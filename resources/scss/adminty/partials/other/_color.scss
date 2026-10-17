@@ -1,0 +1,476 @@
+/* =======================
+   Start Color-page Css
+=========================== */
+
+.amber-colors ul li p,
+.bg-danger li p,
+.bg-default li p,
+.bg-info li p,
+.bg-primary li p,
+.bg-success li p,
+.bg-warning li p,
+.blue-colors ul li p,
+.blue-grey-colors ul li p,
+.brown-colors ul li p,
+.cyan-colors ul li p,
+.deep-orange-colors ul li p,
+.deep-purple-colors ul li p,
+.green-colors ul li p,
+.grey-colors ul li p,
+.indigo-colors ul li p,
+.light-blue-colors ul li p,
+.light-green-colors ul li p,
+.lime-colors ul li p,
+.orange-colors ul li p,
+.pink-colors ul li p,
+.purple-colors ul li p,
+.red-colors ul li p,
+.teal-colors ul li p,
+.yellow-colors ul li p,
+.primary-colorr ul li p,
+.success-colorr ul li p,
+.info-colorr ul li p,
+.warning-colorr ul li p,
+.danger-colorr ul li p {
+    font-size: 18px;
+    padding: 10px 0;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 0;
+}
+
+
+/**====== Accent-red-color css start ======**/
+
+$or:#d50505;
+@for $m-val from 14 to 1 {
+    .red-colors ul li:nth-child(#{$m-val}) {
+        $or: lighten($or, 3%);
+        background-color: $or;
+        p:before {
+            content: "#{$or}";
+        }
+        $m-val: $m-val - 1;
+    }
+}
+
+
+/**====== Accent-red-color css end ======**/
+
+
+/**====== Accent-pink-color css start ======**/
+
+$or:#c61565;
+@for $m-val from 14 to 1 {
+    .pink-colors ul li:nth-child(#{$m-val}) {
+        $or: lighten($or, 3%);
+        background-color: $or;
+        p:before {
+            content: "#{$or}";
+        }
+        $m-val: $m-val - 1;
+    }
+}
+
+
+/**====== Accent-pink-color css end ======**/
+
+
+/**====== Accent-purple-color css start ======**/
+
+$or:#ab05ff;
+@for $m-val from 14 to 1 {
+    .purple-colors ul li:nth-child(#{$m-val}) {
+        $or: lighten($or, 3%);
+        background-color: $or;
+        p:before {
+            content: "#{$or}";
+        }
+        $m-val: $m-val - 1;
+    }
+}
+
+
+/**====== Accent-purple-color css end ======**/
+
+
+/**====== Deep-purple-color css start ======**/
+
+$or:#6505ea;
+@for $m-val from 14 to 1 {
+    .deep-purple-colors ul li:nth-child(#{$m-val}) {
+        $or: lighten($or, 3%);
+        background-color: $or;
+        p:before {
+            content: "#{$or}";
+        }
+        $m-val: $m-val - 1;
+    }
+}
+
+
+/**====== Deep-purple-color css end ======**/
+
+
+/**====== Indigo-color css start ======**/
+
+$or:#3452fe;
+@for $m-val from 14 to 1 {
+    .indigo-colors ul li:nth-child(#{$m-val}) {
+        $or: lighten($or, 2.5%);
+        background-color: $or;
+        p:before {
+            content: "#{$or}";
+        }
+        $m-val: $m-val - 1;
+    }
+}
+
+
+/**====== Indigo-color css end ======**/
+
+
+/**====== Blue-accent-color css start ======**/
+
+$or:#2d65ff;
+@for $m-val from 14 to 1 {
+    .blue-colors ul li:nth-child(#{$m-val}) {
+        $or: lighten($or, 2.5%);
+        background-color: $or;
+        p:before {
+            content: "#{$or}";
+        }
+        $m-val: $m-val - 1;
+    }
+}
+
+
+/**====== Blue-accent-color css end ======**/
+
+
+/**====== Light-blue-color css start ======**/
+
+$or:#0593ea;
+@for $m-val from 14 to 1 {
+    .light-blue-colors ul li:nth-child(#{$m-val}) {
+        $or: lighten($or, 3%);
+        background-color: $or;
+        p:before {
+            content: "#{$or}";
+        }
+        $m-val: $m-val - 1;
+    }
+}
+
+
+/**====== Light-blue-color css end ======**/
+
+
+/**====== Cyan-color css start ======**/
+
+$or:#05b9d4;
+@for $m-val from 14 to 1 {
+    .cyan-colors ul li:nth-child(#{$m-val}) {
+        $or: lighten($or, 3%);
+        background-color: $or;
+        p:before {
+            content: "#{$or}";
+        }
+        $m-val: $m-val - 1;
+    }
+}
+
+
+/**====== Cyan-color css start ======**/
+
+
+/**====== Teal-color css start ======**/
+
+$or:#05c0a6;
+@for $m-val from 14 to 1 {
+    .teal-colors ul li:nth-child(#{$m-val}) {
+        $or: lighten($or, 3%);
+        background-color: $or;
+        p:before {
+            content: "#{$or}";
+        }
+        $m-val: $m-val - 1;
+    }
+}
+
+
+/**====== Teal-color css end ======**/
+
+
+/**====== Green-color css start ======**/
+
+$or:#05c956;
+@for $m-val from 14 to 1 {
+    .green-colors ul li:nth-child(#{$m-val}) {
+        $or: lighten($or, 3%);
+        background-color: $or;
+        p:before {
+            content: "#{$or}";
+        }
+        $m-val: $m-val - 1;
+    }
+}
+
+
+/**====== Green-color css end ======**/
+
+
+/**====== Light-Green-color css start ======**/
+
+$or:#67dd1b;
+@for $m-val from 14 to 1 {
+    .light-green-colors ul li:nth-child(#{$m-val}) {
+        $or: lighten($or, 3%);
+        background-color: $or;
+        p:before {
+            content: "#{$or}";
+        }
+        $m-val: $m-val - 1;
+    }
+}
+
+
+/**====== Light-Green-color css end ======**/
+
+
+/**====== Lime-color css start ======**/
+
+$or:#afea05;
+@for $m-val from 14 to 1 {
+    .lime-colors ul li:nth-child(#{$m-val}) {
+        $or: lighten($or, 3%);
+        background-color: $or;
+        p:before {
+            content: "#{$or}";
+        }
+        $m-val: $m-val - 1;
+    }
+}
+
+
+/**====== Lime-color css end ======**/
+
+
+/**====== Yellow-color css start ======**/
+
+$or:#ffd605;
+@for $m-val from 14 to 1 {
+    .yellow-colors ul li:nth-child(#{$m-val}) {
+        $or: lighten($or, 2.5%);
+        background-color: $or;
+        p:before {
+            content: "#{$or}";
+        }
+        $m-val: $m-val - 1;
+    }
+}
+
+
+/**====== Yellow-color css end ======**/
+
+
+/**====== Amber-color css start ======**/
+
+$or:#ffac05;
+@for $m-val from 14 to 1 {
+    .amber-colors ul li:nth-child(#{$m-val}) {
+        $or: lighten($or, 2.5%);
+        background-color: $or;
+        p:before {
+            content: "#{$or}";
+        }
+        $m-val: $m-val - 1;
+    }
+}
+
+
+/**====== Amber-color css end ======**/
+
+
+/**====== Orange-color css start ======**/
+
+$or:#ff6f05;
+@for $m-val from 14 to 1 {
+    .orange-colors ul li:nth-child(#{$m-val}) {
+        $or: lighten($or, 3%);
+        background-color: $or;
+        p:before {
+            content: "#{$or}";
+        }
+        $m-val: $m-val - 1;
+    }
+}
+
+
+/**====== Orange-color css start ======**/
+
+
+/**====== Deep-Orange-color css start ======**/
+
+$or:#dd3005;
+@for $m-val from 14 to 1 {
+    .deep-orange-colors ul li:nth-child(#{$m-val}) {
+        $or: lighten($or, 3%);
+        background-color: $or;
+        p:before {
+            content: "#{$or}";
+        }
+        $m-val: $m-val - 1;
+    }
+}
+
+
+/**====== Deep-Orange-color css end ======**/
+
+
+/**====== Brown-color css start ======**/
+
+$or:#412b27;
+@for $m-val from 14 to 1 {
+    .brown-colors ul li:nth-child(#{$m-val}) {
+        $or: lighten($or, 5%);
+        background-color: $or;
+        p:before {
+            content: "#{$or}";
+        }
+        $m-val: $m-val - 1;
+    }
+}
+
+
+/**====== Brown-color css end ======**/
+
+
+/**====== Grey-color css start ======**/
+
+$or:#252525;
+@for $m-val from 14 to 1 {
+    .grey-colors ul li:nth-child(#{$m-val}) {
+        $or: lighten($or, 5%);
+        background-color: $or;
+        p:before {
+            content: "#{$or}";
+        }
+        $m-val: $m-val - 1;
+    }
+}
+
+
+/**====== Grey-color css end ======**/
+
+
+/**====== Blue-color css start ======**/
+
+$or:#2a363b;
+@for $m-val from 14 to 1 {
+    .blue-grey-colors ul li:nth-child(#{$m-val}) {
+        $or: lighten($or, 5%);
+        background-color: $or;
+        p:before {
+            content: "#{$or}";
+        }
+        $m-val: $m-val - 1;
+    }
+}
+
+
+/**====== Blue-color css end ======**/
+
+
+/**====== Primary-color css start ======**/
+
+$primary-colorr:#1abc9c;
+@for $m-val from 14 to 1 {
+    .primary-colorr ul li:nth-child(#{$m-val}) {
+        $primary-colorr: lighten($primary-colorr, 3%);
+        background-color: $primary-colorr;
+        p:before {
+            content: "#{$primary-colorr}";
+        }
+        $m-val: $m-val - 1;
+    }
+}
+
+
+/**====== Primary-color css end ======**/
+
+
+/**====== Success-color css start ======**/
+
+$success-colorr:#2ecc71;
+@for $m-val from 14 to 1 {
+    .success-colorr ul li:nth-child(#{$m-val}) {
+        $success-colorr: lighten($success-colorr, 2%);
+        background-color: $success-colorr;
+        p:before {
+            content: "#{$success-colorr}";
+        }
+        $m-val: $m-val - 1;
+    }
+}
+
+
+/**====== Success-color css end ======**/
+
+
+/**====== Info-color css start ======**/
+
+$info-colorr:#3498DB;
+@for $m-val from 14 to 1 {
+    .info-colorr ul li:nth-child(#{$m-val}) {
+        $info-colorr: lighten($info-colorr, 2%);
+        background-color: $info-colorr;
+        p:before {
+            content: "#{$info-colorr}";
+        }
+        $m-val: $m-val - 1;
+    }
+}
+
+
+/**====== Info-color css end ======**/
+
+
+/**====== Warning-color css start ======**/
+
+$warning-colorr:#f1c40f;
+@for $m-val from 14 to 1 {
+    .warning-colorr ul li:nth-child(#{$m-val}) {
+        $warning-colorr: lighten($warning-colorr, 2%);
+        background-color: $warning-colorr;
+        p:before {
+            content: "#{$warning-colorr}";
+        }
+        $m-val: $m-val - 1;
+    }
+}
+
+
+/**====== Warning-color css end ======**/
+
+
+/**====== Danger-color css start ======**/
+
+$danger-colorr: #e74c3c;
+@for $m-val from 14 to 1 {
+    .danger-colorr ul li:nth-child(#{$m-val}) {
+        $danger-colorr: lighten($danger-colorr, 2%);
+        background-color: $danger-colorr;
+        p:before {
+            content: "#{$danger-colorr}";
+        }
+        $m-val: $m-val - 1;
+    }
+}
+
+
+/**====== Danger-color css end ======**/
+
+
+/**====== Color-color css end ======**/

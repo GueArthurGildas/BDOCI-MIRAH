@@ -1,0 +1,197 @@
+/*range slider start */
+
+.range-slider {
+    min-height: 60px;
+    display: flex;
+    align-items: flex-end;
+    padding: 50px 0 20px 0;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    position: relative;
+
+    b {
+        margin-top: -10px;
+    }
+}
+
+#RGB {
+    height: 10px;
+    background: rgb(128, 128, 128);
+}
+
+#RC .slider-selection {
+    background: #FF8282;
+}
+
+#RC .slider-handle {
+    background: red;
+}
+
+#GC .slider-selection {
+    background: #428041;
+}
+
+#GC .slider-handle {
+    background: green;
+}
+
+#BC .slider-selection {
+    background: #8283FF;
+}
+
+#BC .slider-handle {
+    border-bottom-color: blue;
+}
+
+#R,
+#G,
+#B {
+    width: 300px;
+}
+
+.range-slider-contain {
+    position: absolute;
+    bottom: 15px;
+}
+
+.slider-handle {
+    top: -5px;
+    background-image: linear-gradient(to bottom, $primary-color 0%, $primary-color 100%);
+    box-shadow: none;
+}
+
+.slider-tick,
+.slider-track {
+    background-image: linear-gradient(to bottom, #BDC3C7 0%, #BDC3C7 100%)
+}
+
+.slider-handle.custom::before {
+    line-height: 15px;
+    font-size: 35px;
+    color: $primary-color;
+}
+
+#slider12a,
+#slider12c {
+    .slider-track-high {
+        background: green;
+    }
+}
+
+#slider12b,
+#slider12c {
+    .slider-track-low {
+        background: red;
+    }
+}
+
+#slider12c .slider-selection {
+    background: yellow;
+}
+
+.slider-selection.tick-slider-selection {
+    background-image: linear-gradient(to bottom, lighten($primary-color,10%) 0%, lighten($primary-color,10%) 100%);
+}
+
+.slider-tick.in-selection {
+    background-image: linear-gradient(to bottom, lighten($primary-color,10%) 0%, lighten($primary-color,10%) 100%);
+}
+
+.slider.slider-horizontal {
+    .slider-track {
+        height: 2px;
+    }
+    .slider-tick,
+    .slider-handle {
+        top: -5px;
+        cursor: pointer;
+    }
+}
+
+
+/*range slider end */
+
+
+.slider.slider-horizontal .slider-track {
+    width: calc(100% - 20px);
+    margin-top: -5px;
+    top: 50%;
+    left: 10px;
+}
+
+/* Bootstrap 5 tooltip compatibility fixes for bootstrap-slider */
+/* Bootstrap 5 sets .tooltip { opacity: 0 } and only shows with .show class */
+/* The bootstrap-slider plugin doesn't add .show class, so we force visibility */
+.slider .tooltip {
+    opacity: 1 !important;
+    display: block !important;
+
+    .tooltip-inner {
+        white-space: nowrap;
+        max-width: none;
+        padding: 3px 8px;
+        font-size: 11px;
+        font-weight: 500;
+        background-color: $primary-color;
+        color: #fff;
+        border-radius: 3px;
+    }
+
+    /* Fix arrow positioning for Bootstrap 5 */
+    .tooltip-arrow {
+        position: absolute;
+    }
+
+    /* Style the arrow to match primary color */
+    &.bs-tooltip-top .tooltip-arrow::before {
+        border-top-color: $primary-color;
+    }
+
+    &.bs-tooltip-bottom .tooltip-arrow::before {
+        border-bottom-color: $primary-color;
+    }
+
+    &.bs-tooltip-start .tooltip-arrow::before,
+    &.bs-tooltip-left .tooltip-arrow::before {
+        border-left-color: $primary-color;
+    }
+
+    &.bs-tooltip-end .tooltip-arrow::before,
+    &.bs-tooltip-right .tooltip-arrow::before {
+        border-right-color: $primary-color;
+    }
+}
+
+/* Override bootstrap-slider's outdated BS4 tooltip positioning */
+.slider .tooltip.bs-tooltip-top .tooltip-inner,
+.slider .tooltip.bs-tooltip-bottom .tooltip-inner {
+    position: static;
+    left: auto;
+    transform: none;
+}
+
+/* Fix tooltip positioning */
+.slider .tooltip.bs-tooltip-top {
+    margin-top: -38px;
+}
+
+.slider .tooltip.bs-tooltip-bottom {
+    margin-top: 10px;
+}
+
+/* Fix slider handle size consistency */
+.slider-handle {
+    width: 18px;
+    height: 18px;
+}
+
+/* Fix tick labels overflow */
+.slider-tick-label-container {
+    margin-top: 25px;
+
+    .slider-tick-label {
+        padding: 0 2px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+}

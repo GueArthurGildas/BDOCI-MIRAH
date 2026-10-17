@@ -1,0 +1,5 @@
+.pcoded .pcoded-navbar[pcoded-navbar-position="fixed"] .main-menu {
+    height: calc(100% - 80px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
