@@ -16,7 +16,7 @@
             <div class="page-header-breadcrumb">
                 <ul class="breadcrumb-title">
                     <li class="breadcrumb-item float-start">
-                        <a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a>
+                        <a href="{{ url('/') }}" title="{{ __('ui.home') }}"><i class="feather icon-home"></i></a>
                     </li>
                     @foreach ($breadcrumbs as $label => $url)
                         <li class="breadcrumb-item float-start">

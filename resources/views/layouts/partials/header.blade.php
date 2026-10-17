@@ -4,7 +4,7 @@
             <a class="mobile-menu" id="mobile-collapse" href="#!">
                 <i class="feather icon-menu"></i>
             </a>
-            <a href="{{ route('dashboard') }}">
+            <a href="{{ url('/') }}">
                 <img class="img-fluid" src="{{ Vite::asset('resources/images/logo.png') }}" alt="{{ config('app.name') }}">
             </a>
             <a class="mobile-options">
@@ -21,6 +21,7 @@
                 </li>
             </ul>
             <ul class="nav-right">
+                @include('layouts.partials.locale-menu')
                 <li class="user-profile header-notification">
                     <div class="dropdown-primary dropdown">
                         <div class="dropdown-toggle" data-bs-toggle="dropdown">
@@ -33,7 +34,7 @@
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">
-                                        <i class="feather icon-log-out"></i> {{ __('Log out') }}
+                                        <i class="feather icon-log-out"></i> {{ __('ui.log_out') }}
                                     </a>
                                 </form>
                             </li>

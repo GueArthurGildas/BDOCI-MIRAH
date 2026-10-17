@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Modules\Dashboard\Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -24,5 +24,13 @@ class DashboardTest extends TestCase
             ->get('/dashboard')
             ->assertOk()
             ->assertSee('Jane Customer');
+    }
+
+    public function test_dashboard_is_registered_in_the_sidebar(): void
+    {
+        $this->actingAs(User::factory()->create())
+            ->get('/dashboard')
+            ->assertSee('<li class="active">', escape: false)
+            ->assertSee(route('dashboard'));
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Auth;
+namespace Modules\Auth\Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -12,7 +12,7 @@ class AuthenticationTest extends TestCase
 
     public function test_login_screen_can_be_rendered(): void
     {
-        $this->get('/login')->assertOk()->assertViewIs('auth.login');
+        $this->get('/login')->assertOk()->assertViewIs('auth::login');
     }
 
     public function test_users_can_authenticate(): void
