@@ -43,7 +43,7 @@ const verticalMenuOptions = {
     },
 };
 
-function initVerticalMenu() {
+export function initVerticalMenu() {
     const $pcoded = $('#pcoded');
 
     if (!$pcoded.length) {
@@ -61,58 +61,3 @@ function initVerticalMenu() {
         $('.navbar-container .nav-right').slideToggle('slow');
     });
 }
-
-function initCardActions() {
-    $('.card-header-right .close-card').on('click', function () {
-        const $card = $(this).parents('.card');
-
-        $card.animate({ opacity: 0 });
-        setTimeout(() => $card.remove(), 800);
-    });
-
-    $('.card-header-right .minimize-card').on('click', function () {
-        $(this).parents('.card').children('.card-body').slideToggle();
-        $(this).toggleClass('icon-minus icon-plus');
-    });
-
-    $('.card-header-right .full-card').on('click', function () {
-        $(this).parents('.card').toggleClass('full-card');
-        $(this).toggleClass('icon-maximize icon-minimize');
-    });
-}
-
-function initFullScreenToggle() {
-    $('[data-toggle-fullscreen]').on('click', (event) => {
-        event.preventDefault();
-
-        if (document.fullscreenElement) {
-            document.exitFullscreen();
-        } else {
-            document.documentElement.requestFullscreen();
-        }
-    });
-
-    $(document).on('fullscreenchange', () => {
-        $('.full-screen').toggleClass('icon-maximize icon-minimize');
-    });
-}
-
-function initTooltips() {
-    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach((element) => {
-        new window.bootstrap.Tooltip(element);
-    });
-}
-
-function hidePreloader() {
-    $('.theme-loader').fadeOut('slow', function () {
-        $(this).remove();
-    });
-}
-
-$(() => {
-    initVerticalMenu();
-    initCardActions();
-    initFullScreenToggle();
-    initTooltips();
-    hidePreloader();
-});
