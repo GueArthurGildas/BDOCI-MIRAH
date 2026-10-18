@@ -14,6 +14,17 @@
 
         <div class="navbar-container">
             <ul class="nav-left">
+                @if (Route::has('search'))
+                    <li class="header-search">
+                        <form method="GET" action="{{ route('search') }}" class="main-search morphsearch-search" data-header-search>
+                            <div class="input-group">
+                                <span class="input-group-text search-close"><i class="feather icon-x"></i></span>
+                                <input type="search" name="q" class="form-control" placeholder="{{ __('ui.search') }}" aria-label="{{ __('ui.search') }}">
+                                <span class="input-group-text search-btn"><i class="feather icon-search"></i></span>
+                            </div>
+                        </form>
+                    </li>
+                @endif
                 <li>
                     <a href="#!" class="waves-effect waves-light" data-toggle-fullscreen>
                         <i class="full-screen feather icon-maximize"></i>
