@@ -3,6 +3,7 @@
 - [Docker](#docker)
 - [Configuration](#configuration)
 - [Architecture](#architecture)
+- [Domaine et modules](#domaine-et-modules)
 - [Traductions](#traductions)
 
 ## Docker
@@ -130,45 +131,43 @@ Les ports, l'UID/GID et les identifiants se règlent dans `.env` (voir `.env.exa
 
 ## Architecture
 
-L'application est découpée en **modules** : chaque fonctionnalité métier vit dans son propre dossier sous `modules/`, avec ses routes, contrôleurs, vues, traductions et tests. Le dossier `app/` ne contient que le socle partagé par tous les modules.
+L'application est découpée en **modules** : chaque fonctionnalité vit dans son propre dossier sous `modules/`, avec ses routes, contrôleurs, vues, traductions et tests. Le **domaine** (modèles, énumérations, règles métier) est partagé dans `app/` : le cahier des charges demande un référentiel commun, et la fiche navire rassemble les données de tous les modules.
 
 ```
 app/
-├── Http/
-│   ├── Controllers/Controller.php       # contrôleur de base
-│   ├── Controllers/LocaleController.php # changement de langue
-│   └── Middleware/SetLocale.php         # application de la langue à chaque requête
-├── Models/User.php                      # modèles partagés
+├── Enums/                               # énumérations métier (statuts, types…), libellés traduits
+├── Http/Middleware/                     # langue, désactivation des comptes
+├── Models/                              # domaine partagé : navires, licences, positions, observations…
+├── Queries/                             # requêtes métier réutilisées par plusieurs modules
 ├── Providers/AppServiceProvider.php     # services globaux
 └── Support/
-    ├── Localization/Locales.php         # langues supportées
+    ├── Authorization/                   # permissions et rôles (Permission, Role)
+    ├── Localization/                    # langues et pays
     ├── Modules/ModuleServiceProvider.php    # chargement automatique d'un module
-    └── Navigation/                          # registre du menu latéral
+    ├── Navigation/                          # registre du menu latéral (groupes, permissions)
+    └── Presentation/                        # badges, couleurs du thème, liens vers la fiche navire
 
-lang/                                    # traductions partagées (ui.php) et messages Laravel
-
-modules/
-├── Auth/                                # connexion / déconnexion
-└── Dashboard/                           # tableau de bord
+config/surveillance.php                  # seuils métier (rupture d'émission, échéance des licences, pavillons)
+database/                                # migrations, factories, seeders (référentiel + données de démo)
+lang/                                    # traductions partagées (ui.php, enums.php) et messages Laravel
+modules/                                 # une fonctionnalité = un module (voir ci-dessous)
 
 resources/
 ├── views/
 │   ├── components/layouts/              # layouts de page : app (menu vertical) et auth
-│   ├── components/ui/                   # composants réutilisables : page-header, card, stat-card
-│   └── layouts/partials/                # morceaux du layout : head, header, sidebar, preloader, sélecteurs de langue
+│   ├── components/ui/                   # composants réutilisables (voir ci-dessous)
+│   ├── layouts/partials/                # morceaux du layout : en-tête, menu, recherche, langues…
+│   └── errors/                          # pages d'erreur 403, 404, 419, 429, 500, 503
 ├── js/
 │   ├── app.js                           # point d'entrée JS
-│   ├── layout/                          # un fichier par comportement : menu, cartes, plein écran…
+│   ├── components/                      # carte (Leaflet) et graphiques (Chart.js), chargés à la demande
+│   ├── layout/                          # un fichier par comportement : menu, cartes, recherche…
 │   └── vendor/                          # jQuery, Bootstrap, pcoded (Adminty)
-├── scss/
-│   ├── app.scss                         # point d'entrée CSS : Bootstrap, icônes, thème
-│   └── adminty/                         # SCSS du thème (couleurs dans partials/_variables.scss)
+├── scss/                                # thème Adminty, timeline, ajustements (_components.scss)
 ├── fonts/                               # polices d'icônes feather, icofont, themify
 └── images/                              # images du thème
 
-tests/
-├── Feature/                             # tests du socle (langues…)
-└── Unit/                                # tests unitaires (navigation, complétude des traductions)
+tests/                                   # tests du socle ; chaque module a ses propres tests
 ```
 
 ### Anatomie d'un module
@@ -197,7 +196,7 @@ class DashboardServiceProvider extends ModuleServiceProvider
 {
     protected function navigation(Navigation $navigation): void
     {
-        $navigation->add('dashboard::dashboard.title', 'dashboard', 'icon-home', order: 0);
+        $navigation->add('dashboard::dashboard.title', 'dashboard', 'icon-home', NavigationGroup::Overview, order: 0, permission: Permission::DashboardView->value);
     }
 }
 ```
@@ -207,8 +206,9 @@ class DashboardServiceProvider extends ModuleServiceProvider
 1. Créer le dossier `modules/<Nom>/` en reprenant la structure ci-dessus. Le namespace des classes est `Modules\<Nom>\…` (autoload PSR-4 déjà configuré dans `composer.json`).
 2. Créer `Providers/<Nom>ServiceProvider.php`, qui hérite de `ModuleServiceProvider`.
 3. Enregistrer ce provider dans `bootstrap/providers.php`.
-4. Créer les traductions dans `modules/<Nom>/lang/en/<fichier>.php` et `modules/<Nom>/lang/fr/<fichier>.php`, avec les mêmes clés.
-5. Construire les pages avec le layout et les composants partagés :
+4. Déclarer ses permissions dans `Permission`, les attribuer aux rôles dans `Role`, puis lancer `make fresh`.
+5. Créer les traductions dans `modules/<Nom>/lang/en/<fichier>.php` et `modules/<Nom>/lang/fr/<fichier>.php`, avec les mêmes clés.
+6. Construire les pages avec le layout et les composants partagés :
 
 ```blade
 <x-layouts.app :title="__('customers::customers.title')">
@@ -227,7 +227,77 @@ Les tests placés dans `modules/*/Tests`, `tests/Feature` et `tests/Unit` sont l
 - **Langue du code** : tout le code est en anglais (noms, clés, configuration).
 - **Aucun texte en dur** : tout texte affiché passe par une clé de traduction (voir [Traductions](#traductions)).
 - **Commentaires** : le code doit se comprendre sans commentaires, grâce à des noms explicites et des fonctions courtes.
-- **Dépendances entre modules** : un module ne dépend que du socle `app/`, jamais d'un autre module. Ce qui doit être partagé remonte dans `app/` (code PHP) ou dans `resources/views/components/ui/` (composants d'interface). Seule exception : le layout utilise la route `logout` du module `Auth`.
+- **Dépendances entre modules** : un module ne dépend que du socle `app/`, jamais d'un autre module. Ce qui doit être partagé remonte dans `app/` (code PHP) ou dans `resources/views/components/ui/` (composants d'interface). Les liens vers un autre module passent par des helpers qui vérifient que la route existe (`VesselLink`, recherche transversale). Seule exception assumée : le layout utilise la route `logout` du module `Auth`.
+- **Règles métier paramétrables** : seuils et listes dans `config/surveillance.php`, jamais en dur dans le code.
+
+## Domaine et modules
+
+### Domaine
+
+| Modèle | Rôle | Exigences |
+|---|---|---|
+| `Vessel` | navire (pêche ou vedette), identifiant unique, pavillon, statut | A1, A9, RG01-02 |
+| `License` | licence annuelle ; statut calculé (valide, à échéance, expirée, suspendue) | A7, RG07 |
+| `TrackingDevice`, `Position` | balises VMS/AIS (historique des remplacements) et positions datées | A2, RG03-06 |
+| `Port`, `Zone` | ports et zones (GeoJSON) : zones portuaires, mer territoriale, ZEE, zones réglementées | A4 |
+| `Movement` | entrées et sorties des ports | A5 |
+| `Observation` | main courante : constat, niveau, statut, suite à donner, équipe | A6, RG08, RG10 |
+| `Inspection`, `Infraction`, `InfractionType` | contrôles et manquements avec leur cycle de vie | A10, F-006, F-007 |
+| `Species`, `CatchDeclaration` | captures et débarquements | F-008 |
+| `Mission` | missions et opérations (navires, agents, zone) | F-005 |
+| `Team`, `User` | équipes de surveillance et comptes (activables) | S-011 |
+| `DataSource` | état des connecteurs (synchronisation, erreurs, rejets) | F-012 |
+
+Les modifications des données métier sont historisées automatiquement dans le journal d'audit (`spatie/laravel-activitylog`, trait `App\Models\Concerns\Audited`).
+
+### Modules
+
+| Module | Pages | Permission |
+|---|---|---|
+| `Auth` | connexion, déconnexion, journalisation des connexions | — |
+| `Dashboard` | indicateurs, situation par zone, infractions, inspections, fraîcheur des sources | `dashboard.view` |
+| `Tracking` | carte de situation, situation par zone à un instant donné, état des balises | `tracking.view` |
+| `Logbook` | main courante, éléments en suspens, suivi et clôture | `logbook.*` |
+| `Movements` | entrées et sorties | `movements.*` |
+| `Vessels` | liste, fiche 360°, création et modification | `vessels.*` |
+| `Licenses` | liste et échéances | `licenses.view` |
+| `Inspections` | liste et détail | `inspections.view` |
+| `Infractions` | liste, détail, décisions et suites | `infractions.*` |
+| `Catches` | déclarations et totaux par espèce | `catches.view` |
+| `Missions` | liste et détail | `missions.view` |
+| `Search` | recherche transversale (en-tête) | selon les sources |
+| `Administration` | utilisateurs, rôles, connecteurs, journal d'audit | `users.manage`, `connectors.view`, `audit.view` |
+
+### Droits d'accès
+
+Les permissions (`<module>.<action>`) sont déclarées dans l'enum `App\Support\Authorization\Permission`, et les rôles dans `App\Support\Authorization\Role` avec la liste de leurs permissions. `make fresh` (ou `RolesAndPermissionsSeeder`) les synchronise en base. La page *Administration › Rôles et permissions* affiche la matrice complète.
+
+| Rôle | Profil |
+|---|---|
+| `admin` | administration technique, tous les droits |
+| `supervisor` | responsable du CSP : tout sauf la gestion des comptes |
+| `surveillance_agent` | équipe de surveillance : suivi, main courante, mouvements, consultation |
+| `inspector` | inspection / contrôle : consultation de l'historique, des inspections et des infractions |
+
+Pour protéger une route : `->can(Permission::VesselsView->value)`. Pour afficher un élément de menu : passer `permission:` à `$navigation->add()`.
+
+### Composants d'interface
+
+| Composant | Usage |
+|---|---|
+| `<x-ui.page-header>` | titre, sous-titre et fil d'Ariane |
+| `<x-ui.card>` | carte Adminty, avec slot `actions` |
+| `<x-ui.stat-card>` | indicateur chiffré coloré |
+| `<x-ui.filters>`, `<x-ui.filter-input>`, `<x-ui.filter-select>` | barre de filtres (GET) |
+| `<x-ui.table>`, `<x-ui.empty-row>` | tableau avec pagination |
+| `<x-ui.tabs>`, `<x-ui.tab-pane>` | onglets |
+| `<x-ui.detail-list>`, `<x-ui.detail>` | liste libellé / valeur |
+| `<x-ui.status-badge>` | badge d'un enum métier (couleur et libellé traduit) |
+| `<x-ui.vessel-link>` | lien vers la fiche navire si l'utilisateur y a accès |
+| `<x-ui.map>` | carte Leaflet (marqueurs et zones GeoJSON) |
+| `<x-ui.chart>` | graphique Chart.js (configuration passée telle quelle) |
+| `<x-ui.audit-history>` | historique des modifications d'un enregistrement |
+| `<x-ui.form.*>` | champs de formulaire (`input`, `select`, `textarea`, `checkbox`, `actions`) |
 
 ## Traductions
 
@@ -236,6 +306,7 @@ L'interface est disponible en français et en anglais. Aucun texte n'est écrit 
 | Où                                  | Fichiers                              | Appel                                   |
 |-------------------------------------|---------------------------------------|-----------------------------------------|
 | Textes partagés (layout, composants) | `lang/{en,fr}/ui.php`                 | `__('ui.log_out')`                      |
+| Libellés des énumérations métier    | `lang/{en,fr}/enums.php`              | `__($status->label())`                  |
 | Textes d'un module                  | `modules/<Nom>/lang/{en,fr}/<fichier>.php` | `__('<module>::<fichier>.<clé>')`  |
 | Messages Laravel (validation, auth…) | `lang/{en,fr}/*.php`, `lang/{en,fr}.json` (laravel-lang) | automatique |
 

@@ -1,6 +1,6 @@
 # BDOCI-MIRAH
 
-Centralisation de bases de données — Laravel 13, thème Adminty.
+Système d'information du Centre de Surveillance des Pêches (CSP) : référentiel des navires, suivi des positions, main courante, contrôles et pilotage — Laravel 13, thème Adminty.
 
 ## Prérequis
 
@@ -33,8 +33,8 @@ make help               # toutes les commandes
 
 ## Organisation
 
-- `modules/` : une fonctionnalité = un module (routes, contrôleurs, vues, tests)
-- `app/` : socle commun
+- `modules/` : une fonctionnalité = un module (navires, suivi, main courante, contrôles, administration…)
+- `app/` : socle commun et domaine métier (modèles, droits d'accès)
 - `resources/` : layout, composants d'interface, thème
 
 Détails (Docker, configuration, architecture, création d'un module) : [docs/TECHNICAL.md](docs/TECHNICAL.md)
