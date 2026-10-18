@@ -3,8 +3,67 @@
 return [
     'language' => 'English',
     'change_language' => 'Change language',
-    'navigation' => 'Navigation',
     'home' => 'Home',
     'log_out' => 'Log out',
+    'filters' => 'Filters',
+    'filter' => 'Filter',
+    'reset' => 'Reset',
+    'search' => 'Search',
+    'no_results' => 'No results.',
+    'select_placeholder' => 'Select…',
+    'save' => 'Save',
+    'cancel' => 'Cancel',
+    'create' => 'Create',
+    'edit' => 'Edit',
+    'view' => 'View',
+    'back' => 'Back',
+    'back_home' => 'Back to home',
+    'actions' => 'Actions',
+    'all' => 'All',
+    'yes' => 'Yes',
+    'no' => 'No',
+    'saved' => 'Changes saved.',
     'updated_at' => 'Updated at :time',
+
+    'navigation_groups' => [
+        'overview' => 'Overview',
+        'surveillance' => 'Surveillance',
+        'registry' => 'Registry',
+        'controls' => 'Controls',
+        'administration' => 'Administration',
+    ],
+
+    'roles' => [
+        'admin' => 'Administrator',
+        'supervisor' => 'CSP supervisor',
+        'surveillance_agent' => 'Surveillance agent',
+        'inspector' => 'Inspector',
+    ],
+
+    'errors' => [
+        403 => [
+            'title' => 'Access denied',
+            'message' => 'You don\'t have permission to access this page.',
+        ],
+        404 => [
+            'title' => 'Page not found',
+            'message' => 'The page you are looking for does not exist or has been moved.',
+        ],
+        419 => [
+            'title' => 'Session expired',
+            'message' => 'Your session has expired. Please reload the page and try again.',
+        ],
+        429 => [
+            'title' => 'Too many requests',
+            'message' => 'Please wait a moment before trying again.',
+        ],
+        500 => [
+            'title' => 'Server error',
+            'message' => 'Something went wrong on our side. Please try again later.',
+        ],
+        503 => [
+            'title' => 'Under maintenance',
+            'message' => 'The application is temporarily unavailable. Please try again later.',
+        ],
+    ],
 ];

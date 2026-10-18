@@ -3,6 +3,7 @@
 namespace Modules\Dashboard\Tests\Feature;
 
 use App\Models\User;
+use App\Support\Authorization\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -16,20 +17,27 @@ class DashboardTest extends TestCase
         $this->get('/dashboard')->assertRedirect(route('login'));
     }
 
-    public function test_authenticated_users_can_see_the_dashboard(): void
+    public function test_users_without_permission_are_forbidden(): void
     {
-        $user = User::factory()->create(['name' => 'Jane Customer']);
-
-        $this->actingAs($user)
+        $this->actingAs(User::factory()->create())
             ->get('/dashboard')
+            ->assertForbidden();
+    }
+
+    public function test_authorized_users_can_see_the_dashboard(): void
+    {
+        $this->signInAs(Role::Inspector, ['name' => 'Jane Inspector']);
+
+        $this->get('/dashboard')
             ->assertOk()
-            ->assertSee('Jane Customer');
+            ->assertSee('Jane Inspector');
     }
 
     public function test_dashboard_is_registered_in_the_sidebar(): void
     {
-        $this->actingAs(User::factory()->create())
-            ->get('/dashboard')
+        $this->signInAs(Role::Inspector);
+
+        $this->get('/dashboard')
             ->assertSee('<li class="active">', escape: false)
             ->assertSee(route('dashboard'));
     }

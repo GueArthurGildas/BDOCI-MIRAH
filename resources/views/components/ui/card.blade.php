@@ -1,4 +1,4 @@
-@props(['title', 'subtitle' => null, 'flush' => false])
+@props(['title', 'subtitle' => null, 'flush' => false, 'actions' => null])
 
 <div {{ $attributes->class('card') }}>
     <div class="card-header">
@@ -7,10 +7,14 @@
             <span class="text-muted">{{ $subtitle }}</span>
         @endif
         <div class="card-header-right">
-            <ul class="list-unstyled card-option">
-                <li><i class="feather icon-maximize full-card"></i></li>
-                <li><i class="feather icon-minus minimize-card"></i></li>
-            </ul>
+            @if ($actions)
+                {{ $actions }}
+            @else
+                <ul class="list-unstyled card-option">
+                    <li><i class="feather icon-maximize full-card"></i></li>
+                    <li><i class="feather icon-minus minimize-card"></i></li>
+                </ul>
+            @endif
         </div>
     </div>
     <div @class(['card-body', 'p-0' => $flush])>
