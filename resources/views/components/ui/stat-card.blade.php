@@ -1,6 +1,8 @@
-@props(['label', 'value', 'icon', 'color' => 'yellow', 'footer' => null])
+@props(['label', 'value', 'icon', 'color' => 'warning', 'footer' => null])
 
-<div class="card bg-c-{{ $color }} update-card">
+@php($background = ['success' => 'green', 'warning' => 'yellow', 'danger' => 'pink'][$color] ?? 'lite-green')
+
+<div class="card bg-c-{{ $background }} update-card">
     <div class="card-body">
         <div class="row align-items-end">
             <div class="col-8">

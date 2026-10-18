@@ -25,25 +25,25 @@ class DashboardController extends Controller
                 'label' => __('dashboard::dashboard.stats.users'),
                 'value' => User::count(),
                 'icon' => 'icon-users',
-                'color' => 'yellow',
+                'color' => 'warning',
             ],
             [
                 'label' => __('dashboard::dashboard.stats.new_this_month'),
                 'value' => User::where('created_at', '>=', now()->startOfMonth())->count(),
                 'icon' => 'icon-user-plus',
-                'color' => 'green',
+                'color' => 'success',
             ],
             [
                 'label' => __('dashboard::dashboard.stats.verified'),
                 'value' => User::whereNotNull('email_verified_at')->count(),
                 'icon' => 'icon-user-check',
-                'color' => 'lite-green',
+                'color' => 'info',
             ],
             [
                 'label' => __('dashboard::dashboard.stats.unverified'),
                 'value' => User::whereNull('email_verified_at')->count(),
                 'icon' => 'icon-user-x',
-                'color' => 'pink',
+                'color' => 'danger',
             ],
         ];
     }

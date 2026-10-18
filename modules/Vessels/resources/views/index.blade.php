@@ -1,0 +1,80 @@
+<x-layouts.app :title="__('vessels::vessels.title')">
+    <x-ui.page-header :title="__('vessels::vessels.title')" :subtitle="__('vessels::vessels.subtitle')" />
+
+    <div class="page-body">
+        <x-ui.filters :action="route('vessels.index')">
+            <x-ui.filter-field :label="__('ui.search')" class="col-md-4">
+                <input type="search" name="search" value="{{ $filters['search'] ?? '' }}" class="form-control form-control-sm" placeholder="{{ __('vessels::vessels.search_placeholder') }}">
+            </x-ui.filter-field>
+            <x-ui.filter-field :label="__('vessels::vessels.fields.category')">
+                <select name="category" class="form-select form-select-sm">
+                    <option value="">{{ __('ui.all') }}</option>
+                    @foreach (App\Enums\VesselCategory::options() as $value => $label)
+                        <option value="{{ $value }}" @selected(($filters['category'] ?? null) === $value)>{{ $label }}</option>
+                    @endforeach
+                </select>
+            </x-ui.filter-field>
+            <x-ui.filter-field :label="__('vessels::vessels.fields.status')">
+                <select name="status" class="form-select form-select-sm">
+                    <option value="">{{ __('ui.all') }}</option>
+                    @foreach (App\Enums\VesselStatus::options() as $value => $label)
+                        <option value="{{ $value }}" @selected(($filters['status'] ?? null) === $value)>{{ $label }}</option>
+                    @endforeach
+                </select>
+            </x-ui.filter-field>
+            <x-ui.filter-field :label="__('vessels::vessels.fields.flag')">
+                <select name="flag" class="form-select form-select-sm">
+                    <option value="">{{ __('ui.all') }}</option>
+                    @foreach (App\Support\Localization\Countries::options() as $code => $country)
+                        <option value="{{ $code }}" @selected(($filters['flag'] ?? null) === $code)>{{ $country }}</option>
+                    @endforeach
+                </select>
+            </x-ui.filter-field>
+        </x-ui.filters>
+
+        <x-ui.card :title="__('vessels::vessels.list_title')" :subtitle="trans_choice('ui.results_count', $vessels->total())" flush>
+            @can(App\Support\Authorization\Permission::VesselsManage->value)
+                <x-slot:actions>
+                    <a href="{{ route('vessels.create') }}" class="btn btn-primary btn-sm">
+                        <i class="feather icon-plus"></i> {{ __('vessels::vessels.new') }}
+                    </a>
+                </x-slot:actions>
+            @endcan
+
+            <x-ui.table :paginator="$vessels">
+                <x-slot:head>
+                    <th>{{ __('vessels::vessels.fields.name') }}</th>
+                    <th>{{ __('vessels::vessels.fields.registration_number') }}</th>
+                    <th>{{ __('vessels::vessels.fields.flag') }}</th>
+                    <th>{{ __('vessels::vessels.fields.type') }}</th>
+                    <th>{{ __('vessels::vessels.fields.license') }}</th>
+                    <th>{{ __('vessels::vessels.fields.beacon') }}</th>
+                    <th>{{ __('vessels::vessels.fields.status') }}</th>
+                </x-slot:head>
+
+                @forelse ($vessels as $vessel)
+                    <tr>
+                        <td>
+                            <a href="{{ route('vessels.show', $vessel) }}" class="f-w-600">{{ $vessel->name }}</a>
+                            <div class="text-muted f-12">{{ __($vessel->category->label()) }}</div>
+                        </td>
+                        <td>{{ $vessel->registration_number }}</td>
+                        <td>{{ $vessel->flagName() }}</td>
+                        <td>{{ __($vessel->type->label()) }}</td>
+                        <td>
+                            @if ($vessel->currentLicense)
+                                <x-ui.status-badge :status="$vessel->currentLicense->status" />
+                            @else
+                                <span class="text-muted">—</span>
+                            @endif
+                        </td>
+                        <td><x-ui.status-badge :status="$vessel->beaconStatus()" /></td>
+                        <td><x-ui.status-badge :status="$vessel->status" /></td>
+                    </tr>
+                @empty
+                    <x-ui.empty-row colspan="7" />
+                @endforelse
+            </x-ui.table>
+        </x-ui.card>
+    </div>
+</x-layouts.app>

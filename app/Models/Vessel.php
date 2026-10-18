@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Enums\BeaconStatus;
 use App\Enums\VesselCategory;
 use App\Enums\VesselStatus;
 use App\Enums\VesselType;
 use App\Models\Concerns\Audited;
+use App\Support\Localization\Countries;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,7 +16,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Locale;
 
 #[Fillable([
     'name', 'registration_number', 'imo_number', 'call_sign', 'flag', 'type',
@@ -37,7 +38,18 @@ class Vessel extends Model
 
     public function flagName(): string
     {
-        return Locale::getDisplayRegion("-{$this->flag}", app()->getLocale());
+        return Countries::name($this->flag);
+    }
+
+    public function beaconStatus(): BeaconStatus
+    {
+        $lastEmission = $this->latestPosition?->recorded_at;
+
+        return match (true) {
+            $lastEmission === null => BeaconStatus::NoData,
+            $lastEmission->lt(now()->subHours(config('surveillance.beacon_silence_threshold_hours'))) => BeaconStatus::Silent,
+            default => BeaconStatus::Emitting,
+        };
     }
 
     public function scopeSearch(Builder $query, ?string $term): void

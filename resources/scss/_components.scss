@@ -7,3 +7,31 @@
 .pagination {
     margin-bottom: 0;
 }
+
+.label-default {
+    color: $inverse-color;
+}
+
+.page-header .page-header-title span {
+    text-transform: none;
+}
+
+.page-header-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+    padding: 0 6px;
+}
+
+.tab-header .md-tabs.tab-timeline {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: thin;
+
+    .nav-item {
+        flex: 1 0 auto;
+        width: auto;
+    }
+
+    .nav-item a {
+        padding: 20px 18px !important;
+        white-space: nowrap;
+    }
+}

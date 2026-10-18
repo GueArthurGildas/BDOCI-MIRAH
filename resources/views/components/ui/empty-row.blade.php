@@ -2,6 +2,6 @@
 
 <tr>
     <td colspan="{{ $colspan }}" class="text-center text-muted p-4">
-        {{ $slot->isEmpty() ? __('ui.no_results') : $slot }}
+        {{ $slot->hasActualContent() ? $slot : __('ui.no_results') }}
     </td>
 </tr>
