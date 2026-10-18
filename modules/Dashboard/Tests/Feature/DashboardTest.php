@@ -2,6 +2,9 @@
 
 namespace Modules\Dashboard\Tests\Feature;
 
+use App\Enums\ObservationStatus;
+use App\Models\DataSource;
+use App\Models\Observation;
 use App\Models\User;
 use App\Support\Authorization\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -24,16 +27,20 @@ class DashboardTest extends TestCase
             ->assertForbidden();
     }
 
-    public function test_authorized_users_can_see_the_dashboard(): void
+    public function test_dashboard_shows_key_indicators(): void
     {
-        $this->signInAs(Role::Inspector, ['name' => 'Jane Inspector']);
+        $this->signInAs(Role::Inspector);
+        DataSource::factory()->create(['name' => 'VMS / THEMIS']);
+        Observation::factory()->create(['description' => 'Rupture d\'émission à surveiller', 'status' => ObservationStatus::Open]);
 
         $this->get('/dashboard')
             ->assertOk()
-            ->assertSee('Jane Inspector');
+            ->assertSee('VMS / THEMIS')
+            ->assertSee('Rupture d\'émission à surveiller', escape: true)
+            ->assertViewHas('stats', fn (array $stats) => collect($stats)->firstWhere('label', 'pending_observations')['value'] === 1);
     }
 
-    public function test_dashboard_is_registered_in_the_sidebar(): void
+    public function test_dashboard_is_highlighted_in_the_sidebar(): void
     {
         $this->signInAs(Role::Inspector);
 

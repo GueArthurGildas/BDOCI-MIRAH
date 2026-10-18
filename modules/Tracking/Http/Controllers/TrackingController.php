@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Position;
 use App\Models\TrackingDevice;
 use App\Models\Zone;
+use App\Queries\ZoneSituation;
 use App\Support\Presentation\VesselLink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -30,8 +31,6 @@ class TrackingController extends Controller
         'exclusive_economic_zone' => '#404e67',
         'restricted' => '#fe5d70',
     ];
-
-    private const POSITION_FRESHNESS_HOURS = 24;
 
     private const BEACON_STATUS_PRIORITY = ['silent', 'no_data', 'emitting'];
 
@@ -68,11 +67,7 @@ class TrackingController extends Controller
         $filters = $request->validate(['at' => ['nullable', 'date']]);
         $at = Carbon::parse($filters['at'] ?? now());
 
-        $vesselCountByZone = Position::latestPerVessel($at)
-            ->where('positions.recorded_at', '>=', $at->copy()->subHours(self::POSITION_FRESHNESS_HOURS))
-            ->whereNotNull('zone_id')
-            ->get()
-            ->countBy('zone_id');
+        $vesselCountByZone = ZoneSituation::vesselCountByZoneAt($at);
 
         $zones = Zone::where('is_active', true)->orderBy('type')->orderBy('name')->get();
         $portAreas = $zones
@@ -83,7 +78,7 @@ class TrackingController extends Controller
             'at' => $at,
             'zones' => $zones,
             'vesselCountByZone' => $vesselCountByZone,
-            'freshnessHours' => self::POSITION_FRESHNESS_HOURS,
+            'freshnessHours' => ZoneSituation::POSITION_FRESHNESS_HOURS,
             'chart' => [
                 'type' => 'bar',
                 'data' => [

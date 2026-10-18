@@ -2,23 +2,29 @@
 
 return [
     'title' => 'Tableau de bord',
-    'subtitle' => "Vue d'ensemble de votre activité",
-
+    'subtitle' => 'Indicateurs clés de la surveillance des pêches',
     'stats' => [
-        'users' => 'Utilisateurs',
-        'new_this_month' => 'Nouveaux ce mois-ci',
-        'verified' => 'Utilisateurs vérifiés',
-        'unverified' => 'Non vérifiés',
+        'active_vessels' => 'Navires actifs',
+        'expiring_licenses' => 'Licences à échéance',
+        'pending_observations' => 'Observations en suspens',
+        'silent_beacons' => 'Balises en rupture',
     ],
-
-    'latest_users' => [
-        'title' => 'Derniers utilisateurs',
-        'name' => 'Nom',
-        'email' => 'E-mail',
+    'zones_title' => 'Situation par zone',
+    'zones_subtitle' => 'Navires présents en zones portuaires à :time',
+    'infractions_title' => 'Infractions par statut',
+    'inspections_title' => 'Inspections des six derniers mois',
+    'sources_title' => 'Fraîcheur des données',
+    'observations_title' => 'Dernières observations en suspens',
+    'columns' => [
+        'source' => 'Source',
+        'last_synced_at' => 'Dernière synchronisation',
+        'errors' => 'Erreurs',
+        'rejected' => 'Rejets',
         'status' => 'Statut',
-        'registered' => 'Inscription',
-        'verified' => 'Vérifié',
-        'pending' => 'En attente',
-        'empty' => 'Aucun utilisateur pour le moment.',
+        'date' => 'Date',
+        'vessel' => 'Navire',
+        'level' => 'Niveau',
+        'description' => 'Description',
     ],
+    'never' => 'Jamais',
 ];
