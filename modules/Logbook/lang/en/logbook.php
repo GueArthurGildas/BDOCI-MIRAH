@@ -1,0 +1,37 @@
+<?php
+
+return [
+    'title' => 'Logbook',
+    'subtitle' => 'Shared operational log of observations and follow-ups between teams',
+    'list_title' => 'Observations',
+    'create_title' => 'New observation',
+    'new' => 'New observation',
+    'pending_only' => 'Pending items',
+    'pending_hint' => 'Open and in-progress observations to hand over to the next team',
+    'created' => 'The observation has been recorded.',
+    'updated' => 'The observation has been updated.',
+    'search_placeholder' => 'Vessel name or registration…',
+    'no_vessel' => 'No vessel',
+    'fields' => [
+        'observed_at' => 'Observed at',
+        'vessel' => 'Vessel',
+        'zone' => 'Zone',
+        'latitude' => 'Latitude',
+        'longitude' => 'Longitude',
+        'level' => 'Level',
+        'status' => 'Status',
+        'description' => 'Description',
+        'follow_up' => 'Follow-up',
+        'author' => 'Author',
+        'team' => 'Team',
+        'closed_at' => 'Closed at',
+    ],
+    'follow_up_title' => 'Follow-up',
+    'history_title' => 'History',
+    'history' => [
+        'created' => 'Recorded by :user',
+        'updated' => 'Updated by :user',
+        'system' => 'the system',
+        'empty' => 'No change recorded yet.',
+    ],
+];

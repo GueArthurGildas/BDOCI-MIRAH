@@ -1,0 +1,37 @@
+<?php
+
+return [
+    'title' => 'Main courante',
+    'subtitle' => 'Journal opérationnel partagé des observations et des relais entre équipes',
+    'list_title' => 'Observations',
+    'create_title' => 'Nouvelle observation',
+    'new' => 'Nouvelle observation',
+    'pending_only' => 'Éléments en suspens',
+    'pending_hint' => 'Observations ouvertes ou en cours à transmettre à l\'équipe suivante',
+    'created' => 'L\'observation a été enregistrée.',
+    'updated' => 'L\'observation a été mise à jour.',
+    'search_placeholder' => 'Nom ou immatriculation du navire…',
+    'no_vessel' => 'Aucun navire',
+    'fields' => [
+        'observed_at' => 'Date et heure',
+        'vessel' => 'Navire',
+        'zone' => 'Zone',
+        'latitude' => 'Latitude',
+        'longitude' => 'Longitude',
+        'level' => 'Niveau',
+        'status' => 'Statut',
+        'description' => 'Description',
+        'follow_up' => 'Suite à donner',
+        'author' => 'Auteur',
+        'team' => 'Équipe',
+        'closed_at' => 'Clôturée le',
+    ],
+    'follow_up_title' => 'Suivi',
+    'history_title' => 'Historique',
+    'history' => [
+        'created' => 'Enregistrée par :user',
+        'updated' => 'Mise à jour par :user',
+        'system' => 'le système',
+        'empty' => 'Aucune modification enregistrée.',
+    ],
+];
