@@ -18,25 +18,9 @@
         </div>
 
         <x-ui.filters :action="route('licenses.index')">
-            <x-ui.filter-field :label="__('ui.search')" class="col-md-5">
-                <input type="search" name="search" value="{{ $filters['search'] ?? '' }}" class="form-control form-control-sm" placeholder="{{ __('licenses::licenses.search_placeholder') }}">
-            </x-ui.filter-field>
-            <x-ui.filter-field :label="__('licenses::licenses.fields.status')">
-                <select name="status" class="form-select form-select-sm">
-                    <option value="">{{ __('ui.all') }}</option>
-                    @foreach (App\Enums\LicenseStatus::options() as $value => $label)
-                        <option value="{{ $value }}" @selected(($filters['status'] ?? null) === $value)>{{ $label }}</option>
-                    @endforeach
-                </select>
-            </x-ui.filter-field>
-            <x-ui.filter-field :label="__('licenses::licenses.fields.type')">
-                <select name="type" class="form-select form-select-sm">
-                    <option value="">{{ __('ui.all') }}</option>
-                    @foreach (App\Enums\LicenseType::options() as $value => $label)
-                        <option value="{{ $value }}" @selected(($filters['type'] ?? null) === $value)>{{ $label }}</option>
-                    @endforeach
-                </select>
-            </x-ui.filter-field>
+            <x-ui.filter-input name="search" type="search" :label="__('ui.search')" :value="$filters['search'] ?? null" :placeholder="__('licenses::licenses.search_placeholder')" class="col-md-5" />
+            <x-ui.filter-select name="status" :label="__('licenses::licenses.fields.status')" :options="App\Enums\LicenseStatus::options()" :value="$filters['status'] ?? null" />
+            <x-ui.filter-select name="type" :label="__('licenses::licenses.fields.type')" :options="App\Enums\LicenseType::options()" :value="$filters['type'] ?? null" />
         </x-ui.filters>
 
         <x-ui.card :title="__('licenses::licenses.list_title')" :subtitle="trans_choice('ui.results_count', $licenses->total())" flush>

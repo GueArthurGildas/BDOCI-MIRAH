@@ -27,11 +27,4 @@ return [
         'closed_at' => 'Clôturée le',
     ],
     'follow_up_title' => 'Suivi',
-    'history_title' => 'Historique',
-    'history' => [
-        'created' => 'Enregistrée par :user',
-        'updated' => 'Mise à jour par :user',
-        'system' => 'le système',
-        'empty' => 'Aucune modification enregistrée.',
-    ],
 ];

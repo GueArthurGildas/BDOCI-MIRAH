@@ -2,9 +2,13 @@
 
 use App\Providers\AppServiceProvider;
 use Modules\Auth\Providers\AuthServiceProvider;
+use Modules\Catches\Providers\CatchesServiceProvider;
 use Modules\Dashboard\Providers\DashboardServiceProvider;
+use Modules\Infractions\Providers\InfractionsServiceProvider;
+use Modules\Inspections\Providers\InspectionsServiceProvider;
 use Modules\Licenses\Providers\LicensesServiceProvider;
 use Modules\Logbook\Providers\LogbookServiceProvider;
+use Modules\Missions\Providers\MissionsServiceProvider;
 use Modules\Movements\Providers\MovementsServiceProvider;
 use Modules\Tracking\Providers\TrackingServiceProvider;
 use Modules\Vessels\Providers\VesselsServiceProvider;
@@ -12,9 +16,13 @@ use Modules\Vessels\Providers\VesselsServiceProvider;
 return [
     AppServiceProvider::class,
     AuthServiceProvider::class,
+    CatchesServiceProvider::class,
     DashboardServiceProvider::class,
+    InfractionsServiceProvider::class,
+    InspectionsServiceProvider::class,
     LicensesServiceProvider::class,
     LogbookServiceProvider::class,
+    MissionsServiceProvider::class,
     MovementsServiceProvider::class,
     TrackingServiceProvider::class,
     VesselsServiceProvider::class,

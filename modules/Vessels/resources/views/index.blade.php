@@ -3,33 +3,10 @@
 
     <div class="page-body">
         <x-ui.filters :action="route('vessels.index')">
-            <x-ui.filter-field :label="__('ui.search')" class="col-md-4">
-                <input type="search" name="search" value="{{ $filters['search'] ?? '' }}" class="form-control form-control-sm" placeholder="{{ __('vessels::vessels.search_placeholder') }}">
-            </x-ui.filter-field>
-            <x-ui.filter-field :label="__('vessels::vessels.fields.category')">
-                <select name="category" class="form-select form-select-sm">
-                    <option value="">{{ __('ui.all') }}</option>
-                    @foreach (App\Enums\VesselCategory::options() as $value => $label)
-                        <option value="{{ $value }}" @selected(($filters['category'] ?? null) === $value)>{{ $label }}</option>
-                    @endforeach
-                </select>
-            </x-ui.filter-field>
-            <x-ui.filter-field :label="__('vessels::vessels.fields.status')">
-                <select name="status" class="form-select form-select-sm">
-                    <option value="">{{ __('ui.all') }}</option>
-                    @foreach (App\Enums\VesselStatus::options() as $value => $label)
-                        <option value="{{ $value }}" @selected(($filters['status'] ?? null) === $value)>{{ $label }}</option>
-                    @endforeach
-                </select>
-            </x-ui.filter-field>
-            <x-ui.filter-field :label="__('vessels::vessels.fields.flag')">
-                <select name="flag" class="form-select form-select-sm">
-                    <option value="">{{ __('ui.all') }}</option>
-                    @foreach (App\Support\Localization\Countries::options() as $code => $country)
-                        <option value="{{ $code }}" @selected(($filters['flag'] ?? null) === $code)>{{ $country }}</option>
-                    @endforeach
-                </select>
-            </x-ui.filter-field>
+            <x-ui.filter-input name="search" type="search" :label="__('ui.search')" :value="$filters['search'] ?? null" :placeholder="__('vessels::vessels.search_placeholder')" class="col-md-4" />
+            <x-ui.filter-select name="category" :label="__('vessels::vessels.fields.category')" :options="App\Enums\VesselCategory::options()" :value="$filters['category'] ?? null" />
+            <x-ui.filter-select name="status" :label="__('vessels::vessels.fields.status')" :options="App\Enums\VesselStatus::options()" :value="$filters['status'] ?? null" />
+            <x-ui.filter-select name="flag" :label="__('vessels::vessels.fields.flag')" :options="App\Support\Localization\Countries::options()" :value="$filters['flag'] ?? null" />
         </x-ui.filters>
 
         <x-ui.card :title="__('vessels::vessels.list_title')" :subtitle="trans_choice('ui.results_count', $vessels->total())" flush>

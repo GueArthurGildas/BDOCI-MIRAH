@@ -27,11 +27,4 @@ return [
         'closed_at' => 'Closed at',
     ],
     'follow_up_title' => 'Follow-up',
-    'history_title' => 'History',
-    'history' => [
-        'created' => 'Recorded by :user',
-        'updated' => 'Updated by :user',
-        'system' => 'the system',
-        'empty' => 'No change recorded yet.',
-    ],
 ];

@@ -42,6 +42,14 @@ return [
         'inspector' => 'Inspector',
     ],
 
+    'history' => [
+        'title' => 'History',
+        'created' => 'Created by :user',
+        'updated' => 'Updated by :user',
+        'system' => 'the system',
+        'empty' => 'No change recorded yet.',
+    ],
+
     'errors' => [
         403 => [
             'title' => 'Access denied',

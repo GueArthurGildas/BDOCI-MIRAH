@@ -40,19 +40,7 @@
                     @endcan
                 </x-ui.card>
 
-                <x-ui.card :title="__('logbook::logbook.history_title')">
-                    <ul class="list-unstyled m-0">
-                        @forelse ($observation->activitiesAsSubject->sortByDesc('created_at') as $activity)
-                            <li class="m-b-10">
-                                <i class="feather icon-clock text-muted m-r-5"></i>
-                                {{ __('logbook::logbook.history.'.($activity->event === 'created' ? 'created' : 'updated'), ['user' => $activity->causer?->name ?? __('logbook::logbook.history.system')]) }}
-                                <span class="text-muted f-12">— {{ $activity->created_at->isoFormat('L LT') }}</span>
-                            </li>
-                        @empty
-                            <li class="text-muted">{{ __('logbook::logbook.history.empty') }}</li>
-                        @endforelse
-                    </ul>
-                </x-ui.card>
+                <x-ui.audit-history :subject="$observation" />
             </div>
         </div>
     </div>

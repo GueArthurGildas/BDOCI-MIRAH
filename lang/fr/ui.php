@@ -42,6 +42,14 @@ return [
         'inspector' => 'Inspecteur',
     ],
 
+    'history' => [
+        'title' => 'Historique',
+        'created' => 'Créé par :user',
+        'updated' => 'Modifié par :user',
+        'system' => 'le système',
+        'empty' => 'Aucune modification enregistrée.',
+    ],
+
     'errors' => [
         403 => [
             'title' => 'Accès refusé',

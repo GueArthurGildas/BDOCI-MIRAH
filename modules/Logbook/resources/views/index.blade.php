@@ -3,33 +3,10 @@
 
     <div class="page-body">
         <x-ui.filters :action="route('logbook.index')">
-            <x-ui.filter-field :label="__('ui.search')" class="col-md-3">
-                <input type="search" name="search" value="{{ $filters['search'] ?? '' }}" class="form-control form-control-sm" placeholder="{{ __('logbook::logbook.search_placeholder') }}">
-            </x-ui.filter-field>
-            <x-ui.filter-field :label="__('logbook::logbook.fields.status')">
-                <select name="status" class="form-select form-select-sm">
-                    <option value="">{{ __('ui.all') }}</option>
-                    @foreach (App\Enums\ObservationStatus::options() as $value => $label)
-                        <option value="{{ $value }}" @selected(($filters['status'] ?? null) === $value)>{{ $label }}</option>
-                    @endforeach
-                </select>
-            </x-ui.filter-field>
-            <x-ui.filter-field :label="__('logbook::logbook.fields.level')">
-                <select name="level" class="form-select form-select-sm">
-                    <option value="">{{ __('ui.all') }}</option>
-                    @foreach (App\Enums\ObservationLevel::options() as $value => $label)
-                        <option value="{{ $value }}" @selected(($filters['level'] ?? null) === $value)>{{ $label }}</option>
-                    @endforeach
-                </select>
-            </x-ui.filter-field>
-            <x-ui.filter-field :label="__('logbook::logbook.fields.team')">
-                <select name="team" class="form-select form-select-sm">
-                    <option value="">{{ __('ui.all') }}</option>
-                    @foreach ($teams as $id => $name)
-                        <option value="{{ $id }}" @selected((string) ($filters['team'] ?? '') === (string) $id)>{{ $name }}</option>
-                    @endforeach
-                </select>
-            </x-ui.filter-field>
+            <x-ui.filter-input name="search" type="search" :label="__('ui.search')" :value="$filters['search'] ?? null" :placeholder="__('logbook::logbook.search_placeholder')" class="col-md-3" />
+            <x-ui.filter-select name="status" :label="__('logbook::logbook.fields.status')" :options="App\Enums\ObservationStatus::options()" :value="$filters['status'] ?? null" />
+            <x-ui.filter-select name="level" :label="__('logbook::logbook.fields.level')" :options="App\Enums\ObservationLevel::options()" :value="$filters['level'] ?? null" />
+            <x-ui.filter-select name="team" :label="__('logbook::logbook.fields.team')" :options="$teams" :value="$filters['team'] ?? null" />
             <x-ui.filter-field :label="__('logbook::logbook.pending_only')" class="col-md-auto">
                 <div class="form-check form-switch m-t-5">
                     <input type="checkbox" name="pending" value="1" class="form-check-input" @checked($filters['pending'] ?? false) title="{{ __('logbook::logbook.pending_hint') }}">

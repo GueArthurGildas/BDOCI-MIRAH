@@ -8,8 +8,8 @@
     margin-bottom: 0;
 }
 
-.label-default {
-    color: $inverse-color;
+.label.label-default {
+    color: $inverse-color !important;
 }
 
 .main-body .page-wrapper .page-header-title span {

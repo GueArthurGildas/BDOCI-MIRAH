@@ -3,31 +3,11 @@
 
     <div class="page-body">
         <x-ui.filters :action="route('movements.index')">
-            <x-ui.filter-field :label="__('ui.search')" class="col-md-3">
-                <input type="search" name="search" value="{{ $filters['search'] ?? '' }}" class="form-control form-control-sm" placeholder="{{ __('movements::movements.search_placeholder') }}">
-            </x-ui.filter-field>
-            <x-ui.filter-field :label="__('movements::movements.fields.direction')">
-                <select name="direction" class="form-select form-select-sm">
-                    <option value="">{{ __('ui.all') }}</option>
-                    @foreach (App\Enums\MovementDirection::options() as $value => $label)
-                        <option value="{{ $value }}" @selected(($filters['direction'] ?? null) === $value)>{{ $label }}</option>
-                    @endforeach
-                </select>
-            </x-ui.filter-field>
-            <x-ui.filter-field :label="__('movements::movements.fields.port')">
-                <select name="port" class="form-select form-select-sm">
-                    <option value="">{{ __('ui.all') }}</option>
-                    @foreach ($ports as $id => $name)
-                        <option value="{{ $id }}" @selected((string) ($filters['port'] ?? '') === (string) $id)>{{ $name }}</option>
-                    @endforeach
-                </select>
-            </x-ui.filter-field>
-            <x-ui.filter-field :label="__('movements::movements.fields.from')">
-                <input type="date" name="from" value="{{ $filters['from'] ?? '' }}" class="form-control form-control-sm">
-            </x-ui.filter-field>
-            <x-ui.filter-field :label="__('movements::movements.fields.to')">
-                <input type="date" name="to" value="{{ $filters['to'] ?? '' }}" class="form-control form-control-sm">
-            </x-ui.filter-field>
+            <x-ui.filter-input name="search" type="search" :label="__('ui.search')" :value="$filters['search'] ?? null" :placeholder="__('movements::movements.search_placeholder')" class="col-md-3" />
+            <x-ui.filter-select name="direction" :label="__('movements::movements.fields.direction')" :options="App\Enums\MovementDirection::options()" :value="$filters['direction'] ?? null" />
+            <x-ui.filter-select name="port" :label="__('movements::movements.fields.port')" :options="$ports" :value="$filters['port'] ?? null" />
+            <x-ui.filter-input name="from" type="date" :label="__('movements::movements.fields.from')" :value="$filters['from'] ?? null" />
+            <x-ui.filter-input name="to" type="date" :label="__('movements::movements.fields.to')" :value="$filters['to'] ?? null" />
         </x-ui.filters>
 
         <x-ui.card :title="__('movements::movements.list_title')" :subtitle="trans_choice('ui.results_count', $movements->total())" flush>
