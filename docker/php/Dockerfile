@@ -10,10 +10,11 @@ ARG GID=1000
 COPY --from=mlocati/php-extension-installer:latest /usr/bin/install-php-extensions /usr/local/bin/
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends git unzip curl default-mysql-client \
+    && apt-get install -y --no-install-recommends git unzip curl postgresql-client \
     && rm -rf /var/lib/apt/lists/* \
     && install-php-extensions \
-        pdo_mysql \
+        pdo_pgsql \
+        pgsql \
         bcmath \
         intl \
         zip \

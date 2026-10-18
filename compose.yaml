@@ -16,7 +16,7 @@ x-app: &app
   extra_hosts:
     - "host.docker.internal:host-gateway"
   depends_on:
-    mysql:
+    postgres:
       condition: service_healthy
     redis:
       condition: service_healthy
@@ -67,21 +67,20 @@ services:
     networks:
       - laravel
 
-  mysql:
-    image: mysql:8.4
+  postgres:
+    image: postgres:16
     restart: unless-stopped
     ports:
-      - "${FORWARD_DB_PORT:-3306}:3306"
+      - "${FORWARD_DB_PORT:-5435}:5432"
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root}
-      MYSQL_DATABASE: ${DB_DATABASE:-laravel}
-      MYSQL_USER: ${DB_USERNAME:-laravel}
-      MYSQL_PASSWORD: ${DB_PASSWORD:-secret}
+      POSTGRES_DB: ${DB_DATABASE:-laravel}
+      POSTGRES_USER: ${DB_USERNAME:-laravel}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-secret}
     volumes:
-      - mysql-data:/var/lib/mysql
-      - ./docker/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh:ro
+      - postgres-data:/var/lib/postgresql/data
+      - ./docker/postgres/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh:ro
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p${DB_ROOT_PASSWORD:-root}"]
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
       interval: 5s
       timeout: 5s
       retries: 20
@@ -111,25 +110,11 @@ services:
     networks:
       - laravel
 
-  phpmyadmin:
-    image: phpmyadmin:5
-    profiles: ["tools"]
-    ports:
-      - "${FORWARD_PMA_PORT:-8080}:80"
-    environment:
-      PMA_HOST: mysql
-      PMA_USER: root
-      PMA_PASSWORD: ${DB_ROOT_PASSWORD:-root}
-    depends_on:
-      - mysql
-    networks:
-      - laravel
-
 networks:
   laravel:
     driver_opts:
       com.docker.network.driver.mtu: ${DOCKER_MTU:-1400}
 
 volumes:
-  mysql-data:
+  postgres-data:
   redis-data:

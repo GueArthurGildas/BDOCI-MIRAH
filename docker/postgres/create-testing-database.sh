@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-mysql --user=root --password="$MYSQL_ROOT_PASSWORD" <<-EOSQL
-    CREATE DATABASE IF NOT EXISTS testing CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-    GRANT ALL PRIVILEGES ON testing.* TO '$MYSQL_USER'@'%';
-    FLUSH PRIVILEGES;
+set -euo pipefail
+
+psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
+    CREATE DATABASE testing OWNER "$POSTGRES_USER";
 EOSQL

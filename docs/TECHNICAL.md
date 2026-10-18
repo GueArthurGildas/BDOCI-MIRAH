@@ -8,19 +8,18 @@
 
 ## Docker
 
-PHP, Composer, Node et MySQL tournent dans des conteneurs : seuls Docker (Compose v2) et `make` sont requis sur la machine.
+PHP, Composer, Node et PostgreSQL tournent dans des conteneurs : seuls Docker (Compose v2) et `make` sont requis sur la machine.
 
 | Service     | Rôle                                   | Accès                        |
 |-------------|----------------------------------------|------------------------------|
 | `app`       | PHP 8.4-FPM + Composer + Xdebug        | —                            |
 | `nginx`     | Serveur web                            | http://localhost:8000        |
 | `node`      | Node 24 + Vite (HMR)                   | http://localhost:5173        |
-| `mysql`     | MySQL 8.4 (bases `laravel` et `testing`) | `localhost:3306`           |
+| `postgres`  | PostgreSQL 16 (bases `laravel` et `testing`) | `localhost:5435`       |
 | `redis`     | Cache, sessions, files d'attente       | `localhost:6379`             |
 | `queue`     | Worker `queue:work`                    | —                            |
 | `scheduler` | `schedule:work` (tâches planifiées)    | —                            |
 | `mailpit`   | Capture des e-mails                    | http://localhost:8025        |
-| `phpmyadmin`| Optionnel (`make pma`)                 | http://localhost:8080        |
 
 ### Installation
 
@@ -37,16 +36,15 @@ make composer c="require vendor/paquet"
 make npm c="install paquet"
 make assets                        # build front de production (public/build)
 make migrate / make fresh          # migrations / reset + seeders
-make test                          # tests (base MySQL `testing`)
-make db                            # client MySQL
-make pma                           # phpMyAdmin (http://localhost:8080)
+make test                          # tests (base PostgreSQL `testing`)
+make db                            # client PostgreSQL (psql)
 make logs
 make clean                         # ⚠️ supprime aussi les volumes (données)
 ```
 
 ### How/Why?
 
-Tous les services sont décrits dans `compose.yaml` et reliés au même réseau Docker privé `laravel`. Sur ce réseau, chaque conteneur joint les autres par leur nom de service : c'est pour ça que `.env` contient `DB_HOST=mysql`, `REDIS_HOST=redis` ou `MAIL_HOST=mailpit` au lieu de `127.0.0.1`. Le réseau utilise un MTU de 1400 (voir [Configuration](#configuration)).
+Tous les services sont décrits dans `compose.yaml` et reliés au même réseau Docker privé `laravel`. Sur ce réseau, chaque conteneur joint les autres par leur nom de service : c'est pour ça que `.env` contient `DB_HOST=postgres`, `REDIS_HOST=redis` ou `MAIL_HOST=mailpit` au lieu de `127.0.0.1`. Le réseau utilise un MTU de 1400 (voir [Configuration](#configuration)).
 
 Le code du projet est monté dans les conteneurs (`./` → `/var/www/html`) : une modification faite sur la machine est visible immédiatement dans les conteneurs, sans reconstruire d'image.
 
@@ -55,14 +53,14 @@ Le code du projet est monté dans les conteneurs (`./` → `/var/www/html`) : un
 - **Image** : construite localement à partir de `docker/php/Dockerfile` (cible `dev`), taguée `bdoci-mirah/app:dev`. C'est la seule image du projet qui est construite ; toutes les autres sont téléchargées telles quelles depuis Docker Hub.
 - **Étape `base`** :
   - part de l'image officielle `php:8.4-fpm-bookworm` ;
-  - installe les outils système (`git`, `unzip`, `curl`, client MySQL) ;
-  - installe les extensions PHP avec `install-php-extensions` : `pdo_mysql`, `bcmath`, `intl`, `zip`, `gd`, `exif`, `pcntl`, `opcache`, `redis` ;
+  - installe les outils système (`git`, `unzip`, `curl`, client PostgreSQL `psql`) ;
+  - installe les extensions PHP avec `install-php-extensions` : `pdo_pgsql`, `pgsql`, `bcmath`, `intl`, `zip`, `gd`, `exif`, `pcntl`, `opcache`, `redis` ;
   - copie Composer depuis l'image officielle `composer:2` ;
   - applique la configuration `docker/php/php.ini` (mémoire, taille des uploads, OPcache réglé pour le développement).
 - **Utilisateur** : l'étape `base` crée aussi un utilisateur `laravel` qui a le même UID/GID que vous (variables `UID`/`GID` du `.env`), et PHP-FPM tourne sous cet utilisateur. Les fichiers créés par Laravel ou Composer vous appartiennent donc sur votre machine (pas de fichiers `root` dans `storage/` ou `vendor/`).
 - **Étape `dev`** : ajoute Xdebug et sa configuration `docker/php/xdebug.ini`. Xdebug est inactif tant que `XDEBUG_MODE=off`.
 - **Démarrage** : lance `php-fpm`, qui écoute sur le port 9000 du réseau interne. Ce port n'est pas exposé sur votre machine : seul `nginx` lui parle.
-- **Dépendances** : attend que `mysql` et `redis` soient *healthy* avant de démarrer.
+- **Dépendances** : attend que `postgres` et `redis` soient *healthy* avant de démarrer.
 
 #### `queue` et `scheduler` — workers Laravel
 
@@ -89,13 +87,13 @@ Le code du projet est monté dans les conteneurs (`./` → `/var/www/html`) : un
 - **Comment Laravel trouve Vite** : Vite écrit le fichier `public/hot`. Tant que ce fichier existe, la directive `@vite` de Blade charge les assets depuis `http://localhost:5173` (port `VITE_PORT`) au lieu de `public/build`.
 - **Surveillance des fichiers** : `vite.config.js` active le polling. Sans lui, les modifications faites sur la machine ne sont pas toujours détectées à travers le volume Docker. Le dossier `vendor/` est ignoré pour économiser le CPU.
 
-#### `mysql` — base de données
+#### `postgres` — base de données
 
-- **Image** : `mysql:8.4`, utilisée telle quelle.
-- **Premier démarrage** : l'image crée automatiquement la base `DB_DATABASE`, l'utilisateur `DB_USERNAME`/`DB_PASSWORD` et le mot de passe root `DB_ROOT_PASSWORD`. Elle exécute aussi `docker/mysql/create-testing-database.sh`, qui crée la base `testing` utilisée par `php artisan test` (voir `phpunit.xml`).
-- **Données** : stockées dans le volume nommé `mysql-data`. Elles survivent à `make down` et ne sont supprimées que par `make clean`. Pour que le script d'initialisation s'exécute de nouveau, il faut supprimer ce volume.
-- **Healthcheck** : `mysqladmin ping`. C'est lui qui détermine quand les conteneurs PHP peuvent démarrer.
-- **Accès** : port `FORWARD_DB_PORT` (3306 par défaut) exposé pour s'y connecter avec un client graphique (DBeaver, TablePlus…).
+- **Image** : `postgres:16`, utilisée telle quelle.
+- **Premier démarrage** : l'image crée automatiquement la base `DB_DATABASE` et l'utilisateur `DB_USERNAME`/`DB_PASSWORD`, qui en est propriétaire. Elle exécute aussi `docker/postgres/create-testing-database.sh`, qui crée la base `testing` utilisée par `php artisan test` (voir `phpunit.xml`).
+- **Données** : stockées dans le volume nommé `postgres-data`. Elles survivent à `make down` et ne sont supprimées que par `make clean`. Pour que le script d'initialisation s'exécute de nouveau, il faut supprimer ce volume.
+- **Healthcheck** : `pg_isready`. C'est lui qui détermine quand les conteneurs PHP peuvent démarrer.
+- **Accès** : port `FORWARD_DB_PORT` (5435 par défaut, pour ne pas entrer en conflit avec un PostgreSQL installé sur la machine) exposé pour s'y connecter avec un client graphique (DBeaver, pgAdmin, TablePlus…).
 
 #### `redis` — cache, sessions et files d'attente
 
@@ -118,7 +116,7 @@ compose.yaml                         # définition des services
 docker/php/Dockerfile                # image PHP (cible "dev" avec Xdebug)
 docker/php/php.ini, xdebug.ini
 docker/nginx/default.conf
-docker/mysql/create-testing-database.sh
+docker/postgres/create-testing-database.sh
 Makefile
 ```
 
@@ -228,6 +226,7 @@ Les tests placés dans `modules/*/Tests`, `tests/Feature` et `tests/Unit` sont l
 - **Aucun texte en dur** : tout texte affiché passe par une clé de traduction (voir [Traductions](#traductions)).
 - **Commentaires** : le code doit se comprendre sans commentaires, grâce à des noms explicites et des fonctions courtes.
 - **Dépendances entre modules** : un module ne dépend que du socle `app/`, jamais d'un autre module. Ce qui doit être partagé remonte dans `app/` (code PHP) ou dans `resources/views/components/ui/` (composants d'interface). Les liens vers un autre module passent par des helpers qui vérifient que la route existe (`VesselLink`, recherche transversale). Seule exception assumée : le layout utilise la route `logout` du module `Auth`.
+- **Recherche textuelle** : utiliser `whereLike()` / `orWhereLike()`, qui génèrent un `ILIKE` insensible à la casse sous PostgreSQL (un `where(..., 'like', ...)` y serait sensible à la casse).
 - **Règles métier paramétrables** : seuils et listes dans `config/surveillance.php`, jamais en dur dans le code.
 
 ## Domaine et modules

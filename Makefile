@@ -61,13 +61,10 @@ test: ## Run the test suite
 tinker: ## Open Tinker
 	$(APP) php artisan tinker
 
-db: ## Open a MySQL client
-	$(DC) exec mysql sh -c 'mysql -u"$$MYSQL_USER" -p"$$MYSQL_PASSWORD" "$$MYSQL_DATABASE"'
-
-pma: ## Start phpMyAdmin (http://localhost:8080)
-	$(DC) --profile tools up -d phpmyadmin
+db: ## Open a PostgreSQL client
+	$(DC) exec postgres sh -c 'psql -U "$$POSTGRES_USER" "$$POSTGRES_DB"'
 
 clean: ## Remove containers AND volumes (data is lost!)
-	$(DC) --profile tools down -v
+	$(DC) down -v
 
-.PHONY: help setup up down restart build logs ps shell artisan composer npm assets migrate fresh test tinker db pma clean
+.PHONY: help setup up down restart build logs ps shell artisan composer npm assets migrate fresh test tinker db clean
