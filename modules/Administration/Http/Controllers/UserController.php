@@ -24,8 +24,8 @@ class UserController extends Controller
         $users = User::query()
             ->with(['team', 'roles'])
             ->when($search, fn (Builder $query) => $query->where(fn (Builder $query) => $query
-                ->where('name', 'like', "%{$search}%")
-                ->orWhere('email', 'like', "%{$search}%")))
+                ->whereLike('name', "%{$search}%")
+                ->orWhereLike('email', "%{$search}%")))
             ->orderBy('name')
             ->paginate(self::PER_PAGE)
             ->withQueryString();

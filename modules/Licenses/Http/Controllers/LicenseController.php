@@ -28,7 +28,7 @@ class LicenseController extends Controller
             ->withStatus(LicenseStatus::tryFrom($filters['status'] ?? ''))
             ->when($filters['type'] ?? null, fn (Builder $query, string $type) => $query->where('type', $type))
             ->when($filters['search'] ?? null, fn (Builder $query, string $search) => $query->where(fn (Builder $query) => $query
-                ->where('number', 'like', "%{$search}%")
+                ->whereLike('number', "%{$search}%")
                 ->orWhereHas('vessel', fn (Builder $query) => $query->search($search))))
             ->orderByDesc('valid_until')
             ->paginate(self::PER_PAGE)

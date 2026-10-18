@@ -34,7 +34,7 @@ class InfractionController extends Controller
             ->when($filters['from'] ?? null, fn (Builder $query, string $from) => $query->whereDate('detected_at', '>=', $from))
             ->when($filters['to'] ?? null, fn (Builder $query, string $to) => $query->whereDate('detected_at', '<=', $to))
             ->when($filters['search'] ?? null, fn (Builder $query, string $search) => $query->where(fn (Builder $query) => $query
-                ->where('reference', 'like', "%{$search}%")
+                ->whereLike('reference', "%{$search}%")
                 ->orWhereHas('vessel', fn (Builder $query) => $query->search($search))))
             ->latest('detected_at')
             ->paginate(self::PER_PAGE)

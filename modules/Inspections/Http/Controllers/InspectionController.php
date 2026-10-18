@@ -32,7 +32,7 @@ class InspectionController extends Controller
             ->when($filters['from'] ?? null, fn (Builder $query, string $from) => $query->whereDate('inspected_at', '>=', $from))
             ->when($filters['to'] ?? null, fn (Builder $query, string $to) => $query->whereDate('inspected_at', '<=', $to))
             ->when($filters['search'] ?? null, fn (Builder $query, string $search) => $query->where(fn (Builder $query) => $query
-                ->where('external_reference', 'like', "%{$search}%")
+                ->whereLike('external_reference', "%{$search}%")
                 ->orWhereHas('vessel', fn (Builder $query) => $query->search($search))))
             ->latest('inspected_at')
             ->paginate(self::PER_PAGE)

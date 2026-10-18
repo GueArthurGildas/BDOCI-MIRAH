@@ -55,10 +55,10 @@ class Vessel extends Model
     public function scopeSearch(Builder $query, ?string $term): void
     {
         $query->when($term, fn (Builder $query) => $query->where(fn (Builder $query) => $query
-            ->where('name', 'like', "%{$term}%")
-            ->orWhere('registration_number', 'like', "%{$term}%")
-            ->orWhere('imo_number', 'like', "%{$term}%")
-            ->orWhere('call_sign', 'like', "%{$term}%")));
+            ->whereLike('name', "%{$term}%")
+            ->orWhereLike('registration_number', "%{$term}%")
+            ->orWhereLike('imo_number', "%{$term}%")
+            ->orWhereLike('call_sign', "%{$term}%")));
     }
 
     public function licenses(): HasMany

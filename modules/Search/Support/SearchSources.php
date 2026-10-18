@@ -34,27 +34,27 @@ final class SearchSources
                 ->map(fn (Vessel $vessel) => new SearchResult($vessel->name, $vessel->registration_number, self::url('vessels.show', $vessel)))),
 
             new SearchSource('licenses', 'icon-file-text', Permission::LicensesView->value, fn (string $term) => License::with('vessel')
-                ->where('number', 'like', "%{$term}%")
+                ->whereLike('number', "%{$term}%")
                 ->limit(self::RESULTS_PER_SOURCE)->get()
                 ->map(fn (License $license) => new SearchResult($license->number, $license->vessel->name, self::url('licenses.index', ['search' => $license->number])))),
 
             new SearchSource('inspections', 'icon-check-square', Permission::InspectionsView->value, fn (string $term) => Inspection::with('vessel')
-                ->where(fn (Builder $query) => $query->where('external_reference', 'like', "%{$term}%")->orWhereHas('vessel', fn (Builder $query) => $query->search($term)))
+                ->where(fn (Builder $query) => $query->whereLike('external_reference', "%{$term}%")->orWhereHas('vessel', fn (Builder $query) => $query->search($term)))
                 ->latest('inspected_at')->limit(self::RESULTS_PER_SOURCE)->get()
                 ->map(fn (Inspection $inspection) => new SearchResult($inspection->external_reference, $inspection->vessel->name.' — '.$inspection->inspected_at->isoFormat('L'), self::url('inspections.show', $inspection)))),
 
             new SearchSource('infractions', 'icon-alert-triangle', Permission::InfractionsView->value, fn (string $term) => Infraction::with(['vessel', 'type'])
-                ->where(fn (Builder $query) => $query->where('reference', 'like', "%{$term}%")->orWhereHas('vessel', fn (Builder $query) => $query->search($term)))
+                ->where(fn (Builder $query) => $query->whereLike('reference', "%{$term}%")->orWhereHas('vessel', fn (Builder $query) => $query->search($term)))
                 ->latest('detected_at')->limit(self::RESULTS_PER_SOURCE)->get()
                 ->map(fn (Infraction $infraction) => new SearchResult($infraction->reference, $infraction->vessel->name.' — '.$infraction->type->name, self::url('infractions.show', $infraction)))),
 
             new SearchSource('missions', 'icon-flag', Permission::MissionsView->value, fn (string $term) => Mission::query()
-                ->where(fn (Builder $query) => $query->where('reference', 'like', "%{$term}%")->orWhere('objective', 'like', "%{$term}%"))
+                ->where(fn (Builder $query) => $query->whereLike('reference', "%{$term}%")->orWhereLike('objective', "%{$term}%"))
                 ->latest('starts_at')->limit(self::RESULTS_PER_SOURCE)->get()
                 ->map(fn (Mission $mission) => new SearchResult($mission->reference, $mission->objective, self::url('missions.show', $mission)))),
 
             new SearchSource('observations', 'icon-book', Permission::LogbookView->value, fn (string $term) => Observation::with('vessel')
-                ->where(fn (Builder $query) => $query->where('description', 'like', "%{$term}%")->orWhereHas('vessel', fn (Builder $query) => $query->search($term)))
+                ->where(fn (Builder $query) => $query->whereLike('description', "%{$term}%")->orWhereHas('vessel', fn (Builder $query) => $query->search($term)))
                 ->latest('observed_at')->limit(self::RESULTS_PER_SOURCE)->get()
                 ->map(fn (Observation $observation) => new SearchResult(Str::limit($observation->description, 80), $observation->observed_at->isoFormat('L LT'), self::url('logbook.show', $observation)))),
         ]);
