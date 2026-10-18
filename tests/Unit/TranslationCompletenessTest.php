@@ -8,6 +8,8 @@ use PHPUnit\Framework\TestCase;
 
 class TranslationCompletenessTest extends TestCase
 {
+    private const SHARED_APPLICATION_FILES = ['ui.php', 'enums.php'];
+
     #[DataProvider('translationGroups')]
     public function test_every_locale_defines_the_same_keys(string $directory, string $file): void
     {
@@ -30,7 +32,7 @@ class TranslationCompletenessTest extends TestCase
             foreach (glob("{$directory}/en/*.php") as $path) {
                 $file = basename($path);
 
-                if ($directory === $root.'/lang' && $file !== 'ui.php') {
+                if ($directory === $root.'/lang' && ! in_array($file, self::SHARED_APPLICATION_FILES, true)) {
                     continue;
                 }
 

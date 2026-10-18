@@ -20,10 +20,12 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
-        $this->call(RolesAndPermissionsSeeder::class);
+        $this->call([RolesAndPermissionsSeeder::class, ReferenceDataSeeder::class]);
 
         foreach (self::DEMO_USERS as $email => $role) {
             User::factory()->create(['email' => $email])->assignRole($role->value);
         }
+
+        $this->call(DemoDataSeeder::class);
     }
 }
