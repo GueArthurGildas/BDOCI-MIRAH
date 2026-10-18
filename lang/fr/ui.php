@@ -24,6 +24,7 @@ return [
     'all' => 'Tous',
     'yes' => 'Oui',
     'no' => 'Non',
+    'account_deactivated' => 'Votre compte a été désactivé. Contactez un administrateur.',
     'saved' => 'Modifications enregistrées.',
     'updated_at' => 'Mis à jour à :time',
 

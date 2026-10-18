@@ -24,6 +24,7 @@ return [
     'all' => 'All',
     'yes' => 'Yes',
     'no' => 'No',
+    'account_deactivated' => 'Your account has been deactivated. Contact an administrator.',
     'saved' => 'Changes saved.',
     'updated_at' => 'Updated at :time',
 

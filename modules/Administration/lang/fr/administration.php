@@ -1,0 +1,126 @@
+<?php
+
+return [
+    'users' => [
+        'title' => 'Utilisateurs',
+        'subtitle' => 'Comptes, rôles et accès',
+        'list_title' => 'Comptes utilisateurs',
+        'create_title' => 'Nouvel utilisateur',
+        'edit_title' => 'Modifier l\'utilisateur',
+        'new' => 'Nouvel utilisateur',
+        'created' => 'L\'utilisateur a été créé.',
+        'updated' => 'L\'utilisateur a été mis à jour.',
+        'active' => 'Actif',
+        'inactive' => 'Désactivé',
+        'password_hint' => 'Laisser vide pour conserver le mot de passe actuel.',
+        'cannot_deactivate_self' => 'Vous ne pouvez pas désactiver votre propre compte.',
+        'search_placeholder' => 'Nom ou e-mail…',
+        'fields' => [
+            'name' => 'Nom',
+            'email' => 'E-mail',
+            'team' => 'Équipe',
+            'role' => 'Rôle',
+            'is_active' => 'Compte actif',
+            'password' => 'Mot de passe',
+            'password_confirmation' => 'Confirmation du mot de passe',
+            'status' => 'Statut',
+        ],
+    ],
+    'roles' => [
+        'title' => 'Rôles et permissions',
+        'subtitle' => 'Permissions accordées à chaque rôle, par module et par action',
+        'permission' => 'Permission',
+    ],
+    'permissions' => [
+        'dashboard' => [
+            'view' => 'Consulter le tableau de bord',
+        ],
+        'vessels' => [
+            'view' => 'Consulter les navires',
+            'manage' => 'Gérer les navires',
+        ],
+        'licenses' => [
+            'view' => 'Consulter les licences',
+            'manage' => 'Gérer les licences',
+        ],
+        'tracking' => [
+            'view' => 'Consulter le suivi des positions',
+        ],
+        'logbook' => [
+            'view' => 'Consulter la main courante',
+            'create' => 'Saisir des observations',
+            'manage' => 'Suivre les observations',
+        ],
+        'movements' => [
+            'view' => 'Consulter les mouvements',
+            'create' => 'Saisir des mouvements',
+        ],
+        'inspections' => [
+            'view' => 'Consulter les inspections',
+        ],
+        'infractions' => [
+            'view' => 'Consulter les infractions',
+            'manage' => 'Gérer les infractions',
+        ],
+        'catches' => [
+            'view' => 'Consulter les captures',
+        ],
+        'missions' => [
+            'view' => 'Consulter les missions',
+            'manage' => 'Gérer les missions',
+        ],
+        'users' => [
+            'manage' => 'Gérer les utilisateurs',
+        ],
+        'connectors' => [
+            'view' => 'Consulter les connecteurs',
+        ],
+        'audit' => [
+            'view' => 'Consulter le journal d\'audit',
+        ],
+    ],
+    'connectors' => [
+        'title' => 'Connecteurs',
+        'subtitle' => 'État des sources de données, dernières synchronisations, erreurs et rejets',
+        'kind' => 'Nature',
+        'last_synced_at' => 'Dernière synchronisation',
+        'errors' => 'Erreurs',
+        'rejected' => 'Enregistrements rejetés',
+        'never' => 'Jamais',
+    ],
+    'audit' => [
+        'title' => 'Journal d\'audit',
+        'subtitle' => 'Connexions, modifications et actions d\'administration',
+        'list_title' => 'Événements',
+        'date' => 'Date',
+        'user' => 'Utilisateur',
+        'event' => 'Événement',
+        'subject' => 'Élément',
+        'details' => 'Détails',
+        'from' => 'Du',
+        'to' => 'Au',
+        'changed_fields' => 'Champs modifiés : :fields',
+        'system' => 'Système',
+        'events' => [
+            'created' => 'Création',
+            'updated' => 'Modification',
+            'deleted' => 'Suppression',
+            'restored' => 'Restauration',
+            'login' => 'Connexion',
+            'logout' => 'Déconnexion',
+            'login_failed' => 'Échec de connexion',
+            'role_changed' => 'Changement de rôle',
+        ],
+        'subjects' => [
+            'vessel' => 'Navire',
+            'license' => 'Licence',
+            'tracking_device' => 'Balise',
+            'movement' => 'Mouvement',
+            'observation' => 'Observation',
+            'inspection' => 'Inspection',
+            'infraction' => 'Infraction',
+            'mission' => 'Mission',
+            'user' => 'Utilisateur',
+        ],
+    ],
+];

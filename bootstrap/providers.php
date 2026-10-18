@@ -1,6 +1,7 @@
 <?php
 
 use App\Providers\AppServiceProvider;
+use Modules\Administration\Providers\AdministrationServiceProvider;
 use Modules\Auth\Providers\AuthServiceProvider;
 use Modules\Catches\Providers\CatchesServiceProvider;
 use Modules\Dashboard\Providers\DashboardServiceProvider;
@@ -16,6 +17,7 @@ use Modules\Vessels\Providers\VesselsServiceProvider;
 
 return [
     AppServiceProvider::class,
+    AdministrationServiceProvider::class,
     AuthServiceProvider::class,
     CatchesServiceProvider::class,
     DashboardServiceProvider::class,

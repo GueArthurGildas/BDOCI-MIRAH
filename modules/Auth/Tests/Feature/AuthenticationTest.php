@@ -37,6 +37,16 @@ class AuthenticationTest extends TestCase
         $this->assertGuest();
     }
 
+    public function test_deactivated_users_cannot_authenticate(): void
+    {
+        $user = User::factory()->create(['is_active' => false]);
+
+        $this->post('/login', ['email' => $user->email, 'password' => 'password'])
+            ->assertSessionHasErrors('email');
+
+        $this->assertGuest();
+    }
+
     public function test_login_is_throttled_after_too_many_attempts(): void
     {
         $user = User::factory()->create();

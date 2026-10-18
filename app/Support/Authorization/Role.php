@@ -14,6 +14,14 @@ enum Role: string
         return "ui.roles.{$this->value}";
     }
 
+    /** @return array<string, string> */
+    public static function options(): array
+    {
+        return collect(self::cases())
+            ->mapWithKeys(fn (self $role) => [$role->value => __($role->label())])
+            ->all();
+    }
+
     /** @return array<int, Permission> */
     public function permissions(): array
     {
