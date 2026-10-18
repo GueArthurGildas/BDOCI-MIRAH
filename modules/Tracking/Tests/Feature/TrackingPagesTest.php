@@ -1,0 +1,68 @@
+<?php
+
+namespace Modules\Tracking\Tests\Feature;
+
+use App\Enums\BeaconStatus;
+use App\Models\Position;
+use App\Models\TrackingDevice;
+use App\Models\Vessel;
+use App\Models\Zone;
+use App\Support\Authorization\Role;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+
+class TrackingPagesTest extends TestCase
+{
+    use RefreshDatabase;
+
+    public function test_inspectors_cannot_access_tracking(): void
+    {
+        $this->signInAs(Role::Inspector);
+
+        $this->get('/tracking/map')->assertForbidden();
+    }
+
+    public function test_map_shows_the_last_position_of_each_vessel(): void
+    {
+        $this->signInAs(Role::SurveillanceAgent);
+        $vessel = Vessel::factory()->create(['name' => 'TIAGBA 9']);
+        Position::factory()->for($vessel)->create(['recorded_at' => now()->subHours(3)]);
+        Position::factory()->for($vessel)->create(['recorded_at' => now()->subMinutes(10)]);
+
+        $this->get('/tracking/map')
+            ->assertOk()
+            ->assertViewHas('positionsCount', 1)
+            ->assertSee('TIAGBA 9');
+    }
+
+    public function test_zone_situation_counts_vessels_present_at_a_given_time(): void
+    {
+        $this->signInAs(Role::SurveillanceAgent);
+        $abidjan = Zone::factory()->create(['name' => 'Abidjan']);
+        $sanPedro = Zone::factory()->create(['name' => 'San Pedro']);
+        $vessel = Vessel::factory()->create();
+        Position::factory()->for($vessel)->create(['zone_id' => $sanPedro->id, 'recorded_at' => now()->subDays(2)]);
+        Position::factory()->for($vessel)->create(['zone_id' => $abidjan->id, 'recorded_at' => now()->subMinutes(5)]);
+
+        $this->get('/tracking/zones')
+            ->assertOk()
+            ->assertViewHas('vesselCountByZone', fn ($counts) => $counts->get($abidjan->id) === 1 && ! $counts->has($sanPedro->id));
+
+        $this->get('/tracking/zones?at='.now()->subDays(2)->addMinute()->format('Y-m-d H:i'))
+            ->assertViewHas('vesselCountByZone', fn ($counts) => $counts->get($sanPedro->id) === 1 && ! $counts->has($abidjan->id));
+    }
+
+    public function test_silent_beacons_are_detected(): void
+    {
+        $this->signInAs(Role::SurveillanceAgent);
+        $silent = TrackingDevice::factory()->create();
+        Position::factory()->for($silent->vessel)->create(['recorded_at' => now()->subHours(10)]);
+        $emitting = TrackingDevice::factory()->create();
+        Position::factory()->for($emitting->vessel)->create(['recorded_at' => now()->subMinutes(10)]);
+
+        $this->get('/tracking/beacons?status='.BeaconStatus::Silent->value)
+            ->assertOk()
+            ->assertSee($silent->identifier)
+            ->assertDontSee($emitting->identifier);
+    }
+}

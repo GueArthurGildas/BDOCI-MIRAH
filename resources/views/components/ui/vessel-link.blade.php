@@ -1,7 +1,9 @@
 @props(['vessel'])
 
-@if (Route::has('vessels.show') && auth()->user()?->can(App\Support\Authorization\Permission::VesselsView->value))
-    <a href="{{ route('vessels.show', $vessel) }}" {{ $attributes }}>{{ $vessel->name }}</a>
+@php($url = App\Support\Presentation\VesselLink::url($vessel))
+
+@if ($url)
+    <a href="{{ $url }}" {{ $attributes }}>{{ $vessel->name }}</a>
 @else
     <span {{ $attributes }}>{{ $vessel->name }}</span>
 @endif

@@ -15,6 +15,17 @@ function addZones(map, zones) {
     });
 }
 
+function popupContent(marker) {
+    const element = document.createElement(marker.url ? 'a' : 'span');
+    element.textContent = marker.label;
+
+    if (marker.url) {
+        element.href = marker.url;
+    }
+
+    return element;
+}
+
 function addMarkers(map, markers) {
     return markers.map((marker) =>
         L.circleMarker([marker.latitude, marker.longitude], {
@@ -24,7 +35,7 @@ function addMarkers(map, markers) {
             fillColor: marker.color ?? '#01a9ac',
             fillOpacity: 0.9,
         })
-            .bindPopup(marker.url ? `<a href="${marker.url}">${marker.label}</a>` : marker.label)
+            .bindPopup(popupContent(marker))
             .addTo(map),
     );
 }
