@@ -3,7 +3,7 @@
         @csrf
 
         <div class="text-center">
-            <img src="{{ Vite::asset('resources/images/logo.png') }}" alt="{{ config('app.name') }}">
+            <img class="login-logo" src="{{ Vite::asset('resources/images/logo.png') }}" alt="{{ config('app.name') }}">
         </div>
 
         <div class="auth-box card">
@@ -60,7 +60,7 @@
                         <p class="text-inverse text-start"><b class="f-w-600">{{ config('app.name') }}</b></p>
                     </div>
                     <div class="col-md-2">
-                        <img src="{{ Vite::asset('resources/images/auth/Logo-small-bottom.png') }}" alt="{{ config('app.name') }}">
+                        <img class="login-logo-small" src="{{ Vite::asset('resources/images/logo.png') }}" alt="{{ config('app.name') }}">
                     </div>
                 </div>
             </div>
