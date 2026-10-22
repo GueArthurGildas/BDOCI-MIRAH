@@ -5,10 +5,10 @@
 //  ici uniquement (une seule source de vérité).
 // ============================================================
 :root {
-    --gs-orange: #f7841a;
-    --gs-orange-600: #e56a08;
-    --gs-orange-300: #ffa63f;
-    --gs-orange-100: #fff0dd;
+    --gs-orange: #ef5f00;
+    --gs-orange-600: #c94a00;
+    --gs-orange-300: #ff7a1a;
+    --gs-orange-100: #ffe6d2;
     --gs-black: #15171f;
     --gs-ink: #1d2030;
     --gs-ink-2: #2c3045;
@@ -42,9 +42,9 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--gs-font-title); color: var(--gs-ink)
     position: sticky; top: 0; z-index: 1030;
     display: flex; align-items: flex-end; justify-content: space-between; gap: 12px;
     padding: 8px 16px 0;
-    background: linear-gradient(90deg, #f06d00 0%, #f7841a 45%, #ffa63f 100%);
+    background: linear-gradient(90deg, var(--gs-orange-600) 0%, var(--gs-orange) 50%, var(--gs-orange-300) 100%);
     border-bottom: 4px solid var(--gs-black);
-    box-shadow: 0 6px 18px rgba(229, 106, 8, .45);
+    box-shadow: 0 6px 18px rgba(201, 74, 0, .45);
 
     .gs-tabs {
         display: flex; gap: 6px; margin: 0; padding: 0; list-style: none;
@@ -126,7 +126,7 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--gs-font-title); color: var(--gs-ink)
 }
 .gs-menu li.active a {
     background: linear-gradient(90deg, var(--gs-orange-600), var(--gs-orange-300));
-    color: #fff; box-shadow: 0 8px 20px rgba(229, 106, 8, .5);
+    color: #fff; box-shadow: 0 8px 20px rgba(201, 74, 0, .5);
     &::before { background: var(--gs-orange); }
     .gs-ico { color: #fff; }
     .gs-badge { background: #fff; color: var(--gs-orange-600); }
@@ -160,7 +160,7 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--gs-font-title); color: var(--gs-ink)
         float: left; width: 50px; height: 50px; margin-right: 16px; border-radius: 14px; font-size: 1.5rem;
         display: flex; align-items: center; justify-content: center; color: #fff;
         background: linear-gradient(135deg, var(--gs-orange-600), var(--gs-orange-300));
-        box-shadow: 0 6px 16px rgba(247, 132, 26, .55);
+        box-shadow: 0 6px 16px rgba(239, 95, 0, .55);
     }
     .page-header-title { display: block; }
     .page-header-title h4 { color: #fff; margin: 0; font-weight: 700; font-size: 1.35rem; text-transform: none; }
