@@ -1,9 +1,10 @@
-@props(['title', 'subtitle' => null, 'breadcrumbs' => []])
+@props(['title', 'subtitle' => null, 'breadcrumbs' => [], 'icon' => 'icon-bar-chart-2'])
 
 <div class="page-header">
-    <div class="row align-items-end">
+    <div class="row align-items-center">
         <div class="col-lg-8">
             <div class="page-header-title">
+                <span class="gs-page-icon"><i class="feather {{ $icon }}"></i></span>
                 <div class="d-inline">
                     <h4>{{ $title }}</h4>
                     @if ($subtitle)

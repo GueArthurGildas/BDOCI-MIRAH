@@ -1,5 +1,5 @@
 {{-- Barre orange supérieure : un onglet par groupe de navigation (Dashboard, Administration, ...) --}}
-<header class="gs-topbar">
+<div class="gs-topbar" role="banner">
     <ul class="gs-tabs">
         @foreach ($groups as $groupLabel => $items)
             @php($first = collect($items)->first())
@@ -35,4 +35,4 @@
             </ul>
         </div>
     </div>
-</header>
+</div>
