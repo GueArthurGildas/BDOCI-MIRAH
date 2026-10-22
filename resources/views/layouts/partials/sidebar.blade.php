@@ -5,8 +5,6 @@
         <span title="{{ auth()->user()->name }}">{{ auth()->user()->name }}</span>
     </div>
 
-    -- myTest ici --
-
     <ul class="gs-menu">
         @foreach ($groups[$activeKey] ?? [] as $item)
             <li @class(['active' => $item->isActive()])>
