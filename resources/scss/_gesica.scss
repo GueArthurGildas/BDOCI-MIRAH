@@ -5,15 +5,13 @@
 //  ici uniquement (une seule source de vérité).
 // ============================================================
 :root {
-    --gs-orange: #ef5f00;
-    --gs-orange-600: #c94a00;
-    --gs-orange-300: #ff7a1a;
-    --gs-orange-100: #ffe6d2;
-    --gs-orange-soft: #f7a85c;      // fond de l'en-tête (orange doux)
-    --gs-orange-soft-2: #fbc58a;
-    --gs-black: #07080d;
-    --gs-ink: #0f111a;
-    --gs-ink-2: #23263a;
+    --gs-orange: #f7841a;
+    --gs-orange-600: #e56a08;
+    --gs-orange-300: #ffa63f;
+    --gs-orange-100: #fff0dd;
+    --gs-black: #15171f;
+    --gs-ink: #1d2030;
+    --gs-ink-2: #2c3045;
     --gs-bg: #e5e9f8;
     --gs-surface: #ffffff;
     --gs-line: #d3d9ee;
@@ -44,9 +42,9 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--gs-font-title); color: var(--gs-ink)
     position: sticky; top: 0; z-index: 1030;
     display: flex; align-items: flex-end; justify-content: space-between; gap: 12px;
     padding: 8px 16px 0;
-    background: linear-gradient(90deg, var(--gs-orange-soft) 0%, var(--gs-orange-soft-2) 100%);
+    background: linear-gradient(90deg, #f06d00 0%, #f7841a 45%, #ffa63f 100%);
     border-bottom: 4px solid var(--gs-black);
-    box-shadow: 0 6px 18px rgba(201, 74, 0, .28);
+    box-shadow: 0 6px 18px rgba(229, 106, 8, .45);
 
     .gs-tabs {
         display: flex; gap: 6px; margin: 0; padding: 0; list-style: none;
@@ -57,20 +55,20 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--gs-font-title); color: var(--gs-ink)
         display: flex; align-items: center; gap: 8px; white-space: nowrap;
         padding: 9px 18px; border-radius: 12px 12px 0 0;
         font: 600 .9rem var(--gs-font-title); color: #fff; text-decoration: none;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, .3);
-        background: linear-gradient(180deg, var(--gs-orange), var(--gs-orange-600));
+        text-shadow: 0 1px 2px rgba(0, 0, 0, .25);
+        background: rgba(0, 0, 0, .14);
         transition: background .15s, color .15s;
-        &:hover { background: var(--gs-orange-600); }
+        &:hover { background: rgba(0, 0, 0, .28); }
     }
     .gs-tab.active a {
-        background: #fff; color: var(--gs-orange-600); border-bottom: 4px solid var(--gs-orange); text-shadow: none; font-weight: 700;
+        background: var(--gs-black); color: #fff; border-bottom: 3px solid var(--gs-orange-300); text-shadow: none;
         box-shadow: 0 -4px 10px rgba(0, 0, 0, .18);
     }
     .gs-tab i { font-size: 1rem; }
 
     .gs-topbar-right {
-        display: flex; align-items: center; gap: 10px; padding-bottom: 8px; color: var(--gs-black);
-        .dropdown-toggle, a { color: var(--gs-black); cursor: pointer; text-decoration: none; }
+        display: flex; align-items: center; gap: 10px; padding-bottom: 8px; color: #fff;
+        .dropdown-toggle, a { color: #fff; cursor: pointer; text-decoration: none; }
         .img-radius { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 6px; }
         .gs-demandes {
             background: rgba(255, 255, 255, .92); color: var(--gs-ink) !important;
@@ -127,8 +125,8 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--gs-font-title); color: var(--gs-ink)
     }
 }
 .gs-menu li.active a {
-    background: linear-gradient(90deg, #a83c00, var(--gs-orange-600) 45%, var(--gs-orange));
-    color: #fff; box-shadow: 0 8px 20px rgba(201, 74, 0, .5);
+    background: linear-gradient(90deg, var(--gs-orange-600), var(--gs-orange-300));
+    color: #fff; box-shadow: 0 8px 20px rgba(229, 106, 8, .5);
     &::before { background: var(--gs-orange); }
     .gs-ico { color: #fff; }
     .gs-badge { background: #fff; color: var(--gs-orange-600); }
@@ -162,7 +160,7 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--gs-font-title); color: var(--gs-ink)
         float: left; width: 50px; height: 50px; margin-right: 16px; border-radius: 14px; font-size: 1.5rem;
         display: flex; align-items: center; justify-content: center; color: #fff;
         background: linear-gradient(135deg, var(--gs-orange-600), var(--gs-orange-300));
-        box-shadow: 0 6px 16px rgba(239, 95, 0, .55);
+        box-shadow: 0 6px 16px rgba(247, 132, 26, .55);
     }
     .page-header-title { display: block; }
     .page-header-title h4 { color: #fff; margin: 0; font-weight: 700; font-size: 1.35rem; text-transform: none; }
