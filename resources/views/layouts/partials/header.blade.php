@@ -13,6 +13,12 @@
     </ul>
 
     <div class="gs-topbar-right">
+        {{-- Balise d'alerte : point rouge qui s'allume / s'éteint + compteur (démo : alertes simulées) --}}
+        <a href="#!" class="gs-beacon" data-alert-beacon title="{{ __('ui.alerts') }}">
+            <i class="feather icon-bell"></i>
+            <span class="gs-beacon-dot"></span>
+            <span class="gs-beacon-count" data-alert-count>0</span>
+        </a>
         @if (Route::has('search'))
             <a href="{{ route('search') }}" title="{{ __('ui.search') }}"><i class="feather icon-search"></i></a>
         @endif

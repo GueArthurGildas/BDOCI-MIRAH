@@ -339,3 +339,44 @@ a { color: var(--gs-orange-600); }
 
 // --- Champs : focus bleu discret (l'orange reste pour les actions) ---
 .form-control:focus, .form-select:focus { border-color: var(--gs-blue); box-shadow: 0 0 0 .2rem rgba(31, 143, 224, .22); }
+
+// ============================================================
+//  Balise d'alerte clignotante + notifications (toasts) en haut à droite
+// ============================================================
+.gs-beacon { position: relative; display: inline-flex; align-items: center; padding: 4px 6px; color: var(--gs-black) !important; font-size: 1.15rem; }
+.gs-beacon-dot {                       // point rouge qui s'allume et s'éteint
+    position: absolute; top: 0; left: 20px; width: 12px; height: 12px; border-radius: 50%;
+    background: var(--gs-red); border: 2px solid #fff;
+    animation: gs-blink 1s steps(1, end) infinite;   // 1 s allumé / 1 s éteint
+}
+.gs-beacon-count {
+    margin-left: 6px; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 11px;
+    background: var(--gs-black); color: #fff; font: 700 .72rem var(--gs-font-title);
+    display: inline-flex; align-items: center; justify-content: center;
+}
+.gs-beacon.has-alerts .gs-beacon-count { background: var(--gs-red); }
+.gs-beacon:not(.has-alerts) .gs-beacon-dot { animation: none; background: var(--gs-green); }  // calme = vert fixe
+
+@keyframes gs-blink {
+    0%, 49%   { opacity: 1; box-shadow: 0 0 0 4px rgba(224, 36, 63, .35); }
+    50%, 100% { opacity: .15; box-shadow: none; }
+}
+
+.gs-toasts { position: fixed; top: 70px; right: 18px; z-index: 2000; display: flex; flex-direction: column; gap: 10px; width: 340px; max-width: calc(100vw - 36px); }
+.gs-toast {
+    display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; border-radius: 14px;
+    background: var(--gs-black); color: #fff; border-left: 6px solid var(--gs-orange);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, .35); animation: gs-toast-in .35s ease-out;
+    &.is-danger  { border-left-color: var(--gs-red);    .gs-toast-icon { background: var(--gs-red); } }
+    &.is-warning { border-left-color: var(--gs-orange); .gs-toast-icon { background: var(--gs-orange); } }
+    &.is-info    { border-left-color: var(--gs-blue);   .gs-toast-icon { background: var(--gs-blue); } }
+    &.is-success { border-left-color: var(--gs-green);  .gs-toast-icon { background: var(--gs-green); } }
+    &.is-leaving { opacity: 0; transform: translateX(30px); transition: all .3s; }
+}
+.gs-toast-icon { flex: 0 0 34px; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.gs-toast-body { flex: 1 1 auto; strong { display: block; font: 700 .85rem var(--gs-font-title); } span { font-size: .8rem; color: #d7dbeb; } }
+.gs-toast-close { background: transparent; border: 0; color: #9aa1bb; cursor: pointer; padding: 0; &:hover { color: #fff; } }
+
+@keyframes gs-toast-in { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+
+@media (prefers-reduced-motion: reduce) { .gs-beacon-dot { animation: none; } .gs-toast { animation: none; } }

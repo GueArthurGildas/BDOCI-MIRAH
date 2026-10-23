@@ -1,3 +1,4 @@
+import { initAlertsDemo } from './alerts-demo';
 import { initAutoSubmit } from './auto-submit';
 import { initCardActions } from './card-actions';
 import { initFullScreenToggle } from './fullscreen';
@@ -13,5 +14,6 @@ export function initLayout() {
     initFullScreenToggle();
     initHeaderSearch();
     initTooltips();
+    initAlertsDemo();
     hidePreloader();
 }
