@@ -274,3 +274,68 @@ a { color: var(--gs-orange-600); }
     a { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 999px; background: #fff; color: var(--gs-ink); font: 600 .8rem var(--gs-font-title); box-shadow: var(--gs-shadow-sm); text-decoration: none; }
     .active a { background: linear-gradient(90deg, var(--gs-orange-600), var(--gs-orange-300)); color: #fff; }
     .count { background: var(--gs-black); color: #fff; border-radius: 999px; padding: 1px 8px; font-size: .7rem; } }
+
+// ============================================================
+//  Touches de VERT et de BLEU pour faire vivre l'interface
+//  (l'orange reste la couleur de marque, le noir la structure)
+// ============================================================
+
+// --- Onglets du haut : pastille d'icône colorée ---
+.gs-tab i {
+    width: 24px; height: 24px; border-radius: 50%; background: #fff; font-size: .78rem;
+    display: inline-flex; align-items: center; justify-content: center; text-shadow: none;
+    color: var(--gs-orange-600);
+}
+.gs-tab:nth-child(4n+2) i { color: var(--gs-green); }
+.gs-tab:nth-child(4n+3) i { color: var(--gs-blue); }
+.gs-tab:nth-child(4n+4) i { color: var(--gs-black); }
+
+// --- Menu de gauche : liseré + icône en alternance orange / vert / bleu ---
+.gs-menu li:nth-child(3n+2):not(.active) a { &::before { background: var(--gs-green); } .gs-ico { color: var(--gs-green); } }
+.gs-menu li:nth-child(3n):not(.active) a   { &::before { background: var(--gs-blue); }  .gs-ico { color: var(--gs-blue); } }
+.gs-menu li:nth-child(3n+2):not(.active) .gs-badge { background: var(--gs-green); }
+.gs-menu li:nth-child(3n):not(.active) .gs-badge   { background: var(--gs-blue); }
+
+// --- Cartes de statistiques : liseré de la couleur de l'icône ---
+.gs-stat.is-success::before { background: var(--gs-green); }
+.gs-stat.is-info::before    { background: var(--gs-blue); }
+.gs-stat.is-danger::before  { background: var(--gs-red); }
+.gs-stat.is-warning::before { background: var(--gs-orange); }
+
+// --- Variantes d'en-tête de carte : <x-ui.card class="is-green"> ---
+.card.is-green > .card-header { background: var(--gs-green); border-bottom-color: var(--gs-black); }
+.card.is-blue  > .card-header { background: var(--gs-blue);  border-bottom-color: var(--gs-black); }
+.card.is-black > .card-header { background: var(--gs-black); border-bottom-color: var(--gs-orange); }
+
+// --- Boutons : vert (valider), bleu (infos), rouge (refuser), noir (secondaire) ---
+.btn-success { background: linear-gradient(180deg, #3bd47f, var(--gs-green)); color: #fff; &:hover { background: #0d8a42; color: #fff; } }
+.btn-info    { background: linear-gradient(180deg, #55b5f7, var(--gs-blue));  color: #fff; &:hover { background: #1873b8; color: #fff; } }
+.btn-danger  { background: linear-gradient(180deg, #f2536a, var(--gs-red));   color: #fff; &:hover { background: #b81830; color: #fff; } }
+.btn-outline-success { color: var(--gs-green); border: 2px solid var(--gs-green); background: #fff; &:hover { background: var(--gs-green); color: #fff; } }
+.btn-outline-info    { color: var(--gs-blue);  border: 2px solid var(--gs-blue);  background: #fff; &:hover { background: var(--gs-blue);  color: #fff; } }
+.btn-outline-primary { color: var(--gs-orange-600); border: 2px solid var(--gs-orange); background: #fff; &:hover { background: var(--gs-orange); color: #fff; } }
+
+.gs-actionbtn.is-green { background: var(--gs-green); }
+.gs-actionbtn.is-red   { background: var(--gs-red); }
+
+// --- Onglets en pastilles : compteurs colorés ---
+.gs-pilltabs li:nth-child(3n+2) .count { background: var(--gs-green); }
+.gs-pilltabs li:nth-child(3n) .count   { background: var(--gs-blue); }
+
+// --- Tuiles noires : icônes d'étiquette multicolores ---
+.gs-tile:nth-child(3n+2) .gs-tile-label i { color: #3bd47f; }
+.gs-tile:nth-child(3n) .gs-tile-label i   { color: #55b5f7; }
+
+// --- Pastilles d'info dans le bandeau noir : <span class="gs-chip is-green">Actives 4/4</span> ---
+.gs-chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 999px; margin-left: 8px;
+    font: 700 .74rem var(--gs-font-title); color: #fff; background: rgba(255, 255, 255, .14); border: 1px solid rgba(255, 255, 255, .25);
+    &.is-green { background: var(--gs-green); border-color: var(--gs-green); }
+    &.is-blue { background: var(--gs-blue); border-color: var(--gs-blue); }
+    &.is-orange { background: var(--gs-orange); border-color: var(--gs-orange); } }
+
+// --- Étiquettes de statut supplémentaires ---
+.label-teal { background: var(--gs-teal); }
+.label-blue { background: var(--gs-blue); }
+
+// --- Champs : focus bleu discret (l'orange reste pour les actions) ---
+.form-control:focus, .form-select:focus { border-color: var(--gs-blue); box-shadow: 0 0 0 .2rem rgba(31, 143, 224, .22); }

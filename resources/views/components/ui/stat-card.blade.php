@@ -1,7 +1,7 @@
 @props(['label', 'value', 'icon', 'color' => 'warning', 'footer' => null])
 
 <div class="card">
-    <div class="gs-stat">
+    <div class="gs-stat is-{{ $color }}">
         <div class="gs-stat-icon is-{{ $color }}"><i class="feather {{ $icon }}"></i></div>
         <div>
             <p class="gs-stat-value">{{ $value }}</p>
