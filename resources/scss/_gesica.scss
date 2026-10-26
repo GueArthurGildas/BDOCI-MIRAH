@@ -14,7 +14,9 @@
     --gs-navy-600: #0f2c57;
     --gs-side-bg: #f8f9fd;       // panneau de gauche : blanc légèrement bleuté
     --gs-side-line: #d5dbee;
-    --gs-user-bg: #e8ebf5;       // blanc légèrement sombre (zone nom utilisateur)
+    --gs-user-bg: #e8ebf5;
+    --gs-menu-text: #3a4160;     // texte des menus : ardoise, se fond dans le blanc
+    --gs-menu-icon: #8b93b0;     // icônes au repos : gris-bleu discret       // blanc légèrement sombre (zone nom utilisateur)
     --gs-ink: #1d2030;
     --gs-ink-2: #2c3045;
     --gs-bg: #e5e9f8;
@@ -108,36 +110,31 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--gs-font-title); color: var(--gs-ink)
     }
 }
 
-.gs-menu { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.gs-menu { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
 .gs-menu-label {
     font: 700 .68rem var(--gs-font-title); letter-spacing: .08em; text-transform: uppercase;
-    color: var(--gs-muted); padding: 4px 6px 0;
+    color: var(--gs-muted); padding: 6px 12px 4px;
 }
+// Menu "à plat" : ni cadre, ni ombre. Survol = voile orange très clair.
 .gs-menu li a {
-    position: relative; display: flex; align-items: center; gap: 10px;
-    padding: 11px 12px 11px 16px; border-radius: 14px;
-    background: transparent; color: var(--gs-ink); text-decoration: none;
-    font: 600 .86rem var(--gs-font-title);
-    border-bottom: 3px solid transparent;
-    transition: background .15s, box-shadow .15s;
-    &::before {            // liseré gauche vert, comme GESICA
-        content: ""; position: absolute; left: 0; top: 9px; bottom: 9px;
-        width: 4px; border-radius: 4px; background: var(--gs-black);
-    }
-    &:hover { background: #fff; box-shadow: var(--gs-shadow-sm); }
-    .gs-ico { width: 20px; text-align: center; color: var(--gs-orange-600); font-size: 1rem; }
+    position: relative; display: flex; align-items: center; gap: 12px;
+    padding: 10px 12px; border-radius: 10px;
+    color: var(--gs-menu-text); text-decoration: none;
+    font: 500 .9rem var(--gs-font-title);
+    transition: background .15s, color .15s;
+    .gs-ico { width: 20px; text-align: center; font-size: 1.05rem; color: var(--gs-menu-icon); transition: color .15s; }
     .gs-label { flex: 1 1 auto; }
     .gs-badge {
-        min-width: 28px; height: 28px; padding: 0 7px; border-radius: 14px;
+        min-width: 24px; height: 22px; padding: 0 8px; border-radius: 11px;
         display: inline-flex; align-items: center; justify-content: center;
-        background: var(--gs-black); color: #fff; font: 700 .75rem var(--gs-font-title);
+        background: #e6eaf6; color: var(--gs-ink-2); font: 600 .72rem var(--gs-font-title);
     }
+    &:hover { background: var(--gs-orange-100); color: var(--gs-orange-600); .gs-ico { color: var(--gs-orange-600); } }
 }
+// Élément actif : même voile orange + texte orange + fine barre verte à gauche
 .gs-menu li.active a {
-    background: #fff; color: var(--gs-orange-600);          // fond blanc + écriture orange
-    border-bottom-color: var(--gs-green);                   // surlignage vert
-    box-shadow: 0 8px 20px rgba(36, 46, 110, .16), inset 5px 0 0 var(--gs-green);
-    &::before { display: none; }
+    background: var(--gs-orange-100); color: var(--gs-orange-600); font-weight: 600;
+    &::before { content: ""; position: absolute; left: 0; top: 8px; bottom: 8px; width: 3px; border-radius: 3px; background: var(--gs-green); }
     .gs-ico { color: var(--gs-orange-600); }
     .gs-badge { background: var(--gs-orange); color: #fff; }
 }
@@ -290,21 +287,7 @@ a { color: var(--gs-orange-600); }
 //  (l'orange reste la couleur de marque, le noir la structure)
 // ============================================================
 
-// --- Onglets du haut : pastille d'icône colorée ---
-.gs-tab i {
-    width: 24px; height: 24px; border-radius: 50%; background: #fff; font-size: .78rem;
-    display: inline-flex; align-items: center; justify-content: center; text-shadow: none;
-    color: var(--gs-orange-600);
-}
-.gs-tab:nth-child(4n+2) i { color: var(--gs-green); }
-.gs-tab:nth-child(4n+3) i { color: var(--gs-blue); }
-.gs-tab:nth-child(4n+4) i { color: var(--gs-black); }
 
-// --- Menu de gauche : liseré + icône en alternance orange / vert / bleu ---
-.gs-menu li:nth-child(3n+2):not(.active) a { &::before { background: var(--gs-green); } .gs-ico { color: var(--gs-green); } }
-.gs-menu li:nth-child(3n):not(.active) a   { &::before { background: var(--gs-blue); }  .gs-ico { color: var(--gs-blue); } }
-.gs-menu li:nth-child(3n+2):not(.active) .gs-badge { background: var(--gs-green); }
-.gs-menu li:nth-child(3n):not(.active) .gs-badge   { background: var(--gs-blue); }
 
 // --- Cartes de statistiques : liseré de la couleur de l'icône ---
 .gs-stat.is-success::before { background: var(--gs-green); }
@@ -329,12 +312,8 @@ a { color: var(--gs-orange-600); }
 .gs-actionbtn.is-red   { background: var(--gs-red); }
 
 // --- Onglets en pastilles : compteurs colorés ---
-.gs-pilltabs li:nth-child(3n+2) .count { background: var(--gs-green); }
-.gs-pilltabs li:nth-child(3n) .count   { background: var(--gs-blue); }
 
 // --- Tuiles noires : icônes d'étiquette multicolores ---
-.gs-tile:nth-child(3n+2) .gs-tile-label i { color: #3bd47f; }
-.gs-tile:nth-child(3n) .gs-tile-label i   { color: #55b5f7; }
 
 // --- Pastilles d'info dans le bandeau noir : <span class="gs-chip is-green">Actives 4/4</span> ---
 .gs-chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 999px; margin-left: 8px;
@@ -403,5 +382,3 @@ a { color: var(--gs-orange-600); }
 .gs-actionbtn.is-navy { background: var(--gs-navy); }
 .label-navy { background: var(--gs-navy); }
 
-// pastille d'icône de l'onglet actif : légèrement teintée pour rester visible sur le fond blanc
-.gs-tab.active i { background: var(--gs-orange-100); }
