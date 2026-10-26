@@ -5,11 +5,16 @@
 //  ici uniquement (une seule source de vérité).
 // ============================================================
 :root {
-    --gs-orange: #f7841a;
-    --gs-orange-600: #e56a08;
-    --gs-orange-300: #ffa63f;
-    --gs-orange-100: #fff0dd;
+    --gs-orange: #f58f35;
+    --gs-orange-600: #e0771f;
+    --gs-orange-300: #f9ab56;
+    --gs-orange-100: #fff1e3;
     --gs-black: #15171f;
+    --gs-navy: #173a6e;          // bleu foncé (boutons)
+    --gs-navy-600: #0f2c57;
+    --gs-side-bg: #f8f9fd;       // panneau de gauche : blanc légèrement bleuté
+    --gs-side-line: #d5dbee;
+    --gs-user-bg: #e8ebf5;       // blanc légèrement sombre (zone nom utilisateur)
     --gs-ink: #1d2030;
     --gs-ink-2: #2c3045;
     --gs-bg: #e5e9f8;
@@ -42,9 +47,9 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--gs-font-title); color: var(--gs-ink)
     position: sticky; top: 0; z-index: 1030;
     display: flex; align-items: flex-end; justify-content: space-between; gap: 12px;
     padding: 8px 16px 0;
-    background: linear-gradient(90deg, #f06d00 0%, #f7841a 45%, #ffa63f 100%);
+    background: linear-gradient(90deg, #ea7f26 0%, var(--gs-orange) 50%, var(--gs-orange-300) 100%);
     border-bottom: 4px solid var(--gs-black);
-    box-shadow: 0 6px 18px rgba(229, 106, 8, .45);
+    box-shadow: 0 6px 18px rgba(224, 119, 31, .45);
 
     .gs-tabs {
         display: flex; gap: 6px; margin: 0; padding: 0; list-style: none;
@@ -61,8 +66,8 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--gs-font-title); color: var(--gs-ink)
         &:hover { background: rgba(0, 0, 0, .28); }
     }
     .gs-tab.active a {
-        background: var(--gs-black); color: #fff; border-bottom: 3px solid var(--gs-orange-300); text-shadow: none;
-        box-shadow: 0 -4px 10px rgba(0, 0, 0, .18);
+        background: #fff; color: var(--gs-orange-600); border-bottom: 4px solid var(--gs-green); text-shadow: none;
+        box-shadow: 0 -4px 10px rgba(0, 0, 0, .12);
     }
     .gs-tab i { font-size: 1rem; }
 
@@ -84,18 +89,21 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--gs-font-title); color: var(--gs-ink)
 .gs-content { flex: 1 1 auto; min-width: 0; }
 
 .gs-sidebar {
-    flex: 0 0 260px; width: 260px; position: sticky; top: 74px;
-    display: flex; flex-direction: column; gap: 14px;
+    flex: 0 0 272px; width: 272px; position: sticky; top: 74px;
+    display: flex; flex-direction: column; gap: 14px; padding: 16px;
     min-height: calc(100vh - 110px);
+    background: var(--gs-side-bg);                 // blanc légèrement bleuté
+    border: 1px solid var(--gs-side-line); border-radius: 20px;
+    box-shadow: 0 10px 28px rgba(36, 46, 110, .12);
 }
 
 .gs-user {
     display: flex; align-items: center; gap: 10px; padding: 8px 14px;
-    background: linear-gradient(135deg, var(--gs-ink), var(--gs-black)); border-radius: 16px; box-shadow: var(--gs-shadow);
-    border-left: 5px solid var(--gs-orange);
-    img { height: 40px; width: auto; background: #fff; border-radius: 50%; padding: 3px; }
+    background: var(--gs-user-bg); border-radius: 16px;      // blanc légèrement sombre
+    border: 1px solid var(--gs-side-line); border-left: 5px solid var(--gs-orange);
+    img { height: 40px; width: auto; background: #fff; border-radius: 50%; padding: 3px; box-shadow: var(--gs-shadow-sm); }
     span {
-        font: 700 .8rem var(--gs-font-title); color: #fff;
+        font: 700 .8rem var(--gs-font-title); color: var(--gs-ink);
         text-transform: uppercase; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
 }
@@ -108,14 +116,15 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--gs-font-title); color: var(--gs-ink)
 .gs-menu li a {
     position: relative; display: flex; align-items: center; gap: 10px;
     padding: 11px 12px 11px 16px; border-radius: 14px;
-    background: var(--gs-surface); color: var(--gs-ink); text-decoration: none;
-    font: 600 .86rem var(--gs-font-title); box-shadow: var(--gs-shadow-sm);
-    transition: transform .15s, box-shadow .15s;
+    background: transparent; color: var(--gs-ink); text-decoration: none;
+    font: 600 .86rem var(--gs-font-title);
+    border-bottom: 3px solid transparent;
+    transition: background .15s, box-shadow .15s;
     &::before {            // liseré gauche vert, comme GESICA
-        content: ""; position: absolute; left: -8px; top: 6px; bottom: 6px;
+        content: ""; position: absolute; left: 0; top: 9px; bottom: 9px;
         width: 4px; border-radius: 4px; background: var(--gs-black);
     }
-    &:hover { transform: translateX(2px); box-shadow: var(--gs-shadow); }
+    &:hover { background: #fff; box-shadow: var(--gs-shadow-sm); }
     .gs-ico { width: 20px; text-align: center; color: var(--gs-orange-600); font-size: 1rem; }
     .gs-label { flex: 1 1 auto; }
     .gs-badge {
@@ -125,11 +134,12 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--gs-font-title); color: var(--gs-ink)
     }
 }
 .gs-menu li.active a {
-    background: linear-gradient(90deg, var(--gs-orange-600), var(--gs-orange-300));
-    color: #fff; box-shadow: 0 8px 20px rgba(229, 106, 8, .5);
-    &::before { background: var(--gs-orange); }
-    .gs-ico { color: #fff; }
-    .gs-badge { background: #fff; color: var(--gs-orange-600); }
+    background: #fff; color: var(--gs-orange-600);          // fond blanc + écriture orange
+    border-bottom-color: var(--gs-green);                   // surlignage vert
+    box-shadow: 0 8px 20px rgba(36, 46, 110, .16), inset 5px 0 0 var(--gs-green);
+    &::before { display: none; }
+    .gs-ico { color: var(--gs-orange-600); }
+    .gs-badge { background: var(--gs-orange); color: #fff; }
 }
 
 .gs-guide {
@@ -160,7 +170,7 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--gs-font-title); color: var(--gs-ink)
         float: left; width: 50px; height: 50px; margin-right: 16px; border-radius: 14px; font-size: 1.5rem;
         display: flex; align-items: center; justify-content: center; color: #fff;
         background: linear-gradient(135deg, var(--gs-orange-600), var(--gs-orange-300));
-        box-shadow: 0 6px 16px rgba(247, 132, 26, .55);
+        box-shadow: 0 6px 16px rgba(245, 143, 53, .55);
     }
     .page-header-title { display: block; }
     .page-header-title h4 { color: #fff; margin: 0; font-weight: 700; font-size: 1.35rem; text-transform: none; }
@@ -259,7 +269,7 @@ a { color: var(--gs-orange-600); }
 // ---------- Responsive ----------
 @media (max-width: 991.98px) {
     .gs-shell { flex-direction: column; padding: 12px; }
-    .gs-sidebar { position: static; width: 100%; flex-basis: auto; min-height: 0; }
+    .gs-sidebar { position: static; width: 100%; flex-basis: auto; min-height: 0; padding: 12px; }
     .gs-menu { flex-direction: row; overflow-x: auto; padding-bottom: 6px; }
     .gs-menu li { flex: 0 0 auto; }
     .gs-guide { display: none; }
@@ -365,18 +375,33 @@ a { color: var(--gs-orange-600); }
 .gs-toasts { position: fixed; top: 70px; right: 18px; z-index: 2000; display: flex; flex-direction: column; gap: 10px; width: 340px; max-width: calc(100vw - 36px); }
 .gs-toast {
     display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; border-radius: 14px;
-    background: var(--gs-black); color: #fff; border-left: 6px solid var(--gs-orange);
-    box-shadow: 0 14px 34px rgba(0, 0, 0, .35); animation: gs-toast-in .35s ease-out;
+    background: #fff; color: var(--gs-ink); border: 1px solid var(--gs-line); border-left: 6px solid var(--gs-orange);
+    box-shadow: 0 14px 34px rgba(36, 46, 110, .25); animation: gs-toast-in .35s ease-out;
     &.is-danger  { border-left-color: var(--gs-red);    .gs-toast-icon { background: var(--gs-red); } }
     &.is-warning { border-left-color: var(--gs-orange); .gs-toast-icon { background: var(--gs-orange); } }
     &.is-info    { border-left-color: var(--gs-blue);   .gs-toast-icon { background: var(--gs-blue); } }
     &.is-success { border-left-color: var(--gs-green);  .gs-toast-icon { background: var(--gs-green); } }
     &.is-leaving { opacity: 0; transform: translateX(30px); transition: all .3s; }
 }
-.gs-toast-icon { flex: 0 0 34px; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-.gs-toast-body { flex: 1 1 auto; strong { display: block; font: 700 .85rem var(--gs-font-title); } span { font-size: .8rem; color: #d7dbeb; } }
-.gs-toast-close { background: transparent; border: 0; color: #9aa1bb; cursor: pointer; padding: 0; &:hover { color: #fff; } }
+.gs-toast-icon { flex: 0 0 34px; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; }
+.gs-toast-body { flex: 1 1 auto; strong { display: block; font: 700 .85rem var(--gs-font-title); color: var(--gs-ink); } span { font-size: .8rem; color: #4a5070; } }
+.gs-toast-close { background: transparent; border: 0; color: #8a90a8; cursor: pointer; padding: 0; &:hover { color: var(--gs-ink); } }
 
 @keyframes gs-toast-in { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
 
 @media (prefers-reduced-motion: reduce) { .gs-beacon-dot { animation: none; } .gs-toast { animation: none; } }
+
+
+// ============================================================
+//  Boutons vert et bleu foncé (navy)
+// ============================================================
+.btn-navy { background: var(--gs-navy); color: #fff; &:hover, &:focus { background: var(--gs-navy-600); color: #fff; } }
+.btn-secondary { background: var(--gs-navy); color: #fff; &:hover { background: var(--gs-navy-600); color: #fff; } }
+.btn-success-dark { background: #0d7a3c; color: #fff; &:hover { background: #09642f; color: #fff; } }
+.btn-outline-navy { color: var(--gs-navy); border: 2px solid var(--gs-navy); background: #fff; &:hover { background: var(--gs-navy); color: #fff; } }
+.btn-outline-green { color: var(--gs-green); border: 2px solid var(--gs-green); background: #fff; &:hover { background: var(--gs-green); color: #fff; } }
+.gs-actionbtn.is-navy { background: var(--gs-navy); }
+.label-navy { background: var(--gs-navy); }
+
+// pastille d'icône de l'onglet actif : légèrement teintée pour rester visible sur le fond blanc
+.gs-tab.active i { background: var(--gs-orange-100); }
