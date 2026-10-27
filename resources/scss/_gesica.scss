@@ -1,0 +1,384 @@
+// ============================================================
+//  BDOCI-MIRAH — thème "GESICA" (étape 1 : socle + layout)
+//  Importé en DERNIER dans app.scss pour surcharger Adminty.
+//  Les valeurs hex sont estimées d'après les photos : à ajuster
+//  ici uniquement (une seule source de vérité).
+// ============================================================
+:root {
+    --gs-orange: #f58f35;
+    --gs-orange-600: #e0771f;
+    --gs-orange-300: #f9ab56;
+    --gs-orange-100: #fff1e3;
+    --gs-black: #15171f;
+    --gs-navy: #173a6e;          // bleu foncé (boutons)
+    --gs-navy-600: #0f2c57;
+    --gs-side-bg: #f8f9fd;       // panneau de gauche : blanc légèrement bleuté
+    --gs-side-line: #d5dbee;
+    --gs-user-bg: #e8ebf5;
+    --gs-menu-text: #3a4160;     // texte des menus : ardoise, se fond dans le blanc
+    --gs-menu-icon: #8b93b0;     // icônes au repos : gris-bleu discret       // blanc légèrement sombre (zone nom utilisateur)
+    --gs-ink: #1d2030;
+    --gs-ink-2: #2c3045;
+    --gs-bg: #e5e9f8;
+    --gs-surface: #ffffff;
+    --gs-line: #d3d9ee;
+    --gs-muted: #7a819b;
+    --gs-green: #12a150;
+    --gs-red: #e0243f;
+    --gs-blue: #1f8fe0;
+    --gs-teal: #14b8a6;
+    --gs-yellow: #fbbf24;
+    --gs-radius: 18px;
+    --gs-ring: 0 0 0 1px rgba(29, 32, 48, .07);
+    --gs-shadow: 0 0 0 1px rgba(29, 32, 48, .07), 0 14px 32px rgba(36, 46, 110, .16);
+    --gs-shadow-sm: 0 0 0 1px rgba(29, 32, 48, .06), 0 4px 12px rgba(36, 46, 110, .12);
+    --gs-font-title: "Poppins", "Open Sans", sans-serif;
+}
+
+html, body {
+    background: linear-gradient(180deg, #eef1fc 0%, var(--gs-bg) 100%) fixed;
+    color: var(--gs-ink-2);
+    min-height: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 { font-family: var(--gs-font-title); color: var(--gs-ink); }
+
+// ---------- Barre supérieure (modules) ----------
+.gs-topbar {
+    height: auto !important; min-height: 0; text-align: left;   // annule la règle globale `header{height:300px}` du thème timeline
+    position: sticky; top: 0; z-index: 1030;
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 12px;
+    padding: 8px 16px 0;
+    background: linear-gradient(90deg, #ea7f26 0%, var(--gs-orange) 50%, var(--gs-orange-300) 100%);
+    border-bottom: 4px solid var(--gs-black);
+    box-shadow: 0 6px 18px rgba(224, 119, 31, .45);
+
+    .gs-tabs {
+        display: flex; gap: 6px; margin: 0; padding: 0; list-style: none;
+        overflow-x: auto; scrollbar-width: none;
+        &::-webkit-scrollbar { display: none; }
+    }
+    .gs-tab a {
+        display: flex; align-items: center; gap: 8px; white-space: nowrap;
+        padding: 9px 18px; border-radius: 12px 12px 0 0;
+        font: 600 .9rem var(--gs-font-title); color: #fff; text-decoration: none;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, .25);
+        background: rgba(0, 0, 0, .14);
+        transition: background .15s, color .15s;
+        &:hover { background: rgba(0, 0, 0, .28); }
+    }
+    .gs-tab.active a {
+        background: #fff; color: var(--gs-orange-600); border-bottom: 4px solid var(--gs-green); text-shadow: none;
+        box-shadow: 0 -4px 10px rgba(0, 0, 0, .12);
+    }
+    .gs-tab i { font-size: 1rem; }
+
+    .gs-topbar-right {
+        display: flex; align-items: center; gap: 10px; padding-bottom: 8px; color: #fff;
+        .dropdown-toggle, a { color: #fff; cursor: pointer; text-decoration: none; }
+        .img-radius { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; margin-right: 6px; }
+        .gs-demandes {
+            background: rgba(255, 255, 255, .92); color: var(--gs-ink) !important;
+            border-radius: 8px; padding: 3px 12px; font-weight: 600; font-size: .8rem;
+        }
+        .dropdown-menu { border: 0; border-radius: 12px; box-shadow: var(--gs-shadow); }
+        .dropdown-menu a { color: var(--gs-ink); padding: 8px 16px; display: block; }
+    }
+}
+
+// ---------- Corps : sidebar contextuelle + contenu ----------
+.gs-shell { display: flex; align-items: flex-start; gap: 20px; padding: 18px 20px 32px; }
+.gs-content { flex: 1 1 auto; min-width: 0; }
+
+.gs-sidebar {
+    flex: 0 0 272px; width: 272px; position: sticky; top: 74px;
+    display: flex; flex-direction: column; gap: 14px; padding: 16px;
+    min-height: calc(100vh - 110px);
+    background: var(--gs-side-bg);                 // blanc légèrement bleuté
+    border: 1px solid var(--gs-side-line); border-radius: 20px;
+    box-shadow: 0 10px 28px rgba(36, 46, 110, .12);
+}
+
+.gs-user {
+    display: flex; align-items: center; gap: 10px; padding: 8px 14px;
+    background: var(--gs-user-bg); border-radius: 16px;      // blanc légèrement sombre
+    border: 1px solid var(--gs-side-line); border-left: 5px solid var(--gs-orange);
+    img { height: 40px; width: auto; background: #fff; border-radius: 50%; padding: 3px; box-shadow: var(--gs-shadow-sm); }
+    span {
+        font: 700 .8rem var(--gs-font-title); color: var(--gs-ink);
+        text-transform: uppercase; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+}
+
+.gs-menu { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.gs-menu-label {
+    font: 700 .68rem var(--gs-font-title); letter-spacing: .08em; text-transform: uppercase;
+    color: var(--gs-muted); padding: 6px 12px 4px;
+}
+// Menu "à plat" : ni cadre, ni ombre. Survol = voile orange très clair.
+.gs-menu li a {
+    position: relative; display: flex; align-items: center; gap: 12px;
+    padding: 10px 12px; border-radius: 10px;
+    color: var(--gs-menu-text); text-decoration: none;
+    font: 500 .9rem var(--gs-font-title);
+    transition: background .15s, color .15s;
+    .gs-ico { width: 20px; text-align: center; font-size: 1.05rem; color: var(--gs-menu-icon); transition: color .15s; }
+    .gs-label { flex: 1 1 auto; }
+    .gs-badge {
+        min-width: 24px; height: 22px; padding: 0 8px; border-radius: 11px;
+        display: inline-flex; align-items: center; justify-content: center;
+        background: #e6eaf6; color: var(--gs-ink-2); font: 600 .72rem var(--gs-font-title);
+    }
+    &:hover { background: var(--gs-orange-100); color: var(--gs-orange-600); .gs-ico { color: var(--gs-orange-600); } }
+}
+// Élément actif : même voile orange + texte orange + fine barre verte à gauche
+.gs-menu li.active a {
+    background: var(--gs-orange-100); color: var(--gs-orange-600); font-weight: 600;
+    &::before { content: ""; position: absolute; left: 0; top: 8px; bottom: 8px; width: 3px; border-radius: 3px; background: var(--gs-green); }
+    .gs-ico { color: var(--gs-orange-600); }
+    .gs-badge { background: var(--gs-orange); color: #fff; }
+}
+
+.gs-guide {
+    margin-top: auto; position: relative; overflow: hidden; padding: 16px;
+    background: linear-gradient(135deg, #fffdf6, #fdf1d3); border-radius: 16px;
+    box-shadow: var(--gs-shadow-sm);
+    &::after {
+        content: "+"; position: absolute; right: -6px; top: -22px; font: 700 110px/1 var(--gs-font-title);
+        color: rgba(247, 201, 72, .45);
+    }
+    strong { display: block; font: 700 1rem var(--gs-font-title); color: var(--gs-ink); }
+    small { display: block; color: var(--gs-orange-600); font-style: italic; margin-bottom: 10px; }
+    a {
+        position: relative; z-index: 1; display: inline-block; padding: 9px 16px; border-radius: 10px;
+        background: linear-gradient(180deg, #fbd45c, #f2b928); color: var(--gs-ink);
+        font: 700 .8rem var(--gs-font-title); text-decoration: none; box-shadow: 0 4px 10px rgba(242, 185, 40, .5);
+    }
+}
+
+// ---------- En-tête de page : bandeau noir ----------
+.page-header {
+    position: relative; overflow: hidden;
+    background: linear-gradient(135deg, var(--gs-ink) 0%, var(--gs-black) 100%);
+    border-radius: 20px; padding: 20px 26px; margin: 0 0 22px; box-shadow: var(--gs-shadow);
+    border-bottom: 4px solid var(--gs-orange);
+    > .row { margin: 0; align-items: center; }
+    .gs-page-icon {
+        float: left; width: 50px; height: 50px; margin-right: 16px; border-radius: 14px; font-size: 1.5rem;
+        display: flex; align-items: center; justify-content: center; color: #fff;
+        background: linear-gradient(135deg, var(--gs-orange-600), var(--gs-orange-300));
+        box-shadow: 0 6px 16px rgba(245, 143, 53, .55);
+    }
+    .page-header-title { display: block; }
+    .page-header-title h4 { color: #fff; margin: 0; font-weight: 700; font-size: 1.35rem; text-transform: none; }
+    .page-header-title span { color: rgba(255, 255, 255, .72); text-transform: none; }
+    .page-header-breadcrumb { float: none; }
+    .breadcrumb-title { margin: 0; padding: 0; float: right; list-style: none; }
+    .breadcrumb-title a { color: var(--gs-orange-300); }
+    .breadcrumb-item + .breadcrumb-item::before { color: rgba(255, 255, 255, .4); }
+}
+
+// ---------- Cartes ----------
+.card {
+    border: 1px solid var(--gs-line); border-radius: var(--gs-radius); background: var(--gs-surface);
+    box-shadow: var(--gs-shadow); margin-bottom: 22px; overflow: hidden;
+    .card-header {
+        background: linear-gradient(90deg, var(--gs-orange-600), var(--gs-orange) 55%, var(--gs-orange-300));
+        border: 0; border-bottom: 3px solid var(--gs-black); padding: 14px 20px; color: #fff;
+        h5 { color: #fff; margin: 0; font-weight: 700; &::after { display: none; } }
+        span, .text-muted { color: rgba(255, 255, 255, .85) !important; }
+        .card-option i { color: #fff; }
+    }
+    .card-body { padding: 20px; }
+    .card-footer { background: transparent; border-top: 1px solid var(--gs-line); }
+}
+
+// carte statistique (stat-card) : fond blanc + pastille d'icône
+.gs-stat {
+    position: relative; display: flex; align-items: center; gap: 14px; padding: 16px 18px; height: calc(100% - 22px);
+    .gs-stat-icon {
+        flex: 0 0 52px; width: 52px; height: 52px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.4rem;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, .15);
+        &.is-warning { background: linear-gradient(135deg, var(--gs-orange-600), var(--gs-orange-300)); }
+        &.is-success { background: linear-gradient(135deg, #1f9a5c, #52c98c); }
+        &.is-danger  { background: linear-gradient(135deg, #d93352, #f2788d); }
+        &.is-info    { background: linear-gradient(135deg, #2f86c6, #6cc0ec); }
+    }
+    &::before { content: ""; position: absolute; left: 0; top: 14px; bottom: 14px; width: 5px; border-radius: 0 5px 5px 0; background: var(--gs-orange); }
+    .gs-stat-value { font: 700 1.5rem var(--gs-font-title); color: var(--gs-ink); margin: 0; }
+    .gs-stat-label { font: 600 .72rem var(--gs-font-title); text-transform: uppercase; letter-spacing: .05em; color: var(--gs-muted); margin: 0; }
+}
+
+// tuile sombre d'information (ex. "N° CAISSE", "SOLDE ACTUEL")
+.gs-tile {
+    background: linear-gradient(135deg, #34374a, var(--gs-black)); color: #fff;
+    border-radius: 16px; border: 1px solid #000; padding: 12px 14px; box-shadow: 0 6px 14px rgba(40, 44, 70, .3);
+    .gs-tile-label { font: 700 .7rem var(--gs-font-title); text-transform: uppercase; color: #d7dbeb; i { color: var(--gs-orange); margin-right: 6px; } }
+    .gs-tile-value { font: 700 1rem var(--gs-font-title); margin-top: 4px; small { color: #aab0c8; font-weight: 500; } }
+    &.is-accent .gs-tile-value small { color: rgba(255, 255, 255, .9); }
+    &.is-accent .gs-tile-value { display: inline-block; background: linear-gradient(90deg, var(--gs-orange-600), var(--gs-orange-300)); border-radius: 12px; padding: 8px 14px; }
+}
+
+// ---------- Tableaux ----------
+.table {
+    thead th {
+        background: var(--gs-black); border-bottom: 3px solid var(--gs-orange); color: #fff; border: 0; white-space: nowrap;
+        font: 700 .72rem var(--gs-font-title); text-transform: uppercase; letter-spacing: .04em; padding: 12px 14px;
+        &:first-child { border-top-left-radius: 12px; } &:last-child { border-top-right-radius: 12px; }
+    }
+    td { vertical-align: middle; border-color: var(--gs-line); padding: 12px 14px; }
+    &.table-hover tbody tr:hover { background: var(--gs-orange-100); }
+}
+
+// ---------- Boutons ----------
+.btn { border-radius: 10px; font-weight: 600; border: 0; box-shadow: var(--gs-shadow-sm); }
+.btn-primary, .btn-warning { background: linear-gradient(180deg, var(--gs-orange-300), var(--gs-orange-600)); color: #fff; &:hover, &:focus { background: var(--gs-orange-600); color: #fff; } }
+.btn-success { background: var(--gs-green); color: #fff; }
+.btn-danger  { background: var(--gs-red);   color: #fff; }
+.btn-info    { background: var(--gs-blue);  color: #fff; }
+.btn-inverse, .btn-dark { background: var(--gs-black); color: #fff; }
+
+// ---------- Badges / labels ----------
+.label { border-radius: 999px; padding: 4px 12px; font: 700 .72rem var(--gs-font-title); color: #fff; }
+.label-primary, .label-warning { background: var(--gs-orange-600); }
+.label-success { background: var(--gs-green); }
+.label-danger  { background: var(--gs-red); }
+.label-info    { background: var(--gs-blue); }
+.label-inverse { background: var(--gs-black); }
+.label-default { background: #e4e7f2; color: var(--gs-ink) !important; }
+
+// ---------- Formulaires ----------
+.form-control, .form-select {
+    border: 1px solid var(--gs-line); border-radius: 10px; background: #f6f8fd;
+    box-shadow: inset 0 1px 3px rgba(60, 70, 120, .08);
+    &:focus { border-color: var(--gs-orange); box-shadow: 0 0 0 .2rem rgba(245, 154, 74, .25); background: #fff; }
+}
+label, .form-label { font: 600 .8rem var(--gs-font-title); color: var(--gs-ink); }
+
+// ---------- Onglets / pagination ----------
+.nav-tabs .nav-link { border: 0; border-radius: 12px; color: var(--gs-muted); font-weight: 600; background: #eef0f9; margin-right: 6px;
+    &.active { background: var(--gs-orange-600); color: #fff; } }
+.page-link { border-radius: 8px; color: var(--gs-ink); }
+.page-item.active .page-link { background: var(--gs-orange); border-color: var(--gs-orange); }
+a { color: var(--gs-orange-600); }
+
+// ---------- Responsive ----------
+@media (max-width: 991.98px) {
+    .gs-shell { flex-direction: column; padding: 12px; }
+    .gs-sidebar { position: static; width: 100%; flex-basis: auto; min-height: 0; padding: 12px; }
+    .gs-menu { flex-direction: row; overflow-x: auto; padding-bottom: 6px; }
+    .gs-menu li { flex: 0 0 auto; }
+    .gs-guide { display: none; }
+    .gs-topbar .gs-topbar-right .gs-user-name { display: none; }
+}
+
+// ---------- Composants additionnels (étape 3) ----------
+.gs-actionbtn { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; font: 700 .72rem var(--gs-font-title); color: #fff; border: 0; text-decoration: none;
+    &.is-orange { background: linear-gradient(180deg, var(--gs-orange-300), var(--gs-orange-600)); }
+    &.is-teal { background: var(--gs-teal); } &.is-blue { background: var(--gs-blue); } &.is-black { background: var(--gs-black); } }
+.gs-pilltabs { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; list-style: none; margin: 0 0 16px;
+    a { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 999px; background: #fff; color: var(--gs-ink); font: 600 .8rem var(--gs-font-title); box-shadow: var(--gs-shadow-sm); text-decoration: none; }
+    .active a { background: linear-gradient(90deg, var(--gs-orange-600), var(--gs-orange-300)); color: #fff; }
+    .count { background: var(--gs-black); color: #fff; border-radius: 999px; padding: 1px 8px; font-size: .7rem; } }
+
+// ============================================================
+//  Touches de VERT et de BLEU pour faire vivre l'interface
+//  (l'orange reste la couleur de marque, le noir la structure)
+// ============================================================
+
+
+
+// --- Cartes de statistiques : liseré de la couleur de l'icône ---
+.gs-stat.is-success::before { background: var(--gs-green); }
+.gs-stat.is-info::before    { background: var(--gs-blue); }
+.gs-stat.is-danger::before  { background: var(--gs-red); }
+.gs-stat.is-warning::before { background: var(--gs-orange); }
+
+// --- Variantes d'en-tête de carte : <x-ui.card class="is-green"> ---
+.card.is-green > .card-header { background: var(--gs-green); border-bottom-color: var(--gs-black); }
+.card.is-blue  > .card-header { background: var(--gs-blue);  border-bottom-color: var(--gs-black); }
+.card.is-black > .card-header { background: var(--gs-black); border-bottom-color: var(--gs-orange); }
+
+// --- Boutons : vert (valider), bleu (infos), rouge (refuser), noir (secondaire) ---
+.btn-success { background: linear-gradient(180deg, #3bd47f, var(--gs-green)); color: #fff; &:hover { background: #0d8a42; color: #fff; } }
+.btn-info    { background: linear-gradient(180deg, #55b5f7, var(--gs-blue));  color: #fff; &:hover { background: #1873b8; color: #fff; } }
+.btn-danger  { background: linear-gradient(180deg, #f2536a, var(--gs-red));   color: #fff; &:hover { background: #b81830; color: #fff; } }
+.btn-outline-success { color: var(--gs-green); border: 2px solid var(--gs-green); background: #fff; &:hover { background: var(--gs-green); color: #fff; } }
+.btn-outline-info    { color: var(--gs-blue);  border: 2px solid var(--gs-blue);  background: #fff; &:hover { background: var(--gs-blue);  color: #fff; } }
+.btn-outline-primary { color: var(--gs-orange-600); border: 2px solid var(--gs-orange); background: #fff; &:hover { background: var(--gs-orange); color: #fff; } }
+
+.gs-actionbtn.is-green { background: var(--gs-green); }
+.gs-actionbtn.is-red   { background: var(--gs-red); }
+
+// --- Onglets en pastilles : compteurs colorés ---
+
+// --- Tuiles noires : icônes d'étiquette multicolores ---
+
+// --- Pastilles d'info dans le bandeau noir : <span class="gs-chip is-green">Actives 4/4</span> ---
+.gs-chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 999px; margin-left: 8px;
+    font: 700 .74rem var(--gs-font-title); color: #fff; background: rgba(255, 255, 255, .14); border: 1px solid rgba(255, 255, 255, .25);
+    &.is-green { background: var(--gs-green); border-color: var(--gs-green); }
+    &.is-blue { background: var(--gs-blue); border-color: var(--gs-blue); }
+    &.is-orange { background: var(--gs-orange); border-color: var(--gs-orange); } }
+
+// --- Étiquettes de statut supplémentaires ---
+.label-teal { background: var(--gs-teal); }
+.label-blue { background: var(--gs-blue); }
+
+// --- Champs : focus bleu discret (l'orange reste pour les actions) ---
+.form-control:focus, .form-select:focus { border-color: var(--gs-blue); box-shadow: 0 0 0 .2rem rgba(31, 143, 224, .22); }
+
+// ============================================================
+//  Balise d'alerte clignotante + notifications (toasts) en haut à droite
+// ============================================================
+.gs-beacon { position: relative; display: inline-flex; align-items: center; padding: 4px 6px; color: var(--gs-black) !important; font-size: 1.15rem; }
+.gs-beacon-dot {                       // point rouge qui s'allume et s'éteint
+    position: absolute; top: 0; left: 20px; width: 12px; height: 12px; border-radius: 50%;
+    background: var(--gs-red); border: 2px solid #fff;
+    animation: gs-blink 1s steps(1, end) infinite;   // 1 s allumé / 1 s éteint
+}
+.gs-beacon-count {
+    margin-left: 6px; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 11px;
+    background: var(--gs-black); color: #fff; font: 700 .72rem var(--gs-font-title);
+    display: inline-flex; align-items: center; justify-content: center;
+}
+.gs-beacon.has-alerts .gs-beacon-count { background: var(--gs-red); }
+.gs-beacon:not(.has-alerts) .gs-beacon-dot { animation: none; background: var(--gs-green); }  // calme = vert fixe
+
+@keyframes gs-blink {
+    0%, 49%   { opacity: 1; box-shadow: 0 0 0 4px rgba(224, 36, 63, .35); }
+    50%, 100% { opacity: .15; box-shadow: none; }
+}
+
+.gs-toasts { position: fixed; top: 70px; right: 18px; z-index: 2000; display: flex; flex-direction: column; gap: 10px; width: 340px; max-width: calc(100vw - 36px); }
+.gs-toast {
+    display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; border-radius: 14px;
+    background: #fff; color: var(--gs-ink); border: 1px solid var(--gs-line); border-left: 6px solid var(--gs-orange);
+    box-shadow: 0 14px 34px rgba(36, 46, 110, .25); animation: gs-toast-in .35s ease-out;
+    &.is-danger  { border-left-color: var(--gs-red);    .gs-toast-icon { background: var(--gs-red); } }
+    &.is-warning { border-left-color: var(--gs-orange); .gs-toast-icon { background: var(--gs-orange); } }
+    &.is-info    { border-left-color: var(--gs-blue);   .gs-toast-icon { background: var(--gs-blue); } }
+    &.is-success { border-left-color: var(--gs-green);  .gs-toast-icon { background: var(--gs-green); } }
+    &.is-leaving { opacity: 0; transform: translateX(30px); transition: all .3s; }
+}
+.gs-toast-icon { flex: 0 0 34px; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; }
+.gs-toast-body { flex: 1 1 auto; strong { display: block; font: 700 .85rem var(--gs-font-title); color: var(--gs-ink); } span { font-size: .8rem; color: #4a5070; } }
+.gs-toast-close { background: transparent; border: 0; color: #8a90a8; cursor: pointer; padding: 0; &:hover { color: var(--gs-ink); } }
+
+@keyframes gs-toast-in { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+
+@media (prefers-reduced-motion: reduce) { .gs-beacon-dot { animation: none; } .gs-toast { animation: none; } }
+
+
+// ============================================================
+//  Boutons vert et bleu foncé (navy)
+// ============================================================
+.btn-navy { background: var(--gs-navy); color: #fff; &:hover, &:focus { background: var(--gs-navy-600); color: #fff; } }
+.btn-secondary { background: var(--gs-navy); color: #fff; &:hover { background: var(--gs-navy-600); color: #fff; } }
+.btn-success-dark { background: #0d7a3c; color: #fff; &:hover { background: #09642f; color: #fff; } }
+.btn-outline-navy { color: var(--gs-navy); border: 2px solid var(--gs-navy); background: #fff; &:hover { background: var(--gs-navy); color: #fff; } }
+.btn-outline-green { color: var(--gs-green); border: 2px solid var(--gs-green); background: #fff; &:hover { background: var(--gs-green); color: #fff; } }
+.gs-actionbtn.is-navy { background: var(--gs-navy); }
+.label-navy { background: var(--gs-navy); }
+

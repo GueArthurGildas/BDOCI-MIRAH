@@ -1,5 +1,11 @@
 @props(['title' => null])
-
+@inject('navigation', App\Support\Navigation\Navigation::class)
+@php
+    $groups = $navigation->groupsFor(auth()->user());
+    // Onglet actif = groupe contenant l'élément actif (sinon le premier)
+    $activeKey = collect($groups)->filter(fn ($items) => collect($items)->contains(fn ($i) => $i->isActive()))->keys()->first()
+        ?? collect($groups)->keys()->first();
+@endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -8,28 +14,15 @@
 <body>
     @include('layouts.partials.preloader')
 
-    <div id="pcoded" class="pcoded">
-        <div class="pcoded-overlay-box"></div>
-        <div class="pcoded-container navbar-wrapper">
-            @include('layouts.partials.header')
+    @include('layouts.partials.header', ['groups' => $groups, 'activeKey' => $activeKey])
 
-            <div class="pcoded-main-container">
-                <div class="pcoded-wrapper">
-                    @include('layouts.partials.sidebar')
+    <div class="gs-shell">
+        @include('layouts.partials.sidebar', ['groups' => $groups, 'activeKey' => $activeKey])
 
-                    <div class="pcoded-content">
-                        <div class="pcoded-inner-content">
-                            <div class="main-body">
-                                <div class="page-wrapper">
-                                    @include('layouts.partials.flash')
-                                    {{ $slot }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <main class="gs-content">
+            @include('layouts.partials.flash')
+            {{ $slot }}
+        </main>
     </div>
 </body>
 </html>
