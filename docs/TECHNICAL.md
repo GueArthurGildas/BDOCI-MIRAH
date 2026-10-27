@@ -123,35 +123,46 @@ L'application est découpée en **modules** : chaque fonctionnalité vit dans so
 
 ```
 app/
-├── Enums/                               # énumérations métier (statuts, types…), libellés traduits
-├── Http/Middleware/                     # langue, désactivation des comptes
-├── Models/                              # domaine partagé : navires, licences, positions, observations…
-├── Queries/                             # requêtes métier réutilisées par plusieurs modules
-├── Providers/AppServiceProvider.php     # services globaux
+├── Enums/                               # énumérations métier (statuts, types…), libellés traduits ; Concerns/HasTranslatedLabel
+├── Http/
+│   ├── Controllers/LocaleController.php # changement de langue
+│   └── Middleware/                      # langue (SetLocale), désactivation des comptes (EnsureUserIsActive)
+├── Models/                              # domaine partagé : navires, licences, positions, observations, connecteurs, réglages…
+│   └── Concerns/Audited.php             # historisation automatique des modifications (journal d'audit)
+├── Queries/                             # requêtes métier réutilisées par plusieurs modules (SilentBeacons, ZoneSituation)
+├── Providers/AppServiceProvider.php     # services globaux (navigation, langues, réglages)
 └── Support/
     ├── Authorization/                   # permissions et rôles (Permission, Role)
     ├── Localization/                    # langues et pays
-    ├── Modules/ModuleServiceProvider.php    # chargement automatique d'un module
-    ├── Navigation/                          # registre du menu latéral (groupes, permissions)
-    └── Presentation/                        # badges, couleurs du thème, liens vers la fiche navire
+    ├── Modules/ModuleServiceProvider.php    # chargement d'un module : routes, vues, traductions, menu, commandes, planification
+    ├── Navigation/                          # registre du menu (groupes, permissions, élément actif)
+    ├── Notifications/                       # Alert (notification traduite), AlertLevel, Notifier (envoi par permission, anti-répétition)
+    ├── Presentation/                        # badges, couleurs du thème, liens vers la fiche navire
+    └── Settings/                            # réglages modifiables par l'administrateur (Settings, SettingDefinition, SettingType)
 
-config/surveillance.php                  # seuils métier (rupture d'émission, échéance des licences, pavillons)
-database/                                # migrations, factories, seeders (référentiel + données de démo)
+config/surveillance.php                  # seuils métier, alertes et notifications : valeurs par défaut (les réglages les surchargent)
+database/                                # migrations, factories, seeders (référentiel, données de démo, activité des connecteurs)
+docs/                                    # GUIDE, TECHNICAL, DESIGN, PLAN_REFONTE, ACCEPTATION, modèle de données, cas d'utilisation
 lang/                                    # traductions partagées (ui.php, enums.php) et messages Laravel
 modules/                                 # une fonctionnalité = un module (voir ci-dessous)
 
 resources/
 ├── views/
-│   ├── components/layouts/              # layouts de page : app (menu vertical) et auth
+│   ├── components/layouts/              # layouts de page : app (barre du haut gs-topbar, menu gs-sidebar et contenu dans gs-shell) et auth
 │   ├── components/ui/                   # composants réutilisables (voir ci-dessous)
-│   ├── layouts/partials/                # morceaux du layout : en-tête, menu, recherche, langues…
+│   ├── layouts/partials/                # morceaux du layout : head, header (barre du haut), sidebar, flash, locale-menu, locale-links, preloader
 │   └── errors/                          # pages d'erreur 403, 404, 419, 429, 500, 503
 ├── js/
 │   ├── app.js                           # point d'entrée JS
 │   ├── components/                      # carte (Leaflet) et graphiques (Chart.js), chargés à la demande
-│   ├── layout/                          # un fichier par comportement : menu, cartes, recherche…
+│   ├── layout/                          # un fichier par comportement : notifications (balise et toasts), plein écran, actions des cartes, envoi automatique des filtres, infobulles, préchargeur
 │   └── vendor/                          # jQuery, Bootstrap, pcoded (Adminty)
-├── scss/                                # thème Adminty, timeline, ajustements (_components.scss)
+├── scss/
+│   ├── app.scss                         # ordre d'import : Adminty, pages, ajustements, puis le thème
+│   ├── adminty/                         # template Adminty, jamais modifié
+│   ├── pages/_timeline.scss             # chronologie de la fiche navire
+│   ├── _layout.scss, _components.scss   # ajustements propres à l'application
+│   └── theme/                           # thème GESICA : _tokens, _mixins, _base, _topbar, _shell, _page-header, _cards, _tables, _buttons, _forms, _labels, _tabs, _notifications, _comments (voir docs/DESIGN.md)
 ├── fonts/                               # polices d'icônes feather, icofont, themify
 └── images/                              # images du thème
 
@@ -176,6 +187,9 @@ Chaque module a un service provider qui hérite de `App\Support\Modules\ModuleSe
 - **Vues** : le dossier `resources/views`, sous un namespace qui est le nom du module en kebab-case (`dashboard::`, `auth::`…).
 - **Traductions** : le dossier `lang/`, sous le même namespace que les vues.
 - **Menu** : le module ajoute ses entrées au menu latéral dans la méthode `navigation()`, avec une clé de traduction comme libellé.
+- **Commandes et planification** : un module qui a des tâches planifiées surcharge `consoleCommands()` (liste de commandes Artisan) et `schedule()` (fréquence). Exemples : `modules/Tracking/Providers/TrackingServiceProvider.php` et `modules/Licenses/Providers/LicensesServiceProvider.php`.
+
+Selon ses besoins, un module ajoute d'autres dossiers : `Http/Requests/` (validation), `Console/` (commandes planifiées), `Notifications/` (alertes), `Support/` (classes propres au module). Les modules `Administration`, `Tracking` et `Licenses` montrent chacun une variante.
 
 Le layout ne connaît donc aucun module : il se contente d'afficher ce que les modules ont déclaré.
 
@@ -217,7 +231,7 @@ Les tests placés dans `modules/*/Tests`, `tests/Feature` et `tests/Unit` sont l
 - **Commentaires** : le code doit se comprendre sans commentaires, grâce à des noms explicites et des fonctions courtes.
 - **Dépendances entre modules** : un module ne dépend que du socle `app/`, jamais d'un autre module. Ce qui doit être partagé remonte dans `app/` (code PHP) ou dans `resources/views/components/ui/` (composants d'interface). Les liens vers un autre module passent par des helpers qui vérifient que la route existe (`VesselLink`, recherche transversale). Seule exception assumée : le layout utilise la route `logout` du module `Auth`.
 - **Recherche textuelle** : utiliser `whereLike()` / `orWhereLike()`, qui génèrent un `ILIKE` insensible à la casse sous PostgreSQL (un `where(..., 'like', ...)` y serait sensible à la casse).
-- **Règles métier paramétrables** : seuils et listes dans `config/surveillance.php`, jamais en dur dans le code.
+- **Règles métier paramétrables** : seuils et listes dans `config/surveillance.php`, jamais en dur dans le code. Les valeurs que l'administrateur doit pouvoir modifier sont déclarées dans `App\Support\Settings\Settings` et surchargent ce fichier au démarrage.
 
 ## Domaine et modules
 
@@ -235,9 +249,10 @@ Les tests placés dans `modules/*/Tests`, `tests/Feature` et `tests/Unit` sont l
 | `Species`, `CatchDeclaration` | captures et débarquements | F-008 |
 | `Mission` | missions et opérations (navires, agents, zone) | F-005 |
 | `Team`, `User` | équipes de surveillance et comptes (activables) | S-011 |
-| `DataSource` | état des connecteurs (synchronisation, erreurs, rejets) | F-012 |
+| `DataSource`, `DataSourceSync`, `DataSourceError`, `DataSourceRejection`, `DataSourceComment` | état des connecteurs, historique des synchronisations, erreurs, enregistrements rejetés et commentaires de suivi | F-012 |
+| `Setting` | réglages modifiables par l'administrateur (notifications, seuils d'alerte) | — |
 
-Les modifications des données métier sont historisées automatiquement dans le journal d'audit (`spatie/laravel-activitylog`, trait `App\Models\Concerns\Audited`).
+Les notifications utilisent la table `notifications` de Laravel (modèle fourni par le framework, sans classe dans `app/Models`). Les modifications des données métier sont historisées automatiquement dans le journal d'audit (`spatie/laravel-activitylog`, trait `App\Models\Concerns\Audited`).
 
 ### Modules
 
@@ -245,21 +260,22 @@ Les modifications des données métier sont historisées automatiquement dans le
 |---|---|---|
 | `Auth` | connexion, déconnexion, journalisation des connexions | — |
 | `Dashboard` | indicateurs, situation par zone, infractions, inspections, fraîcheur des sources | `dashboard.view` |
-| `Tracking` | carte de situation, situation par zone à un instant donné, état des balises | `tracking.view` |
+| `Tracking` | carte de situation, situation par zone à un instant donné, état des balises ; alerte planifiée des balises muettes | `tracking.view` |
 | `Logbook` | main courante, éléments en suspens, suivi et clôture | `logbook.*` |
 | `Movements` | entrées et sorties | `movements.*` |
 | `Vessels` | liste, fiche 360°, création et modification | `vessels.*` |
-| `Licenses` | liste et échéances | `licenses.view` |
+| `Licenses` | liste et échéances ; alerte planifiée des licences à échéance | `licenses.view` |
 | `Inspections` | liste et détail | `inspections.view` |
 | `Infractions` | liste, détail, décisions et suites | `infractions.*` |
 | `Catches` | déclarations et totaux par espèce | `catches.view` |
 | `Missions` | liste et détail | `missions.view` |
 | `Search` | recherche transversale (en-tête) | selon les sources |
-| `Administration` | utilisateurs, rôles, connecteurs, journal d'audit | `users.manage`, `connectors.view`, `audit.view` |
+| `Notifications` | page des notifications de l'utilisateur et flux JSON lu par la balise de l'en-tête | utilisateur connecté |
+| `Administration` | utilisateurs, rôles et permissions, paramètres, connecteurs (liste et détail : erreurs, rejets, synchronisations, commentaires), journal d'audit | `users.manage`, `roles.manage`, `settings.manage`, `connectors.view`, `connectors.manage`, `audit.view` |
 
 ### Droits d'accès
 
-Les permissions (`<module>.<action>`) sont déclarées dans l'enum `App\Support\Authorization\Permission`, et les rôles dans `App\Support\Authorization\Role` avec la liste de leurs permissions. `make fresh` (ou `RolesAndPermissionsSeeder`) les synchronise en base. La page *Administration › Rôles et permissions* affiche la matrice complète.
+Les permissions (`<module>.<action>`) sont déclarées dans l'enum `App\Support\Authorization\Permission`, et les rôles dans `App\Support\Authorization\Role` avec la liste de leurs permissions. `make fresh` (ou `RolesAndPermissionsSeeder`) les synchronise en base. La page *Administration › Rôles et permissions* permet de créer, modifier et supprimer des rôles personnalisés, de choisir les permissions de chaque rôle et affiche la matrice complète.
 
 | Rôle | Profil |
 |---|---|

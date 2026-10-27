@@ -130,15 +130,18 @@ flowchart LR
   P8 --> P9[9 Pilotage complet et agent IA]
 ```
 
-### Phase 0 — Décisions et documentation · taille S
+### Phase 0 — Décisions et documentation · taille S · **faite et validée**
 
-- Trancher D1 à D9, rédiger les ADR.
-- Schéma physique v2 : traduction du schéma v1 en PostgreSQL et en anglais, validée par Gildas (annexe A = point de départ).
-- Squelette du guide du nouvel arrivant et glossaire (section 5).
-- Matrice d'acceptation UC01–UC29 / RG01–RG10 initialisée (tout en « à faire »).
-- ~~Image Docker PostGIS~~ : fait (voir `docs/TECHNICAL.md`, section Docker). `redis`, `queue` et `mailpit` ont été retirés, faute d'usage actuel ; ils reviendront avec les phases 3a, 5 et 7.
+Livrables :
 
-**Critère de sortie** : ADR validés, schéma v2 validé, guide et matrice présents.
+- Décisions D1 à D9 en ADR : `docs/decisions/`.
+- **Schéma physique v2** : `docs/schema/schema_v2.sql`, traduction complète du schéma v1 en PostgreSQL + PostGIS et en anglais (175 tables), exécutée sur une base vide. Conventions et points à valider : `docs/schema/CONVENTIONS.md`.
+- Glossaire (tables, correspondance avec les tables actuelles, vocabulaire métier, rôles) : `docs/GLOSSAIRE.md`, et glossaire des colonnes : `docs/schema/GLOSSAIRE_COLONNES.md`. Deux tests vérifient qu'ils restent synchronisés avec la base et le schéma.
+- Guide du nouvel arrivant : `docs/GUIDE.md`. `docs/TECHNICAL.md` mis à jour.
+- Matrice d'acceptation UC01–UC29 et RG01–RG10 : `docs/ACCEPTATION.md`.
+- Image Docker PostGIS faite ; `redis`, `queue` et `mailpit` retirés (voir `docs/TECHNICAL.md`).
+
+**Critère de sortie** : ADR, schéma v2 et glossaire validés par Gildas, notamment les traductions listées au point 3 de `docs/schema/CONVENTIONS.md`. Gildas a accepté les changements de base de données le 2026-10-27.
 
 ### Phase 1 — Noyau · taille L (21 tables)
 
