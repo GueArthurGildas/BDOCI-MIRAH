@@ -82,11 +82,11 @@ Chaque décision devient un **ADR** (`docs/decisions/NNNN-titre.md`, format : co
 | D4 | **Droits** | A. garder Spatie ; B. tables `role`, `groupe`, `action_catalog`, `permission` de la spec derrière les `Gate` | **B**, introduit en phase 1 en gardant les appels `can()` existants. **Livré en amont** : l'Admin crée, modifie et supprime des rôles et choisit leurs permissions (voir 3, point 4) | Droits flexibles (§3.3) impossibles : pas de groupes, de portée zone ni de période |
 | D5 | **Rôles** | adopter Directeur / Chef d'équipe / Agent / Admin ; Admin sans droit métier ; inspecteur = Agent + habilitation | **Décidé : adopter les quatre rôles** avec leurs noms directs (`admin`, `director`, `team_lead`, `agent`). `supervisor` devient Chef d'équipe, et la description du rôle le précise ; `inspector` disparaît (un inspecteur est un Agent titulaire d'une habilitation). Livré, voir 3, point 4 | Contradiction avec S-004 |
 | D6 | **Données existantes** | A. migrer ; B. repartir des seeders | **Décidé : B** (hypothèse H1 : aucune donnée réelle) ; la base de démo est reconstruite par `migrate:fresh --seed` | Migrations de données lourdes et inutiles |
-| D7 | **Branche** | `g` (spec) ou `y-branch` (usage actuel) | **Décidé : on conserve les deux branches personnelles** (`y-branch` et `g-branch`, celle du collègue), aucune n'est retirée. Reste à fixer comment elles s'intègrent (fusions de `g-branch` dans `y-branch`, ou passage par `main`) | Divergence silencieuse |
+| D7 | **Branche** | `g` (spec) ou `y-branch` (usage actuel) | **Décidé : on conserve `g-branch`** (design du collègue, déjà fusionnée dans `y-branch`, qui n'évolue plus). Flux : le développement se fait sur `y-branch` ; une fois poussée, le collègue la récupère et la teste ; quand elle est validée, elle est fusionnée dans `main`, la **branche de déploiement** | Divergence silencieuse |
 | D8 | **Validateur des étapes** | qui valide chaque phase (« validation explicite de l'utilisateur ») | **Gildas** pour le métier, vous pour la technique (recommandation acceptée) | Phases enchaînées sans validation, contre la méthode imposée |
 | D9 | **Seuils par défaut** | silence VMS 4 h, alertes licence 30/60/90 | **Spec**, modifiables dans Paramètres (recommandation acceptée ; à appliquer en phases 3b et 4a) | Deux valeurs en circulation |
 
-**Hypothèses** : H1 aucune donnée de production à conserver ; H2 la validation métier de la spec par Gildas est acquise (« validée » dans son en-tête) ; H3 les points ouverts de la section 6 sont traités au fil des phases, pas avant.
+**Hypothèses** : H1 aucune donnée de production à conserver (confirmé : aucune base n'est encore déployée, on reconstruit avec `migrate:fresh --seed`) ; H2 la validation métier de la spec par Gildas est acquise (« validée » dans son en-tête) ; H3 les points ouverts de la section 6 sont traités au fil des phases, pas avant.
 
 ---
 
@@ -298,7 +298,7 @@ L'objectif : quelqu'un qui arrive sur le projet est autonome en une journée, et
 
 ## 8. Prochaines étapes
 
-1. Toutes les décisions D1 à D9 sont prises (D4 est amorcée). Reste à fixer le mode d'intégration entre `y-branch` et `g-branch`.
+1. Toutes les décisions D1 à D9 sont prises (D4 est amorcée) ; le flux de branches est fixé (D7).
 2. Signaler à l'auteur de la spec les points de la section 1.4.
 3. Lancer la phase 0 : ADR, glossaire, schéma physique v2, squelette du guide (l'image PostGIS est déjà en place).
 4. Démarrer la phase 1 par la tranche verticale « enregistrer une licence ».
