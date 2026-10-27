@@ -15,11 +15,8 @@ PHP, Composer, Node et PostgreSQL tournent dans des conteneurs : seuls Docker (C
 | `app`       | PHP 8.4-FPM + Composer + Xdebug        | —                            |
 | `nginx`     | Serveur web                            | http://localhost:8000        |
 | `node`      | Node 24 + Vite (HMR)                   | http://localhost:5173        |
-| `postgres`  | PostgreSQL 16 (bases `laravel` et `testing`) | `localhost:5435`       |
-| `redis`     | Cache, sessions, files d'attente       | `localhost:6379`             |
-| `queue`     | Worker `queue:work`                    | —                            |
+| `postgres`  | PostgreSQL 16 + PostGIS (bases `laravel` et `testing`) | `localhost:5435` |
 | `scheduler` | `schedule:work` (tâches planifiées)    | —                            |
-| `mailpit`   | Capture des e-mails                    | http://localhost:8025        |
 
 ### Installation
 
@@ -44,7 +41,7 @@ make clean                         # ⚠️ supprime aussi les volumes (données
 
 ### How/Why?
 
-Tous les services sont décrits dans `compose.yaml` et reliés au même réseau Docker privé `laravel`. Sur ce réseau, chaque conteneur joint les autres par leur nom de service : c'est pour ça que `.env` contient `DB_HOST=postgres`, `REDIS_HOST=redis` ou `MAIL_HOST=mailpit` au lieu de `127.0.0.1`. Le réseau utilise un MTU de 1400 (voir [Configuration](#configuration)).
+Tous les services sont décrits dans `compose.yaml` et reliés au même réseau Docker privé `laravel`. Sur ce réseau, chaque conteneur joint les autres par leur nom de service : c'est pour ça que `.env` contient `DB_HOST=postgres` au lieu de `127.0.0.1`. Le réseau utilise un MTU de 1400 (voir [Configuration](#configuration)).
 
 Le code du projet est monté dans les conteneurs (`./` → `/var/www/html`) : une modification faite sur la machine est visible immédiatement dans les conteneurs, sans reconstruire d'image.
 
@@ -54,21 +51,18 @@ Le code du projet est monté dans les conteneurs (`./` → `/var/www/html`) : un
 - **Étape `base`** :
   - part de l'image officielle `php:8.4-fpm-bookworm` ;
   - installe les outils système (`git`, `unzip`, `curl`, client PostgreSQL `psql`) ;
-  - installe les extensions PHP avec `install-php-extensions` : `pdo_pgsql`, `pgsql`, `bcmath`, `intl`, `zip`, `gd`, `exif`, `pcntl`, `opcache`, `redis` ;
+  - installe les extensions PHP avec `install-php-extensions` : `pdo_pgsql`, `pgsql`, `bcmath`, `intl`, `zip`, `gd`, `exif`, `pcntl`, `opcache`, `redis` (installée mais inutilisée pour l'instant, voir *Services retirés*) ;
   - copie Composer depuis l'image officielle `composer:2` ;
   - applique la configuration `docker/php/php.ini` (mémoire, taille des uploads, OPcache réglé pour le développement).
 - **Utilisateur** : l'étape `base` crée aussi un utilisateur `laravel` qui a le même UID/GID que vous (variables `UID`/`GID` du `.env`), et PHP-FPM tourne sous cet utilisateur. Les fichiers créés par Laravel ou Composer vous appartiennent donc sur votre machine (pas de fichiers `root` dans `storage/` ou `vendor/`).
 - **Étape `dev`** : ajoute Xdebug et sa configuration `docker/php/xdebug.ini`. Xdebug est inactif tant que `XDEBUG_MODE=off`.
 - **Démarrage** : lance `php-fpm`, qui écoute sur le port 9000 du réseau interne. Ce port n'est pas exposé sur votre machine : seul `nginx` lui parle.
-- **Dépendances** : attend que `postgres` et `redis` soient *healthy* avant de démarrer.
+- **Dépendances** : attend que `postgres` soit *healthy* avant de démarrer.
 
-#### `queue` et `scheduler` — workers Laravel
+#### `scheduler` — tâches planifiées
 
-- **Image** : la même que `app` (bloc commun `x-app` dans `compose.yaml`). Ils ont donc le même PHP, les mêmes extensions, le même code monté et les mêmes variables d'environnement.
-- **Ce qui change** : seulement la commande de démarrage.
-  - `queue` lance `php artisan queue:work --tries=3 --timeout=90` : il traite les jobs mis en file dans Redis (`QUEUE_CONNECTION=redis`).
-  - `scheduler` lance `php artisan schedule:work` : il exécute chaque minute les tâches planifiées définies dans `routes/console.php`. Pas besoin de cron.
-- **Après une modification du code d'un job** : `queue:work` garde le code en mémoire, il faut donc redémarrer le worker avec `docker compose restart queue`.
+- **Image** : la même que `app` (bloc commun `x-app` dans `compose.yaml`) : même PHP, mêmes extensions, même code monté, mêmes variables d'environnement. Seule la commande de démarrage change.
+- **Rôle** : `php artisan schedule:work` exécute chaque minute les tâches planifiées déclarées par les modules (alertes de balises muettes toutes les 15 minutes, licences à échéance chaque jour à 07:00). Pas besoin de cron.
 
 #### `nginx` — serveur web
 
@@ -89,25 +83,21 @@ Le code du projet est monté dans les conteneurs (`./` → `/var/www/html`) : un
 
 #### `postgres` — base de données
 
-- **Image** : `postgres:16`, utilisée telle quelle.
+- **Image** : `postgis/postgis:16-3.5`, utilisée telle quelle : c'est PostgreSQL 16 avec l'extension géographique PostGIS (zones, distances, traces). L'extension est activée par la migration `enable_postgis_extension`, y compris dans la base `testing`.
 - **Premier démarrage** : l'image crée automatiquement la base `DB_DATABASE` et l'utilisateur `DB_USERNAME`/`DB_PASSWORD`, qui en est propriétaire. Elle exécute aussi `docker/postgres/create-testing-database.sh`, qui crée la base `testing` utilisée par `php artisan test` (voir `phpunit.xml`).
 - **Données** : stockées dans le volume nommé `postgres-data`. Elles survivent à `make down` et ne sont supprimées que par `make clean`. Pour que le script d'initialisation s'exécute de nouveau, il faut supprimer ce volume.
 - **Healthcheck** : `pg_isready`. C'est lui qui détermine quand les conteneurs PHP peuvent démarrer.
 - **Accès** : port `FORWARD_DB_PORT` (5435 par défaut, pour ne pas entrer en conflit avec un PostgreSQL installé sur la machine) exposé pour s'y connecter avec un client graphique (DBeaver, pgAdmin, TablePlus…).
 
-#### `redis` — cache, sessions et files d'attente
+### Services retirés
 
-- **Image** : `redis:7-alpine`, utilisée telle quelle.
-- **Rôle** : sert à la fois de cache (`CACHE_STORE=redis`), de stockage des sessions (`SESSION_DRIVER=redis`) et de file d'attente pour `queue` (`QUEUE_CONNECTION=redis`). PHP s'y connecte via l'extension `redis` (`REDIS_CLIENT=phpredis`).
-- **Données** : persistées dans le volume `redis-data`.
-- **Healthcheck** : `redis-cli ping`.
-- **Accès** : port `FORWARD_REDIS_PORT` (6379 par défaut) exposé.
+Trois services ont été retirés parce que rien ne les utilisait encore. Ils reviendront quand une phase du plan (`docs/PLAN_REFONTE.md`) en aura besoin.
 
-#### `mailpit` — capture des e-mails
-
-- **Image** : `axllent/mailpit`, utilisée telle quelle.
-- **Rôle** : faux serveur SMTP. Laravel lui envoie tous les e-mails (`MAIL_MAILER=smtp`, `MAIL_HOST=mailpit`, `MAIL_PORT=1025`) et aucun n'est réellement envoyé.
-- **Accès** : les e-mails se consultent dans l'interface web sur le port `FORWARD_MAILPIT_DASHBOARD_PORT` (http://localhost:8025).
+| Service retiré | Remplacé par | Quand le remettre |
+|---|---|---|
+| `redis` | sessions et cache dans PostgreSQL (`SESSION_DRIVER=database`, `CACHE_STORE=database`) | seulement si la charge l'exige |
+| `queue` | exécution immédiate (`QUEUE_CONNECTION=sync`) | dès qu'un traitement doit tourner en arrière-plan (PDF de clôture de la main courante, envoi de messages, imports des connecteurs) : le remettre avec `QUEUE_CONNECTION=database`, sans Redis |
+| `mailpit` | e-mails écrits dans les journaux (`MAIL_MAILER=log`) | à l'arrivée du canal e-mail (module Communications), comme boîte de réception de test |
 
 ### Fichiers Docker
 
@@ -273,10 +263,12 @@ Les permissions (`<module>.<action>`) sont déclarées dans l'enum `App\Support\
 
 | Rôle | Profil |
 |---|---|
-| `admin` | administration technique, tous les droits |
-| `supervisor` | responsable du CSP : tout sauf la gestion des comptes |
-| `surveillance_agent` | équipe de surveillance : suivi, main courante, mouvements, consultation |
-| `inspector` | inspection / contrôle : consultation de l'historique, des inspections et des infractions |
+| `admin` | administration technique : comptes, rôles, paramètres, connecteurs, audit ; aucune décision métier |
+| `director` | voit tout et prend les décisions finales (refus de port, suspension de licence) |
+| `team_lead` | chef d'équipe, équivalent de l'ancien « responsable du CSP » : valide la saisie des agents, pilote l'équipe de quart |
+| `agent` | opérateur CSP ou inspecteur : suivi, main courante, mouvements, consultation |
+
+Les descriptions de ces rôles sont affichées dans la page des rôles ; pour un rôle personnalisé, elle est saisie par l'administrateur. Un administrateur peut modifier les permissions des rôles système, sauf celles du rôle `admin` (jeu fixe, pour éviter de se couper l'accès).
 
 Pour protéger une route : `->can(Permission::VesselsView->value)`. Pour afficher un élément de menu : passer `permission:` à `$navigation->add()`.
 

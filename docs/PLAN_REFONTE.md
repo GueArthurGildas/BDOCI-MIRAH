@@ -66,7 +66,7 @@ La cible est un système centré sur **un journal d'événements par navire** et
 6. **L'Admin n'a « aucune décision métier » (S-004)** alors que notre rôle `admin` possède toutes les permissions.
 7. **Rôles** : la spec définit Directeur / Chef d'équipe / Agent / Admin ; nous avons admin / supervisor / surveillance_agent / inspector (pas de Directeur). L'inspecteur est un **Agent** dans la spec.
 8. Le schéma v1 est écrit pour **MySQL 8** et en **français** : son auteur demande explicitement de le signaler si le projet est sur PostgreSQL.
-9. La spec demande de **travailler sur la branche `g`** ; le code courant est sur `y-branch` (où `g-branch` a été fusionnée).
+9. La spec demande de **travailler sur la branche `g`** ; nous gardons `g-branch` (collègue) et `y-branch` (le code courant, où `g-branch` a été fusionnée une première fois). L'auteur de la spec devra en être informé.
 
 ---
 
@@ -76,15 +76,15 @@ Chaque décision devient un **ADR** (`docs/decisions/NNNN-titre.md`, format : co
 
 | # | Décision | Options | Recommandation | Conséquence si on ne tranche pas |
 |---|---|---|---|---|
-| D1 | **Langue des identifiants** (tables, colonnes, classes) | A. français sans accents comme la spec ; B. anglais comme le code actuel, avec glossaire FR↔EN | **B** : règle déjà posée pour tout le code ; glossaire en annexe A et dans le guide | Deux conventions mélangées dans le même schéma |
-| D2 | **SGBD** | A. MySQL 8 (schéma v1) ; B. rester sur PostgreSQL 16 | **B** : déjà en place, `jsonb`, partitionnement déclaratif, triggers, PostGIS possible ; traduction du schéma à faire | Réécriture de l'infrastructure sans bénéfice |
-| D3 | **Géométrie** | A. JSON/GeoJSON comme aujourd'hui ; B. PostGIS | **B** (image `postgis/postgis:16`) : zones traversées, distance aux côtes, milles par zone (test de trajectoire, `regle_de_zone`) | Calculs géographiques faits à la main en PHP |
-| D4 | **Droits** | A. garder Spatie ; B. tables `role`, `groupe`, `action_catalog`, `permission` de la spec derrière les `Gate` | **B**, introduit en phase 1 en gardant les appels `can()` existants | Droits flexibles (§3.3) impossibles : pas de groupes, de portée zone ni de période |
-| D5 | **Rôles** | adopter Directeur / Chef d'équipe / Agent / Admin ; Admin sans droit métier ; inspecteur = Agent + habilitation | **Adopter** ; `supervisor` devient Chef d'équipe | Contradiction avec S-004 |
-| D6 | **Données existantes** | A. migrer ; B. repartir des seeders | **B** (hypothèse H1 : aucune donnée réelle) | Migrations de données lourdes et inutiles |
-| D7 | **Branche** | `g` (spec) ou `y-branch` (usage actuel) | **`y-branch`** comme branche d'intégration, `g-branch` retirée | Divergence silencieuse |
-| D8 | **Validateur des étapes** | qui valide chaque phase (« validation explicite de l'utilisateur ») | **Gildas** pour le métier, vous pour la technique | Phases enchaînées sans validation, contre la méthode imposée |
-| D9 | **Seuils par défaut** | silence VMS 4 h, alertes licence 30/60/90 | **Spec**, modifiables dans Paramètres | Deux valeurs en circulation |
+| D1 | **Langue des identifiants** (tables, colonnes, classes) | A. français sans accents comme la spec ; B. anglais comme le code actuel, avec glossaire FR↔EN | **Décidé : B.** Règle déjà posée pour tout le code ; glossaire en annexe A et dans le guide | Deux conventions mélangées dans le même schéma |
+| D2 | **SGBD** | A. MySQL 8 (schéma v1) ; B. rester sur PostgreSQL 16 | **Décidé : B.** Déjà en place, `jsonb`, partitionnement déclaratif, triggers ; traduction du schéma à faire | Réécriture de l'infrastructure sans bénéfice |
+| D3 | **Géométrie** | A. JSON/GeoJSON comme aujourd'hui ; B. PostGIS | **Décidé : B**, déjà en place (image `postgis/postgis:16-3.5`, extension activée par migration) : zones traversées, distance aux côtes, milles par zone (test de trajectoire, `regle_de_zone`) | Calculs géographiques faits à la main en PHP |
+| D4 | **Droits** | A. garder Spatie ; B. tables `role`, `groupe`, `action_catalog`, `permission` de la spec derrière les `Gate` | **B**, introduit en phase 1 en gardant les appels `can()` existants. **Livré en amont** : l'Admin crée, modifie et supprime des rôles et choisit leurs permissions (voir 3, point 4) | Droits flexibles (§3.3) impossibles : pas de groupes, de portée zone ni de période |
+| D5 | **Rôles** | adopter Directeur / Chef d'équipe / Agent / Admin ; Admin sans droit métier ; inspecteur = Agent + habilitation | **Décidé : adopter les quatre rôles** avec leurs noms directs (`admin`, `director`, `team_lead`, `agent`). `supervisor` devient Chef d'équipe, et la description du rôle le précise ; `inspector` disparaît (un inspecteur est un Agent titulaire d'une habilitation). Livré, voir 3, point 4 | Contradiction avec S-004 |
+| D6 | **Données existantes** | A. migrer ; B. repartir des seeders | **Décidé : B** (hypothèse H1 : aucune donnée réelle) ; la base de démo est reconstruite par `migrate:fresh --seed` | Migrations de données lourdes et inutiles |
+| D7 | **Branche** | `g` (spec) ou `y-branch` (usage actuel) | **Décidé : on conserve les deux branches personnelles** (`y-branch` et `g-branch`, celle du collègue), aucune n'est retirée. Reste à fixer comment elles s'intègrent (fusions de `g-branch` dans `y-branch`, ou passage par `main`) | Divergence silencieuse |
+| D8 | **Validateur des étapes** | qui valide chaque phase (« validation explicite de l'utilisateur ») | **Gildas** pour le métier, vous pour la technique (recommandation acceptée) | Phases enchaînées sans validation, contre la méthode imposée |
+| D9 | **Seuils par défaut** | silence VMS 4 h, alertes licence 30/60/90 | **Spec**, modifiables dans Paramètres (recommandation acceptée ; à appliquer en phases 3b et 4a) | Deux valeurs en circulation |
 
 **Hypothèses** : H1 aucune donnée de production à conserver ; H2 la validation métier de la spec par Gildas est acquise (« validée » dans son en-tête) ; H3 les points ouverts de la section 6 sont traités au fil des phases, pas avant.
 
@@ -98,6 +98,10 @@ Ces éléments sont à construire **avant** les modules, parce que tous en dépe
 2. **Journal d'événements** `vessel_events` et **état courant** `vessel_current_states`, plus une commande `vessels:rebuild-state`.
 3. **Registre des modules** `module_registry` (code, version, actif, dépendances), alimenté par les `ModuleServiceProvider`. Règle vérifiée par un test : un module ne dépend que du noyau.
 4. **Droits flexibles** : rôles avec parent, groupes, catalogue d'actions par module, permissions limitées par zone et période. Les 4 rôles de base et les 5 groupes de la spec sont créés par seeder.
+   - **Déjà livré** (sur Spatie) : page Rôles et permissions de l'Admin avec création, modification et suppression de rôles, choix des permissions par module, journal d'audit des changements. Rôles système non renommables ni supprimables ; rôle administrateur verrouillé (toutes les permissions, pour éviter de se couper l'accès) ; suppression refusée tant qu'un utilisateur porte le rôle.
+   - **Les permissions elles-mêmes sont le catalogue d'actions** : chaque module les déclare dans le code (une permission sans code qui la vérifie n'aurait aucun effet). L'Admin les accorde aux rôles ; une nouvelle permission apparaît quand un module livre une nouvelle action. Ce modèle se prolonge naturellement vers `action_catalog` en phase 1.
+   - **Quatre rôles livrés** : `admin`, `director`, `team_lead`, `agent`, chacun avec une description (traduite pour les rôles système, saisie par l'administrateur pour les rôles personnalisés). L'Admin n'a plus de droit métier (comptes, rôles, paramètres, connecteurs, audit, plus l'accès au tableau de bord, qui porte la santé des sources) ; Directeur et Chef d'équipe ont aujourd'hui les mêmes permissions, leur différence apparaîtra avec les actions de décision (phases 4 et 6).
+   - **Reste à faire** : groupes, héritage de rôles, portée zone/période.
 5. **Audit immuable** : triggers PostgreSQL qui refusent `UPDATE` et `DELETE` sur le journal, y compris pour l'Admin ; champs « demandé par » (agent IA), IP, avant/après.
 6. **Génériques** : documents (pièces rattachables à tout objet, PDF figés avec empreinte), commentaires (le modèle des commentaires de connecteurs devient générique), listes paramétrables, champs extensibles, seuils (`Settings` généralisé), étiquettes.
 7. **Utilisateurs** : type humain / agent_ia / système, fonction, téléphone, WhatsApp, chef d'équipe.
@@ -132,7 +136,7 @@ flowchart LR
 - Schéma physique v2 : traduction du schéma v1 en PostgreSQL et en anglais, validée par Gildas (annexe A = point de départ).
 - Squelette du guide du nouvel arrivant et glossaire (section 5).
 - Matrice d'acceptation UC01–UC29 / RG01–RG10 initialisée (tout en « à faire »).
-- Image Docker PostGIS (si D3).
+- ~~Image Docker PostGIS~~ : fait (voir `docs/TECHNICAL.md`, section Docker). `redis`, `queue` et `mailpit` ont été retirés, faute d'usage actuel ; ils reviendront avec les phases 3a, 5 et 7.
 
 **Critère de sortie** : ADR validés, schéma v2 validé, guide et matrice présents.
 
@@ -294,9 +298,9 @@ L'objectif : quelqu'un qui arrive sur le projet est autonome en une journée, et
 
 ## 8. Prochaines étapes
 
-1. Relire la section 2 et trancher **D1, D2, D4, D5** : ce sont les plus structurantes.
+1. Toutes les décisions D1 à D9 sont prises (D4 est amorcée). Reste à fixer le mode d'intégration entre `y-branch` et `g-branch`.
 2. Signaler à l'auteur de la spec les points de la section 1.4.
-3. Lancer la phase 0 : ADR, glossaire, schéma physique v2, squelette du guide.
+3. Lancer la phase 0 : ADR, glossaire, schéma physique v2, squelette du guide (l'image PostGIS est déjà en place).
 4. Démarrer la phase 1 par la tranche verticale « enregistrer une licence ».
 
 ---

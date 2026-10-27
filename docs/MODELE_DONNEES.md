@@ -1,5 +1,7 @@
 # Modèle de données — Système d'Information du CSP
 
+> **Rôles : mise à jour en attente.** Ce document décrit les anciens rôles (`admin`, `supervisor`, `surveillance_agent`, `inspector`). Depuis le 2026-10-27 les rôles sont `admin`, `director`, `team_lead` (ancien `supervisor`) et `agent` (qui inclut l'ancien `inspector`), et l'`admin` n'a plus de droit métier : voir `docs/TECHNICAL.md` (Droits d'accès). La réécriture de ce document est prévue dans `docs/PLAN_REFONTE.md` (matrice d'acceptation).
+
 Entités par module, dictionnaire de données et modèle conceptuel de données (MCD) global de la plateforme PRO-SURVEILLANCE PÊCHES.
 
 **Méthode.** Le périmètre (entités, attributs) est dérivé en priorité du contenu des documents de cadrage : `docs/CAHIER_DES_CHARGES.pdf` §5 « Modèle métier minimal » (entités et attributs minimaux attendus) et F-001 à F-014, `docs/CADRAGE.pdf` §VII « Modélisation par l'approche MERISE » (MCD cible, A1-A10, RG01-RG10). L'implémentation actuelle (`database/migrations/`, `app/Models/`, `app/Enums/`) n'est pas la source du périmètre — le projet est volontairement partiel à ce stade — elle sert uniquement à (a) donner les types/contraintes exacts des entités déjà codées et (b) établir un tableau d'écarts (§4). Les entités citées par les documents mais non encore codées sont donc incluses ci-dessous, marquées **[cible]**, avec des attributs/types proposés plutôt qu'omises. Voir aussi `docs/TECHNICAL.md` pour l'architecture applicative.
@@ -73,7 +75,7 @@ Rôles et permissions portés par le package `spatie/laravel-permission` :
 
 | Table | Rôle |
 |---|---|
-| `roles` (`id`, `name`, `guard_name`) | Rôle applicatif : `admin`, `supervisor`, `surveillance_agent`, `inspector` |
+| `roles` (`id`, `name`, `guard_name`) | Rôle applicatif : `admin`, `director`, `team_lead`, `agent` (anciennement `supervisor`, `surveillance_agent`, `inspector`) ; colonne `description` pour les rôles personnalisés |
 | `permissions` (`id`, `name`, `guard_name`) | Permission unitaire `<module>.<action>` |
 | `model_has_roles` | Association polymorphe `User` ↔ `Role` |
 | `model_has_permissions` | Association polymorphe `User` ↔ `Permission` (droits directs) |

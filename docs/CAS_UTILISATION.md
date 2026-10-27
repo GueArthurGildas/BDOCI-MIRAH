@@ -1,5 +1,7 @@
 # Cas d'utilisation (UML) — Système d'Information du CSP
 
+> **Rôles : mise à jour en attente.** Ce document décrit les anciens rôles (`admin`, `supervisor`, `surveillance_agent`, `inspector`). Depuis le 2026-10-27 les rôles sont `admin`, `director`, `team_lead` (ancien `supervisor`) et `agent` (qui inclut l'ancien `inspector`), et l'`admin` n'a plus de droit métier : voir `docs/TECHNICAL.md` (Droits d'accès). La réécriture de ce document est prévue dans `docs/PLAN_REFONTE.md` (matrice d'acceptation).
+
 Diagrammes de cas d'utilisation par module et diagramme global de la plateforme PRO-SURVEILLANCE PÊCHES.
 
 **Méthode et notation.** Les acteurs et cas d'utilisation sont dérivés de `docs/CAHIER_DES_CHARGES.pdf` (F-001 à F-014) et `docs/CADRAGE.pdf` (§II « Périmètre métier », §IV « Matrice des activités », §V « Acteurs et responsabilités »), puis confrontés au RBAC et aux routes réellement codés (`app/Support/Authorization/{Role,Permission}.php`, `modules/*/routes/web.php`) pour obtenir des cas d'utilisation exacts (pas d'approximation sur qui peut faire quoi). Les cas d'utilisation décrits par les documents mais non routés dans le code sont marqués **[cible]** et dessinés en traits pointillés, suivant la même règle méthodologique que `docs/MODELE_DONNEES.md` ([[feedback-spec-driven-modeling]]) : le périmètre vient des documents, le code sert à vérifier la couverture.
