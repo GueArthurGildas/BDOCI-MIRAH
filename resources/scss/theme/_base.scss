@@ -1,0 +1,21 @@
+html,
+body {
+    min-height: 100%;
+    background: var(--gs-bg);
+    color: var(--gs-ink-soft);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--gs-font-title);
+    color: var(--gs-ink);
+}
+
+a {
+    color: var(--gs-orange-dark);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+    }
+}

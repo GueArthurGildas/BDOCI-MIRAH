@@ -1,0 +1,116 @@
+.gs-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 16px 0;
+    background: var(--gs-orange);
+    border-bottom: 4px solid var(--gs-black);
+}
+
+.gs-tabs {
+    display: flex;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.gs-tab a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 18px;
+    border-radius: var(--gs-radius) var(--gs-radius) 0 0;
+    background: rgba(0, 0, 0, .14);
+    color: #fff;
+    font: 600 .9rem var(--gs-font-title);
+    white-space: nowrap;
+    text-decoration: none;
+    transition: background .15s;
+
+    &:hover {
+        background: rgba(0, 0, 0, .28);
+    }
+}
+
+.gs-tab.active a {
+    background: var(--gs-surface);
+    color: var(--gs-orange-dark);
+    border-bottom: 4px solid var(--gs-green);
+}
+
+.gs-tools {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 0;
+    padding: 0 0 8px;
+    list-style: none;
+
+    > li {
+        display: flex;
+        align-items: center;
+    }
+
+    > li > a,
+    .dropdown-toggle {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: #fff;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .img-radius {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .dropdown-menu {
+        border: 0;
+        border-radius: var(--gs-radius);
+        box-shadow: var(--gs-shadow-raised);
+
+        a {
+            display: block;
+            padding: 8px 16px;
+            color: var(--gs-ink);
+        }
+    }
+}
+
+@media (max-width: 991.98px) {
+    .gs-tools .gs-user-name {
+        display: none;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .gs-topbar {
+        flex-wrap: wrap;
+    }
+
+    .gs-tools {
+        order: -1;
+        justify-content: flex-end;
+        width: 100%;
+        padding: 0 0 6px;
+    }
+
+    .gs-tabs {
+        width: 100%;
+    }
+}

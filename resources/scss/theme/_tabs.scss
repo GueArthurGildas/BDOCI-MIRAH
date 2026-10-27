@@ -1,0 +1,36 @@
+.tab-header .md-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 8px;
+    border-bottom: 0;
+    scrollbar-width: thin;
+
+    .slide {
+        display: none;
+    }
+
+    .nav-item {
+        flex: 0 0 auto;
+        width: auto;
+    }
+
+    .nav-item a.nav-link {
+        margin: 0 4px 0 0;
+        padding: 10px 18px !important;
+        background: var(--gs-sunken);
+        border-radius: var(--gs-radius-sm);
+        color: var(--gs-ink-soft);
+        font: 600 .9rem var(--gs-font-title);
+        white-space: nowrap;
+
+        &:hover {
+            background: var(--gs-orange-tint);
+            color: var(--gs-orange-dark);
+        }
+
+        &.active {
+            background: var(--gs-orange-dark);
+            color: #fff;
+        }
+    }
+}

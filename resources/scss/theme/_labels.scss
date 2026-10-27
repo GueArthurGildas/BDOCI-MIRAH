@@ -1,0 +1,18 @@
+.label {
+    padding: 4px 10px;
+    border-radius: var(--gs-radius-sm);
+    color: #fff;
+    font: 700 .72rem var(--gs-font-title);
+}
+
+.label-primary,
+.label-warning { background: var(--gs-orange-dark); }
+.label-success { background: var(--gs-green); }
+.label-danger { background: var(--gs-red); }
+.label-info { background: var(--gs-blue); }
+.label-inverse { background: var(--gs-black); }
+
+.label-default {
+    background: var(--gs-sunken);
+    color: var(--gs-ink) !important;
+}

@@ -36,4 +36,9 @@ final class Navigation
             ])
             ->filter(fn (Collection $items) => $items->isNotEmpty());
     }
+
+    public function activeItemFor(?Authorizable $user): ?NavigationItem
+    {
+        return $this->groupsFor($user)->flatten(1)->first(fn (NavigationItem $item) => $item->isActive());
+    }
 }

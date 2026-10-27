@@ -1,0 +1,24 @@
+@mixin solid-button($color, $hover) {
+    background: $color;
+    border-color: $color;
+    color: #fff;
+
+    &:hover,
+    &:focus {
+        background: $hover;
+        border-color: $hover;
+        color: #fff;
+    }
+}
+
+@mixin outline-button($color) {
+    background: transparent;
+    border-color: $color;
+    color: $color;
+
+    &:hover,
+    &:focus {
+        background: $color;
+        color: #fff;
+    }
+}

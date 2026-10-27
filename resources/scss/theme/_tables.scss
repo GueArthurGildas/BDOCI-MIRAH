@@ -1,0 +1,38 @@
+.table {
+    > thead > tr > th {
+        padding: 12px 14px;
+        background: var(--gs-black);
+        border: 0;
+        border-bottom: 3px solid var(--gs-orange);
+        color: #fff;
+        font: 700 .72rem var(--gs-font-title);
+        letter-spacing: .04em;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    td {
+        padding: 12px 14px;
+        border-color: var(--gs-line);
+        vertical-align: middle;
+    }
+
+    &.table-hover tbody tr:hover {
+        background: var(--gs-orange-tint);
+    }
+}
+
+.pagination {
+    margin-bottom: 0;
+}
+
+.page-link {
+    border-radius: var(--gs-radius-sm);
+    color: var(--gs-ink);
+}
+
+.page-item.active .page-link {
+    background: var(--gs-orange);
+    border-color: var(--gs-orange);
+    color: #fff;
+}

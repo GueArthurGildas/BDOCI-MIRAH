@@ -22,9 +22,9 @@ final readonly class NavigationItem
 
     public function isActive(): bool
     {
-        $routePrefix = str($this->route)->beforeLast('.')->toString();
+        $routeBase = str($this->route)->chopEnd('.index')->toString();
 
-        return request()->routeIs($this->route, "{$routePrefix}.*");
+        return request()->routeIs($this->route, "{$routeBase}.*");
     }
 
     public function isVisibleTo(?Authorizable $user): bool

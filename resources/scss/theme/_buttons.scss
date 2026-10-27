@@ -1,0 +1,19 @@
+.btn {
+    border: 1px solid transparent;
+    border-radius: var(--gs-radius-sm);
+    font-weight: 600;
+}
+
+.btn-primary,
+.btn-warning { @include solid-button(var(--gs-orange-dark), var(--gs-orange-darker)); }
+.btn-success { @include solid-button(var(--gs-green), var(--gs-green-dark)); }
+.btn-danger { @include solid-button(var(--gs-red), var(--gs-red-dark)); }
+.btn-info { @include solid-button(var(--gs-blue), var(--gs-blue-dark)); }
+.btn-secondary { @include solid-button(var(--gs-navy), var(--gs-navy-dark)); }
+.btn-inverse,
+.btn-dark { @include solid-button(var(--gs-black), var(--gs-ink-soft)); }
+
+.btn-outline-primary { @include outline-button(var(--gs-orange-dark)); }
+.btn-outline-success { @include outline-button(var(--gs-green)); }
+.btn-outline-danger { @include outline-button(var(--gs-red)); }
+.btn-outline-info { @include outline-button(var(--gs-blue)); }

@@ -14,4 +14,15 @@
 @import "pages/timeline";
 @import "layout";
 @import "components";
-@import "gesica";   // thème GESICA : toujours en dernier
+@import "theme/tokens";
+@import "theme/mixins";
+@import "theme/base";
+@import "theme/topbar";
+@import "theme/shell";
+@import "theme/page-header";
+@import "theme/cards";
+@import "theme/tables";
+@import "theme/buttons";
+@import "theme/forms";
+@import "theme/labels";
+@import "theme/tabs";
