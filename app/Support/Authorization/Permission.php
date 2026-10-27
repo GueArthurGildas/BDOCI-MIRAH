@@ -23,5 +23,7 @@ enum Permission: string
     case MissionsManage = 'missions.manage';
     case UsersManage = 'users.manage';
     case ConnectorsView = 'connectors.view';
+    case ConnectorsManage = 'connectors.manage';
+    case SettingsManage = 'settings.manage';
     case AuditView = 'audit.view';
 }

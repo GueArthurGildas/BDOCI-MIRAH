@@ -1,6 +1,6 @@
-@props(['label', 'value', 'icon', 'color' => 'warning', 'footer' => null])
+@props(['label', 'value', 'icon', 'color' => 'warning', 'footer' => null, 'compact' => false])
 
-<div class="card gs-stat is-{{ $color }}">
+<div @class(['card', 'gs-stat', 'is-'.$color, 'is-compact' => $compact])>
     <div class="gs-stat-icon"><i class="feather {{ $icon }}"></i></div>
     <div>
         <p class="gs-stat-value">{{ $value }}</p>

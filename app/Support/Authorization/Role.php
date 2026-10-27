@@ -29,7 +29,7 @@ enum Role: string
             self::Admin => Permission::cases(),
             self::Supervisor => array_values(array_filter(
                 Permission::cases(),
-                fn (Permission $permission) => $permission !== Permission::UsersManage,
+                fn (Permission $permission) => ! in_array($permission, [Permission::UsersManage, Permission::SettingsManage], true),
             )),
             self::SurveillanceAgent => [
                 Permission::DashboardView,

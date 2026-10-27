@@ -26,6 +26,6 @@ class DatabaseSeeder extends Seeder
             User::factory()->create(['email' => $email])->assignRole($role->value);
         }
 
-        $this->call(DemoDataSeeder::class);
+        $this->call([DemoDataSeeder::class, ConnectorActivitySeeder::class]);
     }
 }

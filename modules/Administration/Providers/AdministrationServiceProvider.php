@@ -15,6 +15,7 @@ class AdministrationServiceProvider extends ModuleServiceProvider
             ->add('administration::administration.users.title', 'administration.users.index', 'icon-users', NavigationGroup::Administration, order: 10, permission: Permission::UsersManage->value)
             ->add('administration::administration.roles.title', 'administration.roles', 'icon-shield', NavigationGroup::Administration, order: 20, permission: Permission::UsersManage->value)
             ->add('administration::administration.connectors.title', 'administration.connectors', 'icon-activity', NavigationGroup::Administration, order: 30, permission: Permission::ConnectorsView->value)
-            ->add('administration::administration.audit.title', 'administration.audit', 'icon-clipboard', NavigationGroup::Administration, order: 40, permission: Permission::AuditView->value);
+            ->add('administration::administration.audit.title', 'administration.audit', 'icon-clipboard', NavigationGroup::Administration, order: 40, permission: Permission::AuditView->value)
+            ->add('administration::settings.title', 'administration.settings', 'icon-settings', NavigationGroup::Administration, order: 50, permission: Permission::SettingsManage->value);
     }
 }

@@ -10,18 +10,20 @@ use Modules\Tracking\Notifications\BeaconsSilentAlert;
 
 class NotifySilentBeacons extends Command
 {
-    private const COOLDOWN_HOURS = 4;
-
     protected $signature = 'tracking:notify-silent-beacons';
 
     protected $description = 'Notify tracking viewers when installed beacons stopped emitting';
 
     public function handle(Notifier $notifier): int
     {
+        if (! config('surveillance.alerts.beacons_silent.enabled')) {
+            return self::SUCCESS;
+        }
+
         $count = SilentBeacons::vessels()->count();
 
         if ($count > 0) {
-            $notifier->notifyPermissionHolders(Permission::TrackingView, new BeaconsSilentAlert($count), self::COOLDOWN_HOURS);
+            $notifier->notifyPermissionHolders(Permission::TrackingView, new BeaconsSilentAlert($count), config('surveillance.alerts.beacons_silent.cooldown_hours'));
         }
 
         return self::SUCCESS;

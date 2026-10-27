@@ -3,6 +3,7 @@
 namespace Modules\Administration\Tests\Feature;
 
 use App\Models\DataSource;
+use App\Models\DataSourceRejection;
 use App\Support\Authorization\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -14,9 +15,13 @@ class MonitoringPagesTest extends TestCase
     public function test_connectors_page_shows_each_data_source(): void
     {
         $this->signInAs(Role::Supervisor);
-        DataSource::factory()->create(['name' => 'e-inspection', 'rejected_count' => 3]);
+        $source = DataSource::factory()->create(['name' => 'e-inspection']);
+        DataSourceRejection::factory()->count(3)->for($source)->create();
 
-        $this->get('/administration/connectors')->assertOk()->assertSee('e-inspection');
+        $this->get('/administration/connectors')
+            ->assertOk()
+            ->assertSee('e-inspection')
+            ->assertViewHas('dataSources', fn ($sources) => $sources->first()->pending_rejections_count === 3);
     }
 
     public function test_sign_ins_appear_in_the_audit_log(): void

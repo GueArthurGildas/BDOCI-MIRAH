@@ -36,7 +36,7 @@ class DashboardController extends Controller
             'zonesChart' => $this->zonesChart($now),
             'infractionsChart' => $this->infractionsChart(),
             'inspectionsChart' => $this->inspectionsChart($now),
-            'dataSources' => DataSource::orderBy('name')->get(),
+            'dataSources' => DataSource::withIssueCounts()->orderBy('name')->get(),
             'pendingObservations' => Observation::pending()->with('vessel')->latest('observed_at')->limit(self::LATEST_OBSERVATIONS_LIMIT)->get(),
         ]);
     }

@@ -2,6 +2,19 @@
     border: 1px solid transparent;
     border-radius: var(--gs-radius-sm);
     font-weight: 600;
+    text-transform: none;
+}
+
+.btn-default {
+    background: var(--gs-surface);
+    border-color: var(--gs-line);
+    color: var(--gs-ink);
+
+    &:hover,
+    &:focus {
+        background: var(--gs-sunken);
+        color: var(--gs-ink);
+    }
 }
 
 .btn-primary,

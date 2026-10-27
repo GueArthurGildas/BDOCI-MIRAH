@@ -118,4 +118,32 @@ return [
         'degraded' => 'Degraded',
         'down' => 'Down',
     ],
+
+    'connector_error_code' => [
+        'timeout' => 'Timeout',
+        'connection_refused' => 'Connection refused',
+        'unauthorized' => 'Unauthorized',
+        'invalid_response' => 'Invalid response',
+        'parsing_failed' => 'Parsing failed',
+    ],
+
+    'rejection_reason' => [
+        'missing_field' => 'Missing field',
+        'invalid_value' => 'Invalid value',
+        'duplicate_record' => 'Duplicate record',
+        'unknown_vessel' => 'Unknown vessel',
+        'out_of_zone' => 'Outside authorized zone',
+    ],
+
+    'rejection_status' => [
+        'pending' => 'To review',
+        'corrected' => 'Corrected',
+        'dismissed' => 'Dismissed',
+    ],
+
+    'connector_comment_kind' => [
+        'note' => 'Note',
+        'status' => 'Situation update',
+        'action' => 'Operation launched',
+    ],
 ];

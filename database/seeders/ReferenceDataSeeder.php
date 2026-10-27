@@ -120,22 +120,20 @@ class ReferenceDataSeeder extends Seeder
     private function seedDataSources(): void
     {
         $sources = [
-            ['vms-themis', 'VMS / THEMIS', DataSourceKind::Api, DataSourceStatus::Operational, now()->subMinutes(5), 0, 0],
-            ['e-inspection', 'e-inspection', DataSourceKind::Database, DataSourceStatus::Operational, now()->subHour(), 0, 3],
-            ['missions', 'Opérations / Missions', DataSourceKind::Api, DataSourceStatus::Degraded, now()->subHours(7), 2, 0],
-            ['supervision-reports', 'Rapports et supervision', DataSourceKind::File, DataSourceStatus::Operational, now()->subDay(), 0, 1],
-            ['foreign-vessels', 'Navires étrangers', DataSourceKind::Database, DataSourceStatus::Down, now()->subDays(4), 5, 12],
+            ['vms-themis', 'VMS / THEMIS', DataSourceKind::Api, DataSourceStatus::Operational, now()->subMinutes(5)],
+            ['e-inspection', 'e-inspection', DataSourceKind::Database, DataSourceStatus::Operational, now()->subHour()],
+            ['missions', 'Opérations / Missions', DataSourceKind::Api, DataSourceStatus::Degraded, now()->subHours(7)],
+            ['supervision-reports', 'Rapports et supervision', DataSourceKind::File, DataSourceStatus::Operational, now()->subDay()],
+            ['foreign-vessels', 'Navires étrangers', DataSourceKind::Database, DataSourceStatus::Down, now()->subDays(4)],
         ];
 
-        foreach ($sources as [$key, $name, $kind, $status, $lastSyncedAt, $errorCount, $rejectedCount]) {
+        foreach ($sources as [$key, $name, $kind, $status, $lastSyncedAt]) {
             DataSource::create([
                 'key' => $key,
                 'name' => $name,
                 'kind' => $kind,
                 'status' => $status,
                 'last_synced_at' => $lastSyncedAt,
-                'error_count' => $errorCount,
-                'rejected_count' => $rejectedCount,
             ]);
         }
     }

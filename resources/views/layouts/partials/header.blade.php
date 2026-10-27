@@ -18,6 +18,8 @@
                    data-notification-beacon
                    data-feed-url="{{ route('notifications.feed') }}"
                    data-interval="{{ config('surveillance.notification_poll_seconds') * 1000 }}"
+                   data-toast-seconds="{{ config('surveillance.notification_toast_seconds') }}"
+                   data-max-toasts="{{ config('surveillance.notification_max_toasts') }}"
                    data-close-label="{{ __('ui.close') }}">
                     <i class="feather icon-bell"></i>
                     <span class="gs-beacon-dot"></span>

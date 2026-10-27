@@ -1,6 +1,4 @@
 const TOASTED_STORAGE_KEY = 'gs.toasted-notifications';
-const MAX_TOASTS = 3;
-const TOAST_DURATION_MS = 8000;
 const COUNT_CAP = 99;
 
 function readToastedIds() {
@@ -42,7 +40,7 @@ function element(tag, className, text) {
     return node;
 }
 
-function buildToast(item, closeLabel) {
+function buildToast(item, closeLabel, durationMs) {
     const toast = element('div', `gs-toast is-${item.level}`);
     toast.setAttribute('role', 'status');
 
@@ -60,7 +58,7 @@ function buildToast(item, closeLabel) {
 
     const dismiss = () => toast.remove();
     close.addEventListener('click', dismiss);
-    setTimeout(dismiss, TOAST_DURATION_MS);
+    setTimeout(dismiss, durationMs);
 
     toast.append(icon, body, close);
 
@@ -72,11 +70,11 @@ function updateBeacon(beacon, unread) {
     beacon.classList.toggle('has-alerts', unread > 0);
 }
 
-function showNewToasts(items, closeLabel) {
+function showNewToasts(items, { closeLabel, maxToasts, durationMs }) {
     const toasted = readToastedIds();
     const fresh = items.filter((item) => !toasted.has(item.id));
 
-    fresh.slice(0, MAX_TOASTS).forEach((item) => toastContainer().appendChild(buildToast(item, closeLabel)));
+    fresh.slice(0, maxToasts).forEach((item) => toastContainer().appendChild(buildToast(item, closeLabel, durationMs)));
     fresh.forEach((item) => toasted.add(item.id));
     writeToastedIds(toasted);
 }
@@ -89,6 +87,11 @@ export function initNotifications() {
     }
 
     const { feedUrl, interval, closeLabel } = beacon.dataset;
+    const toastOptions = {
+        closeLabel,
+        maxToasts: Number(beacon.dataset.maxToasts),
+        durationMs: Number(beacon.dataset.toastSeconds) * 1000,
+    };
 
     async function poll() {
         if (document.hidden) {
@@ -107,7 +110,7 @@ export function initNotifications() {
 
             const feed = await response.json();
             updateBeacon(beacon, feed.unread);
-            showNewToasts(feed.items, closeLabel);
+            showNewToasts(feed.items, toastOptions);
         } catch {
             return;
         }

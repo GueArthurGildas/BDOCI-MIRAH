@@ -70,6 +70,10 @@
     &.is-danger { --stat-color: var(--gs-red); }
     &.is-info { --stat-color: var(--gs-blue); }
 
+    &.is-compact .gs-stat-value {
+        font-size: 1.05rem;
+    }
+
     .gs-stat-icon {
         display: flex;
         flex: 0 0 52px;

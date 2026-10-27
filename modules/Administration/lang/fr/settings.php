@@ -1,0 +1,37 @@
+<?php
+
+return [
+    'title' => 'Paramètres',
+    'subtitle' => 'Comportement des notifications et seuils d\'alerte (aucune valeur sensible)',
+    'saved' => 'Paramètres enregistrés.',
+    'reset' => 'Rétablir les valeurs par défaut',
+    'reset_done' => 'Les paramètres par défaut ont été rétablis.',
+    'default' => 'Par défaut : :value',
+    'range' => 'De :min à :max',
+    'customized' => 'Personnalisé',
+    'groups' => [
+        'browser' => [
+            'title' => 'Notifications dans le navigateur',
+            'description' => 'Fréquence de vérification de la balise et affichage des notifications flottantes',
+        ],
+        'beacons' => [
+            'title' => 'Alerte balises muettes',
+            'description' => 'Émise lorsque des balises installées cessent d\'émettre',
+        ],
+        'licenses' => [
+            'title' => 'Alerte licences à échéance',
+            'description' => 'Émise lorsque des licences arrivent bientôt à échéance',
+        ],
+    ],
+    'fields' => [
+        'notifications_poll_seconds' => 'Vérifier les nouvelles notifications toutes les (secondes)',
+        'notifications_toast_seconds' => 'Durée d\'affichage des notifications flottantes (secondes)',
+        'notifications_max_toasts' => 'Nombre maximal de notifications flottantes par vérification',
+        'alerts_beacons_silent_enabled' => 'Envoyer l\'alerte',
+        'alerts_beacons_silent_threshold_hours' => 'Une balise est muette après (heures sans émission)',
+        'alerts_beacons_silent_cooldown_hours' => 'Délai minimal entre deux alertes (heures)',
+        'alerts_licenses_expiring_enabled' => 'Envoyer l\'alerte',
+        'alerts_licenses_expiring_warning_days' => 'Une licence arrive à échéance dans (jours)',
+        'alerts_licenses_expiring_cooldown_hours' => 'Délai minimal entre deux alertes (heures)',
+    ],
+];

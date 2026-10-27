@@ -118,4 +118,32 @@ return [
         'degraded' => 'Dégradée',
         'down' => 'Indisponible',
     ],
+
+    'connector_error_code' => [
+        'timeout' => 'Délai dépassé',
+        'connection_refused' => 'Connexion refusée',
+        'unauthorized' => 'Accès refusé',
+        'invalid_response' => 'Réponse invalide',
+        'parsing_failed' => 'Lecture impossible',
+    ],
+
+    'rejection_reason' => [
+        'missing_field' => 'Champ manquant',
+        'invalid_value' => 'Valeur invalide',
+        'duplicate_record' => 'Doublon',
+        'unknown_vessel' => 'Navire inconnu',
+        'out_of_zone' => 'Hors zone autorisée',
+    ],
+
+    'rejection_status' => [
+        'pending' => 'À examiner',
+        'corrected' => 'Corrigé',
+        'dismissed' => 'Écarté',
+    ],
+
+    'connector_comment_kind' => [
+        'note' => 'Note',
+        'status' => 'Point de situation',
+        'action' => 'Opération lancée',
+    ],
 ];
