@@ -18,8 +18,6 @@ x-app: &app
   depends_on:
     postgres:
       condition: service_healthy
-    redis:
-      condition: service_healthy
   networks:
     - laravel
 
@@ -41,13 +39,6 @@ services:
     networks:
       - laravel
 
-  queue:
-    <<: *app
-    restart: unless-stopped
-    command: php artisan queue:work --tries=3 --timeout=90
-    depends_on:
-      - app
-
   scheduler:
     <<: *app
     restart: unless-stopped
@@ -68,7 +59,7 @@ services:
       - laravel
 
   postgres:
-    image: postgres:16
+    image: postgis/postgis:16-3.5
     restart: unless-stopped
     ports:
       - "127.0.0.1:${FORWARD_DB_PORT:-5435}:5432"
@@ -87,29 +78,6 @@ services:
     networks:
       - laravel
 
-  redis:
-    image: redis:7-alpine
-    restart: unless-stopped
-    ports:
-      - "127.0.0.1:${FORWARD_REDIS_PORT:-6379}:6379"
-    volumes:
-      - redis-data:/data
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 5s
-      timeout: 3s
-      retries: 10
-    networks:
-      - laravel
-
-  mailpit:
-    image: axllent/mailpit:latest
-    restart: unless-stopped
-    ports:
-      - "127.0.0.1:${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025"
-    networks:
-      - laravel
-
 networks:
   laravel:
     driver_opts:
@@ -117,4 +85,3 @@ networks:
 
 volumes:
   postgres-data:
-  redis-data:
