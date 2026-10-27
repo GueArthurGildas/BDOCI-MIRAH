@@ -12,6 +12,19 @@
     </ul>
 
     <ul class="gs-tools">
+        @if (Route::has('notifications.feed'))
+            <li>
+                <a href="{{ route('notifications.index') }}" class="gs-beacon" title="{{ __('ui.notifications') }}"
+                   data-notification-beacon
+                   data-feed-url="{{ route('notifications.feed') }}"
+                   data-interval="{{ config('surveillance.notification_poll_seconds') * 1000 }}"
+                   data-close-label="{{ __('ui.close') }}">
+                    <i class="feather icon-bell"></i>
+                    <span class="gs-beacon-dot"></span>
+                    <span class="gs-beacon-count" data-notification-count>0</span>
+                </a>
+            </li>
+        @endif
         @if (Route::has('search'))
             <li>
                 <a href="{{ route('search') }}" title="{{ __('ui.search') }}"><i class="feather icon-search"></i></a>

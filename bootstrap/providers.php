@@ -11,6 +11,7 @@ use Modules\Licenses\Providers\LicensesServiceProvider;
 use Modules\Logbook\Providers\LogbookServiceProvider;
 use Modules\Missions\Providers\MissionsServiceProvider;
 use Modules\Movements\Providers\MovementsServiceProvider;
+use Modules\Notifications\Providers\NotificationsServiceProvider;
 use Modules\Search\Providers\SearchServiceProvider;
 use Modules\Tracking\Providers\TrackingServiceProvider;
 use Modules\Vessels\Providers\VesselsServiceProvider;
@@ -27,6 +28,7 @@ return [
     LogbookServiceProvider::class,
     MissionsServiceProvider::class,
     MovementsServiceProvider::class,
+    NotificationsServiceProvider::class,
     SearchServiceProvider::class,
     TrackingServiceProvider::class,
     VesselsServiceProvider::class,

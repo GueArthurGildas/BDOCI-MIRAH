@@ -9,6 +9,7 @@ return [
     'filter' => 'Filter',
     'reset' => 'Reset',
     'search' => 'Search',
+    'notifications' => 'Notifications',
     'fullscreen' => 'Full screen',
     'guide_in_progress' => 'Guide in progress',
     'user_guide' => 'User guide',

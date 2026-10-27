@@ -2,7 +2,6 @@
 
 namespace Modules\Dashboard\Http\Controllers;
 
-use App\Enums\BeaconStatus;
 use App\Enums\InfractionStatus;
 use App\Enums\LicenseStatus;
 use App\Enums\VesselStatus;
@@ -15,6 +14,7 @@ use App\Models\License;
 use App\Models\Observation;
 use App\Models\Vessel;
 use App\Models\Zone;
+use App\Queries\SilentBeacons;
 use App\Queries\ZoneSituation;
 use App\Support\Presentation\ThemeColor;
 use Illuminate\Support\Carbon;
@@ -43,15 +43,11 @@ class DashboardController extends Controller
 
     private function keyFigures(): array
     {
-        $monitoredVessels = Vessel::whereHas('trackingDevices', fn ($query) => $query->whereNull('removed_at'))
-            ->with('latestPosition')
-            ->get();
-
         return [
             ['label' => 'active_vessels', 'value' => Vessel::where('status', VesselStatus::Active)->count(), 'icon' => 'icon-anchor', 'color' => 'success'],
             ['label' => 'expiring_licenses', 'value' => License::withStatus(LicenseStatus::Expiring)->count(), 'icon' => 'icon-file-text', 'color' => 'warning'],
             ['label' => 'pending_observations', 'value' => Observation::pending()->count(), 'icon' => 'icon-book', 'color' => 'info'],
-            ['label' => 'silent_beacons', 'value' => $monitoredVessels->filter(fn (Vessel $vessel) => $vessel->beaconStatus() === BeaconStatus::Silent)->count(), 'icon' => 'icon-radio', 'color' => 'danger'],
+            ['label' => 'silent_beacons', 'value' => SilentBeacons::vessels()->count(), 'icon' => 'icon-radio', 'color' => 'danger'],
         ];
     }
 

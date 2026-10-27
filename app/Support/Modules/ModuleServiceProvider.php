@@ -3,6 +3,7 @@
 namespace App\Support\Modules;
 
 use App\Support\Navigation\Navigation;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
@@ -17,10 +18,25 @@ abstract class ModuleServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom($this->modulePath('lang'), $this->moduleNamespace());
 
         $this->callAfterResolving(Navigation::class, $this->navigation(...));
+        $this->callAfterResolving(Schedule::class, $this->schedule(...));
+
+        if ($this->app->runningInConsole()) {
+            $this->commands($this->consoleCommands());
+        }
     }
 
     protected function navigation(Navigation $navigation): void
     {
+    }
+
+    protected function schedule(Schedule $schedule): void
+    {
+    }
+
+    /** @return array<int, class-string> */
+    protected function consoleCommands(): array
+    {
+        return [];
     }
 
     protected function moduleNamespace(): string

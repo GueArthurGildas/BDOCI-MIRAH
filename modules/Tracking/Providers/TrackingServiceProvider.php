@@ -6,6 +6,8 @@ use App\Support\Authorization\Permission;
 use App\Support\Modules\ModuleServiceProvider;
 use App\Support\Navigation\Navigation;
 use App\Support\Navigation\NavigationGroup;
+use Illuminate\Console\Scheduling\Schedule;
+use Modules\Tracking\Console\NotifySilentBeacons;
 
 class TrackingServiceProvider extends ModuleServiceProvider
 {
@@ -17,5 +19,15 @@ class TrackingServiceProvider extends ModuleServiceProvider
             ->add('tracking::tracking.map.title', 'tracking.map', 'icon-map', NavigationGroup::Surveillance, order: 10, permission: $permission)
             ->add('tracking::tracking.zones.title', 'tracking.zones', 'icon-bar-chart-2', NavigationGroup::Surveillance, order: 20, permission: $permission)
             ->add('tracking::tracking.beacons.title', 'tracking.beacons', 'icon-radio', NavigationGroup::Surveillance, order: 30, permission: $permission);
+    }
+
+    protected function schedule(Schedule $schedule): void
+    {
+        $schedule->command(NotifySilentBeacons::class)->everyFifteenMinutes()->withoutOverlapping();
+    }
+
+    protected function consoleCommands(): array
+    {
+        return [NotifySilentBeacons::class];
     }
 }

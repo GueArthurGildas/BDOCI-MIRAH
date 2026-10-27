@@ -9,6 +9,7 @@ return [
     'filter' => 'Filtrer',
     'reset' => 'Réinitialiser',
     'search' => 'Rechercher',
+    'notifications' => 'Notifications',
     'fullscreen' => 'Plein écran',
     'guide_in_progress' => 'Guide en cours de rédaction',
     'user_guide' => 'Guide utilisateur',
