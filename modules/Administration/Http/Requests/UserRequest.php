@@ -2,7 +2,6 @@
 
 namespace Modules\Administration\Http\Requests;
 
-use App\Support\Authorization\Role;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
@@ -22,7 +21,7 @@ class UserRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user)],
             'team_id' => ['nullable', 'exists:teams,id'],
-            'role' => ['required', Rule::enum(Role::class)],
+            'role' => ['required', Rule::exists('roles', 'name')],
             'is_active' => ['boolean', Rule::when($user?->is($this->user()), ['accepted'])],
             'password' => [$user ? 'nullable' : 'required', 'confirmed', Password::defaults()],
         ];

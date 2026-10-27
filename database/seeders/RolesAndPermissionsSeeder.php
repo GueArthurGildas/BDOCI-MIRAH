@@ -20,9 +20,11 @@ class RolesAndPermissionsSeeder extends Seeder
         app(PermissionRegistrar::class)->forgetCachedPermissions();
 
         foreach (Role::cases() as $role) {
-            RoleModel::findOrCreate($role->value)->syncPermissions(
-                array_map(fn (Permission $permission) => $permission->value, $role->permissions()),
-            );
+            $model = RoleModel::findOrCreate($role->value);
+
+            if ($model->wasRecentlyCreated || $role === Role::Admin) {
+                $model->syncPermissions(array_map(fn (Permission $permission) => $permission->value, $role->permissions()));
+            }
         }
     }
 }

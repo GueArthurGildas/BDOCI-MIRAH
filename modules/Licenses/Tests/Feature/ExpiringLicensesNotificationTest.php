@@ -13,7 +13,7 @@ class ExpiringLicensesNotificationTest extends TestCase
 
     public function test_license_viewers_are_notified_with_the_number_of_expiring_licenses(): void
     {
-        $inspector = $this->signInAs(Role::Inspector);
+        $inspector = $this->signInAs(Role::Agent);
         License::factory()->expiringIn(10)->count(2)->create();
         License::factory()->expiringIn(120)->create();
 
@@ -25,7 +25,7 @@ class ExpiringLicensesNotificationTest extends TestCase
 
     public function test_nobody_is_notified_without_expiring_licenses(): void
     {
-        $inspector = $this->signInAs(Role::Inspector);
+        $inspector = $this->signInAs(Role::Agent);
         License::factory()->expiringIn(120)->create();
 
         $this->artisan('licenses:notify-expiring')->assertSuccessful();
@@ -35,7 +35,7 @@ class ExpiringLicensesNotificationTest extends TestCase
 
     public function test_deactivated_users_are_not_notified(): void
     {
-        $inspector = $this->signInAs(Role::Inspector, ['is_active' => false]);
+        $inspector = $this->signInAs(Role::Agent, ['is_active' => false]);
         License::factory()->expiringIn(10)->create();
 
         $this->artisan('licenses:notify-expiring')->assertSuccessful();

@@ -20,7 +20,7 @@ class NotificationsTest extends TestCase
 
     public function test_feed_returns_translated_unread_notifications_of_the_current_user_only(): void
     {
-        $user = $this->signInAs(Role::SurveillanceAgent);
+        $user = $this->signInAs(Role::Agent);
         $user->notify(new BeaconsSilentAlert(3));
         $this->signInAs(Role::Admin)->notify(new LicensesExpiringAlert(1));
         $this->actingAs($user);
@@ -36,7 +36,7 @@ class NotificationsTest extends TestCase
 
     public function test_opening_a_notification_marks_it_read_and_redirects_to_its_target(): void
     {
-        $user = $this->signInAs(Role::SurveillanceAgent);
+        $user = $this->signInAs(Role::Agent);
         $user->notify(new BeaconsSilentAlert(2));
         $notification = $user->notifications()->first();
 
@@ -52,7 +52,7 @@ class NotificationsTest extends TestCase
         $owner->notify(new LicensesExpiringAlert(1));
         $notification = $owner->notifications()->first();
 
-        $this->signInAs(Role::Inspector);
+        $this->signInAs(Role::Agent);
 
         $this->get(route('notifications.open', $notification->id))->assertNotFound();
         $this->assertNull($notification->fresh()->read_at);

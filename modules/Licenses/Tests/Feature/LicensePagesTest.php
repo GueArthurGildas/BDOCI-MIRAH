@@ -20,7 +20,7 @@ class LicensePagesTest extends TestCase
 
     public function test_licenses_are_listed_with_vessel_links(): void
     {
-        $this->signInAs(Role::Inspector);
+        $this->signInAs(Role::Agent);
         $license = License::factory()->create(['number' => 'LIC-2026-0042']);
 
         $this->get('/licenses')
@@ -31,7 +31,7 @@ class LicensePagesTest extends TestCase
 
     public function test_licenses_can_be_filtered_by_status(): void
     {
-        $this->signInAs(Role::Inspector);
+        $this->signInAs(Role::Agent);
         License::factory()->expired()->create(['number' => 'LIC-EXPIRED']);
         License::factory()->expiringIn(5)->create(['number' => 'LIC-EXPIRING']);
 

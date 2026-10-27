@@ -2,23 +2,58 @@
 
 namespace App\Support\Authorization;
 
+use Spatie\Permission\Models\Role as RoleModel;
+
 enum Role: string
 {
     case Admin = 'admin';
-    case Supervisor = 'supervisor';
-    case SurveillanceAgent = 'surveillance_agent';
-    case Inspector = 'inspector';
+    case Director = 'director';
+    case TeamLead = 'team_lead';
+    case Agent = 'agent';
+
+    private const TECHNICAL_PERMISSIONS = [
+        Permission::UsersManage,
+        Permission::RolesManage,
+        Permission::SettingsManage,
+        Permission::ConnectorsView,
+        Permission::ConnectorsManage,
+        Permission::AuditView,
+    ];
 
     public function label(): string
     {
         return "ui.roles.{$this->value}";
     }
 
+    public function description(): string
+    {
+        return "ui.role_descriptions.{$this->value}";
+    }
+
+    public static function isSystem(string $name): bool
+    {
+        return self::tryFrom($name) !== null;
+    }
+
+    public static function labelFor(string $name): string
+    {
+        $system = self::tryFrom($name);
+
+        return $system ? __($system->label()) : $name;
+    }
+
+    public static function descriptionFor(RoleModel $role): ?string
+    {
+        $system = self::tryFrom($role->name);
+
+        return $system ? __($system->description()) : $role->description;
+    }
+
     /** @return array<string, string> */
     public static function options(): array
     {
-        return collect(self::cases())
-            ->mapWithKeys(fn (self $role) => [$role->value => __($role->label())])
+        return RoleModel::orderBy('name')->pluck('name')
+            ->mapWithKeys(fn (string $name) => [$name => self::labelFor($name)])
             ->all();
     }
 
@@ -26,12 +61,12 @@ enum Role: string
     public function permissions(): array
     {
         return match ($this) {
-            self::Admin => Permission::cases(),
-            self::Supervisor => array_values(array_filter(
-                Permission::cases(),
-                fn (Permission $permission) => ! in_array($permission, [Permission::UsersManage, Permission::SettingsManage], true),
-            )),
-            self::SurveillanceAgent => [
+            self::Admin => [Permission::DashboardView, ...self::TECHNICAL_PERMISSIONS],
+            self::Director, self::TeamLead => [
+                ...self::businessPermissions(),
+                Permission::ConnectorsView,
+            ],
+            self::Agent => [
                 Permission::DashboardView,
                 Permission::VesselsView,
                 Permission::LicensesView,
@@ -46,15 +81,15 @@ enum Role: string
                 Permission::CatchesView,
                 Permission::MissionsView,
             ],
-            self::Inspector => [
-                Permission::DashboardView,
-                Permission::VesselsView,
-                Permission::LicensesView,
-                Permission::InspectionsView,
-                Permission::InfractionsView,
-                Permission::CatchesView,
-                Permission::MissionsView,
-            ],
         };
+    }
+
+    /** @return array<int, Permission> */
+    private static function businessPermissions(): array
+    {
+        return array_values(array_filter(
+            Permission::cases(),
+            fn (Permission $permission) => ! in_array($permission, self::TECHNICAL_PERMISSIONS, true),
+        ));
     }
 }

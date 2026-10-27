@@ -14,16 +14,16 @@ class InfractionPagesTest extends TestCase
 
     public function test_infractions_can_be_filtered_by_status(): void
     {
-        $this->signInAs(Role::Inspector);
+        $this->signInAs(Role::Agent);
         Infraction::factory()->create(['reference' => 'PV-OPEN', 'status' => InfractionStatus::Reported]);
         Infraction::factory()->create(['reference' => 'PV-CLOSED', 'status' => InfractionStatus::Closed]);
 
         $this->get('/infractions?status=reported')->assertOk()->assertSee('PV-OPEN')->assertDontSee('PV-CLOSED');
     }
 
-    public function test_inspectors_cannot_update_infractions(): void
+    public function test_agents_cannot_update_infractions(): void
     {
-        $this->signInAs(Role::Inspector);
+        $this->signInAs(Role::Agent);
         $infraction = Infraction::factory()->create();
 
         $this->patch(route('infractions.update', $infraction), ['status' => 'closed'])->assertForbidden();
@@ -31,7 +31,7 @@ class InfractionPagesTest extends TestCase
 
     public function test_supervisors_record_decisions(): void
     {
-        $this->signInAs(Role::Supervisor);
+        $this->signInAs(Role::TeamLead);
         $infraction = Infraction::factory()->create();
 
         $this->patch(route('infractions.update', $infraction), [

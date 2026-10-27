@@ -30,7 +30,7 @@
                         <td>{{ $user->team?->name ?? '—' }}</td>
                         <td>
                             @foreach ($user->roles as $role)
-                                {{ __(App\Support\Authorization\Role::from($role->name)->label()) }}
+                                {{ App\Support\Authorization\Role::labelFor($role->name) }}
                             @endforeach
                         </td>
                         <td>

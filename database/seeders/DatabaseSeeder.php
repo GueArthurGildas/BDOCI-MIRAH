@@ -13,9 +13,9 @@ class DatabaseSeeder extends Seeder
 
     private const DEMO_USERS = [
         'admin@example.com' => Role::Admin,
-        'supervisor@example.com' => Role::Supervisor,
-        'agent@example.com' => Role::SurveillanceAgent,
-        'inspector@example.com' => Role::Inspector,
+        'director@example.com' => Role::Director,
+        'teamlead@example.com' => Role::TeamLead,
+        'agent@example.com' => Role::Agent,
     ];
 
     public function run(): void

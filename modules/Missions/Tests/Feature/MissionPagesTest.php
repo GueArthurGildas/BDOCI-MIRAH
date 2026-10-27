@@ -20,7 +20,7 @@ class MissionPagesTest extends TestCase
 
     public function test_mission_detail_shows_vessels_and_agents(): void
     {
-        $this->signInAs(Role::Inspector);
+        $this->signInAs(Role::Agent);
         $mission = Mission::factory()->create(['reference' => 'MIS-2026-042']);
         $mission->vessels()->attach(Vessel::factory()->patrol()->create(['name' => 'VEDETTE CSP 03']));
         $mission->agents()->attach(User::factory()->create(['name' => 'Awa Koné']));

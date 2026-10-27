@@ -13,7 +13,10 @@ use Modules\Administration\Http\Controllers\UserController;
 Route::middleware('auth')->prefix('administration')->name('administration.')->group(function () {
     Route::middleware('can:'.Permission::UsersManage->value)->group(function () {
         Route::resource('users', UserController::class)->except(['show', 'destroy']);
-        Route::get('roles', RoleController::class)->name('roles');
+    });
+
+    Route::middleware('can:'.Permission::RolesManage->value)->group(function () {
+        Route::resource('roles', RoleController::class)->except(['show']);
     });
 
     Route::middleware('can:'.Permission::SettingsManage->value)->prefix('settings')->controller(SettingsController::class)->group(function () {

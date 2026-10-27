@@ -17,7 +17,7 @@ class NavigationVisibilityTest extends TestCase
         $navigation = (new Navigation)
             ->add('users', 'dashboard', 'icon-users', NavigationGroup::Administration, permission: 'users.manage');
 
-        $this->assertTrue($navigation->groupsFor($this->signInAs(Role::Inspector))->isEmpty());
+        $this->assertTrue($navigation->groupsFor($this->signInAs(Role::Agent))->isEmpty());
         $this->assertCount(1, $navigation->groupsFor($this->signInAs(Role::Admin)));
     }
 }

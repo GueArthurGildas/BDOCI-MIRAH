@@ -16,7 +16,7 @@ class MovementPagesTest extends TestCase
 
     public function test_movements_can_be_filtered_by_direction(): void
     {
-        $this->signInAs(Role::SurveillanceAgent);
+        $this->signInAs(Role::Agent);
         Movement::factory()->create(['direction' => MovementDirection::Entry, 'reason' => 'Débarquement de thon']);
         Movement::factory()->create(['direction' => MovementDirection::Exit, 'reason' => 'Départ en marée']);
 
@@ -28,7 +28,7 @@ class MovementPagesTest extends TestCase
 
     public function test_agents_record_movements(): void
     {
-        $agent = $this->signInAs(Role::SurveillanceAgent);
+        $agent = $this->signInAs(Role::Agent);
 
         $this->post('/movements', [
             'vessel_id' => Vessel::factory()->create()->id,
@@ -40,9 +40,9 @@ class MovementPagesTest extends TestCase
         $this->assertSame($agent->id, Movement::sole()->recorded_by);
     }
 
-    public function test_inspectors_cannot_record_movements(): void
+    public function test_administrators_cannot_record_movements(): void
     {
-        $this->signInAs(Role::Inspector);
+        $this->signInAs(Role::Admin);
 
         $this->get('/movements/create')->assertForbidden();
     }

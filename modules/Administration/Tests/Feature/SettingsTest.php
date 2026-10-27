@@ -28,7 +28,7 @@ class SettingsTest extends TestCase
 
     public function test_only_administrators_can_manage_settings(): void
     {
-        $this->signInAs(Role::Supervisor);
+        $this->signInAs(Role::TeamLead);
 
         $this->get(route('administration.settings'))->assertForbidden();
         $this->put(route('administration.settings.update'), $this->validPayload())->assertForbidden();
@@ -81,7 +81,7 @@ class SettingsTest extends TestCase
 
     public function test_disabled_alerts_are_not_sent(): void
     {
-        $agent = $this->signInAs(Role::SurveillanceAgent);
+        $agent = $this->signInAs(Role::Agent);
         $this->signInAs(Role::Admin);
         $this->put(route('administration.settings.update'), $this->validPayload(['alerts_beacons_silent_enabled' => 0]));
         $device = \App\Models\TrackingDevice::factory()->create();

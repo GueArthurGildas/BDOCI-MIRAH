@@ -33,6 +33,7 @@ use App\Models\TrackingDevice;
 use App\Models\User;
 use App\Models\Vessel;
 use App\Models\Zone;
+use App\Support\Authorization\Role;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
@@ -95,7 +96,7 @@ class DemoDataSeeder extends Seeder
     {
         return Team::all()->flatMap(fn (Team $team) => User::factory(2)
             ->create(['team_id' => $team->id])
-            ->each(fn (User $user) => $user->assignRole('surveillance_agent')));
+            ->each(fn (User $user) => $user->assignRole(Role::Agent->value)));
     }
 
     private function seedFishingVessels(): Collection

@@ -35,6 +35,12 @@
                                 {{ __('administration::administration.audit.changed_fields', ['fields' => implode(', ', $changedFields)]) }}
                             @endif
                             {{ collect($activity->properties)->only(['email', 'ip'])->implode(' · ') }}
+                            @if ($added = $activity->properties->get('added'))
+                                <div class="text-success">+ {{ implode(', ', $added) }}</div>
+                            @endif
+                            @if ($removed = $activity->properties->get('removed'))
+                                <div class="text-danger">− {{ implode(', ', $removed) }}</div>
+                            @endif
                         </td>
                     </tr>
                 @empty

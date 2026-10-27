@@ -35,3 +35,15 @@ label,
         color: var(--gs-orange-dark) !important;
     }
 }
+
+.gs-permission-group {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--gs-line);
+
+    h6 {
+        margin-bottom: 10px;
+        font-size: .8rem;
+        letter-spacing: .05em;
+        text-transform: uppercase;
+    }
+}

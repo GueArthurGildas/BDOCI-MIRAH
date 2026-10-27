@@ -23,7 +23,7 @@ class ConnectorFollowUpTest extends TestCase
 
     public function test_detail_page_lists_errors_rejected_records_syncs_and_comments(): void
     {
-        $this->signInAs(Role::Supervisor);
+        $this->signInAs(Role::TeamLead);
         $source = DataSource::factory()->create();
         $error = DataSourceError::factory()->for($source)->create(['message' => 'Remote host refused the connection']);
         $rejection = DataSourceRejection::factory()->for($source)->create(['external_ref' => 'REC-4242', 'details' => 'Field "latitude" is required']);
@@ -41,7 +41,7 @@ class ConnectorFollowUpTest extends TestCase
 
     public function test_the_most_relevant_tab_is_opened_by_default(): void
     {
-        $this->signInAs(Role::Supervisor);
+        $this->signInAs(Role::TeamLead);
         $withErrors = DataSource::factory()->create();
         DataSourceError::factory()->for($withErrors)->create();
         $quiet = DataSource::factory()->create();
@@ -51,9 +51,9 @@ class ConnectorFollowUpTest extends TestCase
         $this->get(route('administration.connectors.show', [$quiet, 'tab' => 'syncs']))->assertViewHas('tab', 'syncs');
     }
 
-    public function test_inspectors_cannot_open_connectors(): void
+    public function test_agents_cannot_open_connectors(): void
     {
-        $this->signInAs(Role::Inspector);
+        $this->signInAs(Role::Agent);
         $source = DataSource::factory()->create();
 
         $this->get(route('administration.connectors.show', $source))->assertForbidden();
@@ -75,8 +75,8 @@ class ConnectorFollowUpTest extends TestCase
     public function test_a_comment_is_published_and_notifies_the_other_managers_only(): void
     {
         $author = $this->signInAs(Role::Admin);
-        $colleague = User::factory()->create()->assignRole(Role::Supervisor->value);
-        $inspector = User::factory()->create()->assignRole(Role::Inspector->value);
+        $colleague = User::factory()->create()->assignRole(Role::Admin->value);
+        $agent = User::factory()->create()->assignRole(Role::Agent->value);
         $source = DataSource::factory()->create(['name' => 'THEMIS feed']);
         $this->actingAs($author);
 
@@ -92,13 +92,13 @@ class ConnectorFollowUpTest extends TestCase
         $this->assertSame(1, $colleague->notifications()->count());
         $this->assertSame('THEMIS feed', $colleague->notifications()->first()->data['params']['connector']);
         $this->assertSame(0, $author->notifications()->count());
-        $this->assertSame(0, $inspector->notifications()->count());
+        $this->assertSame(0, $agent->notifications()->count());
     }
 
     public function test_notification_is_optional(): void
     {
         $author = $this->signInAs(Role::Admin);
-        $colleague = User::factory()->create()->assignRole(Role::Supervisor->value);
+        $colleague = User::factory()->create()->assignRole(Role::Admin->value);
         $this->actingAs($author);
         $source = DataSource::factory()->create();
 
@@ -121,7 +121,7 @@ class ConnectorFollowUpTest extends TestCase
 
     public function test_errors_can_be_resolved_and_reopened(): void
     {
-        $manager = $this->signInAs(Role::Supervisor);
+        $manager = $this->signInAs(Role::Admin);
         $error = DataSourceError::factory()->create();
 
         $this->post(route('administration.connectors.errors.resolve', $error))->assertRedirect();
@@ -135,7 +135,7 @@ class ConnectorFollowUpTest extends TestCase
 
     public function test_rejected_records_can_be_corrected_dismissed_and_reopened(): void
     {
-        $manager = $this->signInAs(Role::Supervisor);
+        $manager = $this->signInAs(Role::Admin);
         $rejection = DataSourceRejection::factory()->create();
 
         $this->patch(route('administration.connectors.rejections.handle', $rejection), ['status' => 'corrected'])->assertRedirect();
@@ -151,7 +151,7 @@ class ConnectorFollowUpTest extends TestCase
 
     public function test_handling_a_rejection_is_recorded_in_the_audit_log_but_creating_it_is_not(): void
     {
-        $this->signInAs(Role::Supervisor);
+        $this->signInAs(Role::Admin);
         $rejection = DataSourceRejection::factory()->create();
         $rejectionActivities = fn () => Activity::where('subject_type', $rejection->getMorphClass());
         $this->assertSame(0, $rejectionActivities()->count());

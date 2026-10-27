@@ -15,7 +15,7 @@ class InspectionPagesTest extends TestCase
 
     public function test_inspections_can_be_filtered_by_result(): void
     {
-        $this->signInAs(Role::Inspector);
+        $this->signInAs(Role::Agent);
         Inspection::factory()->create(['external_reference' => 'EI-COMPLIANT', 'result' => InspectionResult::Compliant]);
         Inspection::factory()->create(['external_reference' => 'EI-NONCOMPLIANT', 'result' => InspectionResult::NonCompliant]);
 
@@ -27,7 +27,7 @@ class InspectionPagesTest extends TestCase
 
     public function test_inspection_detail_lists_related_infractions(): void
     {
-        $this->signInAs(Role::Inspector);
+        $this->signInAs(Role::Agent);
         $inspection = Inspection::factory()->create();
         Infraction::factory()->for($inspection)->create(['reference' => 'PV-2026-999', 'vessel_id' => $inspection->vessel_id]);
 

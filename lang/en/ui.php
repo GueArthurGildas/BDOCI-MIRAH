@@ -42,9 +42,16 @@ return [
 
     'roles' => [
         'admin' => 'Administrator',
-        'supervisor' => 'CSP supervisor',
-        'surveillance_agent' => 'Surveillance agent',
-        'inspector' => 'Inspector',
+        'director' => 'Director',
+        'team_lead' => 'Team lead',
+        'agent' => 'Agent',
+    ],
+
+    'role_descriptions' => [
+        'admin' => 'Manages accounts, roles, settings, connectors and the audit log. Takes no business decision (requirement S-004).',
+        'director' => 'Sees everything, including the fleet view, and takes the final decisions: port refusal, license suspension or revocation, precautionary measures.',
+        'team_lead' => 'Validates the agents\' entries, runs the shift team and closes operations. Equivalent of the former « CSP supervisor » role.',
+        'agent' => 'CSP operator or inspector: records observations, movements and inspections, and consults vessel files. An inspector is an agent holding an inspector accreditation.',
     ],
 
     'history' => [

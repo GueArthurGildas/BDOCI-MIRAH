@@ -15,16 +15,16 @@ class TrackingPagesTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_inspectors_cannot_access_tracking(): void
+    public function test_administrators_cannot_access_tracking(): void
     {
-        $this->signInAs(Role::Inspector);
+        $this->signInAs(Role::Admin);
 
         $this->get('/tracking/map')->assertForbidden();
     }
 
     public function test_map_shows_the_last_position_of_each_vessel(): void
     {
-        $this->signInAs(Role::SurveillanceAgent);
+        $this->signInAs(Role::Agent);
         $vessel = Vessel::factory()->create(['name' => 'TIAGBA 9']);
         Position::factory()->for($vessel)->create(['recorded_at' => now()->subHours(3)]);
         Position::factory()->for($vessel)->create(['recorded_at' => now()->subMinutes(10)]);
@@ -37,7 +37,7 @@ class TrackingPagesTest extends TestCase
 
     public function test_zone_situation_counts_vessels_present_at_a_given_time(): void
     {
-        $this->signInAs(Role::SurveillanceAgent);
+        $this->signInAs(Role::Agent);
         $abidjan = Zone::factory()->create(['name' => 'Abidjan']);
         $sanPedro = Zone::factory()->create(['name' => 'San Pedro']);
         $vessel = Vessel::factory()->create();
@@ -54,7 +54,7 @@ class TrackingPagesTest extends TestCase
 
     public function test_silent_beacons_are_detected(): void
     {
-        $this->signInAs(Role::SurveillanceAgent);
+        $this->signInAs(Role::Agent);
         $silent = TrackingDevice::factory()->create();
         Position::factory()->for($silent->vessel)->create(['recorded_at' => now()->subHours(10)]);
         $emitting = TrackingDevice::factory()->create();

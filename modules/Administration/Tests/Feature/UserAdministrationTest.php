@@ -14,7 +14,7 @@ class UserAdministrationTest extends TestCase
 
     public function test_only_administrators_manage_users(): void
     {
-        $this->signInAs(Role::Supervisor);
+        $this->signInAs(Role::TeamLead);
 
         $this->get('/administration/users')->assertForbidden();
     }
@@ -26,26 +26,26 @@ class UserAdministrationTest extends TestCase
         $this->post('/administration/users', [
             'name' => 'Awa Koné',
             'email' => 'awa.kone@example.com',
-            'role' => Role::SurveillanceAgent->value,
+            'role' => Role::Agent->value,
             'is_active' => '1',
             'password' => 'Str0ng-passw0rd!',
             'password_confirmation' => 'Str0ng-passw0rd!',
         ])->assertRedirect(route('administration.users.index'));
 
         $user = User::where('email', 'awa.kone@example.com')->firstOrFail();
-        $this->assertTrue($user->hasRole(Role::SurveillanceAgent->value));
+        $this->assertTrue($user->hasRole(Role::Agent->value));
         $this->assertTrue(Activity::where('event', 'role_changed')->where('subject_id', $user->id)->exists());
     }
 
     public function test_a_deactivated_user_is_signed_out_immediately(): void
     {
         $this->signInAs(Role::Admin);
-        $agent = User::factory()->create()->assignRole(Role::SurveillanceAgent->value);
+        $agent = User::factory()->create()->assignRole(Role::Agent->value);
 
         $this->put(route('administration.users.update', $agent), [
             'name' => $agent->name,
             'email' => $agent->email,
-            'role' => Role::SurveillanceAgent->value,
+            'role' => Role::Agent->value,
             'is_active' => '0',
         ])->assertRedirect();
 

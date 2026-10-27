@@ -29,7 +29,7 @@ class DashboardTest extends TestCase
 
     public function test_dashboard_shows_key_indicators(): void
     {
-        $this->signInAs(Role::Inspector);
+        $this->signInAs(Role::Agent);
         DataSource::factory()->create(['name' => 'VMS / THEMIS']);
         Observation::factory()->create(['description' => 'Rupture d\'émission à surveiller', 'status' => ObservationStatus::Open]);
 
@@ -42,7 +42,7 @@ class DashboardTest extends TestCase
 
     public function test_dashboard_is_highlighted_in_the_sidebar(): void
     {
-        $this->signInAs(Role::Inspector);
+        $this->signInAs(Role::Agent);
 
         $this->get('/dashboard')
             ->assertSee('<li class="active">', escape: false)

@@ -42,9 +42,16 @@ return [
 
     'roles' => [
         'admin' => 'Administrateur',
-        'supervisor' => 'Responsable CSP',
-        'surveillance_agent' => 'Agent de surveillance',
-        'inspector' => 'Inspecteur',
+        'director' => 'Directeur',
+        'team_lead' => 'Chef d\'équipe',
+        'agent' => 'Agent',
+    ],
+
+    'role_descriptions' => [
+        'admin' => 'Gère les comptes, les rôles, les paramètres, les connecteurs et le journal d\'audit. Ne prend aucune décision métier (exigence S-004).',
+        'director' => 'Voit tout, y compris la vue flotte, et prend les décisions finales : refus d\'entrée au port, suspension ou révocation de licence, mesures conservatoires.',
+        'team_lead' => 'Valide la saisie des agents, pilote l\'équipe de quart et clôture les opérations. Équivalent de l\'ancien rôle « Responsable CSP » (superviseur).',
+        'agent' => 'Opérateur CSP ou inspecteur : saisit les observations, les mouvements et les inspections, consulte les fiches navires. Un inspecteur est un agent titulaire d\'une habilitation d\'inspecteur.',
     ],
 
     'history' => [

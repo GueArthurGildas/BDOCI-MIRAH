@@ -14,7 +14,7 @@ class MonitoringPagesTest extends TestCase
 
     public function test_connectors_page_shows_each_data_source(): void
     {
-        $this->signInAs(Role::Supervisor);
+        $this->signInAs(Role::TeamLead);
         $source = DataSource::factory()->create(['name' => 'e-inspection']);
         DataSourceRejection::factory()->count(3)->for($source)->create();
 
@@ -26,7 +26,7 @@ class MonitoringPagesTest extends TestCase
 
     public function test_sign_ins_appear_in_the_audit_log(): void
     {
-        $user = $this->signInAs(Role::Supervisor);
+        $user = $this->signInAs(Role::Admin);
         auth()->logout();
 
         $this->post('/login', ['email' => $user->email, 'password' => 'password']);
@@ -37,9 +37,9 @@ class MonitoringPagesTest extends TestCase
             ->assertSee(__('administration::administration.audit.events.login'));
     }
 
-    public function test_inspectors_cannot_read_the_audit_log(): void
+    public function test_agents_cannot_read_the_audit_log(): void
     {
-        $this->signInAs(Role::Inspector);
+        $this->signInAs(Role::Agent);
 
         $this->get('/administration/audit')->assertForbidden();
     }

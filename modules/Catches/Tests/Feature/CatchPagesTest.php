@@ -14,7 +14,7 @@ class CatchPagesTest extends TestCase
 
     public function test_declarations_are_totalled_for_the_selected_species(): void
     {
-        $this->signInAs(Role::Inspector);
+        $this->signInAs(Role::Agent);
         $tuna = Species::factory()->create(['name' => 'Albacore']);
         $sardine = Species::factory()->create(['name' => 'Sardinelle']);
         CatchDeclaration::factory()->for($tuna)->count(2)->create(['quantity_kg' => 1000]);

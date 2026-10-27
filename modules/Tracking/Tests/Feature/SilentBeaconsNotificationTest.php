@@ -14,8 +14,8 @@ class SilentBeaconsNotificationTest extends TestCase
 
     public function test_tracking_viewers_are_notified_once_per_cooldown_when_beacons_are_silent(): void
     {
-        $agent = $this->signInAs(Role::SurveillanceAgent);
-        $inspector = $this->signInAs(Role::Inspector);
+        $agent = $this->signInAs(Role::Agent);
+        $admin = $this->signInAs(Role::Admin);
         $device = TrackingDevice::factory()->create();
         Position::factory()->for($device->vessel)->create(['recorded_at' => now()->subHours(10)]);
 
@@ -23,13 +23,13 @@ class SilentBeaconsNotificationTest extends TestCase
         $this->artisan('tracking:notify-silent-beacons')->assertSuccessful();
 
         $this->assertSame(1, $agent->notifications()->count());
-        $this->assertSame(0, $inspector->notifications()->count());
+        $this->assertSame(0, $admin->notifications()->count());
         $this->assertSame(1, $agent->notifications()->first()->data['params']['count']);
     }
 
     public function test_nobody_is_notified_when_every_beacon_emits(): void
     {
-        $agent = $this->signInAs(Role::SurveillanceAgent);
+        $agent = $this->signInAs(Role::Agent);
         $device = TrackingDevice::factory()->create();
         Position::factory()->for($device->vessel)->create(['recorded_at' => now()->subMinutes(10)]);
 
@@ -40,7 +40,7 @@ class SilentBeaconsNotificationTest extends TestCase
 
     public function test_a_new_notification_is_sent_after_the_cooldown(): void
     {
-        $agent = $this->signInAs(Role::SurveillanceAgent);
+        $agent = $this->signInAs(Role::Agent);
         $device = TrackingDevice::factory()->create();
         Position::factory()->for($device->vessel)->create(['recorded_at' => now()->subHours(10)]);
 

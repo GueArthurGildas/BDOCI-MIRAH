@@ -21,7 +21,7 @@ class VesselPagesTest extends TestCase
 
     public function test_vessels_can_be_listed_and_filtered(): void
     {
-        $this->signInAs(Role::Inspector);
+        $this->signInAs(Role::Agent);
         Vessel::factory()->create(['name' => 'AKWABA 1']);
         Vessel::factory()->patrol()->create(['name' => 'VEDETTE CSP 01']);
 
@@ -37,7 +37,7 @@ class VesselPagesTest extends TestCase
 
     public function test_vessel_profile_gathers_its_history(): void
     {
-        $this->signInAs(Role::Inspector);
+        $this->signInAs(Role::Agent);
         $vessel = Vessel::factory()->create();
         License::factory()->for($vessel)->create(['number' => 'LIC-0001-2026']);
         Position::factory()->for($vessel)->create();
@@ -48,9 +48,9 @@ class VesselPagesTest extends TestCase
             ->assertSee('LIC-0001-2026');
     }
 
-    public function test_inspectors_cannot_manage_vessels(): void
+    public function test_agents_cannot_manage_vessels(): void
     {
-        $this->signInAs(Role::Inspector);
+        $this->signInAs(Role::Agent);
 
         $this->get('/vessels/create')->assertForbidden();
         $this->post('/vessels', [])->assertForbidden();
@@ -58,7 +58,7 @@ class VesselPagesTest extends TestCase
 
     public function test_supervisors_can_create_and_update_vessels(): void
     {
-        $this->signInAs(Role::Supervisor);
+        $this->signInAs(Role::TeamLead);
         $payload = [
             'name' => 'BANDAMA 7',
             'registration_number' => 'AN-7777',
@@ -79,7 +79,7 @@ class VesselPagesTest extends TestCase
 
     public function test_registration_number_must_be_unique(): void
     {
-        $this->signInAs(Role::Supervisor);
+        $this->signInAs(Role::TeamLead);
         Vessel::factory()->create(['registration_number' => 'AN-0001']);
 
         $this->post('/vessels', ['registration_number' => 'AN-0001'])
