@@ -90,6 +90,7 @@ Actions exécutées par l'`ActionRunner` (transaction, droit, événement, état
 | `communications.create_note` | `communications.create_note` | `Modules\Communications\Actions\CreateNote` |
 | `communications.dispatch_rule` | `communications.manage_dispatch` | `Modules\Communications\Actions\DispatchRuleMessages` |
 | `communications.mark_note_read` | `communications.view` | `Modules\Communications\Actions\MarkNoteRead` |
+| `communications.record_delivery_report` | `communications.manage_dispatch` | `Modules\Communications\Actions\RecordDeliveryReport` |
 | `communications.record_whatsapp_consent` | `communications.send` | `Modules\Communications\Actions\RecordWhatsAppConsent` |
 | `communications.request_ai_note` | `communications.trigger_ai_agent` | `Modules\Communications\Actions\RequestAiNote` |
 | `communications.revoke_whatsapp_consent` | `communications.send` | `Modules\Communications\Actions\RevokeWhatsAppConsent` |
@@ -98,6 +99,7 @@ Actions exécutées par l'`ActionRunner` (transaction, droit, événement, état
 | `communications.save_template` | `communications.manage_templates` | `Modules\Communications\Actions\SaveMessageTemplate` |
 | `communications.send_message` | `communications.send` | `Modules\Communications\Actions\SendMessage` |
 | `communications.send_prepared_message` | `communications.send` | `Modules\Communications\Actions\SendPreparedMessage` |
+| `communications.set_ai_agent_enabled` | `settings.manage` | `Modules\Communications\Actions\SetAiAgentEnabled` |
 | `communications.update_channel` | `communications.manage_dispatch` | `Modules\Communications\Actions\UpdateCommunicationChannel` |
 | `infractions.add_evidence` | `infractions.manage` | `Modules\Infractions\Actions\AddEvidenceItem` |
 | `infractions.close` | `infractions.decide` | `Modules\Infractions\Actions\CloseInfractionCase` |

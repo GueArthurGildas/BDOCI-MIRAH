@@ -55,6 +55,8 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `catches.index` | GET | `/catches` | `catches.view` |
 | `catches.landings` | GET | `/catches/landings` | `catches.view` |
 | `catches.transshipments` | GET | `/catches/transshipments` | `catches.view` |
+| `communications.ai-agent.edit` | GET | `/communications/ai-agent` | `settings.manage` |
+| `communications.ai-agent.update` | PUT | `/communications/ai-agent` | `settings.manage` |
 | `communications.channels.connector` | PUT | `/communications/channels/connector` | `connectors.manage` |
 | `communications.channels.consents.destroy` | DELETE | `/communications/channels/consents` | `communications.send` |
 | `communications.channels.consents.store` | POST | `/communications/channels/consents` | `communications.send` |
@@ -81,6 +83,7 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `communications.templates.index` | GET | `/communications/templates` | `communications.view` |
 | `communications.templates.store` | POST | `/communications/templates` | `communications.manage_templates` |
 | `communications.templates.update` | PUT | `/communications/templates/{template}` | `communications.manage_templates` |
+| `communications.webhooks.delivery` | POST | `/communications/webhooks/delivery` | — |
 | `dashboard` | GET | `/dashboard` | `dashboard.view` |
 | `fleet.index` | GET | `/fleet` | `indicators.view` |
 | `indicators.show` | GET | `/indicators/{indicator}` | `indicators.view` |

@@ -46,6 +46,10 @@ return [
             'title' => 'Autorisation des missions',
             'description' => 'Par défaut le Directeur autorise ; cocher un type de mission permet aussi au Chef d\'équipe de l\'autoriser (point ouvert V21, valeurs provisoires H-6-2)',
         ],
+        'communications' => [
+            'title' => 'Messages automatiques',
+            'description' => 'Plafond quotidien par règle d\'envoi et alerte sur les messages à valider (point ouvert V8, valeurs provisoires H-5-5)',
+        ],
     ],
     'fields' => [
         'notifications_poll_seconds' => 'Vérifier les nouvelles notifications toutes les (secondes)',
@@ -76,5 +80,8 @@ return [
         'missions_team_lead_authorizes_continental' => 'Le Chef d\'équipe peut autoriser les missions de type : continental',
         'missions_team_lead_authorizes_port' => 'Le Chef d\'équipe peut autoriser les missions de type : portuaire',
         'missions_team_lead_authorizes_aerial_drone' => 'Le Chef d\'équipe peut autoriser les missions de type : aérien ou drone',
+        'communications_default_daily_cap' => 'Plafond quotidien par défaut des messages automatiques par règle',
+        'alerts_prepared_messages_enabled' => 'Alerte sur les messages à valider',
+        'alerts_prepared_messages_cooldown_hours' => 'Délai minimal entre deux alertes (heures)',
     ],
 ];

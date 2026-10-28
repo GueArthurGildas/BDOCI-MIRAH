@@ -46,6 +46,9 @@ class SettingsTest extends TestCase
             'missions_team_lead_authorizes_continental' => 0,
             'missions_team_lead_authorizes_port' => 0,
             'missions_team_lead_authorizes_aerial_drone' => 0,
+            'communications_default_daily_cap' => 3,
+            'alerts_prepared_messages_enabled' => 1,
+            'alerts_prepared_messages_cooldown_hours' => 4,
         ], $overrides);
     }
 
@@ -114,5 +117,16 @@ class SettingsTest extends TestCase
         $this->artisan('tracking:evaluate-alert-rules')->assertSuccessful();
 
         $this->assertSame(0, $agent->notifications()->count());
+    }
+
+    public function test_the_daily_cap_of_automatic_messages_is_an_editable_setting(): void
+    {
+        $this->signInAs(Role::Admin);
+
+        $this->put(route('administration.settings.update'), $this->validPayload(['communications_default_daily_cap' => 7, 'alerts_prepared_messages_enabled' => 0]))
+            ->assertRedirect(route('administration.settings'));
+
+        $this->assertSame(7, config('communications.default_daily_cap'));
+        $this->assertFalse(config('communications.alerts.prepared_messages.enabled'));
     }
 }

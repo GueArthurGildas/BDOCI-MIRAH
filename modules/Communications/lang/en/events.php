@@ -11,4 +11,5 @@ return [
         'reminder' => ':author left a note: reminder.',
         'to_forward' => ':author left a note: to forward.',
     ],
+    'message_bounced' => 'Message to :recipient bounced.',
 ];

@@ -11,4 +11,5 @@ return [
         'reminder' => ':author a laissé une note : rappel.',
         'to_forward' => ':author a laissé une note : à transmettre.',
     ],
+    'message_bounced' => 'Message à :recipient rejeté.',
 ];

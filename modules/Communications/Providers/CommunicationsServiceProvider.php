@@ -22,7 +22,8 @@ class CommunicationsServiceProvider extends ModuleServiceProvider
 
     protected function navigation(Navigation $navigation): void
     {
-        $navigation->add('communications::communications.title', 'communications.messages.index', 'icon-mail', NavigationGroup::Surveillance, order: 50, permission: Permission::CommunicationsView->value);
+        $navigation->add('communications::communications.title', 'communications.messages.index', 'icon-mail', NavigationGroup::Surveillance, order: 50, permission: Permission::CommunicationsView->value)
+            ->add('communications::ai_agent.title', 'communications.ai-agent.edit', 'icon-cpu', NavigationGroup::Administration, order: 55, permission: Permission::SettingsManage->value);
     }
 
     protected function schedule(Schedule $schedule): void

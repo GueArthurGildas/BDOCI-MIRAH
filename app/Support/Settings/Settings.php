@@ -48,6 +48,9 @@ final class Settings
             new SettingDefinition('missions.team_lead_authorizes.continental', 'surveillance.missions.team_lead_authorizes.continental', SettingType::Boolean, 'missions'),
             new SettingDefinition('missions.team_lead_authorizes.port', 'surveillance.missions.team_lead_authorizes.port', SettingType::Boolean, 'missions'),
             new SettingDefinition('missions.team_lead_authorizes.aerial_drone', 'surveillance.missions.team_lead_authorizes.aerial_drone', SettingType::Boolean, 'missions'),
+            new SettingDefinition('communications.default_daily_cap', 'communications.default_daily_cap', SettingType::Integer, 'communications', 1, 50),
+            new SettingDefinition('alerts.prepared_messages.enabled', 'communications.alerts.prepared_messages.enabled', SettingType::Boolean, 'communications'),
+            new SettingDefinition('alerts.prepared_messages.cooldown_hours', 'communications.alerts.prepared_messages.cooldown_hours', SettingType::Integer, 'communications', 1, 72),
         ])->keyBy(fn (SettingDefinition $definition) => $definition->field());
     }
 

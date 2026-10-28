@@ -46,6 +46,10 @@ return [
             'title' => 'Mission authorization',
             'description' => 'The Director authorizes by default; tick a mission type to let the Team lead authorize it too (open point V21, provisional values H-6-2)',
         ],
+        'communications' => [
+            'title' => 'Automatic messages',
+            'description' => 'Daily cap per dispatch rule and the alert for messages awaiting validation (open point V8, provisional values H-5-5)',
+        ],
     ],
     'fields' => [
         'notifications_poll_seconds' => 'Check for new notifications every (seconds)',
@@ -76,5 +80,8 @@ return [
         'missions_team_lead_authorizes_continental' => 'The Team lead may authorize missions of type: continental',
         'missions_team_lead_authorizes_port' => 'The Team lead may authorize missions of type: port',
         'missions_team_lead_authorizes_aerial_drone' => 'The Team lead may authorize missions of type: aerial or drone',
+        'communications_default_daily_cap' => 'Default daily cap of automatic messages per rule',
+        'alerts_prepared_messages_enabled' => 'Alert about messages awaiting validation',
+        'alerts_prepared_messages_cooldown_hours' => 'Minimum delay between two alerts (hours)',
     ],
 ];

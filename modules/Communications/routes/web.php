@@ -1,8 +1,11 @@
 <?php
 
 use App\Support\Authorization\Permission;
+use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Support\Facades\Route;
+use Modules\Communications\Http\Controllers\AiAgentController;
 use Modules\Communications\Http\Controllers\ChannelController;
+use Modules\Communications\Http\Controllers\DeliveryReportController;
 use Modules\Communications\Http\Controllers\MessageController;
 use Modules\Communications\Http\Controllers\NoteController;
 use Modules\Communications\Http\Controllers\RuleController;
@@ -55,4 +58,11 @@ Route::middleware('auth')->prefix('communications')->name('communications.')->gr
         Route::post('consents', 'storeConsent')->can(Permission::CommunicationsSend->value)->name('consents.store');
         Route::delete('consents', 'revokeConsent')->can(Permission::CommunicationsSend->value)->name('consents.destroy');
     });
+});
+
+Route::post('communications/webhooks/delivery', DeliveryReportController::class)->withoutMiddleware([PreventRequestForgery::class])->name('communications.webhooks.delivery');
+
+Route::middleware(['auth', 'can:'.Permission::SettingsManage->value])->prefix('communications/ai-agent')->name('communications.ai-agent.')->controller(AiAgentController::class)->group(function () {
+    Route::get('/', 'edit')->name('edit');
+    Route::put('/', 'update')->name('update');
 });

@@ -17,16 +17,23 @@ Messages préconçus, règles d'envoi automatique, notes internes par boutons, c
 | `communications.save_template` | `communications.manage_templates` |
 | `communications.save_dispatch_rule`, `update_channel`, `dispatch_rule` | `communications.manage_dispatch` |
 | `communications.save_email_connector` | `connectors.manage` |
+| `communications.set_ai_agent_enabled` | `settings.manage` (page *Administration › Agent IA*) |
+| `communications.record_delivery_report` | `communications.manage_dispatch` (compte `system`, via le webhook) |
 
 ## Envois automatiques
 
 `php artisan communications:dispatch` (toutes les 15 minutes) évalue chaque règle active sous le compte `system`, membre du groupe `automatic_dispatch`. Déclencheurs : `beacon_silent`, `license_expiring` (`Support/TriggerEvents`). Plafond par jour, fréquence et condition d'arrêt sont des données de la règle. Une alerte prévient les détenteurs de `communications.send` des messages à valider (cooldown dans `config/communications.php`).
 
+## Réglages et webhook
+
+- Plafond quotidien par défaut et alerte « messages à valider » : réglages de l'Admin (groupe *Messages automatiques*, `docs/assumptions/phase-5.md`, H-5-5).
+- `POST /communications/webhooks/delivery` : accusés et rejets envoyés par un fournisseur (`message_id`, `event` = `acknowledged`, `bounced` ou `failed`, `reply_received` facultatif). Authentifié par l'en-tête `X-Webhook-Secret` comparé à `COMMUNICATIONS_WEBHOOK_SECRET` (refus 403 tant que le secret n'est pas défini), sans session ni jeton CSRF. Seul un message au statut `sent` change d'état.
+
 ## Canaux
 
 - `in_app` : notification via `Notifier` (destinataire = utilisateur actif).
 - `email` : mailer Laravel choisi par le connecteur actif (`parameters.mailer`), pilote `log` par défaut.
-- `whatsapp` : interface `WhatsAppGateway`, pilote `fake` qui enregistre les envois ; envoi seulement si un consentement est enregistré (liste de référence `whatsapp_consents`).
+- `whatsapp` : interface `WhatsAppGateway`, pilote `fake` qui enregistre les envois ; envoi seulement si un consentement est enregistré (liste de référence `whatsapp_consents`). **Pas de pilote réel** : il dépend du fournisseur (point ouvert V11).
 
 ## Hypothèses
 
