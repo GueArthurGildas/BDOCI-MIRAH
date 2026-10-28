@@ -9,7 +9,7 @@ Ce plan compare l'application actuelle à la spécification de `database/docs/` 
 | `database/docs/BOID_MIRAH_specification_conception (1).md` | Référence métier : modules M1 à M12, règles RG01–RG10, cas d'usage UC01–UC29, phases de construction |
 | `database/docs/BOID_MIRAH_MCD.md` | Modèle conceptuel par module (Mermaid) |
 | `database/docs/BOID_MIRAH_schema.sql` | Schéma physique v1, écrit pour MySQL 8, noms en français |
-| `docs/MODELE_DONNEES.md`, `docs/CAS_UTILISATION.md` | Documents précédents (issus du cahier des charges et du cadrage), à mettre à jour ou à remplacer |
+| `docs/CAS_UTILISATION.md` | Document précédent (issu du cahier des charges et du cadrage), à mettre à jour ou à remplacer |
 
 ---
 

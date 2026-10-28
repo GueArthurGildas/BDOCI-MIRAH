@@ -4,9 +4,9 @@
 
 Diagrammes de cas d'utilisation par module et diagramme global de la plateforme PRO-SURVEILLANCE PÊCHES.
 
-**Méthode et notation.** Les acteurs et cas d'utilisation sont dérivés de `docs/CAHIER_DES_CHARGES.pdf` (F-001 à F-014) et `docs/CADRAGE.pdf` (§II « Périmètre métier », §IV « Matrice des activités », §V « Acteurs et responsabilités »), puis confrontés au RBAC et aux routes réellement codés (`app/Support/Authorization/{Role,Permission}.php`, `modules/*/routes/web.php`) pour obtenir des cas d'utilisation exacts (pas d'approximation sur qui peut faire quoi). Les cas d'utilisation décrits par les documents mais non routés dans le code sont marqués **[cible]** et dessinés en traits pointillés, suivant la même règle méthodologique que `docs/MODELE_DONNEES.md` ([[feedback-spec-driven-modeling]]) : le périmètre vient des documents, le code sert à vérifier la couverture.
+**Méthode et notation.** Les acteurs et cas d'utilisation sont dérivés de `docs/CAHIER_DES_CHARGES.pdf` (F-001 à F-014) et `docs/CADRAGE.pdf` (§II « Périmètre métier », §IV « Matrice des activités », §V « Acteurs et responsabilités »), puis confrontés au RBAC et aux routes réellement codés (`app/Support/Authorization/{Role,Permission}.php`, `modules/*/routes/web.php`) pour obtenir des cas d'utilisation exacts (pas d'approximation sur qui peut faire quoi). Les cas d'utilisation décrits par les documents mais non routés dans le code sont marqués **[cible]** et dessinés en traits pointillés, suivant la règle :  le périmètre vient des documents, le code sert à vérifier la couverture.
 
-Mermaid n'a pas de diagramme de cas d'utilisation UML natif (pas d'acteur « bonhomme », pas d'ovale) : on approxime avec `flowchart` — rectangle pour l'acteur, forme « stade » (`([...])`) pour le cas d'utilisation, sous-graphe pour la frontière du système/module. C'est la même convention que l'ERD de `docs/MODELE_DONNEES.md` : rendu natif sur GitHub, sans outillage supplémentaire (PlantUML).
+Mermaid n'a pas de diagramme de cas d'utilisation UML natif (pas d'acteur « bonhomme », pas d'ovale) : on approxime avec `flowchart` — rectangle pour l'acteur, forme « stade » (`([...])`) pour le cas d'utilisation, sous-graphe pour la frontière du système/module. Rendu natif sur GitHub, sans outillage supplémentaire (PlantUML).
 
 - [1. Acteurs](#1-acteurs)
 - [2. Cas d'utilisation par module](#2-cas-dutilisation-par-module)
@@ -24,7 +24,7 @@ Mermaid n'a pas de diagramme de cas d'utilisation UML natif (pas d'acteur « bon
 
 ## 2. Cas d'utilisation par module
 
-Remarque transversale : l'historisation (F-004) et la journalisation (S-005) s'appliquent automatiquement à toute création/modification via `spatie/laravel-activitylog` — ce n'est pas un cas d'utilisation déclenché par un acteur, donc absent des diagrammes ci-dessous (voir `docs/MODELE_DONNEES.md` §2.1 `activity_log`).
+Remarque transversale : l'historisation (F-004) et la journalisation (S-005) s'appliquent automatiquement à toute création/modification via `spatie/laravel-activitylog` — ce n'est pas un cas d'utilisation déclenché par un acteur, donc absent des diagrammes ci-dessous (voir la table `activity_log` dans `docs/reference/schema.md`).
 
 ### Auth
 
@@ -422,7 +422,7 @@ Synthèse des cas d'utilisation décrits par les documents mais non routés dans
 | Tableaux de bord interactifs par profil, rapports planifiés | cahier des charges §13 | Évolution ultérieure |
 | Historique des traces de navires (filtres temporels, vitesse, cap) | cahier des charges §13 | Évolution ultérieure |
 | Notification/relais explicite entre équipes | cadrage §II | Dans le périmètre « Administration » du cadrage, pas de table ni de route dédiée |
-| Documents liés à la fiche navire | cahier des charges §13 | Évolution ultérieure — voir entité cible `documents` dans `docs/MODELE_DONNEES.md` §2.5 |
+| Documents liés à la fiche navire | cahier des charges §13 | Évolution ultérieure — livré en phase 1 (table `documents`, voir `docs/reference/schema.md`) |
 | Créer / renouveler / suspendre une licence | A7, RG07 | Permission `licenses.manage` déclarée et attribuée, aucune route ne l'utilise |
 | Créer / suivre une mission (moyens, agents, résultats, pièces) | F-005 | Permission `missions.manage` déclarée et attribuée, aucune route ne l'utilise |
 | Importer périodiquement les inspections (e-inspection) | F-006 | Connecteur non branché ; données de seeders |
@@ -430,4 +430,4 @@ Synthèse des cas d'utilisation décrits par les documents mais non routés dans
 | Exporter les données en Excel/CSV | F-011 | Absent de tous les modules — aucune route ni bouton d'export trouvés dans le code |
 | Gérer les notifications | cadrage §II | Périmètre « Administration » du cadrage, non implémenté |
 
-Points également signalés dans `docs/MODELE_DONNEES.md` §4, toujours ouverts : fusion Navire/Vedette, rôles non éditables depuis l'UI malgré S-002, connecteurs réels (THEMIS, NEMO, e-inspection, Access) non branchés.
+Points restés ouverts : fusion Navire/Vedette et connecteurs réels (THEMIS, NEMO, e-inspection, Access) non branchés (voir `docs/assumptions/`).

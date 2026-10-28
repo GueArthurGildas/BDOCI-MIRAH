@@ -92,7 +92,7 @@ Règles à connaître dès le premier jour :
 7. `docs/ACCEPTATION.md` et `docs/reference/` : quels cas d'usage sont couverts par quels tests, et le catalogue généré du code.
 8. `docs/GLOSSAIRE.md` : quand un terme métier vous est inconnu.
 9. `docs/decisions/` : pourquoi une décision a été prise.
-10. Les documents de cadrage : `docs/CADRAGE.pdf` et `docs/CAHIER_DES_CHARGES.pdf`, puis `docs/MODELE_DONNEES.md` et `docs/CAS_UTILISATION.md`. Ces deux derniers portent un avertissement : ils décrivent encore les anciens rôles.
+10. Les documents de cadrage : `docs/CADRAGE.pdf` et `docs/CAHIER_DES_CHARGES.pdf`, puis `docs/CAS_UTILISATION.md`, qui porte un avertissement : il décrit encore les anciens rôles.
 11. La spécification reçue du métier, dans `database/docs/` (spécification de conception, MCD, schéma SQL v1).
 
 ---
