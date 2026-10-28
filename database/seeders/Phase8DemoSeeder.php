@@ -30,7 +30,7 @@ class Phase8DemoSeeder extends Seeder
                 'occurred_at' => $mission->startsAt() ?? now(),
                 'module_id' => $modules->idFor('missions'),
                 'summary_key' => 'vessels::events.mission_assigned',
-                'summary_params' => ['reference' => $mission->reference],
+                'summary_params' => ['reference' => $mission->code],
             ],
         )));
     }
