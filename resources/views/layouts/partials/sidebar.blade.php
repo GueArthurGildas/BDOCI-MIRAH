@@ -6,7 +6,7 @@
 
     <ul class="gs-menu">
         @foreach ($groups[$activeGroup] ?? [] as $item)
-            <li @class(['active' => $item->isActive()])>
+            <li @class(['active' => $item === $activeItem])>
                 <a href="{{ $item->url() }}">
                     <span class="gs-icon"><i class="feather {{ $item->icon }}"></i></span>
                     <span class="gs-label">{{ __($item->label) }}</span>

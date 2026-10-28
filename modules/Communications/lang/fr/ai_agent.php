@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'title' => 'Agent IA',
+    'title' => 'Activation de l\'agent IA',
     'subtitle' => 'Activer ou désactiver l\'agent IA pour les notes internes',
     'card_title' => 'Créer une note',
     'hint' => 'Quand il est désactivé, les demandes adressées à l\'agent IA sont refusées et enregistrées. L\'agent ne décide jamais : il crée seulement des notes.',

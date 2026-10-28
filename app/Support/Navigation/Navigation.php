@@ -39,6 +39,9 @@ final class Navigation
 
     public function activeItemFor(?Authorizable $user): ?NavigationItem
     {
-        return $this->groupsFor($user)->flatten(1)->first(fn (NavigationItem $item) => $item->isActive());
+        return $this->groupsFor($user)->flatten(1)
+            ->filter(fn (NavigationItem $item) => $item->matchScore() > 0)
+            ->sortByDesc(fn (NavigationItem $item) => $item->matchScore())
+            ->first();
     }
 }

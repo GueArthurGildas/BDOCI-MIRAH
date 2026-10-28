@@ -20,11 +20,17 @@ final readonly class NavigationItem
         return route($this->route);
     }
 
-    public function isActive(): bool
+    public const EXACT_MATCH = PHP_INT_MAX;
+
+    public function matchScore(): int
     {
+        if (request()->routeIs($this->route)) {
+            return self::EXACT_MATCH;
+        }
+
         $routeBase = str($this->route)->chopEnd('.index')->toString();
 
-        return request()->routeIs($this->route, "{$routeBase}.*");
+        return request()->routeIs("{$routeBase}.*") ? strlen($routeBase) : 0;
     }
 
     public function isVisibleTo(?Authorizable $user): bool
