@@ -78,6 +78,7 @@ return [
         'audit' => 'Audit log',
         'settings' => 'Settings',
         'roles' => 'Roles',
+        'communications' => 'Communications',
     ],
     'permissions' => [
         'dashboard' => [
@@ -133,6 +134,14 @@ return [
         ],
         'roles' => [
             'manage' => 'Manage roles',
+        ],
+        'communications' => [
+            'view' => 'View communications',
+            'send' => 'Send messages',
+            'create_note' => 'Leave internal notes',
+            'manage_templates' => 'Manage message templates',
+            'manage_dispatch' => 'Manage automatic dispatch rules',
+            'trigger_ai_agent' => 'Trigger the AI agent for communications',
         ],
     ],
     'connectors' => [

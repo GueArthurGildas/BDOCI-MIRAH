@@ -16,8 +16,8 @@ class RolesAndPermissionsSeeder extends Seeder
         'fnp_license_management' => [Permission::LicensesView, Permission::LicensesManage],
         'infraction_investigation' => [Permission::InfractionsView, Permission::InfractionsManage],
         'surveillance_opinion' => [],
-        'automatic_dispatch' => [],
-        'trigger_ai_agent' => [],
+        'automatic_dispatch' => [Permission::CommunicationsManageDispatch],
+        'trigger_ai_agent' => [Permission::CommunicationsTriggerAiAgent],
     ];
 
     public function run(): void

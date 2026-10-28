@@ -78,6 +78,7 @@ return [
         'audit' => 'Journal d\'audit',
         'settings' => 'Paramètres',
         'roles' => 'Rôles',
+        'communications' => 'Communications',
     ],
     'permissions' => [
         'dashboard' => [
@@ -133,6 +134,14 @@ return [
         ],
         'roles' => [
             'manage' => 'Gérer les rôles',
+        ],
+        'communications' => [
+            'view' => 'Consulter les communications',
+            'send' => 'Envoyer des messages',
+            'create_note' => 'Laisser des notes internes',
+            'manage_templates' => 'Gérer les modèles de message',
+            'manage_dispatch' => 'Gérer les règles d\'envoi automatique',
+            'trigger_ai_agent' => 'Déclencher l\'agent IA pour les communications',
         ],
     ],
     'connectors' => [

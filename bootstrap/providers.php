@@ -4,6 +4,7 @@ use App\Providers\AppServiceProvider;
 use Modules\Administration\Providers\AdministrationServiceProvider;
 use Modules\Auth\Providers\AuthServiceProvider;
 use Modules\Catches\Providers\CatchesServiceProvider;
+use Modules\Communications\Providers\CommunicationsServiceProvider;
 use Modules\Dashboard\Providers\DashboardServiceProvider;
 use Modules\Infractions\Providers\InfractionsServiceProvider;
 use Modules\Inspections\Providers\InspectionsServiceProvider;
@@ -21,6 +22,7 @@ return [
     AdministrationServiceProvider::class,
     AuthServiceProvider::class,
     CatchesServiceProvider::class,
+    CommunicationsServiceProvider::class,
     DashboardServiceProvider::class,
     InfractionsServiceProvider::class,
     InspectionsServiceProvider::class,
