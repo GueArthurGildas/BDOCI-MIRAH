@@ -168,4 +168,104 @@ return [
         'boolean' => 'Yes / no',
         'list' => 'List',
     ],
+
+    'institution_type' => [
+        'rfmo' => 'RFMO',
+        'rfb' => 'RFB',
+        'fao' => 'FAO',
+        'state' => 'State',
+        'authority' => 'Authority',
+        'other' => 'Other',
+    ],
+
+    'identifier_type' => [
+        'imo' => 'IMO',
+        'mmsi' => 'MMSI',
+        'ircs' => 'Call sign (IRCS)',
+        'registration' => 'Registration',
+        'iccat' => 'ICCAT',
+        'eu' => 'EU number',
+        'beacon' => 'Beacon',
+        'other' => 'Other mark',
+    ],
+
+    'source_system' => [
+        'manual_entry' => 'Manual entry',
+        'themis' => 'THEMIS',
+        'neno' => 'NENO',
+        'e_inspection' => 'e-inspection',
+        'dpep' => 'DPEP',
+        'mrep' => 'MREP',
+    ],
+
+    'matching_status' => [
+        'matched' => 'Matched',
+        'possible_duplicate' => 'Possible duplicate',
+        'new' => 'New',
+        'rejected' => 'Rejected',
+    ],
+
+    'matching_criterion' => [
+        'imo' => 'IMO',
+        'mmsi' => 'MMSI',
+        'ircs' => 'Call sign (IRCS)',
+        'registration' => 'Registration',
+        'name_flag' => 'Name and flag',
+    ],
+
+    'actor_role' => [
+        'owner' => 'Owner',
+        'shipowner' => 'Shipowner',
+        'beneficiary' => 'Beneficiary',
+        'local_agent' => 'Local agent',
+        'captain' => 'Captain',
+        'fishing_captain' => 'Fishing captain',
+    ],
+
+    'zone_rule_segment' => [
+        'artisanal' => 'Artisanal',
+        'small_pelagics' => 'Small pelagics',
+        'trawl' => 'Trawl',
+        'tuna_vessel' => 'Tuna vessel',
+    ],
+
+    'external_list_type' => [
+        'global_record' => 'Global record',
+        'rfmo' => 'RFMO list',
+        'inn' => 'IUU list',
+    ],
+
+    'record_status' => [
+        'draft' => 'Draft',
+        'to_match' => 'To match',
+        'validated' => 'Validated',
+    ],
+
+    'fleet_segment' => [
+        'patrol_vessel' => 'Patrol vessel',
+        'industrial' => 'Industrial',
+        'semi_industrial' => 'Semi-industrial',
+        'artisanal' => 'Artisanal',
+        'authorized_foreign' => 'Authorized foreign',
+        'known_unauthorized' => 'Known, unauthorized',
+    ],
+
+    'fleet_type' => [
+        'fishing' => 'Fishing',
+        'support' => 'Support',
+        'reefer' => 'Reefer',
+        'other' => 'Other',
+    ],
+
+    'legal_status' => [
+        'ivorian' => 'Ivorian',
+        'chartered' => 'Chartered',
+        'foreign' => 'Foreign',
+    ],
+
+    'duplicate_decision' => [
+        'merge' => 'Merge into the existing record',
+        'keep_separate' => 'Keep separate',
+        'reject' => 'Reject',
+    ],
 ];

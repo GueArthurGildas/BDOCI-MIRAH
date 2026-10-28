@@ -15,7 +15,7 @@ class VesselFactory extends Factory
             'name' => mb_strtoupper(fake()->unique()->words(2, true)),
             'registration_number' => fake()->unique()->bothify('AN-####-??'),
             'imo_number' => fake()->unique()->numerify('IMO#######'),
-            'call_sign' => fake()->bothify('TU##??'),
+            'call_sign' => fake()->unique()->bothify('TU##??'),
             'flag' => 'CI',
             'type' => fake()->randomElement([VesselType::Trawler, VesselType::Seiner, VesselType::Longliner]),
             'category' => VesselCategory::Fishing,

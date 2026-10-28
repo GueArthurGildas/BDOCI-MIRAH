@@ -6,6 +6,16 @@ Tables de l'application (hors tables du framework) et clés étrangères, relev�
 
 ```mermaid
 erDiagram
+    accreditations {
+        int8 id PK
+        int8 agent_id FK
+        varchar card_number
+        varchar decision
+        date returned_on
+        text trainings
+        timestamp created_at
+        timestamp updated_at
+    }
     action_catalog {
         int8 id PK
         int8 module_id FK
@@ -27,6 +37,16 @@ erDiagram
         int8 causer_id
         json attribute_changes
         json properties
+        timestamp created_at
+        timestamp updated_at
+    }
+    agents {
+        int8 id PK
+        int8 user_id FK
+        varchar name
+        varchar grade
+        varchar agency
+        bool is_inspector
         timestamp created_at
         timestamp updated_at
     }
@@ -69,6 +89,25 @@ erDiagram
         varchar code
         bool is_auto_dispatch_enabled
         bool is_consent_required
+        timestamp created_at
+        timestamp updated_at
+    }
+    contacts {
+        int8 id PK
+        varchar category
+        int8 country_id FK
+        int8 institution_id FK
+        varchar organization
+        varchar email
+        varchar phone
+        timestamp created_at
+        timestamp updated_at
+    }
+    countries {
+        int8 id PK
+        bpchar iso3_code
+        bpchar iso2_code
+        varchar label
         timestamp created_at
         timestamp updated_at
     }
@@ -237,6 +276,27 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
+    external_list_vessel {
+        int8 vessel_id FK
+        int8 external_list_id FK
+        date listed_from
+        date listed_until
+    }
+    external_lists {
+        int8 id PK
+        int8 institution_id FK
+        varchar type
+        varchar label
+        timestamp created_at
+        timestamp updated_at
+    }
+    gears {
+        int8 id PK
+        varchar code_fao
+        varchar label
+        timestamp created_at
+        timestamp updated_at
+    }
     infraction_types {
         int8 id PK
         varchar code
@@ -273,6 +333,14 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
+    institutions {
+        int8 id PK
+        varchar type
+        varchar name
+        int8 country_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
     internal_notes {
         int8 id PK
         varchar type
@@ -289,6 +357,16 @@ erDiagram
         varchar relayed_by
         int8 logbook_entry_id
         timestamp created_at
+    }
+    legal_entities {
+        int8 id PK
+        varchar name
+        varchar address
+        varchar phone
+        varchar email
+        int8 country_id FK
+        timestamp created_at
+        timestamp updated_at
     }
     licenses {
         int8 id PK
@@ -392,6 +470,18 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
+    people {
+        int8 id PK
+        varchar name
+        varchar first_name
+        int8 nationality_country_id FK
+        varchar address
+        varchar phone
+        varchar email
+        int8 legal_entity_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
     permission_grants {
         int8 id PK
         int8 role_id FK
@@ -424,6 +514,8 @@ erDiagram
         int8 zone_id FK
         timestamp created_at
         timestamp updated_at
+        varchar code
+        bool is_designated
     }
     positions {
         int8 id PK
@@ -436,6 +528,14 @@ erDiagram
         numeric longitude
         numeric speed_knots
         int2 course
+    }
+    presentations {
+        int8 id PK
+        varchar code
+        varchar label
+        numeric conversion_factor
+        timestamp created_at
+        timestamp updated_at
     }
     reference_list_values {
         int8 id PK
@@ -494,6 +594,11 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
+    source_priorities {
+        varchar field
+        varchar source
+        int2 rank
+    }
     species {
         int8 id PK
         varchar fao_code
@@ -536,6 +641,17 @@ erDiagram
         varchar whatsapp_number
         timestamp last_login_at
     }
+    vessel_actors {
+        int8 id PK
+        int8 vessel_id FK
+        varchar role
+        int8 legal_entity_id FK
+        int8 person_id FK
+        date started_on
+        date ended_on
+        timestamp created_at
+        timestamp updated_at
+    }
     vessel_current_states {
         int8 vessel_id FK
         varchar license_status
@@ -565,22 +681,93 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
+    vessel_field_provenance {
+        int8 vessel_id FK
+        varchar field
+        varchar source
+        timestamp updated_at
+    }
+    vessel_history {
+        int8 id PK
+        int8 vessel_id FK
+        varchar former_name
+        int8 former_flag_country_id FK
+        date changed_on
+        timestamp created_at
+        timestamp updated_at
+    }
+    vessel_identifiers {
+        int8 id PK
+        int8 vessel_id FK
+        varchar type
+        varchar value
+        date valid_from
+        date valid_to
+        timestamp created_at
+        timestamp updated_at
+    }
+    vessel_sources {
+        int8 id PK
+        int8 vessel_id FK
+        varchar source
+        varchar external_id
+        timestamp last_import_at
+        jsonb raw_data
+        varchar matching_status
+        int8 candidate_vessel_id FK
+        varchar matching_criterion
+        int8 settled_by FK
+        timestamp settled_at
+        timestamp created_at
+        timestamp updated_at
+    }
+    vessel_types {
+        int8 id PK
+        varchar code
+        varchar label
+        timestamp created_at
+        timestamp updated_at
+    }
     vessels {
         int8 id PK
         varchar name
         varchar registration_number
         varchar imo_number
         varchar call_sign
-        bpchar flag
         varchar type
         varchar category
-        varchar owner
-        numeric length_meters
+        numeric length_m
         numeric gross_tonnage
         varchar status
         timestamp created_at
         timestamp updated_at
         timestamp deleted_at
+        varchar record_status
+        varchar creation_origin
+        varchar fleet_segment
+        int8 vessel_type_id FK
+        varchar fleet_type
+        bool is_tuna_vessel
+        varchar legal_status
+        int8 flag_country_id FK
+        int8 home_port_id FK
+        int2 construction_year
+        numeric beam_m
+        numeric depth_over_keel_m
+        numeric net_tonnage
+        varchar propulsion
+        numeric hold_capacity_m3
+        varchar registration_certificate
+        varchar fao_identifier
+        bool license_not_provided
+    }
+    zone_rules {
+        int8 id PK
+        int8 zone_id FK
+        varchar segment
+        int2 nautical_miles
+        timestamp created_at
+        timestamp updated_at
     }
     zones {
         int8 id PK
@@ -593,8 +780,15 @@ erDiagram
     }
     action_catalog ||--o{ ai_agent_actions : "action_id"
     action_catalog ||--o{ permission_grants : "action_id"
+    agents ||--o{ accreditations : "agent_id"
     ai_agent_actions ||--o{ internal_notes : "ai_agent_action_id"
     communication_channels ||--o{ sent_messages : "communication_channel_id"
+    countries ||--o{ contacts : "country_id"
+    countries ||--o{ institutions : "country_id"
+    countries ||--o{ legal_entities : "country_id"
+    countries ||--o{ people : "nationality_country_id"
+    countries ||--o{ vessel_history : "former_flag_country_id"
+    countries ||--o{ vessels : "flag_country_id"
     custom_field_definitions ||--o{ custom_field_values : "custom_field_definition_id"
     data_source_syncs ||--o{ data_source_errors : "data_source_sync_id"
     data_source_syncs ||--o{ data_source_rejections : "data_source_sync_id"
@@ -608,19 +802,26 @@ erDiagram
     eez_declarations ||--o{ entry_exit_alerts : "eez_declaration_id"
     eez_declarations ||--o{ entry_exit_links : "entry_declaration_id"
     eez_declarations ||--o{ entry_exit_links : "exit_declaration_id"
+    external_lists ||--o{ external_list_vessel : "external_list_id"
     infraction_types ||--o{ infractions : "infraction_type_id"
     inspections ||--o{ infractions : "inspection_id"
+    institutions ||--o{ contacts : "institution_id"
+    institutions ||--o{ external_lists : "institution_id"
+    legal_entities ||--o{ people : "legal_entity_id"
+    legal_entities ||--o{ vessel_actors : "legal_entity_id"
     message_templates ||--o{ dispatch_rules : "message_template_id"
     message_templates ||--o{ sent_messages : "message_template_id"
     missions ||--o{ mission_user : "mission_id"
     missions ||--o{ mission_vessel : "mission_id"
     module_registry ||--o{ action_catalog : "module_id"
     module_registry ||--o{ vessel_events : "module_id"
+    people ||--o{ vessel_actors : "person_id"
     permission_groups ||--o{ dispatch_rules : "editable_by_permission_group_id"
     permission_groups ||--o{ permission_grants : "permission_group_id"
     permission_groups ||--o{ permission_group_user : "permission_group_id"
     ports ||--o{ inspections : "port_id"
     ports ||--o{ movements : "port_id"
+    ports ||--o{ vessels : "home_port_id"
     reference_list_values ||--o{ eez_declarations : "reception_channel_id"
     reference_lists ||--o{ reference_list_values : "reference_list_id"
     roles ||--o{ permission_grants : "role_id"
@@ -632,6 +833,7 @@ erDiagram
     teams ||--o{ observations : "team_id"
     teams ||--o{ users : "team_id"
     tracking_devices ||--o{ positions : "tracking_device_id"
+    users ||--o{ agents : "user_id"
     users ||--o{ ai_agent_actions : "requested_by"
     users ||--o{ comments : "user_id"
     users ||--o{ data_source_errors : "resolved_by"
@@ -649,9 +851,12 @@ erDiagram
     users ||--o{ settings : "updated_by"
     users ||--o{ teams : "lead_user_id"
     users ||--o{ vessel_events : "user_id"
+    users ||--o{ vessel_sources : "settled_by"
+    vessel_types ||--o{ vessels : "vessel_type_id"
     vessels ||--o{ catch_declarations : "vessel_id"
     vessels ||--o{ eez_declarations : "vessel_id"
     vessels ||--o{ entry_exit_alerts : "vessel_id"
+    vessels ||--o{ external_list_vessel : "vessel_id"
     vessels ||--o{ infractions : "vessel_id"
     vessels ||--o{ inspections : "vessel_id"
     vessels ||--o{ internal_notes : "vessel_id"
@@ -663,8 +868,14 @@ erDiagram
     vessels ||--o{ positions : "vessel_id"
     vessels ||--o{ sent_messages : "vessel_id"
     vessels ||--o{ tracking_devices : "vessel_id"
+    vessels ||--o{ vessel_actors : "vessel_id"
     vessels ||--o{ vessel_current_states : "vessel_id"
     vessels ||--o{ vessel_events : "vessel_id"
+    vessels ||--o{ vessel_field_provenance : "vessel_id"
+    vessels ||--o{ vessel_history : "vessel_id"
+    vessels ||--o{ vessel_identifiers : "vessel_id"
+    vessels ||--o{ vessel_sources : "candidate_vessel_id"
+    vessels ||--o{ vessel_sources : "vessel_id"
     zones ||--o{ catch_declarations : "zone_id"
     zones ||--o{ missions : "zone_id"
     zones ||--o{ observations : "zone_id"
@@ -672,4 +883,5 @@ erDiagram
     zones ||--o{ ports : "zone_id"
     zones ||--o{ positions : "zone_id"
     zones ||--o{ vessel_events : "zone_id"
+    zones ||--o{ zone_rules : "zone_id"
 ```

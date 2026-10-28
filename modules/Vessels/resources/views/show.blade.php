@@ -1,4 +1,4 @@
-@php($tabs = ['identity', 'licenses', 'devices', 'movements', 'observations', 'inspections', 'infractions', 'catches', 'missions', 'timeline'])
+@php($tabs = ['identity', 'identifiers', 'actors', 'sources', 'licenses', 'devices', 'movements', 'observations', 'inspections', 'infractions', 'catches', 'missions', 'timeline'])
 
 <x-layouts.app :title="$vessel->name">
     <x-ui.page-header :title="$vessel->name" :subtitle="$vessel->registration_number" :breadcrumbs="[__('vessels::vessels.title') => route('vessels.index')]" />

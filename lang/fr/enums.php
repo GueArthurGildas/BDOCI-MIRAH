@@ -168,4 +168,104 @@ return [
         'boolean' => 'Oui / non',
         'list' => 'Liste',
     ],
+
+    'institution_type' => [
+        'rfmo' => 'ORGP',
+        'rfb' => 'ORP',
+        'fao' => 'FAO',
+        'state' => 'État',
+        'authority' => 'Autorité',
+        'other' => 'Autre',
+    ],
+
+    'identifier_type' => [
+        'imo' => 'IMO',
+        'mmsi' => 'MMSI',
+        'ircs' => 'Indicatif (IRCS)',
+        'registration' => 'Immatriculation',
+        'iccat' => 'ICCAT',
+        'eu' => 'Numéro UE',
+        'beacon' => 'Balise',
+        'other' => 'Autre marque',
+    ],
+
+    'source_system' => [
+        'manual_entry' => 'Saisie',
+        'themis' => 'THEMIS',
+        'neno' => 'NENO',
+        'e_inspection' => 'e-inspection',
+        'dpep' => 'DPEP',
+        'mrep' => 'MREP',
+    ],
+
+    'matching_status' => [
+        'matched' => 'Rapproché',
+        'possible_duplicate' => 'Doublon possible',
+        'new' => 'Nouveau',
+        'rejected' => 'Rejeté',
+    ],
+
+    'matching_criterion' => [
+        'imo' => 'IMO',
+        'mmsi' => 'MMSI',
+        'ircs' => 'Indicatif (IRCS)',
+        'registration' => 'Immatriculation',
+        'name_flag' => 'Nom et pavillon',
+    ],
+
+    'actor_role' => [
+        'owner' => 'Propriétaire',
+        'shipowner' => 'Armateur',
+        'beneficiary' => 'Bénéficiaire',
+        'local_agent' => 'Agent en Côte d\'Ivoire',
+        'captain' => 'Capitaine',
+        'fishing_captain' => 'Capitaine de pêche',
+    ],
+
+    'zone_rule_segment' => [
+        'artisanal' => 'Pêche artisanale',
+        'small_pelagics' => 'Petits pélagiques',
+        'trawl' => 'Chalut',
+        'tuna_vessel' => 'Thonier',
+    ],
+
+    'external_list_type' => [
+        'global_record' => 'Fichier mondial',
+        'rfmo' => 'Liste ORGP',
+        'inn' => 'Liste INN',
+    ],
+
+    'record_status' => [
+        'draft' => 'Brouillon',
+        'to_match' => 'À rapprocher',
+        'validated' => 'Validée',
+    ],
+
+    'fleet_segment' => [
+        'patrol_vessel' => 'Vedette',
+        'industrial' => 'Industriel',
+        'semi_industrial' => 'Semi-industriel',
+        'artisanal' => 'Artisanal',
+        'authorized_foreign' => 'Étranger autorisé',
+        'known_unauthorized' => 'Connu, non autorisé',
+    ],
+
+    'fleet_type' => [
+        'fishing' => 'Pêche',
+        'support' => 'Soutien',
+        'reefer' => 'Reefer',
+        'other' => 'Autre',
+    ],
+
+    'legal_status' => [
+        'ivorian' => 'Ivoirien',
+        'chartered' => 'Affrété',
+        'foreign' => 'Étranger',
+    ],
+
+    'duplicate_decision' => [
+        'merge' => 'Fusionner avec la fiche existante',
+        'keep_separate' => 'Garder séparées',
+        'reject' => 'Rejeter',
+    ],
 ];

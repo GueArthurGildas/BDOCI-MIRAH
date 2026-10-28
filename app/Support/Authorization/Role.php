@@ -93,6 +93,7 @@ enum Role: string
                 Permission::CommunicationsView,
                 Permission::CommunicationsSend,
                 Permission::CommunicationsCreateNote,
+                Permission::RegistryView,
             ],
         };
     }

@@ -43,7 +43,7 @@ class Phase4bDemoSeeder extends Seeder
         $actor = User::where('email', 'director@example.com')->firstOrFail();
         $runner = app(ActionRunner::class);
         $species = Species::pluck('id', 'fao_code');
-        $vessels = Vessel::where('flag', '!=', 'CI')->where('category', 'fishing')->orderBy('id')->limit(count(self::TRIPS))->get();
+        $vessels = Vessel::whereHas('flagCountry', fn ($query) => $query->where('iso2_code', '!=', 'CI'))->where('category', 'fishing')->orderBy('id')->limit(count(self::TRIPS))->get();
 
         foreach (self::TRIPS as $index => $trip) {
             $vessel = $vessels[$index];

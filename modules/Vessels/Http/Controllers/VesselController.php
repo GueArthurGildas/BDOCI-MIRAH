@@ -5,6 +5,9 @@ namespace Modules\Vessels\Http\Controllers;
 use App\Enums\VesselCategory;
 use App\Enums\VesselStatus;
 use App\Http\Controllers\Controller;
+use App\Models\ExternalList;
+use App\Models\LegalEntity;
+use App\Models\Person;
 use App\Models\Vessel;
 use App\Support\Actions\ActionRunner;
 use Illuminate\Http\RedirectResponse;
@@ -32,11 +35,11 @@ class VesselController extends Controller
         ]);
 
         $vessels = Vessel::query()
-            ->with(['currentLicense', 'latestPosition'])
+            ->with(['currentLicense', 'latestPosition', 'flagCountry'])
             ->search($filters['search'] ?? null)
             ->when($filters['category'] ?? null, fn ($query, $category) => $query->where('category', $category))
             ->when($filters['status'] ?? null, fn ($query, $status) => $query->where('status', $status))
-            ->when($filters['flag'] ?? null, fn ($query, $flag) => $query->where('flag', $flag))
+            ->when($filters['flag'] ?? null, fn ($query, $flag) => $query->whereHas('flagCountry', fn ($countries) => $countries->where('iso2_code', $flag)))
             ->orderBy('name')
             ->paginate(self::PER_PAGE)
             ->withQueryString();
@@ -56,12 +59,25 @@ class VesselController extends Controller
             'infractions.type',
             'catchDeclarations.species',
             'missions',
+            'flagCountry',
+            'homePort',
+            'vesselType',
+            'identifiers',
+            'history.formerFlagCountry',
+            'actors.legalEntity',
+            'actors.person',
+            'sources',
+            'fieldProvenance',
+            'externalLists.institution',
         ]);
 
         return view('vessels::show', [
             'vessel' => $vessel,
             'track' => $vessel->positions()->latest('recorded_at')->limit(self::TRACK_LENGTH)->get(),
             'timeline' => VesselTimeline::for($vessel),
+            'legalEntities' => LegalEntity::orderBy('name')->pluck('name', 'id'),
+            'people' => Person::orderBy('name')->get()->pluck('full_name', 'id'),
+            'externalLists' => ExternalList::orderBy('label')->pluck('label', 'id'),
         ]);
     }
 

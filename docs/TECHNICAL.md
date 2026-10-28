@@ -263,7 +263,8 @@ Les notifications utilisent la table `notifications` de Laravel (modèle fourni 
 | `Tracking` | carte de situation, situation par zone à un instant donné, état des balises ; alerte planifiée des balises muettes | `tracking.view` |
 | `Logbook` | main courante, éléments en suspens, suivi et clôture | `logbook.*` |
 | `Movements` | entrées et sorties | `movements.*` |
-| `Vessels` | liste, fiche 360°, création et modification | `vessels.*` |
+| `Vessels` | liste, fiche 360°, création et modification, rapprochement des sources et file des doublons | `vessels.*` |
+| `Registry` | référentiels (pays, organismes, personnes, codes FAO, ports, listes externes, annuaire, agents) et priorité des sources | `registry.view`, `registry.manage` |
 | `Licenses` | liste et échéances ; alerte planifiée des licences à échéance | `licenses.view` |
 | `Inspections` | liste et détail | `inspections.view` |
 | `Infractions` | liste, détail, décisions et suites | `infractions.*` |

@@ -79,6 +79,7 @@ return [
         'settings' => 'Settings',
         'roles' => 'Roles',
         'communications' => 'Communications',
+        'registry' => 'Registry',
     ],
     'permissions' => [
         'dashboard' => [
@@ -87,6 +88,7 @@ return [
         'vessels' => [
             'view' => 'View vessels',
             'manage' => 'Manage vessels',
+            'match' => 'Settle vessel duplicates',
         ],
         'licenses' => [
             'view' => 'View licenses',
@@ -131,6 +133,10 @@ return [
         ],
         'settings' => [
             'manage' => 'Manage settings',
+        ],
+        'registry' => [
+            'view' => 'View the registries',
+            'manage' => 'Manage the registries',
         ],
         'roles' => [
             'manage' => 'Manage roles',

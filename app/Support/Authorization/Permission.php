@@ -50,4 +50,7 @@ enum Permission: string
     case CommunicationsManageTemplates = 'communications.manage_templates';
     case CommunicationsManageDispatch = 'communications.manage_dispatch';
     case CommunicationsTriggerAiAgent = 'communications.trigger_ai_agent';
+    case VesselsMatch = 'vessels.match';
+    case RegistryView = 'registry.view';
+    case RegistryManage = 'registry.manage';
 }

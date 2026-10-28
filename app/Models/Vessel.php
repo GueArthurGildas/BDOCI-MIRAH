@@ -2,16 +2,26 @@
 
 namespace App\Models;
 
+use App\Enums\ActorRole;
 use App\Enums\BeaconStatus;
+use App\Enums\FleetSegment;
+use App\Enums\FleetType;
+use App\Enums\IdentifierType;
+use App\Enums\LegalStatus;
+use App\Enums\RecordStatus;
+use App\Enums\SourceSystem;
 use App\Enums\VesselCategory;
 use App\Enums\VesselStatus;
 use App\Enums\VesselType;
 use App\Models\Concerns\Audited;
 use App\Support\Localization\Countries;
+use App\Support\Vessels\VesselRelationsSynchronizer;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -20,10 +30,22 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 #[Fillable([
     'name', 'registration_number', 'imo_number', 'call_sign', 'flag', 'type',
     'category', 'owner', 'length_meters', 'gross_tonnage', 'status',
+    'record_status', 'creation_origin', 'fleet_segment', 'vessel_type_id', 'fleet_type', 'is_tuna_vessel',
+    'legal_status', 'flag_country_id', 'home_port_id', 'construction_year', 'length_m', 'beam_m',
+    'depth_over_keel_m', 'net_tonnage', 'propulsion', 'hold_capacity_m3', 'registration_certificate',
+    'fao_identifier', 'license_not_provided',
 ])]
 class Vessel extends Model
 {
     use Audited, HasFactory, SoftDeletes;
+
+    public ?string $pendingOwner = null;
+
+    protected static function booted(): void
+    {
+        static::updating(fn (Vessel $vessel) => VesselRelationsSynchronizer::recordHistory($vessel));
+        static::saved(fn (Vessel $vessel) => VesselRelationsSynchronizer::sync($vessel));
+    }
 
     protected function casts(): array
     {
@@ -31,14 +53,57 @@ class Vessel extends Model
             'type' => VesselType::class,
             'category' => VesselCategory::class,
             'status' => VesselStatus::class,
-            'length_meters' => 'float',
+            'record_status' => RecordStatus::class,
+            'creation_origin' => SourceSystem::class,
+            'fleet_segment' => FleetSegment::class,
+            'fleet_type' => FleetType::class,
+            'legal_status' => LegalStatus::class,
+            'is_tuna_vessel' => 'boolean',
+            'license_not_provided' => 'boolean',
+            'length_m' => 'float',
+            'beam_m' => 'float',
+            'depth_over_keel_m' => 'float',
+            'net_tonnage' => 'float',
             'gross_tonnage' => 'float',
+            'hold_capacity_m3' => 'float',
         ];
+    }
+
+    protected function flag(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->flagCountry?->iso2_code,
+            set: function (?string $code) {
+                $this->unsetRelation('flagCountry');
+
+                return ['flag_country_id' => Country::forIso2($code)?->id];
+            },
+        );
+    }
+
+    protected function lengthMeters(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->length_m,
+            set: fn ($value) => ['length_m' => $value],
+        );
+    }
+
+    protected function owner(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->pendingOwner ?? $this->currentOwner?->holderName(),
+            set: function (?string $name) {
+                $this->pendingOwner = $name;
+
+                return [];
+            },
+        );
     }
 
     public function flagName(): string
     {
-        return Countries::name($this->flag);
+        return $this->flag ? Countries::name($this->flag) : '';
     }
 
     public function beaconStatus(): BeaconStatus
@@ -58,7 +123,68 @@ class Vessel extends Model
             ->whereLike('name', "%{$term}%")
             ->orWhereLike('registration_number', "%{$term}%")
             ->orWhereLike('imo_number', "%{$term}%")
-            ->orWhereLike('call_sign', "%{$term}%")));
+            ->orWhereLike('call_sign', "%{$term}%")
+            ->orWhereHas('identifiers', fn (Builder $identifiers) => $identifiers->whereLike('value', "%{$term}%"))));
+    }
+
+    public function flagCountry(): BelongsTo
+    {
+        return $this->belongsTo(Country::class, 'flag_country_id');
+    }
+
+    public function homePort(): BelongsTo
+    {
+        return $this->belongsTo(Port::class, 'home_port_id');
+    }
+
+    public function vesselType(): BelongsTo
+    {
+        return $this->belongsTo(VesselTypeRecord::class, 'vessel_type_id');
+    }
+
+    public function identifiers(): HasMany
+    {
+        return $this->hasMany(VesselIdentifier::class)->orderBy('type')->orderByDesc('valid_from');
+    }
+
+    public function activeIdentifiers(): HasMany
+    {
+        return $this->hasMany(VesselIdentifier::class)->whereNull('valid_to');
+    }
+
+    public function history(): HasMany
+    {
+        return $this->hasMany(VesselHistory::class)->latest('changed_on')->latest('id');
+    }
+
+    public function sources(): HasMany
+    {
+        return $this->hasMany(VesselSource::class);
+    }
+
+    public function fieldProvenance(): HasMany
+    {
+        return $this->hasMany(VesselFieldProvenance::class, 'vessel_id');
+    }
+
+    public function actors(): HasMany
+    {
+        return $this->hasMany(VesselActor::class)->orderByDesc('started_on')->orderByDesc('id');
+    }
+
+    public function currentOwner(): HasOne
+    {
+        return $this->hasOne(VesselActor::class)->where('role', ActorRole::Owner->value)->whereNull('ended_on')->latestOfMany();
+    }
+
+    public function externalLists(): BelongsToMany
+    {
+        return $this->belongsToMany(ExternalList::class)->withPivot(['listed_from', 'listed_until']);
+    }
+
+    public function identifierValue(IdentifierType $type): ?string
+    {
+        return $this->activeIdentifiers->firstWhere('type', $type)?->value;
     }
 
     public function licenses(): HasMany

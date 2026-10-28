@@ -59,7 +59,7 @@ Nom de la spécification (v1, français) → nom technique (v2, anglais) → sit
 | Spécification | Table | Situation actuelle |
 |---|---|---|
 | `module_registre` | `module_registry` | créé (phase 1) |
-| `pays` | `countries` | nouveau |
+| `pays` | `countries` | créé (phase 2), avec `iso2_code` |
 | `zone` | `zones` | existe (géométrie JSON vers PostGIS) |
 | `equipe` | `teams` | existe |
 | `role` | `roles` | créée (phase 1), avec `parent_id` et `description` |
@@ -84,27 +84,27 @@ Nom de la spécification (v1, français) → nom technique (v2, anglais) → sit
 
 | Spécification | Table | Situation actuelle |
 |---|---|---|
-| `organisme` | `institutions` | nouveau |
-| `port` | `ports` | existe |
-| `personne_morale` | `legal_entities` | nouveau |
-| `personne` | `people` | nouveau |
-| `navire` | `vessels` | existe, à étendre (`owner` et `flag` deviennent des relations) |
-| `navire_identifiant` | `vessel_identifiers` | nouveau |
-| `navire_historique` | `vessel_history` | nouveau |
-| `navire_source` | `vessel_sources` | nouveau |
-| `navire_champ_provenance` | `vessel_field_provenance` | nouveau |
-| `source_priorite` | `source_priorities` | nouveau |
-| `navire_acteur` | `vessel_actors` | nouveau |
-| `regle_de_zone` | `zone_rules` | nouveau |
-| `espece` | `species` | existe |
-| `engin` | `gears` | nouveau |
-| `presentation` | `presentations` | nouveau |
-| `type_navire` | `vessel_types` | nouveau |
-| `liste_externe` | `external_lists` | nouveau |
-| `navire_liste_externe` | `external_list_vessel` | nouveau |
-| `contact` | `contacts` | nouveau |
-| `agent` | `agents` | nouveau |
-| `habilitation` | `accreditations` | nouveau |
+| `organisme` | `institutions` | créé (phase 2) |
+| `port` | `ports` | étendu (phase 2) : `code` et `is_designated` |
+| `personne_morale` | `legal_entities` | créé (phase 2) |
+| `personne` | `people` | créé (phase 2) |
+| `navire` | `vessels` | étendu (phase 2) : `flag` et `owner` deviennent des relations, colonnes de la fiche complète ajoutées |
+| `navire_identifiant` | `vessel_identifiers` | créé (phase 2) |
+| `navire_historique` | `vessel_history` | créé (phase 2) |
+| `navire_source` | `vessel_sources` | créé (phase 2) |
+| `navire_champ_provenance` | `vessel_field_provenance` | créé (phase 2) |
+| `source_priorite` | `source_priorities` | créé (phase 2) |
+| `navire_acteur` | `vessel_actors` | créé (phase 2) |
+| `regle_de_zone` | `zone_rules` | créé (phase 2) |
+| `espece` | `species` | existe, code FAO élargi à 10 caractères (phase 2) |
+| `engin` | `gears` | créé (phase 2) |
+| `presentation` | `presentations` | créé (phase 2) |
+| `type_navire` | `vessel_types` | créé (phase 2) |
+| `liste_externe` | `external_lists` | créé (phase 2) |
+| `navire_liste_externe` | `external_list_vessel` | créé (phase 2) |
+| `contact` | `contacts` | créé (phase 2) |
+| `agent` | `agents` | créé (phase 2) |
+| `habilitation` | `accreditations` | créé (phase 2) |
 | `evenement_navire` | `vessel_events` | créé (phase 1) |
 | `etat_courant_navire` | `vessel_current_states` | créé (phase 1) |
 | `etat_connecteur` | `data_sources` | existe (voir CONVENTIONS, point 9) |
@@ -315,15 +315,15 @@ Nom de la spécification (v1, français) → nom technique (v2, anglais) → sit
 | `movements` | `eez_declarations, mrep_port_calls` | change de sens |
 | `notifications` | `(propre à l'application)` | canal in_app du module Communications, conservée |
 | `observations` | `surveillance_observations, logbook_entries` | remplacée |
-| `ports` | `ports` | alignée |
+| `ports` | `ports` | étendue (code, port désigné) |
 | `positions` | `positions` | à partitionner par mois |
 | `roles` | `roles` | étendue |
 | `settings` | `threshold_parameters` | absorbée |
-| `species` | `species` | alignée |
+| `species` | `species` | alignée (noms de colonnes conservés, voir CONVENTIONS §11) |
 | `teams` | `teams` | alignée |
 | `tracking_devices` | `beacons, beacon_assignments` | remplacée |
 | `users` | `users` | étendue |
-| `vessels` | `vessels` | étendue |
+| `vessels` | `vessels` | étendue (phase 2) |
 | `zones` | `zones` | géométrie vers PostGIS |
 
 Tables du framework (hors périmètre de ce glossaire) : `migrations`, `cache`, `cache_locks`, `jobs`, `job_batches`, `failed_jobs`, `sessions`, `password_reset_tokens`.

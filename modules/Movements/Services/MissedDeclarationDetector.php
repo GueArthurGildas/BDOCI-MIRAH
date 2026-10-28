@@ -28,7 +28,7 @@ class MissedDeclarationDetector
         $since = now()->subHours(config('surveillance.eez_position_window_hours'));
 
         return Vessel::query()
-            ->where('flag', '!=', 'CI')
+            ->whereHas('flagCountry', fn ($query) => $query->where('iso2_code', '!=', 'CI'))
             ->whereIn('id', Position::query()
                 ->latestPerVessel(now())
                 ->where('positions.recorded_at', '>=', $since)

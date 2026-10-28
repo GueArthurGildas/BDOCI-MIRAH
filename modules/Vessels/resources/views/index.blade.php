@@ -12,6 +12,9 @@
         <x-ui.card :title="__('vessels::vessels.list_title')" :subtitle="trans_choice('ui.results_count', $vessels->total())" flush>
             @can(App\Support\Authorization\Permission::VesselsManage->value)
                 <x-slot:actions>
+                    <a href="{{ route('vessels.ingest.create') }}" class="btn btn-default btn-sm">
+                        <i class="feather icon-download"></i> {{ __('vessels::vessels.ingest.link') }}
+                    </a>
                     <a href="{{ route('vessels.create') }}" class="btn btn-primary btn-sm">
                         <i class="feather icon-plus"></i> {{ __('vessels::vessels.new') }}
                     </a>
@@ -27,6 +30,7 @@
                     <th>{{ __('vessels::vessels.fields.license') }}</th>
                     <th>{{ __('vessels::vessels.fields.beacon') }}</th>
                     <th>{{ __('vessels::vessels.fields.status') }}</th>
+                    <th>{{ __('vessels::vessels.fields.record_status') }}</th>
                 </x-slot:head>
 
                 @forelse ($vessels as $vessel)
@@ -37,7 +41,7 @@
                         </td>
                         <td>{{ $vessel->registration_number }}</td>
                         <td>{{ $vessel->flagName() }}</td>
-                        <td>{{ __($vessel->type->label()) }}</td>
+                        <td>{{ $vessel->type ? __($vessel->type->label()) : '—' }}</td>
                         <td>
                             @if ($vessel->currentLicense)
                                 <x-ui.status-badge :status="$vessel->currentLicense->status" />
@@ -47,9 +51,10 @@
                         </td>
                         <td><x-ui.status-badge :status="$vessel->beaconStatus()" /></td>
                         <td><x-ui.status-badge :status="$vessel->status" /></td>
+                        <td><x-ui.status-badge :status="$vessel->record_status" /></td>
                     </tr>
                 @empty
-                    <x-ui.empty-row colspan="7" />
+                    <x-ui.empty-row colspan="8" />
                 @endforelse
             </x-ui.table>
         </x-ui.card>

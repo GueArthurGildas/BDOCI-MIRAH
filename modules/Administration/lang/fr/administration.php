@@ -79,6 +79,7 @@ return [
         'settings' => 'Paramètres',
         'roles' => 'Rôles',
         'communications' => 'Communications',
+        'registry' => 'Référentiels',
     ],
     'permissions' => [
         'dashboard' => [
@@ -87,6 +88,7 @@ return [
         'vessels' => [
             'view' => 'Consulter les navires',
             'manage' => 'Gérer les navires',
+            'match' => 'Trancher les doublons de navires',
         ],
         'licenses' => [
             'view' => 'Consulter les licences',
@@ -131,6 +133,10 @@ return [
         ],
         'settings' => [
             'manage' => 'Gérer les paramètres',
+        ],
+        'registry' => [
+            'view' => 'Consulter les référentiels',
+            'manage' => 'Gérer les référentiels',
         ],
         'roles' => [
             'manage' => 'Gérer les rôles',
