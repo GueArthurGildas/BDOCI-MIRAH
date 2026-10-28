@@ -23,6 +23,7 @@ use Modules\Tracking\Providers\TrackingServiceProvider;
 use Modules\Vessels\Providers\VesselsServiceProvider;
 use Modules\Vms\Providers\VmsServiceProvider;
 use Modules\Watch\Providers\WatchServiceProvider;
+use Modules\Witnesses\Providers\WitnessesServiceProvider;
 
 return [
     AppServiceProvider::class,
@@ -48,4 +49,5 @@ return [
     VmsServiceProvider::class,
     WatchServiceProvider::class,
     IndicatorsServiceProvider::class,
+    WitnessesServiceProvider::class,
 ];

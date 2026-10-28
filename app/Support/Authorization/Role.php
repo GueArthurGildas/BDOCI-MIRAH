@@ -20,6 +20,12 @@ enum Role: string
         Permission::AuditView,
         Permission::ReportsViewHealth,
         Permission::ConnectorsSync,
+        Permission::InfractionsManageTypes,
+    ];
+
+    private const DIRECTOR_ONLY_PERMISSIONS = [
+        Permission::InfractionsDecideMeasures,
+        Permission::MissionsAuthorizeAsDirector,
     ];
 
     public function label(): string
@@ -73,8 +79,13 @@ enum Role: string
     {
         return match ($this) {
             self::Admin => [Permission::DashboardView, ...self::TECHNICAL_PERMISSIONS],
-            self::Director, self::TeamLead => [
+            self::Director => [
                 ...self::businessPermissions(),
+                Permission::ConnectorsView,
+                Permission::ReportsViewHealth,
+            ],
+            self::TeamLead => [
+                ...array_values(array_filter(self::businessPermissions(), fn (Permission $permission) => ! in_array($permission, self::DIRECTOR_ONLY_PERMISSIONS, true))),
                 Permission::ConnectorsView,
                 Permission::ReportsViewHealth,
             ],
@@ -105,6 +116,9 @@ enum Role: string
                 Permission::TrackingCreate,
                 Permission::VmsView,
                 Permission::VmsCreate,
+                Permission::MissionsCreate,
+                Permission::WitnessesView,
+                Permission::WitnessesCreate,
             ],
         };
     }

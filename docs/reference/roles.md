@@ -19,7 +19,11 @@ Permissions accordées par défaut à chaque rôle système (l'héritage `Direct
 | `connectors.view` | oui | oui | oui | — |
 | `dashboard.view` | oui | oui | oui | oui |
 | `indicators.view` | — | oui | oui | — |
+| `infractions.create` | — | oui | oui | — |
+| `infractions.decide` | — | oui | oui | — |
+| `infractions.decide_measures` | — | oui | — | — |
 | `infractions.manage` | — | oui | oui | — |
+| `infractions.manage_types` | oui | — | — | — |
 | `infractions.view` | — | oui | oui | oui |
 | `inspections.view` | — | oui | oui | oui |
 | `licenses.import` | — | oui | oui | — |
@@ -33,6 +37,9 @@ Permissions accordées par défaut à chaque rôle système (l'héritage `Direct
 | `logbook.create` | — | oui | oui | oui |
 | `logbook.manage` | — | oui | oui | oui |
 | `logbook.view` | — | oui | oui | oui |
+| `missions.authorize` | — | oui | oui | — |
+| `missions.authorize_as_director` | — | oui | — | — |
+| `missions.create` | — | oui | oui | oui |
 | `missions.manage` | — | oui | oui | — |
 | `missions.view` | — | oui | oui | oui |
 | `movements.create` | — | oui | oui | oui |
@@ -66,3 +73,6 @@ Permissions accordées par défaut à chaque rôle système (l'héritage `Direct
 | `watch.create` | — | oui | oui | oui |
 | `watch.manage` | — | oui | oui | — |
 | `watch.view` | — | oui | oui | oui |
+| `witnesses.create` | — | oui | oui | oui |
+| `witnesses.manage` | — | oui | oui | — |
+| `witnesses.view` | — | oui | oui | oui |

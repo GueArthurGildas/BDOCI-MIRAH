@@ -86,6 +86,7 @@ return [
         'mrep' => 'Miroir MREP (DPEP)',
         'vms' => 'Balises, avaries et ERS',
         'indicators' => 'Indicateurs et vue flotte',
+        'witnesses' => 'Signalements de témoins',
     ],
     'permissions' => [
         'dashboard' => [
@@ -126,6 +127,10 @@ return [
         'infractions' => [
             'view' => 'Consulter les infractions',
             'manage' => 'Gérer les infractions',
+            'create' => 'Ouvrir des dossiers d\'infraction',
+            'decide' => 'Décider des suites, enregistrer paiements et recours',
+            'decide_measures' => 'Décider des mesures conservatoires (Directeur)',
+            'manage_types' => 'Gérer la nomenclature des infractions',
         ],
         'catches' => [
             'view' => 'Consulter les captures',
@@ -133,6 +138,9 @@ return [
         'missions' => [
             'view' => 'Consulter les missions',
             'manage' => 'Gérer les missions',
+            'create' => 'Programmer des missions',
+            'authorize' => 'Autoriser des missions',
+            'authorize_as_director' => 'Autoriser des missions au titre du Directeur',
         ],
         'users' => [
             'manage' => 'Gérer les utilisateurs',
@@ -193,6 +201,11 @@ return [
         ],
         'indicators' => [
             'view' => 'Consulter la vue flotte, les indicateurs et leur détail',
+        ],
+        'witnesses' => [
+            'view' => 'Consulter les signalements de témoins',
+            'create' => 'Enregistrer des signalements de témoins',
+            'manage' => 'Instruire, classer ou transmettre les signalements et diffuser la liste des navires autorisés',
         ],
     ],
 
@@ -314,6 +327,34 @@ return [
             'reference_list_value' => 'Valeur de référence',
             'custom_field_definition' => 'Champ extensible',
             'user' => 'Utilisateur',
+            'infraction_case' => 'Dossier d\'infraction',
+            'infraction_type' => 'Infraction (nomenclature)',
+            'upheld_infraction' => 'Infraction retenue',
+            'evidence_item' => 'Preuve',
+            'seal' => 'Scellé',
+            'seizure' => 'Saisie',
+            'precautionary_measure' => 'Mesure conservatoire',
+            'violation_report' => 'Procès-verbal',
+            'litigation_follow_up' => 'Suite contentieuse',
+            'decision' => 'Décision',
+            'payment' => 'Paiement',
+            'appeal' => 'Recours',
+            'mission_authorization' => 'Autorisation de mission',
+            'mission_participant' => 'Participant de mission',
+            'mission_asset' => 'Moyen de mission',
+            'mission_briefing' => 'Briefing de mission',
+            'mission_debriefing' => 'Débriefing de mission',
+            'mission_event' => 'Évènement de mission',
+            'mission_review' => 'Bilan de mission',
+            'observed_unit' => 'Unité rencontrée',
+            'patrol_track' => 'Trace de patrouille',
+            'observer_boarding' => 'Embarquement d\'observateur',
+            'asset' => 'Moyen',
+            'witness_report' => 'Signalement de témoin',
+            'report_usability' => 'Exploitabilité du signalement',
+            'report_investigation' => 'Enquête sur signalement',
+            'report_decision' => 'Décision sur signalement',
+            'authorized_list_distribution' => 'Diffusion de la liste',
         ],
     ],
 ];

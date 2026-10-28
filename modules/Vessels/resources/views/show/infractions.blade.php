@@ -6,12 +6,18 @@
             <th>{{ __('vessels::vessels.columns.infraction_type') }}</th>
             <th>{{ __('vessels::vessels.columns.status') }}</th>
         </x-slot:head>
-        @forelse ($vessel->infractions as $infraction)
+        @forelse ($vessel->infractionCases as $case)
             <tr>
-                <td>{{ $infraction->reference }}</td>
-                <td>{{ $infraction->detected_at->isoFormat('L') }}</td>
-                <td>{{ $infraction->type->name }}</td>
-                <td><x-ui.status-badge :status="$infraction->status" /></td>
+                <td>
+                    @can(App\Support\Authorization\Permission::InfractionsView->value)
+                        <a href="{{ route('infractions.show', $case) }}">{{ $case->reference }}</a>
+                    @else
+                        {{ $case->reference }}
+                    @endcan
+                </td>
+                <td>{{ $case->opened_at->isoFormat('L') }}</td>
+                <td class="text-wrap">{{ $case->upheld->map(fn ($upheld) => $upheld->type->label)->implode(', ') ?: '—' }}</td>
+                <td><x-ui.status-badge :status="$case->status" /></td>
             </tr>
         @empty
             <x-ui.empty-row colspan="4" />

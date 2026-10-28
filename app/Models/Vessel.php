@@ -250,14 +250,9 @@ class Vessel extends Model
         return $this->hasMany(ExternalInspection::class)->latest('started_at');
     }
 
-    public function inspections(): HasMany
+    public function infractionCases(): HasMany
     {
-        return $this->hasMany(Inspection::class)->latest('inspected_at');
-    }
-
-    public function infractions(): HasMany
-    {
-        return $this->hasMany(Infraction::class)->latest('detected_at');
+        return $this->hasMany(InfractionCase::class)->latest('opened_at');
     }
 
     public function catchDeclarations(): HasMany
@@ -265,9 +260,14 @@ class Vessel extends Model
         return $this->hasMany(CatchDeclaration::class)->latest('period_start');
     }
 
+    public function observedUnits(): HasMany
+    {
+        return $this->hasMany(ObservedUnit::class)->latest('observed_at');
+    }
+
     public function missions(): BelongsToMany
     {
-        return $this->belongsToMany(Mission::class)->latest('starts_at');
+        return $this->belongsToMany(Mission::class, 'observed_units')->distinct()->latest('missions.planned_start_at');
     }
 
     public function watchEntries(): HasMany

@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Vigilance;
 
-use App\Enums\InfractionStatus;
-use App\Models\Infraction;
+use App\Enums\InfractionCaseStatus;
+use App\Models\InfractionCase;
 use App\Models\License;
 use App\Models\Vessel;
 use App\Support\Vessels\VesselIndicators;
@@ -46,7 +46,7 @@ class VigilanceScoreTest extends TestCase
     {
         $vessel = Vessel::factory()->create();
         License::factory()->for($vessel)->expired()->create();
-        Infraction::factory()->count(2)->create(['vessel_id' => $vessel->id, 'status' => InfractionStatus::Reported, 'detected_at' => now()->subDays(10)]);
+        InfractionCase::factory()->count(2)->create(['vessel_id' => $vessel->id, 'status' => InfractionCaseStatus::Open, 'opened_at' => now()->subDays(10)]);
 
         $score = $this->score($vessel);
 
@@ -62,7 +62,7 @@ class VigilanceScoreTest extends TestCase
     {
         $vessel = Vessel::factory()->create();
         License::factory()->for($vessel)->expired()->create();
-        Infraction::factory()->count(10)->create(['vessel_id' => $vessel->id, 'status' => InfractionStatus::Reported, 'detected_at' => now()->subDays(5)]);
+        InfractionCase::factory()->count(10)->create(['vessel_id' => $vessel->id, 'status' => InfractionCaseStatus::Open, 'opened_at' => now()->subDays(5)]);
 
         $score = $this->score($vessel);
 

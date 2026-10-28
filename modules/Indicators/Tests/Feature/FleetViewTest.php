@@ -2,8 +2,8 @@
 
 namespace Modules\Indicators\Tests\Feature;
 
-use App\Enums\InfractionStatus;
-use App\Models\Infraction;
+use App\Enums\InfractionCaseStatus;
+use App\Models\InfractionCase;
 use App\Models\License;
 use App\Models\Position;
 use App\Models\TrackingDevice;
@@ -45,7 +45,7 @@ class FleetViewTest extends TestCase
         $device = TrackingDevice::factory()->create();
         Position::factory()->for($device->vessel)->create(['recorded_at' => now()->subHours(10)]);
         License::factory()->for(Vessel::factory()->create())->expiringIn(10)->create();
-        Infraction::factory()->create(['status' => InfractionStatus::Reported]);
+        InfractionCase::factory()->create(['status' => InfractionCaseStatus::Open]);
 
         $response = $this->get('/fleet')->assertOk();
 

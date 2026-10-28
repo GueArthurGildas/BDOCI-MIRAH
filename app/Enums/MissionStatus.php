@@ -9,18 +9,20 @@ enum MissionStatus: string implements HasBadge
 {
     use HasTranslatedLabel;
 
-    case Planned = 'planned';
+    case Scheduled = 'scheduled';
+    case Authorized = 'authorized';
     case InProgress = 'in_progress';
     case Completed = 'completed';
-    case Cancelled = 'cancelled';
+    case Closed = 'closed';
 
     public function color(): string
     {
         return match ($this) {
-            self::Planned => 'info',
+            self::Scheduled => 'info',
+            self::Authorized => 'primary',
             self::InProgress => 'warning',
             self::Completed => 'success',
-            self::Cancelled => 'default',
+            self::Closed => 'default',
         };
     }
 }

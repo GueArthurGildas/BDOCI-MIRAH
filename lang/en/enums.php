@@ -79,14 +79,6 @@ return [
         'non_compliant' => 'Non-compliant',
     ],
 
-    'infraction_status' => [
-        'reported' => 'Reported',
-        'under_investigation' => 'Under investigation',
-        'sanctioned' => 'Sanctioned',
-        'closed' => 'Closed',
-        'dismissed' => 'Dismissed',
-    ],
-
     'catch_source' => [
         'logbook' => 'Logbook',
         'landing' => 'Landing',
@@ -94,16 +86,19 @@ return [
     ],
 
     'mission_type' => [
-        'sea_patrol' => 'Sea patrol',
-        'port_control' => 'Port control',
-        'joint_operation' => 'Joint operation',
+        'maritime' => 'Maritime',
+        'lagoon' => 'Lagoon',
+        'continental' => 'Continental',
+        'port' => 'Port',
+        'aerial_drone' => 'Aerial or drone',
     ],
 
     'mission_status' => [
-        'planned' => 'Planned',
+        'scheduled' => 'Scheduled',
+        'authorized' => 'Authorized',
         'in_progress' => 'In progress',
         'completed' => 'Completed',
-        'cancelled' => 'Cancelled',
+        'closed' => 'Closed',
     ],
 
     'connector_error_code' => [
@@ -512,5 +507,130 @@ return [
         'to_watch' => 'To watch',
         'suspect' => 'Suspect',
         'in_violation' => 'In violation',
+    ],
+
+    'witness_category' => [
+        'state_vessel' => 'State vessel',
+        'fisher' => 'Fisher',
+        'coaster' => 'Coaster',
+        'port_authority' => 'Port authority',
+        'other' => 'Other',
+    ],
+
+    'report_channel' => [
+        'email' => 'Email',
+        'fax' => 'Fax',
+        'phone' => 'Phone',
+        'mail' => 'Mail',
+        'form' => 'Paper or PDF form copied',
+    ],
+
+    'witness_report_status' => [
+        'received' => 'Received',
+        'verified' => 'Verified',
+        'closed' => 'Closed',
+        'forwarded' => 'Forwarded',
+    ],
+
+    'report_decision_type' => [
+        'dismissal' => 'Dismissal',
+        'forward_to_instruction' => 'Forward to instruction',
+    ],
+
+    'infraction_qualification' => [
+        'presumed' => 'Presumed',
+        'established' => 'Established',
+    ],
+
+    'infraction_case_status' => [
+        'open' => 'Open',
+        'instruction' => 'Under instruction',
+        'decision' => 'Decision',
+        'closed' => 'Closed',
+    ],
+
+    'precautionary_measure_type' => [
+        'immobilization' => 'Immobilization',
+        'port_services_refusal' => 'Port services refusal',
+        'gear_seizure' => 'Gear seizure',
+        'catch_seizure' => 'Catch seizure',
+        'license_suspension' => 'License suspension',
+        'license_withdrawal' => 'License withdrawal',
+        'diversion' => 'Diversion',
+        'seals' => 'Seals',
+        'cessation_order' => 'Cessation order',
+    ],
+
+    'seizure_decision' => [
+        'return' => 'Return',
+        'destruction' => 'Destruction',
+        'confiscation' => 'Confiscation',
+    ],
+
+    'follow_up_type' => [
+        'warning' => 'Warning',
+        'administrative_penalty' => 'Administrative penalty',
+        'settlement' => 'Settlement',
+        'forward_to_hierarchy' => 'Forward to hierarchy',
+        'forward_to_court' => 'Forward to court',
+    ],
+
+    'infraction_severity' => [
+        'minor' => 'Minor',
+        'serious' => 'Serious',
+        'very_serious' => 'Very serious',
+    ],
+
+    'mission_nature' => [
+        'internal' => 'Internal',
+        'joint' => 'Joint',
+    ],
+
+    'asset_type' => [
+        'intervention_boat' => 'Intervention boat',
+        'patrol_boat' => 'Patrol boat',
+        'vehicle' => 'Vehicle',
+        'drone' => 'Drone',
+        'vhf' => 'VHF',
+        'gps' => 'GPS',
+        'inspection_equipment' => 'Inspection equipment',
+        'seals' => 'Seals',
+    ],
+
+    'observed_unit_level' => [
+        'sighted' => 'Sighted',
+        'approached' => 'Approached',
+        'inspected' => 'Inspected',
+    ],
+
+    'sighting_source' => [
+        'visual' => 'Visual',
+        'radar' => 'Radar',
+        'vms' => 'VMS',
+    ],
+
+    'authorizing_role' => [
+        'director' => 'Director',
+        'team_lead' => 'Team lead',
+    ],
+
+    'mission_checklist_item' => [
+        'fuel' => 'Fuel on board',
+        'radio' => 'VHF radio checked',
+        'gps' => 'GPS working',
+        'inspection_kit' => 'Inspection equipment',
+        'seals' => 'Seals available',
+        'safety' => 'Safety equipment',
+        'documents' => 'Mission order and documents',
+    ],
+
+    'investigation_element' => [
+        'photos' => 'Photos',
+        'themis' => 'THEMIS records',
+        'global_record' => 'Global Record',
+        'rfmo_lists' => 'RFMO and IUU lists',
+        'trajectories' => 'Trajectories',
+        'vms_extract' => 'VMS extract',
+        'press' => 'Press',
     ],
 ];

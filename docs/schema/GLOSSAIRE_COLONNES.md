@@ -1600,6 +1600,7 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 | `alerte_id` | `alert_id` | bigint |
 | `signalement_id` | `witness_report_id` | bigint |
 | `qualification` | `qualification` | varchar(40) |
+| (absente) | `facts` | text |
 | `observations_capitaine` | `captain_observations` | text |
 | `statut` | `status` | varchar(40) |
 | `ouvert_par` | `opened_by` | bigint |

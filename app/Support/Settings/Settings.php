@@ -42,6 +42,12 @@ final class Settings
             new SettingDefinition('connectors.catch_variance_threshold_percent', 'surveillance.connectors.catch_variance_threshold_percent', SettingType::Integer, 'connectors', 0, 100),
             new SettingDefinition('alerts.licenses_expiring.second_warning_days', 'surveillance.license_expiry_second_warning_days', SettingType::Integer, 'licenses', 1, 730),
             new SettingDefinition('alerts.licenses_expiring.third_warning_days', 'surveillance.license_expiry_third_warning_days', SettingType::Integer, 'licenses', 1, 730),
+            new SettingDefinition('infractions.repeat_threshold', 'surveillance.infractions.repeat_threshold', SettingType::Integer, 'infractions', 2, 20),
+            new SettingDefinition('missions.team_lead_authorizes.maritime', 'surveillance.missions.team_lead_authorizes.maritime', SettingType::Boolean, 'missions'),
+            new SettingDefinition('missions.team_lead_authorizes.lagoon', 'surveillance.missions.team_lead_authorizes.lagoon', SettingType::Boolean, 'missions'),
+            new SettingDefinition('missions.team_lead_authorizes.continental', 'surveillance.missions.team_lead_authorizes.continental', SettingType::Boolean, 'missions'),
+            new SettingDefinition('missions.team_lead_authorizes.port', 'surveillance.missions.team_lead_authorizes.port', SettingType::Boolean, 'missions'),
+            new SettingDefinition('missions.team_lead_authorizes.aerial_drone', 'surveillance.missions.team_lead_authorizes.aerial_drone', SettingType::Boolean, 'missions'),
         ])->keyBy(fn (SettingDefinition $definition) => $definition->field());
     }
 

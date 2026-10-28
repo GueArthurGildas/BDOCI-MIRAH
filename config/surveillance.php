@@ -47,5 +47,19 @@ return [
         'slot_window_hours' => 2,
     ],
 
+    'infractions' => [
+        'repeat_threshold' => (int) env('SURVEILLANCE_INFRACTIONS_REPEAT_THRESHOLD', 2),
+    ],
+
+    'missions' => [
+        'team_lead_authorizes' => [
+            'maritime' => false,
+            'lagoon' => false,
+            'continental' => false,
+            'port' => false,
+            'aerial_drone' => false,
+        ],
+    ],
+
     'flag_states' => ['CI', 'BJ', 'BZ', 'CN', 'ES', 'FR', 'GH', 'GN', 'JP', 'KR', 'LR', 'MA', 'NG', 'PA', 'PT', 'SL', 'SN', 'TG', 'TW'],
 ];

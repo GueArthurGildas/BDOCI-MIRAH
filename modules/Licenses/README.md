@@ -10,4 +10,4 @@ Licences de pêche déjà délivrées hors application : enregistrement, zones, 
 - Calculs partagés : `App\Support\Licenses\AuthorizedList` et `CurrentLicense`.
 - L'expiration se calcule à partir de la date, jamais stockée.
 - Hypothèses : H-4a-1 à H-4a-8 (`docs/assumptions/phase-4a.md`).
-- Clés étrangères tardives : `license_suspensions.infraction_case_id` (phase 6), `vms_failure_id` (phase 3b), `license_revocations.infraction_case_id` (phase 6).
+- Clés étrangères : `license_suspensions.infraction_case_id` et `license_revocations.infraction_case_id` pointent vers `infraction_cases` (contrainte ajoutée en phase 6 ; le formulaire accepte `?infraction_case=` depuis un dossier d'infraction) ; `vms_failure_id` reste tardive (phase 3b).

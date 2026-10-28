@@ -2,8 +2,8 @@
 
 namespace Modules\Vessels\Tests\Feature;
 
-use App\Enums\InfractionStatus;
-use App\Models\Infraction;
+use App\Enums\InfractionCaseStatus;
+use App\Models\InfractionCase;
 use App\Models\License;
 use App\Models\RegisteredModule;
 use App\Models\Vessel;
@@ -34,7 +34,7 @@ class Vessel360Test extends TestCase
         $this->signInAs(Role::Director);
         $vessel = Vessel::factory()->create();
         License::factory()->for($vessel)->expired()->create();
-        Infraction::factory()->create(['vessel_id' => $vessel->id, 'status' => InfractionStatus::Reported]);
+        InfractionCase::factory()->create(['vessel_id' => $vessel->id, 'status' => InfractionCaseStatus::Open]);
 
         $this->get(route('vessels.show', $vessel))
             ->assertOk()

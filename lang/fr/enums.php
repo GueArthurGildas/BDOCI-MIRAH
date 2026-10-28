@@ -79,14 +79,6 @@ return [
         'non_compliant' => 'Non conforme',
     ],
 
-    'infraction_status' => [
-        'reported' => 'Constatée',
-        'under_investigation' => 'En instruction',
-        'sanctioned' => 'Sanctionnée',
-        'closed' => 'Classée',
-        'dismissed' => 'Abandonnée',
-    ],
-
     'catch_source' => [
         'logbook' => 'Journal de pêche',
         'landing' => 'Débarquement',
@@ -94,16 +86,19 @@ return [
     ],
 
     'mission_type' => [
-        'sea_patrol' => 'Patrouille en mer',
-        'port_control' => 'Contrôle portuaire',
-        'joint_operation' => 'Opération conjointe',
+        'maritime' => 'Maritime',
+        'lagoon' => 'Lagunaire',
+        'continental' => 'Continentale',
+        'port' => 'Portuaire',
+        'aerial_drone' => 'Aérienne ou drone',
     ],
 
     'mission_status' => [
-        'planned' => 'Planifiée',
+        'scheduled' => 'Programmée',
+        'authorized' => 'Autorisée',
         'in_progress' => 'En cours',
         'completed' => 'Terminée',
-        'cancelled' => 'Annulée',
+        'closed' => 'Clôturée',
     ],
 
     'connector_error_code' => [
@@ -512,5 +507,130 @@ return [
         'to_watch' => 'À surveiller',
         'suspect' => 'Suspect',
         'in_violation' => 'En infraction',
+    ],
+
+    'witness_category' => [
+        'state_vessel' => 'Navire de l\'État',
+        'fisher' => 'Pêcheur',
+        'coaster' => 'Caboteur',
+        'port_authority' => 'Autorité portuaire',
+        'other' => 'Autre',
+    ],
+
+    'report_channel' => [
+        'email' => 'E-mail',
+        'fax' => 'Fax',
+        'phone' => 'Téléphone',
+        'mail' => 'Courrier',
+        'form' => 'Fiche papier ou PDF recopiée',
+    ],
+
+    'witness_report_status' => [
+        'received' => 'Reçu',
+        'verified' => 'Vérifié',
+        'closed' => 'Classé',
+        'forwarded' => 'Transmis',
+    ],
+
+    'report_decision_type' => [
+        'dismissal' => 'Classement sans suite',
+        'forward_to_instruction' => 'Transmission au groupe Instruction',
+    ],
+
+    'infraction_qualification' => [
+        'presumed' => 'Présumée',
+        'established' => 'Constatée',
+    ],
+
+    'infraction_case_status' => [
+        'open' => 'Ouvert',
+        'instruction' => 'En instruction',
+        'decision' => 'En décision',
+        'closed' => 'Clos',
+    ],
+
+    'precautionary_measure_type' => [
+        'immobilization' => 'Immobilisation',
+        'port_services_refusal' => 'Refus des services du port',
+        'gear_seizure' => 'Saisie d\'engins',
+        'catch_seizure' => 'Saisie de captures',
+        'license_suspension' => 'Suspension de licence',
+        'license_withdrawal' => 'Retrait de licence',
+        'diversion' => 'Déroutement',
+        'seals' => 'Scellés',
+        'cessation_order' => 'Ordre de cessation',
+    ],
+
+    'seizure_decision' => [
+        'return' => 'Restitution',
+        'destruction' => 'Destruction',
+        'confiscation' => 'Confiscation',
+    ],
+
+    'follow_up_type' => [
+        'warning' => 'Avertissement',
+        'administrative_penalty' => 'Sanction administrative',
+        'settlement' => 'Transaction',
+        'forward_to_hierarchy' => 'Transmission à la hiérarchie',
+        'forward_to_court' => 'Transmission au tribunal',
+    ],
+
+    'infraction_severity' => [
+        'minor' => 'Mineure',
+        'serious' => 'Grave',
+        'very_serious' => 'Très grave',
+    ],
+
+    'mission_nature' => [
+        'internal' => 'Interne',
+        'joint' => 'Conjointe',
+    ],
+
+    'asset_type' => [
+        'intervention_boat' => 'Vedette d\'intervention',
+        'patrol_boat' => 'Vedette de patrouille',
+        'vehicle' => 'Véhicule',
+        'drone' => 'Drone',
+        'vhf' => 'VHF',
+        'gps' => 'GPS',
+        'inspection_equipment' => 'Matériel d\'inspection',
+        'seals' => 'Scellés',
+    ],
+
+    'observed_unit_level' => [
+        'sighted' => 'Vue',
+        'approached' => 'Approchée',
+        'inspected' => 'Contrôlée',
+    ],
+
+    'sighting_source' => [
+        'visual' => 'À vue',
+        'radar' => 'Radar',
+        'vms' => 'VMS',
+    ],
+
+    'authorizing_role' => [
+        'director' => 'Directeur',
+        'team_lead' => 'Chef d\'équipe',
+    ],
+
+    'mission_checklist_item' => [
+        'fuel' => 'Carburant embarqué',
+        'radio' => 'Radio VHF vérifiée',
+        'gps' => 'GPS opérationnel',
+        'inspection_kit' => 'Matériel d\'inspection',
+        'seals' => 'Scellés disponibles',
+        'safety' => 'Équipement de sécurité',
+        'documents' => 'Ordre de mission et documents',
+    ],
+
+    'investigation_element' => [
+        'photos' => 'Photos',
+        'themis' => 'Fiches THEMIS',
+        'global_record' => 'Fichier mondial',
+        'rfmo_lists' => 'Listes ORGP et INN',
+        'trajectories' => 'Trajectoires',
+        'vms_extract' => 'Extraction VMS',
+        'press' => 'Presse',
     ],
 ];

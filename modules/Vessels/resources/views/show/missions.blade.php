@@ -9,10 +9,16 @@
         </x-slot:head>
         @forelse ($vessel->missions as $mission)
             <tr>
-                <td>{{ $mission->reference }}</td>
-                <td>{{ $mission->starts_at->isoFormat('L') }}</td>
+                <td>
+                    @can(App\Support\Authorization\Permission::MissionsView->value)
+                        <a href="{{ route('missions.show', $mission) }}">{{ $mission->code }}</a>
+                    @else
+                        {{ $mission->code }}
+                    @endcan
+                </td>
+                <td>{{ $mission->startsAt()?->isoFormat('L') ?? '—' }}</td>
                 <td>{{ __($mission->type->label()) }}</td>
-                <td class="text-wrap">{{ $mission->objective }}</td>
+                <td class="text-wrap">{{ $mission->objectives }}</td>
                 <td><x-ui.status-badge :status="$mission->status" /></td>
             </tr>
         @empty

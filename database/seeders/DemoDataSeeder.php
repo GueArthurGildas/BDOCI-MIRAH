@@ -3,12 +3,7 @@
 namespace Database\Seeders;
 
 use App\Enums\CatchSource;
-use App\Enums\InfractionStatus;
-use App\Enums\InspectionResult;
-use App\Enums\InspectionType;
 use App\Enums\LicenseSegment;
-use App\Enums\MissionStatus;
-use App\Enums\MissionType;
 use App\Enums\MovementDirection;
 use App\Enums\ObservationLevel;
 use App\Enums\ObservationStatus;
@@ -17,11 +12,7 @@ use App\Enums\VesselStatus;
 use App\Enums\VesselType;
 use App\Enums\ZoneType;
 use App\Models\CatchDeclaration;
-use App\Models\Infraction;
-use App\Models\InfractionType;
-use App\Models\Inspection;
 use App\Models\License;
-use App\Models\Mission;
 use App\Models\Movement;
 use App\Models\Observation;
 use App\Models\Port;
@@ -86,9 +77,7 @@ class DemoDataSeeder extends Seeder
         $this->seedTrackingAndPositions($fishingVessels->where('type', '!=', VesselType::Canoe), $patrolBoats);
         $this->seedMovements($fishingVessels, $agents);
         $this->seedObservations($fishingVessels, $agents);
-        $this->seedInspectionsAndInfractions($fishingVessels);
         $this->seedCatchDeclarations($fishingVessels->where('type', '!=', VesselType::Canoe));
-        $this->seedMissions($patrolBoats, $fishingVessels, $agents);
     }
 
     private function seedAgents(): Collection
@@ -292,40 +281,6 @@ class DemoDataSeeder extends Seeder
         }
     }
 
-    private function seedInspectionsAndInfractions(Collection $vessels): void
-    {
-        $ports = Port::all();
-        $infractionTypes = InfractionType::all();
-
-        foreach (range(1, 50) as $index) {
-            $result = fake()->randomElement([InspectionResult::Compliant, InspectionResult::Compliant, InspectionResult::MinorIssues, InspectionResult::NonCompliant]);
-            $type = fake()->randomElement(InspectionType::cases());
-
-            $inspection = Inspection::factory()->create([
-                'vessel_id' => $vessels->random()->id,
-                'port_id' => $type === InspectionType::AtSea ? null : $ports->random()->id,
-                'external_reference' => sprintf('EI-2026-%05d', $index),
-                'type' => $type,
-                'inspected_at' => now()->subDays(fake()->numberBetween(1, 300)),
-                'inspectors' => fake()->name().', '.fake()->name(),
-                'result' => $result,
-                'findings' => $result === InspectionResult::Compliant ? 'Documents de bord et engins conformes.' : 'Écarts constatés lors du contrôle des engins et des documents de bord.',
-            ]);
-
-            if ($result === InspectionResult::NonCompliant) {
-                Infraction::factory()->create([
-                    'reference' => sprintf('PV-2026-%03d', $index),
-                    'vessel_id' => $inspection->vessel_id,
-                    'inspection_id' => $inspection->id,
-                    'infraction_type_id' => $infractionTypes->random()->id,
-                    'detected_at' => $inspection->inspected_at,
-                    'facts' => 'Manquement constaté lors de l\'inspection '.$inspection->external_reference.'.',
-                    'status' => fake()->randomElement(InfractionStatus::cases()),
-                ]);
-            }
-        }
-    }
-
     private function seedCatchDeclarations(Collection $vessels): void
     {
         $species = Species::all();
@@ -343,40 +298,6 @@ class DemoDataSeeder extends Seeder
                 'quantity_kg' => fake()->randomFloat(2, 200, 45000),
                 'source' => fake()->randomElement(CatchSource::cases()),
             ]);
-        }
-    }
-
-    private function seedMissions(Collection $patrolBoats, Collection $fishingVessels, Collection $agents): void
-    {
-        foreach (range(1, 12) as $index) {
-            $startsAt = now()->subDays(fake()->numberBetween(-5, 120));
-            $status = match (true) {
-                $startsAt->isFuture() => MissionStatus::Planned,
-                $startsAt->gt(now()->subDays(2)) => MissionStatus::InProgress,
-                default => fake()->randomElement([MissionStatus::Completed, MissionStatus::Completed, MissionStatus::Cancelled]),
-            };
-
-            $mission = Mission::factory()->create([
-                'reference' => sprintf('MIS-2026-%03d', $index),
-                'zone_id' => $this->zones->random()->id,
-                'type' => fake()->randomElement(MissionType::cases()),
-                'objective' => fake()->randomElement([
-                    'Patrouille de contrôle des chalutiers en mer territoriale.',
-                    'Contrôle des débarquements au port de pêche.',
-                    'Surveillance de l\'aire marine protégée.',
-                    'Opération conjointe avec la Marine nationale en ZEE.',
-                ]),
-                'starts_at' => $startsAt,
-                'ends_at' => $startsAt->copy()->addDays(fake()->numberBetween(1, 4)),
-                'status' => $status,
-                'results' => $status === MissionStatus::Completed ? fake()->numberBetween(3, 15).' navires contrôlés.' : null,
-            ]);
-
-            $mission->vessels()->attach([
-                $patrolBoats->random()->id,
-                ...$fishingVessels->random(fake()->numberBetween(2, 5))->pluck('id'),
-            ]);
-            $mission->agents()->attach($agents->random(fake()->numberBetween(2, 4))->pluck('id'));
         }
     }
 }

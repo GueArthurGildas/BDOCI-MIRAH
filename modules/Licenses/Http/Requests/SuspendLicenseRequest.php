@@ -14,6 +14,7 @@ class SuspendLicenseRequest extends FormRequest
             'reason' => ['required', Rule::enum(SuspensionReason::class)],
             'started_on' => ['required', 'date'],
             'planned_end_on' => ['nullable', 'date'],
+            'infraction_case_id' => ['nullable', 'exists:infraction_cases,id'],
         ];
     }
 

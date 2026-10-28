@@ -17,6 +17,6 @@ final class VesselMissions
     /** @return Collection<int, Mission> */
     public static function forVessel(int $vesselId): Collection
     {
-        return Mission::query()->whereHas('vessels', fn (Builder $vessels) => $vessels->whereKey($vesselId))->latest('starts_at')->get();
+        return Mission::query()->whereHas('observedUnits', fn (Builder $units) => $units->where('vessel_id', $vesselId))->latest('planned_start_at')->get();
     }
 }

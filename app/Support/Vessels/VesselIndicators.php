@@ -7,7 +7,6 @@ use App\Enums\MessageStatus;
 use App\Models\Alert;
 use App\Models\DeclaredObservedCatch;
 use App\Models\ExternalInspection;
-use App\Models\Inspection;
 use App\Models\SentMessage;
 use App\Models\Vessel;
 use App\Queries\OpenInfractionCases;
@@ -37,8 +36,7 @@ final readonly class VesselIndicators
             silenceHours: $vessel->currentState?->vms_silence_hours,
             silences12Months: Alert::where('vessel_id', $vessel->id)->where('type', AlertRuleType::Silence->value)->where('triggered_at', '>=', $since)->count(),
             daysBeforeExpiry: $facts->licenseDaysLeft,
-            inspections12Months: ExternalInspection::where('vessel_id', $vessel->id)->where('started_at', '>=', $since)->count()
-                + Inspection::where('vessel_id', $vessel->id)->where('inspected_at', '>=', $since)->count(),
+            inspections12Months: ExternalInspection::where('vessel_id', $vessel->id)->where('started_at', '>=', $since)->count(),
             infractions12Months: OpenInfractionCases::countSince($vessel->id, $since),
             checks: $facts->checksCount,
             meanCatchVariancePercent: self::meanVariance($vessel->id, $since),

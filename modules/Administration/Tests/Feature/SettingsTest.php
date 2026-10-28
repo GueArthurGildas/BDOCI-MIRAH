@@ -40,6 +40,12 @@ class SettingsTest extends TestCase
             'connectors_catch_variance_threshold_percent' => 10,
             'alerts_licenses_expiring_second_warning_days' => 60,
             'alerts_licenses_expiring_third_warning_days' => 90,
+            'infractions_repeat_threshold' => 2,
+            'missions_team_lead_authorizes_maritime' => 0,
+            'missions_team_lead_authorizes_lagoon' => 0,
+            'missions_team_lead_authorizes_continental' => 0,
+            'missions_team_lead_authorizes_port' => 0,
+            'missions_team_lead_authorizes_aerial_drone' => 0,
         ], $overrides);
     }
 

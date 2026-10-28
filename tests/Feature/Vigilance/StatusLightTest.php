@@ -4,13 +4,13 @@ namespace Tests\Feature\Vigilance;
 
 use App\Enums\CurrentLicenseStatus;
 use App\Enums\EezCheckResult;
-use App\Enums\InfractionStatus;
+use App\Enums\InfractionCaseStatus;
 use App\Enums\VesselStatusLight;
 use App\Enums\WatchOrigin;
 use App\Models\CheckCounter;
 use App\Models\EezDeclaration;
 use App\Models\EezDeclarationCheck;
-use App\Models\Infraction;
+use App\Models\InfractionCase;
 use App\Models\License;
 use App\Models\Position;
 use App\Models\TrackingDevice;
@@ -108,7 +108,7 @@ class StatusLightTest extends TestCase
     {
         $vessel = Vessel::factory()->create();
         License::factory()->for($vessel)->expired()->create();
-        Infraction::factory()->create(['vessel_id' => $vessel->id, 'status' => InfractionStatus::UnderInvestigation]);
+        InfractionCase::factory()->create(['vessel_id' => $vessel->id, 'status' => InfractionCaseStatus::Instruction]);
 
         $this->assertSame(VesselStatusLight::InViolation, $this->assess($vessel));
     }
@@ -117,7 +117,7 @@ class StatusLightTest extends TestCase
     public function test_a_closed_infraction_case_does_not_count(): void
     {
         $vessel = Vessel::factory()->create();
-        Infraction::factory()->create(['vessel_id' => $vessel->id, 'status' => InfractionStatus::Closed]);
+        InfractionCase::factory()->create(['vessel_id' => $vessel->id, 'status' => InfractionCaseStatus::Closed]);
 
         $this->assertSame(VesselStatusLight::Compliant, $this->assess($vessel));
     }
@@ -125,7 +125,7 @@ class StatusLightTest extends TestCase
     public function test_the_current_state_stores_the_status_light_and_its_facts(): void
     {
         $vessel = Vessel::factory()->create();
-        Infraction::factory()->create(['vessel_id' => $vessel->id, 'status' => InfractionStatus::Reported]);
+        InfractionCase::factory()->create(['vessel_id' => $vessel->id, 'status' => InfractionCaseStatus::Open]);
 
         $state = app(VesselStateBuilder::class)->refresh($vessel->id);
 
@@ -138,7 +138,7 @@ class StatusLightTest extends TestCase
     {
         $vessels = Vessel::factory()->count(3)->create();
         License::factory()->for($vessels[0])->expired()->create();
-        Infraction::factory()->create(['vessel_id' => $vessels[1]->id, 'status' => InfractionStatus::Reported]);
+        InfractionCase::factory()->create(['vessel_id' => $vessels[1]->id, 'status' => InfractionCaseStatus::Open]);
         $vessels->each(fn (Vessel $vessel) => app(VesselStateBuilder::class)->refresh($vessel->id));
         $incremental = VesselCurrentState::orderBy('vessel_id')->pluck('status_light', 'vessel_id')->all();
 
