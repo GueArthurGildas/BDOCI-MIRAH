@@ -8,6 +8,12 @@ Permissions accordées par défaut à chaque rôle système (l'héritage `Direct
 |---|---|---|---|---|
 | `audit.view` | oui | — | — | — |
 | `catches.view` | — | oui | oui | oui |
+| `communications.create_note` | — | oui | oui | oui |
+| `communications.manage_dispatch` | — | oui | oui | — |
+| `communications.manage_templates` | — | oui | oui | — |
+| `communications.send` | — | oui | oui | oui |
+| `communications.trigger_ai_agent` | — | oui | oui | — |
+| `communications.view` | — | oui | oui | oui |
 | `connectors.manage` | oui | — | — | — |
 | `connectors.view` | oui | oui | oui | — |
 | `dashboard.view` | oui | oui | oui | oui |

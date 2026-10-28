@@ -9,6 +9,7 @@ Modules déclarés dans le registre (`ModuleServiceProvider`).
 | `administration` | Administration | 1.0.0 | — |
 | `auth` | Auth | 1.0.0 | — |
 | `catches` | Catches | 1.0.0 | — |
+| `communications` | Communications | 1.0.0 | — |
 | `dashboard` | Dashboard | 1.0.0 | — |
 | `infractions` | Infractions | 1.0.0 | — |
 | `inspections` | Inspections | 1.0.0 | — |

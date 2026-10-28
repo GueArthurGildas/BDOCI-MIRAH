@@ -1,0 +1,32 @@
+<?php
+
+return [
+    'title' => 'Internal notes',
+    'subtitle' => 'Leave a note to a colleague in a few buttons',
+    'unread' => 'Unread',
+    'box' => 'Box',
+    'inbox' => 'Received',
+    'sent' => 'Sent',
+    'list_title' => 'Notes',
+    'new' => 'New note',
+    'author' => 'From',
+    'state' => 'State',
+    'by_ai_agent' => 'AI agent',
+    'overdue' => 'Overdue',
+    'read' => 'Read',
+    'not_read' => 'Unread',
+    'mark_read' => 'Mark as read',
+    'recipient_users' => 'Agents',
+    'recipient_teams' => 'Teams',
+    'created' => 'The note has been left.',
+    'marked_read' => 'The note is marked as read.',
+    'ai_executed' => 'The AI agent has created the note.',
+    'ai_refused' => 'The AI agent could not create the note: the action is disabled or refused.',
+    'no_relay' => 'None',
+    'leave' => 'Leave the note',
+    'ask_ai_agent' => 'Ask the AI agent',
+    'relay' => [
+        'subject' => 'Note: :type',
+        'body' => ':author left a note (:type) about :vessel. :text',
+    ],
+];

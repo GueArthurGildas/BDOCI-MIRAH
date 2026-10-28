@@ -8,6 +8,12 @@
 |---|---|---|---|
 | `audit.view` | `administration` | `view` | Consulter le journal d'audit |
 | `catches.view` | `catches` | `view` | Consulter les captures |
+| `communications.create_note` | `communications` | `update` | Laisser des notes internes |
+| `communications.manage_dispatch` | `communications` | `update` | Gérer les règles d'envoi automatique |
+| `communications.manage_templates` | `communications` | `update` | Gérer les modèles de message |
+| `communications.send` | `communications` | `update` | Envoyer des messages |
+| `communications.trigger_ai_agent` | `communications` | `update` | Déclencher l'agent IA pour les communications |
+| `communications.view` | `communications` | `view` | Consulter les communications |
 | `connectors.manage` | `administration` | `update` | Gérer les connecteurs |
 | `connectors.view` | `administration` | `view` | Consulter les connecteurs |
 | `dashboard.view` | `dashboard` | `view` | Consulter le tableau de bord |
@@ -36,6 +42,19 @@ Actions exécutées par l'`ActionRunner` (transaction, droit, événement, état
 
 | Code | Permission | Classe |
 |---|---|---|
+| `communications.acknowledge_message` | `communications.send` | `Modules\Communications\Actions\AcknowledgeMessage` |
+| `communications.create_note` | `communications.create_note` | `Modules\Communications\Actions\CreateNote` |
+| `communications.dispatch_rule` | `communications.manage_dispatch` | `Modules\Communications\Actions\DispatchRuleMessages` |
+| `communications.mark_note_read` | `communications.view` | `Modules\Communications\Actions\MarkNoteRead` |
+| `communications.record_whatsapp_consent` | `communications.send` | `Modules\Communications\Actions\RecordWhatsAppConsent` |
+| `communications.request_ai_note` | `communications.trigger_ai_agent` | `Modules\Communications\Actions\RequestAiNote` |
+| `communications.revoke_whatsapp_consent` | `communications.send` | `Modules\Communications\Actions\RevokeWhatsAppConsent` |
+| `communications.save_dispatch_rule` | `communications.manage_dispatch` | `Modules\Communications\Actions\SaveDispatchRule` |
+| `communications.save_email_connector` | `connectors.manage` | `Modules\Communications\Actions\SaveEmailConnector` |
+| `communications.save_template` | `communications.manage_templates` | `Modules\Communications\Actions\SaveMessageTemplate` |
+| `communications.send_message` | `communications.send` | `Modules\Communications\Actions\SendMessage` |
+| `communications.send_prepared_message` | `communications.send` | `Modules\Communications\Actions\SendPreparedMessage` |
+| `communications.update_channel` | `communications.manage_dispatch` | `Modules\Communications\Actions\UpdateCommunicationChannel` |
 | `infractions.update` | `infractions.manage` | `Modules\Infractions\Actions\UpdateInfraction` |
 | `licenses.record` | `licenses.manage` | `Modules\Licenses\Actions\RecordLicense` |
 | `logbook.open` | `logbook.create` | `Modules\Logbook\Actions\OpenObservation` |

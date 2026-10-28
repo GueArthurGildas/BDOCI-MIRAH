@@ -1,0 +1,32 @@
+<?php
+
+return [
+    'title' => 'Notes internes',
+    'subtitle' => 'Laisser une note à un collègue en quelques boutons',
+    'unread' => 'Non lues',
+    'box' => 'Boîte',
+    'inbox' => 'Reçues',
+    'sent' => 'Envoyées',
+    'list_title' => 'Notes',
+    'new' => 'Nouvelle note',
+    'author' => 'De',
+    'state' => 'État',
+    'by_ai_agent' => 'Agent IA',
+    'overdue' => 'En retard',
+    'read' => 'Lue',
+    'not_read' => 'Non lue',
+    'mark_read' => 'Marquer comme lue',
+    'recipient_users' => 'Agents',
+    'recipient_teams' => 'Équipes',
+    'created' => 'La note a été laissée.',
+    'marked_read' => 'La note est marquée comme lue.',
+    'ai_executed' => 'L\'agent IA a créé la note.',
+    'ai_refused' => 'L\'agent IA n\'a pas pu créer la note : l\'action est désactivée ou refusée.',
+    'no_relay' => 'Aucun',
+    'leave' => 'Laisser la note',
+    'ask_ai_agent' => 'Demander à l\'agent IA',
+    'relay' => [
+        'subject' => 'Note : :type',
+        'body' => ':author a laissé une note (:type) concernant :vessel. :text',
+    ],
+];

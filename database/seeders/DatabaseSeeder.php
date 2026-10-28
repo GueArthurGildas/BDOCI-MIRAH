@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
         }
 
         $this->call([DemoDataSeeder::class, ConnectorActivitySeeder::class]);
+        $this->call(Phase5DemoSeeder::class);
 
         app(ModuleRegistry::class)->sync();
         app(VesselStateBuilder::class)->rebuildAll();

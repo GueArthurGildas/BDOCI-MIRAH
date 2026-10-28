@@ -43,4 +43,10 @@ enum Permission: string
         };
     }
     case AuditView = 'audit.view';
+    case CommunicationsView = 'communications.view';
+    case CommunicationsSend = 'communications.send';
+    case CommunicationsCreateNote = 'communications.create_note';
+    case CommunicationsManageTemplates = 'communications.manage_templates';
+    case CommunicationsManageDispatch = 'communications.manage_dispatch';
+    case CommunicationsTriggerAiAgent = 'communications.trigger_ai_agent';
 }

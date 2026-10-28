@@ -278,13 +278,13 @@ Nom de la spécification (v1, français) → nom technique (v2, anglais) → sit
 
 | Spécification | Table | Situation actuelle |
 |---|---|---|
-| `canal_communication` | `communication_channels` | nouveau |
-| `connecteur_email` | `email_connectors` | nouveau |
-| `message_modele` | `message_templates` | nouveau |
-| `regle_envoi` | `dispatch_rules` | nouveau |
-| `message_envoye` | `sent_messages` | nouveau |
-| `agent_ia_action` | `ai_agent_actions` | nouveau |
-| `note_interne` | `internal_notes` | nouveau |
+| `canal_communication` | `communication_channels` | créé (phase 5) |
+| `connecteur_email` | `email_connectors` | créé (phase 5) |
+| `message_modele` | `message_templates` | créé (phase 5) |
+| `regle_envoi` | `dispatch_rules` | créé (phase 5) |
+| `message_envoye` | `sent_messages` | créé (phase 5) |
+| `agent_ia_action` | `ai_agent_actions` | créé (phase 5) |
+| `note_interne` | `internal_notes` | créé (phase 5) |
 
 ### M10 Pilotage, rapports, archivage
 

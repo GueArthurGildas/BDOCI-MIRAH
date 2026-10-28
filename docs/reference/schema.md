@@ -30,6 +30,19 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
+    ai_agent_actions {
+        int8 id PK
+        int8 action_id FK
+        int8 requested_by FK
+        text instruction
+        jsonb parameters
+        varchar status
+        timestamp executed_at
+        varchar result_object_type
+        int8 result_object_id
+        timestamp created_at
+        timestamp updated_at
+    }
     catch_declarations {
         int8 id PK
         int8 vessel_id FK
@@ -50,6 +63,14 @@ erDiagram
         varchar kind
         text body
         timestamp created_at
+    }
+    communication_channels {
+        int8 id PK
+        varchar code
+        bool is_auto_dispatch_enabled
+        bool is_consent_required
+        timestamp created_at
+        timestamp updated_at
     }
     custom_field_definitions {
         int8 id PK
@@ -117,6 +138,20 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
+    dispatch_rules {
+        int8 id PK
+        int8 message_template_id FK
+        varchar trigger_event
+        jsonb conditions
+        int4 frequency_minutes
+        int4 daily_cap
+        varchar stop_condition
+        varchar mode
+        bool is_active
+        int8 editable_by_permission_group_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
     document_links {
         int8 document_id FK
         varchar object_type
@@ -131,6 +166,15 @@ erDiagram
         bool is_frozen
         int8 filed_by FK
         timestamp created_at
+    }
+    email_connectors {
+        int8 id PK
+        varchar supplier
+        varchar domain
+        jsonb parameters
+        bool is_active
+        timestamp created_at
+        timestamp updated_at
     }
     infraction_types {
         int8 id PK
@@ -168,6 +212,23 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
+    internal_notes {
+        int8 id PK
+        varchar type
+        int8 vessel_id FK
+        varchar urgency
+        int8 recipient_user_id FK
+        int8 recipient_team_id FK
+        timestamp due_date
+        text free_text
+        int8 author_id FK
+        int8 ai_agent_action_id FK
+        bool is_read
+        timestamp read_at
+        varchar relayed_by
+        int8 logbook_entry_id
+        timestamp created_at
+    }
     licenses {
         int8 id PK
         int8 vessel_id FK
@@ -176,6 +237,18 @@ erDiagram
         date valid_from
         date valid_until
         timestamp suspended_at
+        timestamp created_at
+        timestamp updated_at
+    }
+    message_templates {
+        int8 id PK
+        varchar code
+        varchar channel
+        varchar language
+        varchar subject
+        text body
+        varchar form
+        bool is_active
         timestamp created_at
         timestamp updated_at
     }
@@ -323,6 +396,26 @@ erDiagram
         text description
         int8 parent_id FK
     }
+    sent_messages {
+        int8 id PK
+        int8 message_template_id FK
+        int8 dispatch_rule_id FK
+        int8 communication_channel_id FK
+        int8 vessel_id FK
+        int8 operation_id
+        int8 logbook_entry_id
+        varchar recipient
+        varchar subject
+        text body
+        varchar status
+        timestamp sent_at
+        timestamp acknowledged_at
+        varchar triggered_by
+        int8 user_id FK
+        bool reply_received
+        timestamp created_at
+        timestamp updated_at
+    }
     settings {
         int8 id PK
         varchar key
@@ -428,20 +521,27 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
+    action_catalog ||--o{ ai_agent_actions : "action_id"
     action_catalog ||--o{ permission_grants : "action_id"
+    ai_agent_actions ||--o{ internal_notes : "ai_agent_action_id"
+    communication_channels ||--o{ sent_messages : "communication_channel_id"
     custom_field_definitions ||--o{ custom_field_values : "custom_field_definition_id"
     data_source_syncs ||--o{ data_source_errors : "data_source_sync_id"
     data_source_syncs ||--o{ data_source_rejections : "data_source_sync_id"
     data_sources ||--o{ data_source_errors : "data_source_id"
     data_sources ||--o{ data_source_rejections : "data_source_id"
     data_sources ||--o{ data_source_syncs : "data_source_id"
+    dispatch_rules ||--o{ sent_messages : "dispatch_rule_id"
     documents ||--o{ document_links : "document_id"
     infraction_types ||--o{ infractions : "infraction_type_id"
     inspections ||--o{ infractions : "inspection_id"
+    message_templates ||--o{ dispatch_rules : "message_template_id"
+    message_templates ||--o{ sent_messages : "message_template_id"
     missions ||--o{ mission_user : "mission_id"
     missions ||--o{ mission_vessel : "mission_id"
     module_registry ||--o{ action_catalog : "module_id"
     module_registry ||--o{ vessel_events : "module_id"
+    permission_groups ||--o{ dispatch_rules : "editable_by_permission_group_id"
     permission_groups ||--o{ permission_grants : "permission_group_id"
     permission_groups ||--o{ permission_group_user : "permission_group_id"
     ports ||--o{ inspections : "port_id"
@@ -451,29 +551,36 @@ erDiagram
     roles ||--o{ role_user : "role_id"
     roles ||--o{ roles : "parent_id"
     species ||--o{ catch_declarations : "species_id"
+    teams ||--o{ internal_notes : "recipient_team_id"
     teams ||--o{ observations : "team_id"
     teams ||--o{ users : "team_id"
     tracking_devices ||--o{ positions : "tracking_device_id"
+    users ||--o{ ai_agent_actions : "requested_by"
     users ||--o{ comments : "user_id"
     users ||--o{ data_source_errors : "resolved_by"
     users ||--o{ data_source_rejections : "handled_by"
     users ||--o{ documents : "filed_by"
+    users ||--o{ internal_notes : "author_id"
+    users ||--o{ internal_notes : "recipient_user_id"
     users ||--o{ mission_user : "user_id"
     users ||--o{ movements : "recorded_by"
     users ||--o{ observations : "author_id"
     users ||--o{ permission_group_user : "user_id"
     users ||--o{ role_user : "user_id"
+    users ||--o{ sent_messages : "user_id"
     users ||--o{ settings : "updated_by"
     users ||--o{ teams : "lead_user_id"
     users ||--o{ vessel_events : "user_id"
     vessels ||--o{ catch_declarations : "vessel_id"
     vessels ||--o{ infractions : "vessel_id"
     vessels ||--o{ inspections : "vessel_id"
+    vessels ||--o{ internal_notes : "vessel_id"
     vessels ||--o{ licenses : "vessel_id"
     vessels ||--o{ mission_vessel : "vessel_id"
     vessels ||--o{ movements : "vessel_id"
     vessels ||--o{ observations : "vessel_id"
     vessels ||--o{ positions : "vessel_id"
+    vessels ||--o{ sent_messages : "vessel_id"
     vessels ||--o{ tracking_devices : "vessel_id"
     vessels ||--o{ vessel_current_states : "vessel_id"
     vessels ||--o{ vessel_events : "vessel_id"

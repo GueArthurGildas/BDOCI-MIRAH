@@ -89,6 +89,9 @@ enum Role: string
                 Permission::InfractionsView,
                 Permission::CatchesView,
                 Permission::MissionsView,
+                Permission::CommunicationsView,
+                Permission::CommunicationsSend,
+                Permission::CommunicationsCreateNote,
             ],
         };
     }

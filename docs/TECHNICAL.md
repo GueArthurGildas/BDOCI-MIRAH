@@ -271,6 +271,7 @@ Les notifications utilisent la table `notifications` de Laravel (modèle fourni 
 | `Missions` | liste et détail | `missions.view` |
 | `Search` | recherche transversale (en-tête) | selon les sources |
 | `Notifications` | page des notifications de l'utilisateur et flux JSON lu par la balise de l'en-tête | utilisateur connecté |
+| `Communications` | messages (modèles, envoi, accusé), notes par boutons, règles d'envoi automatique (plafond par jour, condition d'arrêt), canaux et consentements WhatsApp ; commande planifiée `communications:dispatch` | `communications.*` |
 | `Administration` | utilisateurs, rôles et permissions, paramètres, connecteurs (liste et détail : erreurs, rejets, synchronisations, commentaires), journal d'audit | `users.manage`, `roles.manage`, `settings.manage`, `connectors.view`, `connectors.manage`, `audit.view` |
 
 ### Droits d'accès
