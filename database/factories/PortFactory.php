@@ -9,6 +9,7 @@ class PortFactory extends Factory
     public function definition(): array
     {
         return [
+            'code' => strtoupper(fake()->unique()->lexify('????')),
             'name' => fake()->unique()->city(),
             'locality' => fake()->city(),
             'latitude' => fake()->randomFloat(6, 4.3, 5.3),

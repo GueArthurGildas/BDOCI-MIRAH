@@ -78,6 +78,7 @@ return [
         'audit' => 'Journal d\'audit',
         'settings' => 'Paramètres',
         'roles' => 'Rôles',
+        'registry' => 'Référentiels',
     ],
     'permissions' => [
         'dashboard' => [
@@ -86,6 +87,7 @@ return [
         'vessels' => [
             'view' => 'Consulter les navires',
             'manage' => 'Gérer les navires',
+            'match' => 'Trancher les doublons de navires',
         ],
         'licenses' => [
             'view' => 'Consulter les licences',
@@ -129,6 +131,10 @@ return [
         ],
         'settings' => [
             'manage' => 'Gérer les paramètres',
+        ],
+        'registry' => [
+            'view' => 'Consulter les référentiels',
+            'manage' => 'Gérer les référentiels',
         ],
         'roles' => [
             'manage' => 'Gérer les rôles',

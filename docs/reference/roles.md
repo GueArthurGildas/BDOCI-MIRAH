@@ -23,9 +23,12 @@ Permissions accordées par défaut à chaque rôle système (l'héritage `Direct
 | `missions.view` | — | oui | oui | oui |
 | `movements.create` | — | oui | oui | oui |
 | `movements.view` | — | oui | oui | oui |
+| `registry.manage` | — | oui | oui | — |
+| `registry.view` | — | oui | oui | oui |
 | `roles.manage` | oui | — | — | — |
 | `settings.manage` | oui | — | — | — |
 | `tracking.view` | — | oui | oui | oui |
 | `users.manage` | oui | — | — | — |
 | `vessels.manage` | — | oui | oui | — |
+| `vessels.match` | — | oui | oui | — |
 | `vessels.view` | — | oui | oui | oui |

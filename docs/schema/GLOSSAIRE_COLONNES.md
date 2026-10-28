@@ -26,6 +26,7 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 | `id` | `id` | bigint |
 | `code_iso3` | `iso3_code` | char(3) |
 | `libelle` | `label` | varchar(100) |
+| (ajout) | `iso2_code` | char(2) |
 
 ### `zones` (spécification : `zone`)
 
@@ -244,6 +245,9 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 | `nom` | `name` | varchar(120) |
 | `zone_id` | `zone_id` | bigint |
 | `designe` | `is_designated` | boolean |
+| (ajout) | `locality` | varchar(255) |
+| (ajout) | `latitude` | numeric(9,6) |
+| (ajout) | `longitude` | numeric(9,6) |
 
 ### `legal_entities` (spécification : `personne_morale`)
 
@@ -297,6 +301,13 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 | `licence_non_renseignee` | `license_not_provided` | boolean |
 | `created_at` | `created_at` | timestamp(0) |
 | `updated_at` | `updated_at` | timestamp(0) |
+| (ajout) | `fleet_segment` | varchar(40) |
+| (ajout) | `type` | varchar(255) |
+| (ajout) | `status` | varchar(255) |
+| (ajout) | `registration_number` | varchar(255) |
+| (ajout) | `imo_number` | varchar(255) |
+| (ajout) | `call_sign` | varchar(255) |
+| (ajout) | `deleted_at` | timestamp(0) |
 
 ### `vessel_identifiers` (spécification : `navire_identifiant`)
 
@@ -380,6 +391,7 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 | `id` | `id` | bigint |
 | `code_fao` | `code_fao` | varchar(10) |
 | `libelle` | `label` | varchar(160) |
+| (renommage) | `fao_code`, `name`, `scientific_name` | voir CONVENTIONS §11 |
 
 ### `gears` (spécification : `engin`)
 

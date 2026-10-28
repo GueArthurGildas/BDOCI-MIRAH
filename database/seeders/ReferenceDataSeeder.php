@@ -26,6 +26,13 @@ class ReferenceDataSeeder extends Seeder
         ['Débarcadère de Jacqueville', 'Jacqueville', 5.2050, -4.4180, false],
     ];
 
+    private const PORT_CODES = [
+        'Abidjan' => 'CIABJ', 'San Pedro' => 'CISPY', 'Sassandra' => 'CISAS', 'Tabou' => 'CITAB',
+        'Grand-Bassam' => 'CIGBA', 'Jacqueville' => 'CIJAC',
+    ];
+
+    private const DESIGNATED_PORTS = ['Abidjan', 'San Pedro'];
+
     private const COASTLINE = [
         [-7.55, 4.35], [-7.35, 4.42], [-6.64, 4.74], [-6.08, 4.95], [-5.57, 5.08],
         [-5.02, 5.14], [-4.42, 5.20], [-4.01, 5.25], [-3.74, 5.19], [-3.28, 5.12], [-2.75, 5.10],
@@ -108,6 +115,8 @@ class ReferenceDataSeeder extends Seeder
             ]) : null;
 
             Port::create([
+                'code' => self::PORT_CODES[$locality],
+                'is_designated' => in_array($locality, self::DESIGNATED_PORTS, true),
                 'name' => $name,
                 'locality' => $locality,
                 'latitude' => $latitude,

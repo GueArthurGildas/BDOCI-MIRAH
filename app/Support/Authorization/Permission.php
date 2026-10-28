@@ -43,4 +43,7 @@ enum Permission: string
         };
     }
     case AuditView = 'audit.view';
+    case VesselsMatch = 'vessels.match';
+    case RegistryView = 'registry.view';
+    case RegistryManage = 'registry.manage';
 }
