@@ -12,6 +12,7 @@ use Modules\Licenses\Providers\LicensesServiceProvider;
 use Modules\Logbook\Providers\LogbookServiceProvider;
 use Modules\Missions\Providers\MissionsServiceProvider;
 use Modules\Movements\Providers\MovementsServiceProvider;
+use Modules\Mrep\Providers\MrepServiceProvider;
 use Modules\Notifications\Providers\NotificationsServiceProvider;
 use Modules\Operations\Providers\OperationsServiceProvider;
 use Modules\Registry\Providers\RegistryServiceProvider;
@@ -34,6 +35,7 @@ return [
     LogbookServiceProvider::class,
     MissionsServiceProvider::class,
     MovementsServiceProvider::class,
+    MrepServiceProvider::class,
     NotificationsServiceProvider::class,
     RegistryServiceProvider::class,
     ReportsServiceProvider::class,

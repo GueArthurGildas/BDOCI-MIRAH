@@ -2,10 +2,12 @@
 
 namespace Modules\Inspections\Http\Controllers;
 
+use App\Enums\ExternalLinkSource;
+use App\Enums\InspectionLocationType;
 use App\Enums\InspectionResult;
-use App\Enums\InspectionType;
 use App\Http\Controllers\Controller;
-use App\Models\Inspection;
+use App\Models\ExternalInspection;
+use App\Models\ExternalLink;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -19,32 +21,37 @@ class InspectionController extends Controller
     {
         $filters = $request->validate([
             'search' => ['nullable', 'string', 'max:100'],
-            'type' => ['nullable', Rule::enum(InspectionType::class)],
+            'location_type' => ['nullable', Rule::enum(InspectionLocationType::class)],
             'result' => ['nullable', Rule::enum(InspectionResult::class)],
             'from' => ['nullable', 'date'],
             'to' => ['nullable', 'date', 'after_or_equal:from'],
         ]);
 
-        $inspections = Inspection::query()
+        $inspections = ExternalInspection::query()
             ->with(['vessel', 'port'])
-            ->when($filters['type'] ?? null, fn (Builder $query, string $type) => $query->where('type', $type))
+            ->withCount(['infractions', 'catches as exceeding_catches_count' => fn (Builder $query) => $query->where('exceeds_csp_threshold', true)])
+            ->when($filters['location_type'] ?? null, fn (Builder $query, string $type) => $query->where('location_type', $type))
             ->when($filters['result'] ?? null, fn (Builder $query, string $result) => $query->where('result', $result))
-            ->when($filters['from'] ?? null, fn (Builder $query, string $from) => $query->whereDate('inspected_at', '>=', $from))
-            ->when($filters['to'] ?? null, fn (Builder $query, string $to) => $query->whereDate('inspected_at', '<=', $to))
+            ->when($filters['from'] ?? null, fn (Builder $query, string $from) => $query->whereDate('started_at', '>=', $from))
+            ->when($filters['to'] ?? null, fn (Builder $query, string $to) => $query->whereDate('started_at', '<=', $to))
             ->when($filters['search'] ?? null, fn (Builder $query, string $search) => $query->where(fn (Builder $query) => $query
-                ->whereLike('external_reference', "%{$search}%")
+                ->whereLike('reference', "%{$search}%")
+                ->orWhereLike('external_id', "%{$search}%")
                 ->orWhereHas('vessel', fn (Builder $query) => $query->search($search))))
-            ->latest('inspected_at')
+            ->latest('started_at')
             ->paginate(self::PER_PAGE)
             ->withQueryString();
 
         return view('inspections::index', compact('inspections', 'filters'));
     }
 
-    public function show(Inspection $inspection): View
+    public function show(ExternalInspection $inspection): View
     {
-        $inspection->load(['vessel', 'port', 'infractions.type']);
+        $inspection->load(['vessel', 'port', 'documents', 'gears.gear', 'catches.species', 'catches.presentation', 'infractions']);
 
-        return view('inspections::show', compact('inspection'));
+        return view('inspections::show', [
+            'inspection' => $inspection,
+            'link' => ExternalLink::forSource(ExternalLinkSource::EInspection),
+        ]);
     }
 }

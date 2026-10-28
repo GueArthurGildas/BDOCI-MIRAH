@@ -6,6 +6,9 @@ use App\Support\Authorization\Permission;
 use App\Support\Modules\ModuleServiceProvider;
 use App\Support\Navigation\Navigation;
 use App\Support\Navigation\NavigationGroup;
+use Illuminate\Console\Scheduling\Schedule;
+use Modules\Administration\Console\RefreshConnectorFreshness;
+use Modules\Administration\Console\SynchroniseConnectors;
 
 class AdministrationServiceProvider extends ModuleServiceProvider
 {
@@ -20,5 +23,16 @@ class AdministrationServiceProvider extends ModuleServiceProvider
             ->add('administration::reference_lists.title', 'administration.reference-lists.index', 'icon-list', NavigationGroup::Administration, order: 45, permission: Permission::SettingsManage->value)
             ->add('administration::custom_fields.title', 'administration.custom-fields.index', 'icon-sliders', NavigationGroup::Administration, order: 47, permission: Permission::SettingsManage->value)
             ->add('administration::settings.title', 'administration.settings', 'icon-settings', NavigationGroup::Administration, order: 50, permission: Permission::SettingsManage->value);
+    }
+
+    protected function schedule(Schedule $schedule): void
+    {
+        $schedule->command(SynchroniseConnectors::class)->hourly()->withoutOverlapping();
+        $schedule->command(RefreshConnectorFreshness::class)->hourly();
+    }
+
+    protected function consoleCommands(): array
+    {
+        return [SynchroniseConnectors::class, RefreshConnectorFreshness::class];
     }
 }

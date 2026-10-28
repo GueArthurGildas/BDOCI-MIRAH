@@ -2,7 +2,7 @@
 
 namespace App\Support\Health;
 
-use App\Enums\DataSourceStatus;
+use App\Enums\DataSourceIndicator;
 use App\Models\DataSource;
 use Illuminate\Support\Collection;
 
@@ -15,7 +15,7 @@ final class SystemHealth
             ->withIssueCounts()
             ->orderBy('name')
             ->get()
-            ->filter(fn (DataSource $source) => $source->status !== DataSourceStatus::Operational
+            ->filter(fn (DataSource $source) => $source->indicator_status !== DataSourceIndicator::Green
                 || $source->open_errors_count > 0
                 || $source->pending_rejections_count > 0)
             ->values();
@@ -24,6 +24,6 @@ final class SystemHealth
     /** @param Collection<int, DataSource> $sources */
     public function isCritical(Collection $sources): bool
     {
-        return $sources->contains(fn (DataSource $source) => $source->status === DataSourceStatus::Down);
+        return $sources->contains(fn (DataSource $source) => $source->indicator_status === DataSourceIndicator::Red);
     }
 }

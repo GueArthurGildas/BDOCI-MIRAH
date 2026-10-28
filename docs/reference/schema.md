@@ -184,11 +184,27 @@ erDiagram
     }
     data_sources {
         int8 id PK
-        varchar key
+        varchar code
         varchar name
-        varchar kind
-        varchar status
+        varchar mode
+        varchar indicator_status
         timestamp last_synced_at
+        timestamp created_at
+        timestamp updated_at
+        text last_error
+        bool is_stale
+    }
+    declared_observed_catches {
+        int8 id PK
+        int8 inspection_id FK
+        int8 species_id FK
+        int8 presentation_id FK
+        numeric declared_weight_kg
+        numeric observed_weight_kg
+        numeric net_weight_kg
+        numeric conversion_factor
+        numeric variance_pct
+        bool exceeds_csp_threshold
         timestamp created_at
         timestamp updated_at
     }
@@ -303,6 +319,34 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
+    external_inspections {
+        int8 id PK
+        varchar external_id
+        varchar reference
+        int8 vessel_id FK
+        varchar location_type
+        int8 port_id FK
+        numeric latitude
+        numeric longitude
+        timestamp started_at
+        timestamp ended_at
+        varchar control_type
+        varchar result
+        varchar captain_signature_status
+        bool is_copy_handed_over
+        jsonb raw
+        timestamp read_at
+        timestamp created_at
+        timestamp updated_at
+    }
+    external_links {
+        int8 id PK
+        varchar source
+        varchar model_url
+        bool is_copy_fallback
+        timestamp created_at
+        timestamp updated_at
+    }
     external_list_vessel {
         int8 vessel_id FK
         int8 external_list_id FK
@@ -347,6 +391,33 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
+    inspection_documents {
+        int8 id PK
+        int8 inspection_id FK
+        varchar type
+        bool is_compliant
+        timestamp created_at
+        timestamp updated_at
+    }
+    inspection_gears {
+        int8 id PK
+        int8 inspection_id FK
+        int8 gear_id FK
+        numeric mesh_mm
+        bool is_marking_compliant
+        bool is_compliant
+        timestamp created_at
+        timestamp updated_at
+    }
+    inspection_infractions {
+        int8 id PK
+        int8 inspection_id FK
+        varchar provision
+        varchar stamp
+        text measures
+        timestamp created_at
+        timestamp updated_at
+    }
     inspections {
         int8 id PK
         int8 vessel_id FK
@@ -384,6 +455,16 @@ erDiagram
         varchar relayed_by
         int8 logbook_entry_id FK
         timestamp created_at
+    }
+    landings {
+        int8 id PK
+        int8 vessel_id FK
+        int8 port_id FK
+        timestamp landed_at
+        varchar origin
+        jsonb lines
+        timestamp created_at
+        timestamp updated_at
     }
     legal_entities {
         int8 id PK
@@ -503,6 +584,71 @@ erDiagram
         timestamp occurred_at
         varchar reason
         text notes
+        timestamp created_at
+        timestamp updated_at
+    }
+    mrep_dpeps {
+        int8 id PK
+        varchar external_id
+        int8 vessel_id FK
+        varchar number
+        int8 port_id FK
+        timestamp planned_arrival_at
+        varchar purpose
+        varchar last_port_call
+        jsonb catches_on_board
+        jsonb catches_to_land
+        bool is_complete
+        bool is_72h_deadline_met
+        jsonb raw
+        timestamp read_at
+        timestamp created_at
+        timestamp updated_at
+    }
+    mrep_entry_decisions {
+        int8 id PK
+        int8 dpep_id FK
+        varchar decision
+        timestamp decided_at
+        varchar decision_maker
+        timestamp created_at
+        timestamp updated_at
+    }
+    mrep_gies_refusals {
+        int8 id PK
+        int8 vessel_id FK
+        varchar reference
+        date refused_on
+        timestamp created_at
+        timestamp updated_at
+    }
+    mrep_notifications {
+        int8 id PK
+        int8 dpep_id FK
+        varchar recipient
+        varchar channel
+        timestamp notified_at
+        varchar status
+        timestamp created_at
+        timestamp updated_at
+    }
+    mrep_port_calls {
+        int8 id PK
+        int8 dpep_id FK
+        timestamp arrival
+        timestamp departure
+        bool is_inspected
+        bool is_infraction_recorded
+        int8 inspection_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
+    mrep_targetings {
+        int8 id PK
+        int2 year
+        numeric objective_pct
+        numeric achieved_pct
+        varchar target
         timestamp created_at
         timestamp updated_at
     }
@@ -812,6 +958,16 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
+    transshipments {
+        int8 id PK
+        int8 vessel_id FK
+        int8 partner_vessel_id FK
+        timestamp transshipped_at
+        varchar origin
+        jsonb lines
+        timestamp created_at
+        timestamp updated_at
+    }
     users {
         int8 id PK
         varchar name
@@ -1011,7 +1167,13 @@ erDiagram
     eez_declarations ||--o{ entry_exit_links : "entry_declaration_id"
     eez_declarations ||--o{ entry_exit_links : "exit_declaration_id"
     entry_exit_alerts ||--o{ watch_entries : "entry_exit_alert_id"
+    external_inspections ||--o{ declared_observed_catches : "inspection_id"
+    external_inspections ||--o{ inspection_documents : "inspection_id"
+    external_inspections ||--o{ inspection_gears : "inspection_id"
+    external_inspections ||--o{ inspection_infractions : "inspection_id"
+    external_inspections ||--o{ mrep_port_calls : "inspection_id"
     external_lists ||--o{ external_list_vessel : "external_list_id"
+    gears ||--o{ inspection_gears : "gear_id"
     infraction_types ||--o{ infractions : "infraction_type_id"
     inspections ||--o{ infractions : "inspection_id"
     institutions ||--o{ contacts : "institution_id"
@@ -1032,6 +1194,9 @@ erDiagram
     missions ||--o{ mission_vessel : "mission_id"
     module_registry ||--o{ action_catalog : "module_id"
     module_registry ||--o{ vessel_events : "module_id"
+    mrep_dpeps ||--o{ mrep_entry_decisions : "dpep_id"
+    mrep_dpeps ||--o{ mrep_notifications : "dpep_id"
+    mrep_dpeps ||--o{ mrep_port_calls : "dpep_id"
     observations ||--o{ surveillance_observations : "legacy_observation_id"
     operation_categories ||--o{ operation_counters : "category_id"
     operation_categories ||--o{ operations : "category_id"
@@ -1048,9 +1213,13 @@ erDiagram
     permission_groups ||--o{ dispatch_rules : "editable_by_permission_group_id"
     permission_groups ||--o{ permission_grants : "permission_group_id"
     permission_groups ||--o{ permission_group_user : "permission_group_id"
+    ports ||--o{ external_inspections : "port_id"
     ports ||--o{ inspections : "port_id"
+    ports ||--o{ landings : "port_id"
     ports ||--o{ movements : "port_id"
+    ports ||--o{ mrep_dpeps : "port_id"
     ports ||--o{ vessels : "home_port_id"
+    presentations ||--o{ declared_observed_catches : "presentation_id"
     reference_list_values ||--o{ eez_declarations : "reception_channel_id"
     reference_list_values ||--o{ logbook_entries : "channel_id"
     reference_lists ||--o{ reference_list_values : "reference_list_id"
@@ -1060,6 +1229,7 @@ erDiagram
     rotations ||--o{ shift_handovers : "rotation_id"
     shift_handovers ||--o{ relays : "shift_handover_id"
     species ||--o{ catch_declarations : "species_id"
+    species ||--o{ declared_observed_catches : "species_id"
     species ||--o{ eez_declaration_catches : "species_id"
     surveillance_observations ||--o{ relays : "surveillance_observation_id"
     teams ||--o{ internal_notes : "recipient_team_id"
@@ -1103,15 +1273,19 @@ erDiagram
     vessels ||--o{ check_counters : "vessel_id"
     vessels ||--o{ eez_declarations : "vessel_id"
     vessels ||--o{ entry_exit_alerts : "vessel_id"
+    vessels ||--o{ external_inspections : "vessel_id"
     vessels ||--o{ external_list_vessel : "vessel_id"
     vessels ||--o{ infractions : "vessel_id"
     vessels ||--o{ inspections : "vessel_id"
     vessels ||--o{ internal_notes : "vessel_id"
+    vessels ||--o{ landings : "vessel_id"
     vessels ||--o{ licenses : "vessel_id"
     vessels ||--o{ logbook_entry_vessel : "vessel_id"
     vessels ||--o{ missed_declarations : "vessel_id"
     vessels ||--o{ mission_vessel : "vessel_id"
     vessels ||--o{ movements : "vessel_id"
+    vessels ||--o{ mrep_dpeps : "vessel_id"
+    vessels ||--o{ mrep_gies_refusals : "vessel_id"
     vessels ||--o{ observations : "vessel_id"
     vessels ||--o{ operation_vessel : "vessel_id"
     vessels ||--o{ positions : "vessel_id"
@@ -1119,6 +1293,8 @@ erDiagram
     vessels ||--o{ standing_instructions : "vessel_id"
     vessels ||--o{ surveillance_observations : "vessel_id"
     vessels ||--o{ tracking_devices : "vessel_id"
+    vessels ||--o{ transshipments : "partner_vessel_id"
+    vessels ||--o{ transshipments : "vessel_id"
     vessels ||--o{ vessel_actors : "vessel_id"
     vessels ||--o{ vessel_current_states : "vessel_id"
     vessels ||--o{ vessel_events : "vessel_id"

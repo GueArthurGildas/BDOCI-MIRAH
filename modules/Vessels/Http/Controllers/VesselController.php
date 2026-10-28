@@ -55,7 +55,7 @@ class VesselController extends Controller
             'latestPosition.zone',
             'movements.port',
             'observations.author',
-            'inspections.port',
+            'externalInspections.port',
             'infractions.type',
             'catchDeclarations.species',
             'missions',

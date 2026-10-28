@@ -34,6 +34,10 @@ return [
             'title' => 'Reports and archiving',
             'description' => 'Alert for generated reports and number of years before closed operations are archived (provisional values)',
         ],
+        'connectors' => [
+            'title' => 'Connectors',
+            'description' => 'Freshness of the synchronised data and the catch variance threshold of the CSP (open points, provisional values)',
+        ],
     ],
     'fields' => [
         'notifications_poll_seconds' => 'Check for new notifications every (seconds)',
@@ -55,5 +59,7 @@ return [
         'watch_check_threshold' => 'An alert is raised beyond (checks of the same vessel)',
         'alerts_scheduled_reports_enabled' => 'Notify recipients when a scheduled report is ready',
         'archive_after_years' => 'Closed operations are archived after (years)',
+        'connectors_stale_after_hours' => 'A source is stale after (hours without synchronisation)',
+        'connectors_catch_variance_threshold_percent' => 'Catch variance threshold of the CSP (percent)',
     ],
 ];

@@ -185,6 +185,9 @@ return [
         'last_import_at' => 'Last import',
         'matching_status' => 'Matching',
         'criterion' => 'Criterion',
+        'link' => 'Link',
+        'open' => 'Open',
+        'copy' => 'Copy the identifier',
     ],
     'provenance' => [
         'title' => 'Provenance per field',

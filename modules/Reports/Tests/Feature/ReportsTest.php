@@ -2,7 +2,7 @@
 
 namespace Modules\Reports\Tests\Feature;
 
-use App\Enums\DataSourceStatus;
+use App\Enums\DataSourceIndicator;
 use App\Enums\OperationStatus;
 use App\Models\AiAgentAction;
 use App\Models\DataSource;
@@ -261,14 +261,14 @@ class ReportsTest extends TestCase
         $this->signInAs(Role::Director);
         $this->get(route('reports.index'))->assertDontSee('data-health-banner', false);
 
-        DataSource::factory()->create(['name' => 'THEMIS', 'status' => DataSourceStatus::Down]);
+        DataSource::factory()->create(['name' => 'THEMIS', 'indicator_status' => DataSourceIndicator::Red]);
 
         $this->get(route('reports.index'))->assertSee('data-health-banner', false)->assertSee('THEMIS');
     }
 
     public function test_the_health_banner_is_hidden_from_agents_and_shown_to_administrators(): void
     {
-        DataSource::factory()->create(['name' => 'THEMIS', 'status' => DataSourceStatus::Degraded]);
+        DataSource::factory()->create(['name' => 'THEMIS', 'indicator_status' => DataSourceIndicator::Orange]);
 
         $this->signInAs(Role::Agent);
         $this->get(route('dashboard'))->assertDontSee('data-health-banner', false);

@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Enums\DataSourceKind;
-use App\Enums\DataSourceStatus;
+use App\Enums\DataSourceIndicator;
+use App\Enums\DataSourceMode;
 use App\Enums\ZoneType;
 use App\Models\DataSource;
 use App\Models\InfractionType;
@@ -129,19 +129,21 @@ class ReferenceDataSeeder extends Seeder
     private function seedDataSources(): void
     {
         $sources = [
-            ['vms-themis', 'VMS / THEMIS', DataSourceKind::Api, DataSourceStatus::Operational, now()->subMinutes(5)],
-            ['e-inspection', 'e-inspection', DataSourceKind::Database, DataSourceStatus::Operational, now()->subHour()],
-            ['missions', 'Opérations / Missions', DataSourceKind::Api, DataSourceStatus::Degraded, now()->subHours(7)],
-            ['supervision-reports', 'Rapports et supervision', DataSourceKind::File, DataSourceStatus::Operational, now()->subDay()],
-            ['foreign-vessels', 'Navires étrangers', DataSourceKind::Database, DataSourceStatus::Down, now()->subDays(4)],
+            ['vms-themis', 'VMS / THEMIS', DataSourceMode::Api, DataSourceIndicator::Green, now()->subMinutes(5)],
+            ['e-inspection', 'e-inspection', DataSourceMode::Api, DataSourceIndicator::Green, now()->subHour()],
+            ['missions', 'Opérations / Missions', DataSourceMode::Api, DataSourceIndicator::Orange, now()->subHours(7)],
+            ['supervision-reports', 'Rapports et supervision', DataSourceMode::Import, DataSourceIndicator::Green, now()->subDay()],
+            ['foreign-vessels', 'Navires étrangers', DataSourceMode::DirectRead, DataSourceIndicator::Red, now()->subDays(4)],
+            ['dpep-mrep', 'DPEP / MREP', DataSourceMode::DirectRead, DataSourceIndicator::Red, null],
+            ['neno', 'NENO (vedettes)', DataSourceMode::Api, DataSourceIndicator::Red, null],
         ];
 
-        foreach ($sources as [$key, $name, $kind, $status, $lastSyncedAt]) {
+        foreach ($sources as [$code, $name, $mode, $indicator, $lastSyncedAt]) {
             DataSource::create([
-                'key' => $key,
+                'code' => $code,
                 'name' => $name,
-                'kind' => $kind,
-                'status' => $status,
+                'mode' => $mode,
+                'indicator_status' => $indicator,
                 'last_synced_at' => $lastSyncedAt,
             ]);
         }

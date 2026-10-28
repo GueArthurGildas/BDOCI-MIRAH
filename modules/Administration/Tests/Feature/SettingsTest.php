@@ -37,6 +37,8 @@ class SettingsTest extends TestCase
             'watch_check_threshold' => 3,
             'alerts_scheduled_reports_enabled' => 1,
             'archive_after_years' => 5,
+            'connectors_stale_after_hours' => 24,
+            'connectors_catch_variance_threshold_percent' => 10,
         ], $overrides);
     }
 

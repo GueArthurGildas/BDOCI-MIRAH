@@ -26,10 +26,10 @@ final class VesselTimeline
                 __('vessels::vessels.timeline.observation', ['level' => __($observation->level->label())]),
                 $observation->description,
             )))
-            ->concat($vessel->inspections->map(fn ($inspection) => self::entry(
-                $inspection->inspected_at, 'icon-check-square', $inspection->result->color(),
-                __('vessels::vessels.timeline.inspection', ['result' => __($inspection->result->label())]),
-                $inspection->findings,
+            ->concat($vessel->externalInspections->filter->started_at->map(fn ($inspection) => self::entry(
+                $inspection->started_at, 'icon-check-square', $inspection->resultCase()?->color() ?? 'info',
+                __('vessels::vessels.timeline.inspection', ['result' => $inspection->resultLabel()]),
+                $inspection->control_type,
             )))
             ->concat($vessel->infractions->map(fn ($infraction) => self::entry(
                 $infraction->detected_at, 'icon-alert-triangle', 'danger',

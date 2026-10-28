@@ -1,0 +1,175 @@
+{
+  "records": [
+    {
+      "kind": "dpep",
+      "dpep_id": "DPEP-2026-00871",
+      "number": "DPEP/ABJ/2026/871",
+      "vessel": {
+        "imo": "9302312"
+      },
+      "port": "Abidjan",
+      "eta": "2026-11-10T08:00:00Z",
+      "submitted_at": "2026-11-02T09:00:00Z",
+      "purpose": "LAN",
+      "last_port_call": "Dakar (SN)",
+      "catches_on_board": [
+        {
+          "species": "YFT",
+          "weight_kg": 42000
+        },
+        {
+          "species": "SKJ",
+          "weight_kg": 30000
+        }
+      ],
+      "catches_to_land": [
+        {
+          "species": "YFT",
+          "weight_kg": 42000
+        },
+        {
+          "species": "SKJ",
+          "weight_kg": 30000
+        }
+      ],
+      "complete": true,
+      "decision": {
+        "type": "authorization",
+        "at": "2026-11-04T10:00:00Z",
+        "by": "Direction des pêches maritimes"
+      },
+      "port_calls": [
+        {
+          "arrival": "2026-10-02T06:00:00Z",
+          "departure": "2026-10-04T18:00:00Z",
+          "inspected": true,
+          "infraction": false,
+          "inspection_id": "EI-2026-0401"
+        }
+      ],
+      "notifications": [
+        {
+          "recipient": "Etat du pavillon (ES)",
+          "channel": "email",
+          "at": "2026-11-04T11:00:00Z",
+          "status": "sent"
+        },
+        {
+          "recipient": "ICCAT",
+          "channel": "email",
+          "at": "2026-11-04T11:05:00Z",
+          "status": "sent"
+        }
+      ]
+    },
+    {
+      "kind": "dpep",
+      "dpep_id": "DPEP-2026-00872",
+      "number": "DPEP/SPY/2026/872",
+      "vessel": {
+        "ircs": "DTBX3"
+      },
+      "port": "San Pedro",
+      "eta": "2026-11-06T14:00:00Z",
+      "submitted_at": "2026-11-05T09:00:00Z",
+      "purpose": "TRX",
+      "last_port_call": "Tema (GH)",
+      "catches_on_board": [
+        {
+          "species": "BET",
+          "weight_kg": 15000
+        }
+      ],
+      "catches_to_land": [],
+      "complete": false,
+      "decision": {
+        "type": "refusal",
+        "at": "2026-11-05T16:00:00Z",
+        "by": "Direction des pêches maritimes"
+      },
+      "port_calls": [
+        {
+          "arrival": "2026-10-09T05:00:00Z",
+          "departure": "2026-10-11T12:00:00Z",
+          "inspected": true,
+          "infraction": true,
+          "inspection_id": "EI-2026-0402"
+        }
+      ],
+      "notifications": [
+        {
+          "recipient": "Etat du pavillon (KR)",
+          "channel": "email",
+          "at": "2026-11-05T17:00:00Z",
+          "status": "sent"
+        },
+        {
+          "recipient": "Autorité portuaire de San Pedro",
+          "channel": "letter",
+          "at": "2026-11-05T17:30:00Z",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "kind": "dpep",
+      "dpep_id": "DPEP-2026-00873",
+      "number": "DPEP/ABJ/2026/873",
+      "vessel": {
+        "mmsi": "412345670"
+      },
+      "port": "Abidjan",
+      "eta": "2026-11-12T08:00:00Z",
+      "purpose": "PRO",
+      "decision": {
+        "type": "inspection_only",
+        "at": "2026-11-06T09:00:00Z",
+        "by": "Direction des pêches maritimes"
+      },
+      "port_calls": [],
+      "notifications": []
+    },
+    {
+      "kind": "dpep",
+      "dpep_id": "DPEP-2026-00874",
+      "vessel": {
+        "imo": "9302312"
+      },
+      "purpose": "ZZZ"
+    },
+    {
+      "kind": "dpep",
+      "number": "DPEP/ABJ/2026/875"
+    },
+    {
+      "kind": "gies_refusal",
+      "reference": "GIES-2026-014",
+      "vessel": {
+        "ircs": "DTBX3"
+      },
+      "refused_on": "2026-09-15"
+    },
+    {
+      "kind": "gies_refusal",
+      "reference": "GIES-2026-015",
+      "vessel": {
+        "imo": "1111111"
+      },
+      "refused_on": "2026-09-20"
+    },
+    {
+      "kind": "targeting",
+      "year": 2026,
+      "target": "foreign_fishing",
+      "objective_pct": 25,
+      "achieved_pct": 18.5
+    },
+    {
+      "kind": "targeting",
+      "year": 2026,
+      "target": "transshipment",
+      "objective_pct": 100,
+      "achieved_pct": 40
+    }
+  ]
+}

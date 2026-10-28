@@ -39,6 +39,8 @@ final class Settings
             new SettingDefinition('watch.check_threshold', 'surveillance.watch.check_threshold', SettingType::Integer, 'watch', 1, 20),
             new SettingDefinition('alerts.scheduled_reports.enabled', 'surveillance.alerts.scheduled_reports.enabled', SettingType::Boolean, 'reports'),
             new SettingDefinition('archive.after_years', 'surveillance.archive_after_years', SettingType::Integer, 'reports', 1, 50),
+            new SettingDefinition('connectors.stale_after_hours', 'surveillance.connectors.stale_after_hours', SettingType::Integer, 'connectors', 1, 720),
+            new SettingDefinition('connectors.catch_variance_threshold_percent', 'surveillance.connectors.catch_variance_threshold_percent', SettingType::Integer, 'connectors', 0, 100),
         ])->keyBy(fn (SettingDefinition $definition) => $definition->field());
     }
 

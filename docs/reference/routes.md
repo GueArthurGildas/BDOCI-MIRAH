@@ -11,8 +11,12 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `administration.connectors.comments.store` | POST | `/administration/connectors/{dataSource}/comments` | `connectors.manage` |
 | `administration.connectors.errors.reopen` | POST | `/administration/connectors/errors/{error}/reopen` | `connectors.manage` |
 | `administration.connectors.errors.resolve` | POST | `/administration/connectors/errors/{error}/resolve` | `connectors.manage` |
+| `administration.connectors.links` | GET | `/administration/connectors/links` | `connectors.manage` |
+| `administration.connectors.links.update` | PUT | `/administration/connectors/links` | `connectors.manage` |
+| `administration.connectors.mode` | PATCH | `/administration/connectors/{dataSource}/mode` | `connectors.manage` |
 | `administration.connectors.rejections.handle` | PATCH | `/administration/connectors/rejections/{rejection}` | `connectors.manage` |
 | `administration.connectors.show` | GET | `/administration/connectors/{dataSource}` | `connectors.view` |
+| `administration.connectors.sync` | POST | `/administration/connectors/{dataSource}/sync` | `connectors.sync` |
 | `administration.custom-fields.create` | GET | `/administration/custom-fields/create` | `settings.manage` |
 | `administration.custom-fields.edit` | GET | `/administration/custom-fields/{customField}/edit` | `settings.manage` |
 | `administration.custom-fields.index` | GET | `/administration/custom-fields` | `settings.manage` |
@@ -49,6 +53,8 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `administration.users.store` | POST | `/administration/users` | `users.manage` |
 | `administration.users.update` | PUT, PATCH | `/administration/users/{user}` | `users.manage` |
 | `catches.index` | GET | `/catches` | `catches.view` |
+| `catches.landings` | GET | `/catches/landings` | `catches.view` |
+| `catches.transshipments` | GET | `/catches/transshipments` | `catches.view` |
 | `communications.channels.connector` | PUT | `/communications/channels/connector` | `connectors.manage` |
 | `communications.channels.consents.destroy` | DELETE | `/communications/channels/consents` | `communications.send` |
 | `communications.channels.consents.store` | POST | `/communications/channels/consents` | `communications.send` |
@@ -118,6 +124,10 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `movements.eez.store` | POST | `/eez-declarations` | `movements.declare` |
 | `movements.index` | GET | `/movements` | `movements.view` |
 | `movements.store` | POST | `/movements` | `movements.create` |
+| `mrep.dpeps.index` | GET | `/mrep` | `mrep.view` |
+| `mrep.dpeps.show` | GET | `/mrep/dpeps/{dpep}` | `mrep.view` |
+| `mrep.refusals` | GET | `/mrep/gies-refusals` | `mrep.view` |
+| `mrep.targetings` | GET | `/mrep/targetings` | `mrep.view` |
 | `notifications.feed` | GET | `/notifications/feed` | — |
 | `notifications.index` | GET | `/notifications` | — |
 | `notifications.open` | GET | `/notifications/{notification}` | — |

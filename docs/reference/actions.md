@@ -15,6 +15,7 @@
 | `communications.trigger_ai_agent` | `communications` | `update` | Déclencher l'agent IA pour les communications |
 | `communications.view` | `communications` | `view` | Consulter les communications |
 | `connectors.manage` | `administration` | `update` | Gérer les connecteurs |
+| `connectors.sync` | `administration` | `update` | Synchroniser les connecteurs |
 | `connectors.view` | `administration` | `view` | Consulter les connecteurs |
 | `dashboard.view` | `dashboard` | `view` | Consulter le tableau de bord |
 | `infractions.manage` | `infractions` | `update` | Gérer les infractions |
@@ -31,6 +32,7 @@
 | `movements.create` | `movements` | `create` | Saisir des mouvements |
 | `movements.declare` | `movements` | `update` | Saisir et suivre les déclarations ZEE |
 | `movements.view` | `movements` | `view` | Consulter les mouvements |
+| `mrep.view` | `mrep` | `view` | Consulter les DPEP, décisions d'entrée et notifications |
 | `operations.create` | `operations` | `create` | Ouvrir des opérations |
 | `operations.manage` | `operations` | `update` | Suivre et clôturer les opérations |
 | `operations.view` | `operations` | `view` | Consulter les opérations |
@@ -61,6 +63,9 @@ Actions exécutées par l'`ActionRunner` (transaction, droit, événement, état
 
 | Code | Permission | Classe |
 |---|---|---|
+| `administration.change_connector_mode` | `connectors.manage` | `Modules\Administration\Actions\ChangeConnectorMode` |
+| `administration.synchronise_connector` | `connectors.sync` | `Modules\Administration\Actions\SynchroniseConnector` |
+| `administration.update_external_link` | `connectors.manage` | `Modules\Administration\Actions\UpdateExternalLink` |
 | `communications.acknowledge_message` | `communications.send` | `Modules\Communications\Actions\AcknowledgeMessage` |
 | `communications.create_note` | `communications.create_note` | `Modules\Communications\Actions\CreateNote` |
 | `communications.dispatch_rule` | `communications.manage_dispatch` | `Modules\Communications\Actions\DispatchRuleMessages` |

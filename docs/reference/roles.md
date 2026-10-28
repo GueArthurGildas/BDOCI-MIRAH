@@ -15,6 +15,7 @@ Permissions accordées par défaut à chaque rôle système (l'héritage `Direct
 | `communications.trigger_ai_agent` | — | oui | oui | — |
 | `communications.view` | — | oui | oui | oui |
 | `connectors.manage` | oui | — | — | — |
+| `connectors.sync` | oui | — | — | — |
 | `connectors.view` | oui | oui | oui | — |
 | `dashboard.view` | oui | oui | oui | oui |
 | `infractions.manage` | — | oui | oui | — |
@@ -31,6 +32,7 @@ Permissions accordées par défaut à chaque rôle système (l'héritage `Direct
 | `movements.create` | — | oui | oui | oui |
 | `movements.declare` | — | oui | oui | oui |
 | `movements.view` | — | oui | oui | oui |
+| `mrep.view` | — | oui | oui | oui |
 | `operations.create` | — | oui | oui | oui |
 | `operations.manage` | — | oui | oui | — |
 | `operations.view` | — | oui | oui | oui |

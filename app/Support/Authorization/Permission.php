@@ -68,4 +68,6 @@ enum Permission: string
     case ReportsExportLogbook = 'reports.export_logbook';
     case ReportsArchive = 'reports.archive';
     case ReportsViewHealth = 'reports.view_health';
+    case ConnectorsSync = 'connectors.sync';
+    case MrepView = 'mrep.view';
 }

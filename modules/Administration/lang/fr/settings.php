@@ -34,6 +34,10 @@ return [
             'title' => 'Rapports et archivage',
             'description' => 'Alerte des rapports produits et nombre d\'années avant l\'archivage des opérations clôturées (valeurs provisoires)',
         ],
+        'connectors' => [
+            'title' => 'Connecteurs',
+            'description' => 'Fraîcheur des données synchronisées et seuil d\'écart de captures propre au CSP (points ouverts, valeurs provisoires)',
+        ],
     ],
     'fields' => [
         'notifications_poll_seconds' => 'Vérifier les nouvelles notifications toutes les (secondes)',
@@ -55,5 +59,7 @@ return [
         'watch_check_threshold' => 'Une alerte est levée au-delà de (vérifications d\'un même navire)',
         'alerts_scheduled_reports_enabled' => 'Prévenir le destinataire lorsqu\'un rapport programmé est prêt',
         'archive_after_years' => 'Les opérations clôturées sont archivées après (années)',
+        'connectors_stale_after_hours' => 'Une source est périmée après (heures sans synchronisation)',
+        'connectors_catch_variance_threshold_percent' => 'Seuil d\'écart de captures propre au CSP (pourcentage)',
     ],
 ];

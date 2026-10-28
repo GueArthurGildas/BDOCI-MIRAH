@@ -1,0 +1,22 @@
+{
+  "records": [
+    {
+      "vessel_ref": "NE-3001",
+      "name": "VEDETTE CSP 01",
+      "ircs": "TUVC1",
+      "mmsi": "619000011",
+      "flag": "CI"
+    },
+    {
+      "vessel_ref": "NE-3002",
+      "name": "VEDETTE CSP 02",
+      "ircs": "TUVC2",
+      "mmsi": "619000012",
+      "flag": "CI"
+    },
+    {
+      "name": "VEDETTE SANS REFERENCE",
+      "ircs": "TUVC9"
+    }
+  ]
+}

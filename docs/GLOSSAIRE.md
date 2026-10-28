@@ -107,10 +107,10 @@ Nom de la spécification (v1, français) → nom technique (v2, anglais) → sit
 | `habilitation` | `accreditations` | créé (phase 2) |
 | `evenement_navire` | `vessel_events` | créé (phase 1) |
 | `etat_courant_navire` | `vessel_current_states` | créé (phase 1) |
-| `etat_connecteur` | `data_sources` | existe (voir CONVENTIONS, point 9) |
+| `etat_connecteur` | `data_sources` | livré (phase 7) : `code`, `mode`, `indicator_status`, `last_error`, `is_stale` (voir CONVENTIONS, point 9 et section 11) |
 | `journal_synchro` | `data_source_syncs` | existe |
 | `rejet_import` | `data_source_rejections` | existe |
-| `lien_externe` | `external_links` | nouveau |
+| `lien_externe` | `external_links` | livré (phase 7) |
 
 ### M2 Suivi des licences
 
@@ -207,24 +207,24 @@ Nom de la spécification (v1, français) → nom technique (v2, anglais) → sit
 
 | Spécification | Table | Situation actuelle |
 |---|---|---|
-| `mrep_dpep` | `mrep_dpeps` | nouveau |
-| `mrep_decision_entree` | `mrep_entry_decisions` | nouveau |
-| `mrep_escale` | `mrep_port_calls` | nouveau |
-| `mrep_notification` | `mrep_notifications` | nouveau |
-| `mrep_refus_gies` | `mrep_gies_refusals` | nouveau |
-| `mrep_ciblage` | `mrep_targetings` | nouveau |
+| `mrep_dpep` | `mrep_dpeps` | livré (phase 7) |
+| `mrep_decision_entree` | `mrep_entry_decisions` | livré (phase 7) |
+| `mrep_escale` | `mrep_port_calls` | livré (phase 7) |
+| `mrep_notification` | `mrep_notifications` | livré (phase 7) |
+| `mrep_refus_gies` | `mrep_gies_refusals` | livré (phase 7) |
+| `mrep_ciblage` | `mrep_targetings` | livré (phase 7) |
 
 ### M11 e-inspection (miroir en lecture seule)
 
 | Spécification | Table | Situation actuelle |
 |---|---|---|
-| `inspection_externe` | `external_inspections` | remplace `inspections` |
-| `inspection_document` | `inspection_documents` | nouveau |
-| `inspection_engin` | `inspection_gears` | nouveau |
-| `capture_declaree_constatee` | `declared_observed_catches` | absorbe `catch_declarations` |
-| `inspection_infraction` | `inspection_infractions` | nouveau |
-| `debarquement` | `landings` | nouveau |
-| `transbordement` | `transshipments` | nouveau |
+| `inspection_externe` | `external_inspections` | livré (phase 7) ; remplace `inspections`, conservée tant que la phase 6 n'a pas repris `infractions.inspection_id` |
+| `inspection_document` | `inspection_documents` | livré (phase 7) |
+| `inspection_engin` | `inspection_gears` | livré (phase 7) |
+| `capture_declaree_constatee` | `declared_observed_catches` | livré (phase 7) ; `catch_declarations` reste en place pour la page des captures (phase 3a/8) |
+| `inspection_infraction` | `inspection_infractions` | livré (phase 7) |
+| `debarquement` | `landings` | livré (phase 7) |
+| `transbordement` | `transshipments` | livré (phase 7) |
 
 ### M7 Surveillance participative
 

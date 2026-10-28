@@ -19,6 +19,7 @@ enum Role: string
         Permission::ConnectorsManage,
         Permission::AuditView,
         Permission::ReportsViewHealth,
+        Permission::ConnectorsSync,
     ];
 
     public function label(): string
@@ -100,6 +101,7 @@ enum Role: string
                 Permission::OperationsCreate,
                 Permission::WatchView,
                 Permission::WatchCreate,
+                Permission::MrepView,
             ],
         };
     }
