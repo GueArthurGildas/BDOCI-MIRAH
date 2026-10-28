@@ -60,4 +60,8 @@ enum Permission: string
     case WatchView = 'watch.view';
     case WatchCreate = 'watch.create';
     case WatchManage = 'watch.manage';
+    case TrackingCreate = 'tracking.create';
+    case VmsView = 'vms.view';
+    case VmsCreate = 'vms.create';
+    case VmsManage = 'vms.manage';
 }

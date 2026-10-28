@@ -13,11 +13,12 @@ use Modules\Logbook\Providers\LogbookServiceProvider;
 use Modules\Missions\Providers\MissionsServiceProvider;
 use Modules\Movements\Providers\MovementsServiceProvider;
 use Modules\Notifications\Providers\NotificationsServiceProvider;
-use Modules\Registry\Providers\RegistryServiceProvider;
 use Modules\Operations\Providers\OperationsServiceProvider;
+use Modules\Registry\Providers\RegistryServiceProvider;
 use Modules\Search\Providers\SearchServiceProvider;
 use Modules\Tracking\Providers\TrackingServiceProvider;
 use Modules\Vessels\Providers\VesselsServiceProvider;
+use Modules\Vms\Providers\VmsServiceProvider;
 use Modules\Watch\Providers\WatchServiceProvider;
 
 return [
@@ -39,5 +40,6 @@ return [
     SearchServiceProvider::class,
     TrackingServiceProvider::class,
     VesselsServiceProvider::class,
+    VmsServiceProvider::class,
     WatchServiceProvider::class,
 ];

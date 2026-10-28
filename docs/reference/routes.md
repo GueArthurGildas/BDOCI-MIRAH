@@ -139,8 +139,20 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `registry.store` | POST | `/registry/{resource}` | `registry.manage` |
 | `registry.update` | PUT | `/registry/{resource}/{id}` | `registry.manage` |
 | `search` | GET | `/search` | — |
+| `tracking.alerts.acknowledge` | POST | `/tracking/alerts/{alert}/acknowledge` | `tracking.view`, `tracking.create` |
+| `tracking.alerts.handle` | POST | `/tracking/alerts/{alert}/handle` | `tracking.view`, `tracking.create` |
+| `tracking.alerts.index` | GET | `/tracking/alerts` | `tracking.view` |
+| `tracking.alerts.show` | GET | `/tracking/alerts/{alert}` | `tracking.view` |
 | `tracking.beacons` | GET | `/tracking/beacons` | `tracking.view` |
 | `tracking.map` | GET | `/tracking/map` | `tracking.view` |
+| `tracking.rules.index` | GET | `/tracking/rules` | `settings.manage` |
+| `tracking.rules.store` | POST | `/tracking/rules` | `settings.manage` |
+| `tracking.rules.update` | PUT | `/tracking/rules/{rule}` | `settings.manage` |
+| `tracking.slots.confirm` | POST | `/tracking/slots/{slot}/positions/{position}/confirm` | `tracking.view`, `tracking.create` |
+| `tracking.slots.index` | GET | `/tracking/slots` | `tracking.view` |
+| `tracking.slots.show` | GET | `/tracking/slots/{slot}` | `tracking.view` |
+| `tracking.slots.store` | POST | `/tracking/slots` | `tracking.view`, `tracking.create` |
+| `tracking.slots.sweep` | POST | `/tracking/slots/{slot}/sweep` | `tracking.view`, `tracking.create` |
 | `tracking.zones` | GET | `/tracking/zones` | `tracking.view` |
 | `vessels.actors.store` | POST | `/vessels/{vessel}/actors` | `vessels.manage` |
 | `vessels.create` | GET | `/vessels/create` | `vessels.manage` |
@@ -155,6 +167,27 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `vessels.show` | GET | `/vessels/{vessel}` | `vessels.view` |
 | `vessels.store` | POST | `/vessels` | `vessels.manage` |
 | `vessels.update` | PUT | `/vessels/{vessel}` | `vessels.manage` |
+| `vms.beacons.assign` | POST | `/vms/beacons/assign` | `vms.create` |
+| `vms.beacons.index` | GET | `/vms/beacons` | `vms.view` |
+| `vms.beacons.store` | POST | `/vms/beacons` | `vms.manage` |
+| `vms.cutoffs.store` | POST | `/vms/cutoffs` | `vms.manage` |
+| `vms.ers.create` | GET | `/vms/ers/create` | `vms.create` |
+| `vms.ers.index` | GET | `/vms/ers` | `vms.view` |
+| `vms.ers.show` | GET | `/vms/ers/{declaration}` | `vms.view` |
+| `vms.ers.store` | POST | `/vms/ers` | `vms.create` |
+| `vms.failures.attest` | POST | `/vms/failures/{failure}/attestation` | `vms.create` |
+| `vms.failures.index` | GET | `/vms/failures` | `vms.view` |
+| `vms.failures.order` | POST | `/vms/failures/{failure}/cessation-order` | `vms.manage` |
+| `vms.failures.report` | POST | `/vms/failures/{failure}/reports` | `vms.create` |
+| `vms.failures.show` | GET | `/vms/failures/{failure}` | `vms.view` |
+| `vms.failures.store` | POST | `/vms/failures` | `vms.create` |
+| `vms.obligations.store` | POST | `/vms/obligations` | `vms.manage` |
+| `vms.requests.assess` | POST | `/vms/requests/assessments/{assessmentRequest}` | `vms.create` |
+| `vms.requests.assessment` | POST | `/vms/requests/assessments` | `vms.create` |
+| `vms.requests.index` | GET | `/vms/requests` | `vms.view` |
+| `vms.requests.install` | POST | `/vms/requests/new-beacons/{newBeaconRequest}/install` | `vms.create` |
+| `vms.requests.installers.store` | POST | `/vms/requests/installers` | `vms.manage` |
+| `vms.requests.new-beacon` | POST | `/vms/requests/new-beacons` | `vms.create` |
 | `watch.board.close` | POST | `/watch/board/{entry}/close` | `watch.manage` |
 | `watch.board.director-list` | POST | `/watch/board/director-list` | `watch.manage` |
 | `watch.board.enhanced-monitoring` | POST | `/watch/board/enhanced-monitoring` | `watch.create` |

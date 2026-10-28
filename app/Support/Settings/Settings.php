@@ -24,7 +24,6 @@ final class Settings
             new SettingDefinition('notifications.toast_seconds', 'surveillance.notification_toast_seconds', SettingType::Integer, 'browser', 3, 30),
             new SettingDefinition('notifications.max_toasts', 'surveillance.notification_max_toasts', SettingType::Integer, 'browser', 1, 5),
             new SettingDefinition('alerts.beacons_silent.enabled', 'surveillance.alerts.beacons_silent.enabled', SettingType::Boolean, 'beacons'),
-            new SettingDefinition('alerts.beacons_silent.threshold_hours', 'surveillance.beacon_silence_threshold_hours', SettingType::Integer, 'beacons', 1, 48),
             new SettingDefinition('alerts.beacons_silent.cooldown_hours', 'surveillance.alerts.beacons_silent.cooldown_hours', SettingType::Integer, 'beacons', 1, 72),
             new SettingDefinition('alerts.licenses_expiring.enabled', 'surveillance.alerts.licenses_expiring.enabled', SettingType::Boolean, 'licenses'),
             new SettingDefinition('alerts.licenses_expiring.warning_days', 'surveillance.license_expiry_warning_days', SettingType::Integer, 'licenses', 1, 365),

@@ -36,6 +36,9 @@ return [
     'tracking_system' => [
         'vms' => 'VMS',
         'ais' => 'AIS',
+        'sat_ais' => 'Sat-AIS',
+        'manual' => 'Manual report',
+        'radar' => 'Radar',
     ],
 
     'beacon_status' => [
@@ -320,5 +323,79 @@ return [
     'watch_status' => [
         'open' => 'Open',
         'closed' => 'Closed',
+    ],
+
+    'beacon_modem' => [
+        'gnss' => 'GNSS',
+        'satellite' => 'Satellite',
+        'gprs' => 'GPRS',
+    ],
+
+    'slot_test_result' => [
+        'ok' => 'OK',
+        'ko' => 'KO',
+        'to_confirm' => 'To confirm',
+    ],
+
+    'slot_result' => [
+        'normal' => 'Normal',
+        'suspect' => 'Suspect',
+    ],
+
+    'position_loading_source' => [
+        'api' => 'API',
+        'import' => 'Import',
+        'scraping' => 'Scraping',
+    ],
+
+    'alert_rule_type' => [
+        'geofencing' => 'Geofencing',
+        'silence' => 'Silence',
+        'speed' => 'Speed',
+        'zone' => 'Zone',
+        'other' => 'Other',
+    ],
+
+    'alert_status' => [
+        'open' => 'Open',
+        'acknowledged' => 'Acknowledged',
+        'closed' => 'Closed',
+    ],
+
+    'vms_failure_category' => [
+        'foreign' => 'Foreign vessel',
+        'ivorian' => 'Ivorian vessel',
+        'chartered' => 'Chartered vessel',
+        'tuna_vessel' => 'Tuna vessel',
+    ],
+
+    'sweep_anomaly_type' => [
+        'non_emitting' => 'Not emitting',
+        'licensed_absent_themis' => 'Licensed but absent from THEMIS',
+        'other' => 'Other',
+    ],
+
+    'ers_source' => [
+        'import' => 'Import',
+        'api' => 'API',
+        'manual_entry' => 'Manual entry',
+    ],
+
+    'vms_request_status' => [
+        'requested' => 'Requested',
+        'assessed' => 'Assessed',
+        'closed' => 'Closed',
+    ],
+
+    'beacon_request_status' => [
+        'requested' => 'Requested',
+        'installed' => 'Installed',
+        'closed' => 'Closed',
+    ],
+
+    'assessment_result' => [
+        'compatible' => 'Compatible',
+        'incompatible' => 'Incompatible',
+        'to_complete' => 'To complete',
     ],
 ];

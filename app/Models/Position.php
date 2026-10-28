@@ -13,7 +13,8 @@ use Illuminate\Support\Carbon;
 
 #[Fillable([
     'vessel_id', 'tracking_device_id', 'zone_id', 'system',
-    'recorded_at', 'latitude', 'longitude', 'speed_knots', 'course',
+    'recorded_at', 'received_at', 'latitude', 'longitude', 'speed_knots', 'course',
+    'activity', 'navigation_status', 'accuracy_m', 'retention_reason',
 ])]
 class Position extends Model
 {
@@ -26,6 +27,7 @@ class Position extends Model
         return [
             'system' => TrackingSystem::class,
             'recorded_at' => 'datetime',
+            'received_at' => 'datetime',
             'latitude' => 'float',
             'longitude' => 'float',
             'speed_knots' => 'float',

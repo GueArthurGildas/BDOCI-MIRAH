@@ -16,6 +16,7 @@ use App\Enums\VesselType;
 use App\Models\Concerns\Audited;
 use App\Support\Localization\Countries;
 use App\Support\Vessels\VesselRelationsSynchronizer;
+use App\Support\Vms\SilenceThreshold;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -112,7 +113,7 @@ class Vessel extends Model
 
         return match (true) {
             $lastEmission === null => BeaconStatus::NoData,
-            $lastEmission->lt(now()->subHours(config('surveillance.beacon_silence_threshold_hours'))) => BeaconStatus::Silent,
+            $lastEmission->lt(now()->subMinutes((int) round(app(SilenceThreshold::class)->hours() * 60))) => BeaconStatus::Silent,
             default => BeaconStatus::Emitting,
         };
     }

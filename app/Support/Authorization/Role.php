@@ -98,6 +98,9 @@ enum Role: string
                 Permission::OperationsCreate,
                 Permission::WatchView,
                 Permission::WatchCreate,
+                Permission::TrackingCreate,
+                Permission::VmsView,
+                Permission::VmsCreate,
             ],
         };
     }

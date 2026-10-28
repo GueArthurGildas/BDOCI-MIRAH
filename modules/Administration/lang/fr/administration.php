@@ -82,6 +82,7 @@ return [
         'registry' => 'Référentiels',
         'operations' => 'Opérations',
         'watch' => 'Surveillance de quart',
+        'vms' => 'Balises, avaries et ERS',
     ],
     'permissions' => [
         'dashboard' => [
@@ -98,6 +99,7 @@ return [
         ],
         'tracking' => [
             'view' => 'Consulter le suivi des positions',
+            'create' => 'Traiter les alertes, ouvrir des créneaux et confirmer les tests',
         ],
         'logbook' => [
             'view' => 'Consulter la main courante',
@@ -161,6 +163,11 @@ return [
             'view' => 'Consulter le tableau du matin et la surveillance de quart',
             'create' => 'Saisir des observations, relais et suivis renforcés',
             'manage' => 'Planifier les rotations, consignes permanentes et listes de veille',
+        ],
+        'vms' => [
+            'view' => 'Voir les balises, avaries et déclarations ERS',
+            'create' => 'Affecter des balises, déclarer des avaries et saisir des déclarations ERS',
+            'manage' => 'Gérer balises, installateurs, obligations, arrêts techniques et ordres de cessation',
         ],
     ],
     'connectors' => [

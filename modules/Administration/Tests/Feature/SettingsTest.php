@@ -22,7 +22,6 @@ class SettingsTest extends TestCase
             'notifications_toast_seconds' => 8,
             'notifications_max_toasts' => 3,
             'alerts_beacons_silent_enabled' => 1,
-            'alerts_beacons_silent_threshold_hours' => 2,
             'alerts_beacons_silent_cooldown_hours' => 4,
             'alerts_licenses_expiring_enabled' => 1,
             'alerts_licenses_expiring_warning_days' => 30,
@@ -100,7 +99,7 @@ class SettingsTest extends TestCase
         $device = TrackingDevice::factory()->create();
         Position::factory()->for($device->vessel)->create(['recorded_at' => now()->subHours(10)]);
 
-        $this->artisan('tracking:notify-silent-beacons')->assertSuccessful();
+        $this->artisan('tracking:evaluate-alert-rules')->assertSuccessful();
 
         $this->assertSame(0, $agent->notifications()->count());
     }

@@ -22,6 +22,7 @@ class GlossaryTest extends TestCase
         $missing = collect(Schema::getTables())
             ->pluck('name')
             ->reject(fn (string $table) => in_array($table, self::FRAMEWORK_TABLES, true))
+            ->reject(fn (string $table) => preg_match('/^positions_(default|\d{4}_\d{2})$/', $table) === 1)
             ->reject(fn (string $table) => str_contains($glossary, "`{$table}`"))
             ->values()
             ->all();

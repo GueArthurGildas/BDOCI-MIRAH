@@ -136,35 +136,35 @@ Nom de la spécification (v1, français) → nom technique (v2, anglais) → sit
 
 | Spécification | Table | Situation actuelle |
 |---|---|---|
-| `balise_vms` | `beacons` | remplace `tracking_devices` |
-| `balise_affectation` | `beacon_assignments` | nouveau |
-| `installateur_agree` | `approved_installers` | nouveau |
-| `demande_evaluation_vms` | `vms_assessment_requests` | nouveau |
-| `demande_nouvelle_balise` | `new_beacon_requests` | nouveau |
-| `evaluation_compatibilite` | `compatibility_assessments` | nouveau |
-| `installation` | `beacon_installations` | nouveau |
-| `obligation_declarative_navire` | `vessel_reporting_obligations` | nouveau |
-| `position` | `positions` | existe, à partitionner |
-| `position_jour` | `position_daily_summaries` | nouveau |
-| `creneau_controle` | `control_slots` | nouveau |
-| `position_creneau` | `slot_positions` | nouveau |
-| `trace` | `tracks` | nouveau |
-| `capture_ecran` | `screen_captures` | nouveau |
-| `anomalie_identite` | `identity_anomalies` | nouveau |
-| `coupure_emission` | `emission_cutoffs` | nouveau |
-| `regle_alerte` | `alert_rules` | nouveau |
-| `alerte` | `alerts` | nouveau |
-| `traitement_alerte` | `alert_handlings` | nouveau |
-| `avarie_vms` | `vms_failures` | nouveau |
-| `autorisation_coupure_vms` | `vms_cutoff_authorizations` | nouveau |
-| `rapport_position_manuel` | `manual_position_reports` | nouveau |
-| `attestation_bon_fonctionnement` | `working_order_attestations` | nouveau |
-| `ordre_cessation` | `cessation_orders` | nouveau |
-| `balayage` | `sweeps` | nouveau |
-| `anomalie_balayage` | `sweep_anomalies` | nouveau |
-| `agregation_mensuelle` | `monthly_aggregates` | nouveau |
-| `declaration_ers` | `ers_declarations` | nouveau |
-| `ers_ligne_capture` | `ers_catch_lines` | nouveau |
+| `balise_vms` | `beacons` | livrée en phase 3b ; `tracking_devices` reste la projection lue par la carte et l'état courant |
+| `balise_affectation` | `beacon_assignments` | livrée en phase 3b |
+| `installateur_agree` | `approved_installers` | livrée en phase 3b |
+| `demande_evaluation_vms` | `vms_assessment_requests` | livrée en phase 3b |
+| `demande_nouvelle_balise` | `new_beacon_requests` | livrée en phase 3b |
+| `evaluation_compatibilite` | `compatibility_assessments` | livrée en phase 3b |
+| `installation` | `beacon_installations` | livrée en phase 3b |
+| `obligation_declarative_navire` | `vessel_reporting_obligations` | livrée en phase 3b |
+| `position` | `positions` | partitionnée par mois en phase 3b (colonnes `recorded_at`, `speed_knots`, `system` conservées) |
+| `position_jour` | `position_daily_summaries` | livrée en phase 3b |
+| `creneau_controle` | `control_slots` | livrée en phase 3b |
+| `position_creneau` | `slot_positions` | livrée en phase 3b |
+| `trace` | `tracks` | livrée en phase 3b |
+| `capture_ecran` | `screen_captures` | livrée en phase 3b |
+| `anomalie_identite` | `identity_anomalies` | livrée en phase 3b |
+| `coupure_emission` | `emission_cutoffs` | livrée en phase 3b |
+| `regle_alerte` | `alert_rules` | livrée en phase 3b |
+| `alerte` | `alerts` | livrée en phase 3b |
+| `traitement_alerte` | `alert_handlings` | livrée en phase 3b |
+| `avarie_vms` | `vms_failures` | livrée en phase 3b |
+| `autorisation_coupure_vms` | `vms_cutoff_authorizations` | livrée en phase 3b |
+| `rapport_position_manuel` | `manual_position_reports` | livrée en phase 3b |
+| `attestation_bon_fonctionnement` | `working_order_attestations` | livrée en phase 3b |
+| `ordre_cessation` | `cessation_orders` | livrée en phase 3b |
+| `balayage` | `sweeps` | livrée en phase 3b |
+| `anomalie_balayage` | `sweep_anomalies` | livrée en phase 3b |
+| `agregation_mensuelle` | `monthly_aggregates` | livrée en phase 3b |
+| `declaration_ers` | `ers_declarations` | livrée en phase 3b |
+| `ers_ligne_capture` | `ers_catch_lines` | livrée en phase 3b |
 
 ### M4 Déclarations d'entrée et de sortie de la ZEE
 
@@ -316,14 +316,14 @@ Nom de la spécification (v1, français) → nom technique (v2, anglais) → sit
 | `notifications` | `(propre à l'application)` | canal in_app du module Communications, conservée |
 | `observations` | `surveillance_observations, logbook_entries` | remplacée |
 | `ports` | `ports` | étendue (code, port désigné) |
-| `positions` | `positions` | à partitionner par mois |
+| `positions` | `positions` | partitionnée par mois (phase 3b) |
 | `roles` | `roles` | étendue |
 | `settings` | `threshold_parameters` | absorbée |
 | `species` | `species` | alignée (noms de colonnes conservés, voir CONVENTIONS §11) |
 | `teams` | `teams` | alignée |
-| `tracking_devices` | `beacons, beacon_assignments` | remplacée |
+| `tracking_devices` | `beacons, beacon_assignments` | conservée comme projection des affectations (H-3b-7), importée dans `beacons` à la migration |
 | `users` | `users` | étendue |
 | `vessels` | `vessels` | étendue (phase 2) |
-| `zones` | `zones` | géométrie vers PostGIS |
+| `zones` | `zones` | géométrie JSON conservée, colonne PostGIS `geom` synchronisée (phase 3b) |
 
 Tables du framework (hors périmètre de ce glossaire) : `migrations`, `cache`, `cache_locks`, `jobs`, `job_batches`, `failed_jobs`, `sessions`, `password_reset_tokens`.

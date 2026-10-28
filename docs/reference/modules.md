@@ -23,4 +23,5 @@ Modules déclarés dans le registre (`ModuleServiceProvider`).
 | `search` | Rechercher | 1.0.0 | — |
 | `tracking` | Tracking | 1.0.0 | — |
 | `vessels` | Vessels | 1.0.0 | — |
+| `vms` | Vms | 1.0.0 | — |
 | `watch` | Watch | 1.0.0 | — |

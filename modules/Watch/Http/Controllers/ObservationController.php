@@ -30,6 +30,8 @@ class ObservationController extends Controller
     public function create(Request $request): View
     {
         return view('watch::observations.create', [
+            'slotPositionId' => $request->integer('slot_position_id') ?: null,
+            'selectedVesselId' => $request->integer('vessel_id') ?: null,
             'vessels' => Vessel::orderBy('name')->get()->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => "{$vessel->name} ({$vessel->registration_number})"]),
             'teams' => Team::whereKeyNot($request->user()->team_id)->orderBy('name')->pluck('name', 'id'),
         ]);
