@@ -30,6 +30,10 @@ return [
             'title' => 'Surveillance de quart et main courante',
             'description' => 'Horaires du quart, nombre d\'équipes et seuil de vérifications (point ouvert E1, valeurs provisoires)',
         ],
+        'reports' => [
+            'title' => 'Rapports et archivage',
+            'description' => 'Alerte des rapports produits et nombre d\'années avant l\'archivage des opérations clôturées (valeurs provisoires)',
+        ],
     ],
     'fields' => [
         'notifications_poll_seconds' => 'Vérifier les nouvelles notifications toutes les (secondes)',
@@ -49,5 +53,7 @@ return [
         'watch_shift_end_hour' => 'Heure de clôture de la main courante (1 à 23)',
         'watch_teams_count' => 'Nombre d\'équipes en rotation',
         'watch_check_threshold' => 'Une alerte est levée au-delà de (vérifications d\'un même navire)',
+        'alerts_scheduled_reports_enabled' => 'Prévenir le destinataire lorsqu\'un rapport programmé est prêt',
+        'archive_after_years' => 'Les opérations clôturées sont archivées après (années)',
     ],
 ];

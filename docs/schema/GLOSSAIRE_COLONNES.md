@@ -1996,6 +1996,10 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 | `utilisateur_id` | `user_id` | bigint |
 | `objet` | `subject` | varchar(120) |
 | `exporte_le` | `exported_at` | timestamp(0) |
+| (nouvelle) | `permission` | varchar(60) |
+| (nouvelle) | `format` | varchar(20) |
+| (nouvelle) | `filters` | jsonb |
+| (nouvelle) | `row_count` | integer |
 
 ### `operation_archives` (spécification : `archive_operation`)
 

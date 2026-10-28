@@ -291,6 +291,18 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
+    export_log {
+        int8 id PK
+        int8 user_id FK
+        varchar subject
+        varchar permission
+        varchar format
+        jsonb filters
+        int4 row_count
+        timestamp exported_at
+        timestamp created_at
+        timestamp updated_at
+    }
     external_list_vessel {
         int8 vessel_id FK
         int8 external_list_id FK
@@ -521,6 +533,10 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
+    operation_archives {
+        int8 operation_id FK
+        timestamp archived_at
+    }
     operation_categories {
         int8 id PK
         varchar code
@@ -698,6 +714,16 @@ erDiagram
         date day
         time start_time
         time end_time
+        timestamp created_at
+        timestamp updated_at
+    }
+    scheduled_reports {
+        int8 id PK
+        varchar code
+        varchar frequency
+        varchar format
+        int8 recipient_id FK
+        bool is_active
         timestamp created_at
         timestamp updated_at
     }
@@ -1010,6 +1036,7 @@ erDiagram
     operation_categories ||--o{ operation_counters : "category_id"
     operation_categories ||--o{ operations : "category_id"
     operations ||--o{ logbook_entries : "operation_id"
+    operations ||--o{ operation_archives : "operation_id"
     operations ||--o{ operation_contexts : "operation_id"
     operations ||--o{ operation_events : "operation_id"
     operations ||--o{ operation_instructions : "operation_id"
@@ -1048,6 +1075,7 @@ erDiagram
     users ||--o{ data_source_rejections : "handled_by"
     users ||--o{ documents : "filed_by"
     users ||--o{ eez_declarations : "entered_by"
+    users ||--o{ export_log : "user_id"
     users ||--o{ internal_notes : "author_id"
     users ||--o{ internal_notes : "recipient_user_id"
     users ||--o{ logbook_closings : "closed_by"
@@ -1062,6 +1090,7 @@ erDiagram
     users ||--o{ permission_group_user : "user_id"
     users ||--o{ relays : "read_acknowledged_by"
     users ||--o{ role_user : "user_id"
+    users ||--o{ scheduled_reports : "recipient_id"
     users ||--o{ sent_messages : "user_id"
     users ||--o{ settings : "updated_by"
     users ||--o{ surveillance_observations : "created_by"

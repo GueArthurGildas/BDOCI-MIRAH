@@ -18,6 +18,7 @@
         @include('layouts.partials.sidebar', ['groups' => $groups, 'activeGroup' => $activeGroup])
 
         <main class="gs-content">
+            @include('layouts.partials.health-banner')
             @include('layouts.partials.flash')
             {{ $slot }}
         </main>

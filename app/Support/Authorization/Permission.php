@@ -60,4 +60,12 @@ enum Permission: string
     case WatchView = 'watch.view';
     case WatchCreate = 'watch.create';
     case WatchManage = 'watch.manage';
+    case ReportsView = 'reports.view';
+    case ReportsManage = 'reports.manage';
+    case ReportsGenerate = 'reports.generate';
+    case ReportsExportOperations = 'reports.export_operations';
+    case ReportsExportVessels = 'reports.export_vessels';
+    case ReportsExportLogbook = 'reports.export_logbook';
+    case ReportsArchive = 'reports.archive';
+    case ReportsViewHealth = 'reports.view_health';
 }

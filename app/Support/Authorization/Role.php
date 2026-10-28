@@ -18,6 +18,7 @@ enum Role: string
         Permission::ConnectorsView,
         Permission::ConnectorsManage,
         Permission::AuditView,
+        Permission::ReportsViewHealth,
     ];
 
     public function label(): string
@@ -74,6 +75,7 @@ enum Role: string
             self::Director, self::TeamLead => [
                 ...self::businessPermissions(),
                 Permission::ConnectorsView,
+                Permission::ReportsViewHealth,
             ],
             self::Agent => [
                 Permission::DashboardView,

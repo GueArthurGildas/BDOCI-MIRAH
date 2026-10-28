@@ -10,6 +10,7 @@ return [
         'beacons_silent' => ['enabled' => true, 'cooldown_hours' => 4],
         'licenses_expiring' => ['enabled' => true, 'cooldown_hours' => 24],
         'eez_declarations' => ['enabled' => true, 'cooldown_hours' => 12],
+        'scheduled_reports' => ['enabled' => true],
     ],
 
     'license_expiry_warning_days' => (int) env('SURVEILLANCE_LICENSE_EXPIRY_WARNING_DAYS', 30),
@@ -24,6 +25,8 @@ return [
         'check_threshold' => (int) env('SURVEILLANCE_WATCH_CHECK_THRESHOLD', 3),
         'working_days' => array_map('intval', explode(',', env('SURVEILLANCE_WATCH_WORKING_DAYS', '1,2,3,4,5,6,7'))),
     ],
+
+    'archive_after_years' => (int) env('SURVEILLANCE_ARCHIVE_AFTER_YEARS', 5),
 
     'flag_states' => ['CI', 'BJ', 'BZ', 'CN', 'ES', 'FR', 'GH', 'GN', 'JP', 'KR', 'LR', 'MA', 'NG', 'PA', 'PT', 'SL', 'SN', 'TG', 'TW'],
 ];

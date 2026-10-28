@@ -290,9 +290,9 @@ Nom de la spécification (v1, français) → nom technique (v2, anglais) → sit
 
 | Spécification | Table | Situation actuelle |
 |---|---|---|
-| `rapport_programme` | `scheduled_reports` | nouveau |
-| `export_journal` | `export_log` | nouveau |
-| `archive_operation` | `operation_archives` | nouveau |
+| `rapport_programme` | `scheduled_reports` | créé (phase 9) |
+| `export_journal` | `export_log` | créé (phase 9) |
+| `archive_operation` | `operation_archives` | créé (phase 9) |
 
 ## 4. Tables actuelles vers la cible
 

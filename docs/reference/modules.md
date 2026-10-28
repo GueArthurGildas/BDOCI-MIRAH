@@ -20,6 +20,7 @@ Modules déclarés dans le registre (`ModuleServiceProvider`).
 | `notifications` | Notifications | 1.0.0 | — |
 | `operations` | Operations | 1.0.0 | — |
 | `registry` | Registry | 1.0.0 | — |
+| `reports` | Reports | 1.0.0 | — |
 | `search` | Rechercher | 1.0.0 | — |
 | `tracking` | Tracking | 1.0.0 | — |
 | `vessels` | Vessels | 1.0.0 | — |

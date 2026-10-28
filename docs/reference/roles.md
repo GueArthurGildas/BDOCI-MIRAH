@@ -36,6 +36,14 @@ Permissions accordées par défaut à chaque rôle système (l'héritage `Direct
 | `operations.view` | — | oui | oui | oui |
 | `registry.manage` | — | oui | oui | — |
 | `registry.view` | — | oui | oui | oui |
+| `reports.archive` | — | oui | oui | — |
+| `reports.export_logbook` | — | oui | oui | — |
+| `reports.export_operations` | — | oui | oui | — |
+| `reports.export_vessels` | — | oui | oui | — |
+| `reports.generate` | — | oui | oui | — |
+| `reports.manage` | — | oui | oui | — |
+| `reports.view` | — | oui | oui | — |
+| `reports.view_health` | oui | oui | oui | — |
 | `roles.manage` | oui | — | — | — |
 | `settings.manage` | oui | — | — | — |
 | `tracking.view` | — | oui | oui | oui |

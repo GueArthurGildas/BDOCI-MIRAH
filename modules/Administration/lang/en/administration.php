@@ -82,6 +82,7 @@ return [
         'registry' => 'Registry',
         'operations' => 'Operations',
         'watch' => 'Watch duty',
+        'reports' => 'Reports and archives',
     ],
     'permissions' => [
         'dashboard' => [
@@ -161,6 +162,16 @@ return [
             'view' => 'View the morning board and watch duty',
             'create' => 'Record observations, handovers and enhanced monitoring',
             'manage' => 'Plan rotations, standing instructions and watch lists',
+        ],
+        'reports' => [
+            'view' => 'View reports, exports and archives',
+            'manage' => 'Manage scheduled reports',
+            'generate' => 'Generate scheduled reports',
+            'export_operations' => 'Export operations',
+            'export_vessels' => 'Export vessels',
+            'export_logbook' => 'Export logbook entries',
+            'archive' => 'Archive old operations',
+            'view_health' => 'See the system health banner',
         ],
     ],
     'connectors' => [

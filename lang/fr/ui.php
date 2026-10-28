@@ -88,4 +88,10 @@ return [
             'message' => 'L\'application est temporairement indisponible. Réessayez plus tard.',
         ],
     ],
+
+    'health' => [
+        'title' => 'Santé du système',
+        'message' => '{1} :count source de données demande votre attention :|[2,*] :count sources de données demandent votre attention :',
+        'details' => 'Voir les connecteurs',
+    ],
 ];

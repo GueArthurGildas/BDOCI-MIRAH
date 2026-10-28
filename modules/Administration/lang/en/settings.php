@@ -30,6 +30,10 @@ return [
             'title' => 'Watch and logbook',
             'description' => 'Shift hours, number of teams and check threshold (open point E1, provisional values)',
         ],
+        'reports' => [
+            'title' => 'Reports and archiving',
+            'description' => 'Alert for generated reports and number of years before closed operations are archived (provisional values)',
+        ],
     ],
     'fields' => [
         'notifications_poll_seconds' => 'Check for new notifications every (seconds)',
@@ -49,5 +53,7 @@ return [
         'watch_shift_end_hour' => 'Logbook closing hour (1 to 23)',
         'watch_teams_count' => 'Number of teams in rotation',
         'watch_check_threshold' => 'An alert is raised beyond (checks of the same vessel)',
+        'alerts_scheduled_reports_enabled' => 'Notify recipients when a scheduled report is ready',
+        'archive_after_years' => 'Closed operations are archived after (years)',
     ],
 ];

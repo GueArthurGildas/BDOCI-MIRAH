@@ -138,6 +138,16 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `registry.priorities.update` | PUT | `/registry/source-priorities` | `registry.manage` |
 | `registry.store` | POST | `/registry/{resource}` | `registry.manage` |
 | `registry.update` | PUT | `/registry/{resource}/{id}` | `registry.manage` |
+| `reports.ai-agent.index` | GET | `/reports/ai-agent` | `reports.view` |
+| `reports.archives.index` | GET | `/reports/archives` | `reports.view` |
+| `reports.archives.run` | POST | `/reports/archives/run` | `reports.archive` |
+| `reports.documents.download` | GET | `/reports/documents/{document}` | `reports.view` |
+| `reports.exports.download` | GET | `/reports/exports/{type}` | — |
+| `reports.exports.index` | GET | `/reports/exports` | `reports.view` |
+| `reports.generate` | POST | `/reports/{scheduledReport}/generate` | `reports.generate` |
+| `reports.index` | GET | `/reports` | `reports.view` |
+| `reports.store` | POST | `/reports` | `reports.manage` |
+| `reports.update` | PUT | `/reports/{scheduledReport}` | `reports.manage` |
 | `search` | GET | `/search` | — |
 | `tracking.beacons` | GET | `/tracking/beacons` | `tracking.view` |
 | `tracking.map` | GET | `/tracking/map` | `tracking.view` |
