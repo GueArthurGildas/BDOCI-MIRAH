@@ -8,8 +8,8 @@ use App\Enums\VesselStatus;
 use App\Enums\ZoneType;
 use App\Http\Controllers\Controller;
 use App\Models\DataSource;
-use App\Models\Infraction;
 use App\Models\ExternalInspection;
+use App\Models\Infraction;
 use App\Models\License;
 use App\Models\Observation;
 use App\Models\Vessel;
@@ -45,9 +45,9 @@ class DashboardController extends Controller
     {
         return [
             ['label' => 'active_vessels', 'value' => Vessel::where('status', VesselStatus::Active)->count(), 'icon' => 'icon-anchor', 'color' => 'success'],
-            ['label' => 'expiring_licenses', 'value' => License::withStatus(LicenseStatus::Expiring)->count(), 'icon' => 'icon-file-text', 'color' => 'warning'],
+            ['label' => 'expiring_licenses', 'value' => License::withStatus(LicenseStatus::Expiring)->count(), 'icon' => 'icon-file-text', 'color' => 'warning', 'indicator' => 'expiring_licenses'],
             ['label' => 'pending_observations', 'value' => Observation::pending()->count(), 'icon' => 'icon-book', 'color' => 'info'],
-            ['label' => 'silent_beacons', 'value' => SilentBeacons::vessels()->count(), 'icon' => 'icon-radio', 'color' => 'danger'],
+            ['label' => 'silent_beacons', 'value' => SilentBeacons::vessels()->count(), 'icon' => 'icon-radio', 'color' => 'danger', 'indicator' => 'silent_beacons'],
         ];
     }
 

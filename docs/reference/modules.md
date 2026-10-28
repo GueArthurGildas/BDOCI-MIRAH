@@ -11,6 +11,7 @@ Modules déclarés dans le registre (`ModuleServiceProvider`).
 | `catches` | Catches | 1.0.0 | — |
 | `communications` | Communications | 1.0.0 | — |
 | `dashboard` | Dashboard | 1.0.0 | — |
+| `indicators` | Indicators | 1.0.0 | — |
 | `infractions` | Infractions | 1.0.0 | — |
 | `inspections` | Inspections | 1.0.0 | — |
 | `licenses` | Licenses | 1.0.0 | — |

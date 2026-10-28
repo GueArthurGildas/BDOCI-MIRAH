@@ -152,3 +152,7 @@ Ces écarts par rapport au schéma v2 initial ont été décidés en écrivant l
 | `zones` | la colonne JSON `geometry` est conservée et la colonne `geom` (`geometry(Geometry, 4326)`, index GiST) est alimentée par un déclencheur | la carte lit le GeoJSON ; les calculs PostGIS (zone d'une position, distance à la côte, milles par zone) lisent `geom` |
 | `beacons`, `beacon_assignments` | index uniques partiels : une seule affectation active par balise et par navire | RG05 ; `tracking_devices` reste la projection lue par la carte et l'état courant (H-3b-7) |
 | `alert_rules` | le seuil de silence de la règle est la seule source ; le réglage `alerts.beacons_silent.threshold_hours` est supprimé de la page des réglages | décision D9 (4 h par défaut, modifiable par l'Admin) |
+| `v_authorized_vessels` | ajout de `v.deleted_at IS NULL` | un navire supprimé (suppression logique) ne figure pas parmi les navires autorisés |
+| `v_expiring_licenses` | ajout de `l.expires_on >= CURRENT_DATE` | la vue du schéma incluait les licences déjà expirées (jours restants négatifs) |
+| `v_repeat_offenses`, `v_seen_never_inspected` | non créées en phase 8 | elles lisent `infraction_cases` et `observed_units` (phase 6, non livrée) ; une vue dépendante empêcherait aussi le remplacement de `infractions` |
+| `vessel_current_states` | `status_light` est stockée et recalculée avec les autres faits par `VesselStateBuilder` (action, commande horaire `vessels:rebuild-state`) ; la fiche navire la recalcule en direct | règles H-8-1 |

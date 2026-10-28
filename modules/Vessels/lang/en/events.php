@@ -13,4 +13,6 @@ return [
     'identifier_added' => 'Identifier :type :value added to :name.',
     'actor_added' => 'Actor :role of :name: :holder.',
     'listed' => 'Vessel :name added to list :list.',
+    'infraction_recorded' => 'Infraction :reference recorded.',
+    'mission_assigned' => 'Vessel engaged in mission :reference.',
 ];

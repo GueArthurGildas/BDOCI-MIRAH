@@ -106,7 +106,7 @@ Nom de la spécification (v1, français) → nom technique (v2, anglais) → sit
 | `agent` | `agents` | créé (phase 2) |
 | `habilitation` | `accreditations` | créé (phase 2) |
 | `evenement_navire` | `vessel_events` | créé (phase 1) |
-| `etat_courant_navire` | `vessel_current_states` | créé (phase 1) |
+| `etat_courant_navire` | `vessel_current_states` | créé (phase 1), alimenté en entier par `VesselStateBuilder` (statut à feux, infractions ouvertes, vérifications, suivi renforcé, avarie ; phase 8) |
 | `etat_connecteur` | `data_sources` | livré (phase 7) : `code`, `mode`, `indicator_status`, `last_error`, `is_stale` (voir CONVENTIONS, point 9 et section 11) |
 | `journal_synchro` | `data_source_syncs` | existe |
 | `rejet_import` | `data_source_rejections` | existe |
@@ -325,5 +325,7 @@ Nom de la spécification (v1, français) → nom technique (v2, anglais) → sit
 | `users` | `users` | étendue |
 | `vessels` | `vessels` | étendue (phase 2) |
 | `zones` | `zones` | géométrie JSON conservée, colonne PostGIS `geom` synchronisée (phase 3b) |
+
+Vues calculées (phase 8, migration `2026_11_10_100000`) : `v_authorized_vessels`, `v_morning_board`, `v_expiring_licenses`, `v_vessel_timeline` ; `v_repeat_offenses` et `v_seen_never_inspected` attendent la phase 6 (`infraction_cases`, `observed_units`).
 
 Tables du framework (hors périmètre de ce glossaire) : `migrations`, `cache`, `cache_locks`, `jobs`, `job_batches`, `failed_jobs`, `sessions`, `password_reset_tokens`.

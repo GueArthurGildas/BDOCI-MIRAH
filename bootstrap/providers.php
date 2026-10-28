@@ -6,6 +6,7 @@ use Modules\Auth\Providers\AuthServiceProvider;
 use Modules\Catches\Providers\CatchesServiceProvider;
 use Modules\Communications\Providers\CommunicationsServiceProvider;
 use Modules\Dashboard\Providers\DashboardServiceProvider;
+use Modules\Indicators\Providers\IndicatorsServiceProvider;
 use Modules\Infractions\Providers\InfractionsServiceProvider;
 use Modules\Inspections\Providers\InspectionsServiceProvider;
 use Modules\Licenses\Providers\LicensesServiceProvider;
@@ -46,4 +47,5 @@ return [
     VesselsServiceProvider::class,
     VmsServiceProvider::class,
     WatchServiceProvider::class,
+    IndicatorsServiceProvider::class,
 ];

@@ -5,48 +5,53 @@ namespace Modules\Vessels\Support;
 use App\Models\Vessel;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 final class VesselTimeline
 {
-    /** @return Collection<int, array{date: Carbon, icon: string, color: string, title: string, description: ?string}> */
-    public static function for(Vessel $vessel): Collection
+    private const LIMIT = 200;
+
+    private const ICONS = [
+        'vessels' => ['icon-anchor', 'primary'],
+        'licenses' => ['icon-file-text', 'primary'],
+        'tracking' => ['icon-radio', 'warning'],
+        'vms' => ['icon-radio', 'warning'],
+        'logbook' => ['icon-book', 'info'],
+        'watch' => ['icon-eye', 'info'],
+        'operations' => ['icon-clipboard', 'info'],
+        'movements' => ['icon-navigation', 'info'],
+        'inspections' => ['icon-check-square', 'success'],
+        'infractions' => ['icon-alert-triangle', 'danger'],
+        'missions' => ['icon-flag', 'success'],
+        'communications' => ['icon-mail', 'default'],
+        'reports' => ['icon-bar-chart-2', 'default'],
+    ];
+
+    /** @return Collection<int, array{date: Carbon, module: string, icon: string, color: string, title: string}> */
+    public static function for(Vessel $vessel, ?string $module = null): Collection
     {
-        return collect()
-            ->concat($vessel->licenses->map(fn ($license) => self::entry(
-                $license->issued_on ?? $license->created_at, 'icon-file-text', 'primary',
-                __('vessels::vessels.timeline.license', ['number' => $license->number]),
-            )))
-            ->concat($vessel->movements->map(fn ($movement) => self::entry(
-                $movement->occurred_at, 'icon-navigation', 'info',
-                __('vessels::vessels.timeline.movement', ['direction' => __($movement->direction->label()), 'port' => $movement->port->name]),
-                $movement->reason,
-            )))
-            ->concat($vessel->observations->map(fn ($observation) => self::entry(
-                $observation->observed_at, 'icon-eye', $observation->level->color(),
-                __('vessels::vessels.timeline.observation', ['level' => __($observation->level->label())]),
-                $observation->description,
-            )))
-            ->concat($vessel->externalInspections->filter->started_at->map(fn ($inspection) => self::entry(
-                $inspection->started_at, 'icon-check-square', $inspection->resultCase()?->color() ?? 'info',
-                __('vessels::vessels.timeline.inspection', ['result' => $inspection->resultLabel()]),
-                $inspection->control_type,
-            )))
-            ->concat($vessel->infractions->map(fn ($infraction) => self::entry(
-                $infraction->detected_at, 'icon-alert-triangle', 'danger',
-                __('vessels::vessels.timeline.infraction', ['reference' => $infraction->reference]),
-                $infraction->type->name,
-            )))
-            ->concat($vessel->missions->map(fn ($mission) => self::entry(
-                $mission->starts_at, 'icon-flag', 'success',
-                __('vessels::vessels.timeline.mission', ['reference' => $mission->reference]),
-                $mission->objective,
-            )))
-            ->sortByDesc('date')
-            ->values();
+        return DB::table('v_vessel_timeline')
+            ->where('vessel_id', $vessel->id)
+            ->when($module, fn ($query, $module) => $query->where('module', $module))
+            ->orderByDesc('occurred_at')
+            ->limit(self::LIMIT)
+            ->get()
+            ->map(function (object $event) {
+                [$icon, $color] = self::ICONS[$event->module] ?? ['icon-activity', 'default'];
+
+                return [
+                    'date' => Carbon::parse($event->occurred_at),
+                    'module' => $event->module,
+                    'icon' => $icon,
+                    'color' => $color,
+                    'title' => __($event->summary_key, json_decode($event->summary_params ?? '[]', true) ?: []),
+                ];
+            });
     }
 
-    private static function entry(Carbon $date, string $icon, string $color, string $title, ?string $description = null): array
+    /** @return Collection<int, string> */
+    public static function modulesOf(Vessel $vessel): Collection
     {
-        return compact('date', 'icon', 'color', 'title', 'description');
+        return DB::table('v_vessel_timeline')->where('vessel_id', $vessel->id)->distinct()->orderBy('module')->pluck('module');
     }
 }

@@ -507,4 +507,10 @@ return [
         'incompatible' => 'Incompatible',
         'to_complete' => 'To complete',
     ],
+    'vessel_status_light' => [
+        'compliant' => 'Compliant',
+        'to_watch' => 'To watch',
+        'suspect' => 'Suspect',
+        'in_violation' => 'In violation',
+    ],
 ];

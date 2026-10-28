@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 #[Fillable([
@@ -267,5 +268,35 @@ class Vessel extends Model
     public function missions(): BelongsToMany
     {
         return $this->belongsToMany(Mission::class)->latest('starts_at');
+    }
+
+    public function watchEntries(): HasMany
+    {
+        return $this->hasMany(WatchEntry::class)->latest('started_at');
+    }
+
+    public function alerts(): HasMany
+    {
+        return $this->hasMany(Alert::class)->latest('triggered_at');
+    }
+
+    public function sentMessages(): HasMany
+    {
+        return $this->hasMany(SentMessage::class)->latest('sent_at');
+    }
+
+    public function internalNotes(): HasMany
+    {
+        return $this->hasMany(InternalNote::class)->latest('id');
+    }
+
+    public function licenseDocuments(): HasMany
+    {
+        return $this->hasMany(LicenseDocument::class);
+    }
+
+    public function comments(): MorphMany
+    {
+        return $this->morphMany(Comment::class, 'object')->latest('created_at');
     }
 }

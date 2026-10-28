@@ -18,6 +18,7 @@ Permissions accordées par défaut à chaque rôle système (l'héritage `Direct
 | `connectors.sync` | oui | — | — | — |
 | `connectors.view` | oui | oui | oui | — |
 | `dashboard.view` | oui | oui | oui | oui |
+| `indicators.view` | — | oui | oui | — |
 | `infractions.manage` | — | oui | oui | — |
 | `infractions.view` | — | oui | oui | oui |
 | `inspections.view` | — | oui | oui | oui |

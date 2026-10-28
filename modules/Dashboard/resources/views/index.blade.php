@@ -5,13 +5,25 @@
         <div class="row">
             @foreach ($stats as $stat)
                 <div class="col-xl-3 col-md-6">
-                    <x-ui.stat-card
-                        :label="__('dashboard::dashboard.stats.'.$stat['label'])"
-                        :value="Number::format($stat['value'])"
-                        :icon="$stat['icon']"
-                        :color="$stat['color']"
-                        :footer="__('ui.updated_at', ['time' => $now->isoFormat('LT')])"
-                    />
+                    @if (isset($stat['indicator']) && Route::has('indicators.show') && auth()->user()->can(App\Support\Authorization\Permission::IndicatorsView->value))
+                        <a href="{{ route('indicators.show', $stat['indicator']) }}">
+                            <x-ui.stat-card
+                                :label="__('dashboard::dashboard.stats.'.$stat['label'])"
+                                :value="Number::format($stat['value'])"
+                                :icon="$stat['icon']"
+                                :color="$stat['color']"
+                                :footer="__('ui.updated_at', ['time' => $now->isoFormat('LT')])"
+                            />
+                        </a>
+                    @else
+                        <x-ui.stat-card
+                            :label="__('dashboard::dashboard.stats.'.$stat['label'])"
+                            :value="Number::format($stat['value'])"
+                            :icon="$stat['icon']"
+                            :color="$stat['color']"
+                            :footer="__('ui.updated_at', ['time' => $now->isoFormat('LT')])"
+                        />
+                    @endif
                 </div>
             @endforeach
         </div>

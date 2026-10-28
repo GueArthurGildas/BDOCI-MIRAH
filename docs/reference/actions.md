@@ -18,6 +18,7 @@
 | `connectors.sync` | `administration` | `update` | Synchroniser les connecteurs |
 | `connectors.view` | `administration` | `view` | Consulter les connecteurs |
 | `dashboard.view` | `dashboard` | `view` | Consulter le tableau de bord |
+| `indicators.view` | `indicators` | `view` | Consulter la vue flotte, les indicateurs et leur détail |
 | `infractions.manage` | `infractions` | `update` | Gérer les infractions |
 | `infractions.view` | `infractions` | `view` | Consulter les infractions |
 | `inspections.view` | `inspections` | `view` | Consulter les inspections |

@@ -3178,7 +3178,7 @@ CREATE INDEX patrol_tracks_geometry_gist ON patrol_tracks USING gist (geometry);
 CREATE VIEW v_authorized_vessels AS
 SELECT v.id AS vessel_id, v.name, l.number, l.expires_on
 FROM vessels v JOIN licenses l ON l.vessel_id = v.id
-WHERE l.status = 'active' AND l.expires_on >= CURRENT_DATE;
+WHERE l.status = 'active' AND l.expires_on >= CURRENT_DATE AND v.deleted_at IS NULL;
 
 CREATE VIEW v_morning_board AS
 SELECT w.id, w.vessel_id, v.name, w.origin, w.started_at, (CURRENT_DATE - w.started_at::date) AS age_days
@@ -3188,7 +3188,7 @@ WHERE w.status = 'open';
 CREATE VIEW v_expiring_licenses AS
 SELECT l.id, l.vessel_id, l.expires_on, (l.expires_on - CURRENT_DATE) AS days_left
 FROM licenses l
-WHERE l.status = 'active' AND l.expires_on <= CURRENT_DATE + 90;
+WHERE l.status = 'active' AND l.expires_on >= CURRENT_DATE AND l.expires_on <= CURRENT_DATE + 90;
 
 CREATE VIEW v_vessel_timeline AS
 SELECT e.vessel_id, e.occurred_at, m.code AS module, e.type, e.summary_key, e.summary_params

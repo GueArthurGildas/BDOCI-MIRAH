@@ -85,6 +85,7 @@ return [
         'reports' => 'Reports and archives',
         'mrep' => 'MREP mirror (DPEP)',
         'vms' => 'Beacons, failures and ERS',
+        'indicators' => 'Indicators and fleet view',
     ],
     'permissions' => [
         'dashboard' => [
@@ -189,6 +190,9 @@ return [
             'view' => 'View beacons, failures and ERS declarations',
             'create' => 'Assign beacons, declare failures and record ERS declarations',
             'manage' => 'Manage beacons, installers, obligations, technical stops and cessation orders',
+        ],
+        'indicators' => [
+            'view' => 'View the fleet view, indicators and their detail',
         ],
     ],
 

@@ -9,7 +9,14 @@ use App\Models\ExternalList;
 use App\Models\LegalEntity;
 use App\Models\Person;
 use App\Models\Vessel;
+use App\Queries\OpenInfractionCases;
+use App\Queries\VesselMissions;
 use App\Support\Actions\ActionRunner;
+use App\Support\Authorization\Permission;
+use App\Support\Vessels\StatusLight;
+use App\Support\Vessels\VesselIndicators;
+use App\Support\Vessels\VigilanceScore;
+use App\Support\Vms\ThemisLink;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -47,8 +54,10 @@ class VesselController extends Controller
         return view('vessels::index', compact('vessels', 'filters'));
     }
 
-    public function show(Vessel $vessel): View
+    public function show(Request $request, Vessel $vessel): View
     {
+        $timelineModule = $request->validate(['module' => ['nullable', 'string', 'max:30'], 'tab' => ['nullable', 'string', 'max:30']]);
+
         $vessel->load([
             'licenses',
             'trackingDevices',
@@ -56,9 +65,15 @@ class VesselController extends Controller
             'movements.port',
             'observations.author',
             'externalInspections.port',
-            'infractions.type',
             'catchDeclarations.species',
-            'missions',
+            'currentState',
+            'eezDeclarations',
+            'watchEntries',
+            'alerts.zone',
+            'sentMessages',
+            'internalNotes',
+            'comments.author',
+            'licenseDocuments.document',
             'flagCountry',
             'homePort',
             'vesselType',
@@ -71,10 +86,23 @@ class VesselController extends Controller
             'externalLists.institution',
         ]);
 
+        $vessel->setRelation('infractions', OpenInfractionCases::forVessel($vessel->id));
+        $vessel->setRelation('missions', VesselMissions::forVessel($vessel->id));
+
+        $indicators = VesselIndicators::for($vessel);
+
         return view('vessels::show', [
             'vessel' => $vessel,
+            'tabs' => $this->tabs(),
+            'activeTab' => $timelineModule['tab'] ?? null,
+            'assessment' => StatusLight::assess($indicators->facts),
+            'indicators' => $indicators,
+            'score' => VigilanceScore::compute($indicators),
+            'themisUrl' => app(ThemisLink::class)->url($vessel),
+            'timelineModule' => $timelineModule['module'] ?? null,
+            'timelineModules' => VesselTimeline::modulesOf($vessel),
             'track' => $vessel->positions()->latest('recorded_at')->limit(self::TRACK_LENGTH)->get(),
-            'timeline' => VesselTimeline::for($vessel),
+            'timeline' => VesselTimeline::for($vessel, $timelineModule['module'] ?? null),
             'legalEntities' => LegalEntity::orderBy('name')->pluck('name', 'id'),
             'people' => Person::orderBy('name')->get()->pluck('full_name', 'id'),
             'externalLists' => ExternalList::orderBy('label')->pluck('label', 'id'),
@@ -103,5 +131,27 @@ class VesselController extends Controller
         $actions->run(UpdateVessel::class, $request->user(), ['vessel_id' => $vessel->id, 'attributes' => $request->validated()]);
 
         return to_route('vessels.show', $vessel)->with('status', __('vessels::vessels.updated'));
+    }
+
+    /** @return array<int, string> */
+    private function tabs(): array
+    {
+        $gated = [
+            'indicators' => Permission::IndicatorsView,
+            'licenses' => Permission::LicensesView,
+            'devices' => Permission::TrackingView,
+            'alerts' => Permission::TrackingView,
+            'eez' => Permission::MovementsView,
+            'watch' => Permission::WatchView,
+            'inspections' => Permission::InspectionsView,
+            'infractions' => Permission::InfractionsView,
+            'communications' => Permission::CommunicationsView,
+            'documents' => Permission::LicensesView,
+        ];
+
+        return collect(['indicators', 'identity', 'identifiers', 'actors', 'sources', 'licenses', 'devices', 'alerts', 'movements', 'eez', 'watch', 'observations', 'inspections', 'infractions', 'catches', 'missions', 'communications', 'documents', 'comments', 'timeline'])
+            ->filter(fn (string $tab) => ! isset($gated[$tab]) || auth()->user()->can($gated[$tab]->value))
+            ->values()
+            ->all();
     }
 }

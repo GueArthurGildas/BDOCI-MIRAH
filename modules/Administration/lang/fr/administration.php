@@ -85,6 +85,7 @@ return [
         'reports' => 'Rapports et archives',
         'mrep' => 'Miroir MREP (DPEP)',
         'vms' => 'Balises, avaries et ERS',
+        'indicators' => 'Indicateurs et vue flotte',
     ],
     'permissions' => [
         'dashboard' => [
@@ -189,6 +190,9 @@ return [
             'view' => 'Voir les balises, avaries et déclarations ERS',
             'create' => 'Affecter des balises, déclarer des avaries et saisir des déclarations ERS',
             'manage' => 'Gérer balises, installateurs, obligations, arrêts techniques et ordres de cessation',
+        ],
+        'indicators' => [
+            'view' => 'Consulter la vue flotte, les indicateurs et leur détail',
         ],
     ],
 

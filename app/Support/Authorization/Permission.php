@@ -79,4 +79,5 @@ enum Permission: string
     case VmsView = 'vms.view';
     case VmsCreate = 'vms.create';
     case VmsManage = 'vms.manage';
+    case IndicatorsView = 'indicators.view';
 }

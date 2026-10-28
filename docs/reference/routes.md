@@ -82,6 +82,8 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `communications.templates.store` | POST | `/communications/templates` | `communications.manage_templates` |
 | `communications.templates.update` | PUT | `/communications/templates/{template}` | `communications.manage_templates` |
 | `dashboard` | GET | `/dashboard` | `dashboard.view` |
+| `fleet.index` | GET | `/fleet` | `indicators.view` |
+| `indicators.show` | GET | `/indicators/{indicator}` | `indicators.view` |
 | `infractions.index` | GET | `/infractions` | `infractions.view` |
 | `infractions.show` | GET | `/infractions/{infraction}` | `infractions.view` |
 | `infractions.update` | PATCH | `/infractions/{infraction}` | `infractions.view`, `infractions.manage` |
