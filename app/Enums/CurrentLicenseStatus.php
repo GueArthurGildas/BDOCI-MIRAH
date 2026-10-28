@@ -18,11 +18,12 @@ enum CurrentLicenseStatus: string implements HasBadge
 
     public static function fromLicense(?License $license): self
     {
-        return match ($license?->status) {
+        return match ($license?->standing) {
             null => self::NotProvided,
             LicenseStatus::Valid, LicenseStatus::Expiring => self::Active,
             LicenseStatus::Suspended => self::Suspended,
             LicenseStatus::Expired => self::Expired,
+            LicenseStatus::Revoked => self::Revoked,
         };
     }
 

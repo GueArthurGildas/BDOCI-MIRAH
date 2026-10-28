@@ -13,6 +13,7 @@ enum LicenseStatus: string implements HasBadge
     case Expiring = 'expiring';
     case Expired = 'expired';
     case Suspended = 'suspended';
+    case Revoked = 'revoked';
 
     public function color(): string
     {
@@ -21,6 +22,7 @@ enum LicenseStatus: string implements HasBadge
             self::Expiring => 'warning',
             self::Expired => 'danger',
             self::Suspended => 'default',
+            self::Revoked => 'danger',
         };
     }
 }

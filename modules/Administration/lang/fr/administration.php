@@ -97,6 +97,11 @@ return [
         'licenses' => [
             'view' => 'Consulter les licences',
             'manage' => 'Gérer les licences',
+            'import' => 'Importer et saisir des licences par lot',
+            'validate' => 'Valider des licences en lot',
+            'suspend' => 'Suspendre et lever la suspension des licences',
+            'revoke' => 'Révoquer des licences',
+            'publish' => 'Publier la liste des navires autorisés et le registre annuel',
         ],
         'tracking' => [
             'view' => 'Consulter le suivi des positions',

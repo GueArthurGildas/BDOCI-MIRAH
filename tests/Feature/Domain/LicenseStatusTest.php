@@ -15,10 +15,11 @@ class LicenseStatusTest extends TestCase
     #[Covers('RG07', 'UC03', partial: true)]
     public function test_status_is_derived_from_validity_dates_and_suspension(): void
     {
-        $this->assertSame(LicenseStatus::Valid, License::factory()->expiringIn(120)->create()->status);
-        $this->assertSame(LicenseStatus::Expiring, License::factory()->expiringIn(10)->create()->status);
-        $this->assertSame(LicenseStatus::Expired, License::factory()->expired()->create()->status);
-        $this->assertSame(LicenseStatus::Suspended, License::factory()->create(['suspended_at' => now()])->status);
+        $this->assertSame(LicenseStatus::Valid, License::factory()->expiringIn(120)->create()->standing);
+        $this->assertSame(LicenseStatus::Expiring, License::factory()->expiringIn(10)->create()->standing);
+        $this->assertSame(LicenseStatus::Expired, License::factory()->expired()->create()->standing);
+        $this->assertSame(LicenseStatus::Suspended, License::factory()->suspended()->create()->standing);
+        $this->assertSame(LicenseStatus::Revoked, License::factory()->revoked()->create()->standing);
     }
 
     #[Covers('RG01', partial: true)]

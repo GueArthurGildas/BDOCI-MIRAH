@@ -4,10 +4,11 @@ namespace App\Enums;
 
 use App\Enums\Concerns\HasTranslatedLabel;
 
-enum LicenseType: string
+enum LicenseSegment: string
 {
     use HasTranslatedLabel;
 
-    case Industrial = 'industrial';
     case Artisanal = 'artisanal';
+    case SemiIndustrial = 'semi_industrial';
+    case Industrial = 'industrial';
 }

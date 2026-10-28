@@ -39,6 +39,8 @@ class SettingsTest extends TestCase
             'archive_after_years' => 5,
             'connectors_stale_after_hours' => 24,
             'connectors_catch_variance_threshold_percent' => 10,
+            'alerts_licenses_expiring_second_warning_days' => 60,
+            'alerts_licenses_expiring_third_warning_days' => 90,
         ], $overrides);
     }
 

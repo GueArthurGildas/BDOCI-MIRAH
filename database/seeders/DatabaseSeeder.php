@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
             User::factory()->create(['email' => $email])->assignRole($role->value);
         }
 
-        $this->call([DemoDataSeeder::class, ConnectorActivitySeeder::class, Phase2DemoSeeder::class, Phase3aDemoSeeder::class, Phase4bDemoSeeder::class, Phase5DemoSeeder::class, Phase9DemoSeeder::class, Phase7DemoSeeder::class]);
+        $this->call([DemoDataSeeder::class, ConnectorActivitySeeder::class, Phase2DemoSeeder::class, Phase3aDemoSeeder::class, Phase4bDemoSeeder::class, Phase5DemoSeeder::class, Phase9DemoSeeder::class, Phase7DemoSeeder::class, Phase4aDemoSeeder::class]);
 
         app(ModuleRegistry::class)->sync();
         app(VesselStateBuilder::class)->rebuildAll();

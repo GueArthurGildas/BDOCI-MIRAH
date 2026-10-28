@@ -44,7 +44,7 @@
                         <td>{{ $vessel->type ? __($vessel->type->label()) : '—' }}</td>
                         <td>
                             @if ($vessel->currentLicense)
-                                <x-ui.status-badge :status="$vessel->currentLicense->status" />
+                                <x-ui.status-badge :status="$vessel->currentLicense->standing" />
                             @else
                                 <span class="text-muted">—</span>
                             @endif

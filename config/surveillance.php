@@ -14,6 +14,9 @@ return [
     ],
 
     'license_expiry_warning_days' => (int) env('SURVEILLANCE_LICENSE_EXPIRY_WARNING_DAYS', 30),
+    'license_expiry_second_warning_days' => (int) env('SURVEILLANCE_LICENSE_EXPIRY_SECOND_WARNING_DAYS', 60),
+    'license_expiry_third_warning_days' => (int) env('SURVEILLANCE_LICENSE_EXPIRY_THIRD_WARNING_DAYS', 90),
+    'license_suspension_max_months' => 3,
 
     'eez_position_window_hours' => (int) env('SURVEILLANCE_EEZ_POSITION_WINDOW_HOURS', 6),
     'eez_variance_tolerance_percent' => (int) env('SURVEILLANCE_EEZ_VARIANCE_TOLERANCE_PERCENT', 10),

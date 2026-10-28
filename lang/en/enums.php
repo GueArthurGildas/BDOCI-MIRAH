@@ -21,16 +21,12 @@ return [
         'inactive' => 'Inactive',
     ],
 
-    'license_type' => [
-        'industrial' => 'Industrial',
-        'artisanal' => 'Artisanal',
-    ],
-
     'license_status' => [
         'valid' => 'Valid',
         'expiring' => 'Expiring soon',
         'expired' => 'Expired',
         'suspended' => 'Suspended',
+        'revoked' => 'Revoked',
     ],
 
     'tracking_system' => [
@@ -380,5 +376,58 @@ return [
     'mirror_origin' => [
         'e_inspection' => 'e-inspection',
         'fallback_entry' => 'Fallback entry',
+    ],
+
+    'license_segment' => [
+        'artisanal' => 'Artisanal',
+        'semi_industrial' => 'Semi-industrial',
+        'industrial' => 'Industrial',
+    ],
+
+    'license_record_status' => [
+        'active' => 'Active',
+        'suspended' => 'Suspended',
+        'expired' => 'Expired',
+        'revoked' => 'Revoked',
+    ],
+
+    'license_origin' => [
+        'import' => 'File import',
+        'batch' => 'Batch entry',
+        'manual' => 'Manual entry',
+    ],
+
+    'suspension_reason' => [
+        'force_majeure' => 'Force majeure',
+        'stocks' => 'Stocks',
+        'art_105' => 'Article 105',
+        'art_106' => 'Article 106',
+        'vms_overdue' => 'VMS repair overdue',
+        'other' => 'Other',
+    ],
+
+    'fnp_registration' => [
+        'registered' => 'Registered',
+        'deregistered' => 'Deregistered',
+    ],
+
+    'fnp_deregistration_reason' => [
+        'destruction' => 'Destruction',
+        'unauthorized_modification' => 'Unauthorized modification',
+        'flag_change' => 'Flag change',
+        'inn_list' => 'IUU list',
+        'five_years_without_license' => 'Five years without a license',
+    ],
+
+    'license_import_status' => [
+        'preview' => 'Preview',
+        'valid' => 'Validated',
+        'cancelled' => 'Cancelled',
+    ],
+
+    'license_import_line_status' => [
+        'to_validate' => 'To validate',
+        'valid' => 'Validated',
+        'rejected' => 'Rejected',
     ],
 ];

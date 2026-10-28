@@ -61,5 +61,7 @@ return [
         'archive_after_years' => 'Les opérations clôturées sont archivées après (années)',
         'connectors_stale_after_hours' => 'Une source est périmée après (heures sans synchronisation)',
         'connectors_catch_variance_threshold_percent' => 'Seuil d\'écart de captures propre au CSP (pourcentage)',
+        'alerts_licenses_expiring_second_warning_days' => 'Une licence arrive à échéance (deuxième alerte, jours)',
+        'alerts_licenses_expiring_third_warning_days' => 'Une licence arrive à échéance (troisième alerte, jours)',
     ],
 ];

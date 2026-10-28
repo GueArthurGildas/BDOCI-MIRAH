@@ -21,7 +21,12 @@
 | `infractions.manage` | `infractions` | `update` | Gérer les infractions |
 | `infractions.view` | `infractions` | `view` | Consulter les infractions |
 | `inspections.view` | `inspections` | `view` | Consulter les inspections |
+| `licenses.import` | `licenses` | `update` | Importer et saisir des licences par lot |
 | `licenses.manage` | `licenses` | `update` | Gérer les licences |
+| `licenses.publish` | `licenses` | `update` | Publier la liste des navires autorisés et le registre annuel |
+| `licenses.revoke` | `licenses` | `update` | Révoquer des licences |
+| `licenses.suspend` | `licenses` | `update` | Suspendre et lever la suspension des licences |
+| `licenses.validate` | `licenses` | `update` | Valider des licences en lot |
 | `licenses.view` | `licenses` | `view` | Consulter les licences |
 | `logbook.close` | `logbook` | `update` | Clôturer la main courante du jour |
 | `logbook.create` | `logbook` | `create` | Saisir des observations |
@@ -80,7 +85,23 @@ Actions exécutées par l'`ActionRunner` (transaction, droit, événement, état
 | `communications.send_prepared_message` | `communications.send` | `Modules\Communications\Actions\SendPreparedMessage` |
 | `communications.update_channel` | `communications.manage_dispatch` | `Modules\Communications\Actions\UpdateCommunicationChannel` |
 | `infractions.update` | `infractions.manage` | `Modules\Infractions\Actions\UpdateInfraction` |
+| `licenses.attach_document` | `licenses.manage` | `Modules\Licenses\Actions\AttachLicenseDocument` |
+| `licenses.cancel_import` | `licenses.import` | `Modules\Licenses\Actions\CancelLicenseImport` |
+| `licenses.generate_register` | `licenses.publish` | `Modules\Licenses\Actions\GenerateLicenseRegister` |
+| `licenses.import_file` | `licenses.import` | `Modules\Licenses\Actions\ImportLicenseFile` |
+| `licenses.lift_suspension` | `licenses.suspend` | `Modules\Licenses\Actions\LiftLicenseSuspension` |
+| `licenses.publish_authorized_list` | `licenses.publish` | `Modules\Licenses\Actions\PublishAuthorizedList` |
 | `licenses.record` | `licenses.manage` | `Modules\Licenses\Actions\RecordLicense` |
+| `licenses.record_external_authorization` | `licenses.manage` | `Modules\Licenses\Actions\RecordExternalAuthorization` |
+| `licenses.record_vms_certificate` | `licenses.manage` | `Modules\Licenses\Actions\RecordVmsCertificate` |
+| `licenses.revoke` | `licenses.revoke` | `Modules\Licenses\Actions\RevokeLicense` |
+| `licenses.set_fnp_status` | `licenses.manage` | `Modules\Licenses\Actions\SetFnpStatus` |
+| `licenses.start_batch` | `licenses.import` | `Modules\Licenses\Actions\StartLicenseBatch` |
+| `licenses.suspend` | `licenses.suspend` | `Modules\Licenses\Actions\SuspendLicense` |
+| `licenses.update` | `licenses.manage` | `Modules\Licenses\Actions\UpdateLicense` |
+| `licenses.update_import_line` | `licenses.import` | `Modules\Licenses\Actions\UpdateLicenseImportLine` |
+| `licenses.validate_import` | `licenses.validate` | `Modules\Licenses\Actions\ValidateLicenseImport` |
+| `licenses.validate_import_line` | `licenses.validate` | `Modules\Licenses\Actions\ValidateLicenseImportLine` |
 | `logbook.add_entry` | `logbook.create` | `Modules\Logbook\Actions\AddLogbookEntry` |
 | `logbook.close_day` | `logbook.close` | `Modules\Logbook\Actions\CloseLogbookDay` |
 | `logbook.open` | `logbook.create` | `Modules\Logbook\Actions\OpenObservation` |

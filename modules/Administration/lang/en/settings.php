@@ -61,5 +61,7 @@ return [
         'archive_after_years' => 'Closed operations are archived after (years)',
         'connectors_stale_after_hours' => 'A source is stale after (hours without synchronisation)',
         'connectors_catch_variance_threshold_percent' => 'Catch variance threshold of the CSP (percent)',
+        'alerts_licenses_expiring_second_warning_days' => 'A license expires (second alert, days)',
+        'alerts_licenses_expiring_third_warning_days' => 'A license expires (third alert, days)',
     ],
 ];

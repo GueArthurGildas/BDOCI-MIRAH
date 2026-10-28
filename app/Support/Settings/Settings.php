@@ -41,6 +41,8 @@ final class Settings
             new SettingDefinition('archive.after_years', 'surveillance.archive_after_years', SettingType::Integer, 'reports', 1, 50),
             new SettingDefinition('connectors.stale_after_hours', 'surveillance.connectors.stale_after_hours', SettingType::Integer, 'connectors', 1, 720),
             new SettingDefinition('connectors.catch_variance_threshold_percent', 'surveillance.connectors.catch_variance_threshold_percent', SettingType::Integer, 'connectors', 0, 100),
+            new SettingDefinition('alerts.licenses_expiring.second_warning_days', 'surveillance.license_expiry_second_warning_days', SettingType::Integer, 'licenses', 1, 730),
+            new SettingDefinition('alerts.licenses_expiring.third_warning_days', 'surveillance.license_expiry_third_warning_days', SettingType::Integer, 'licenses', 1, 730),
         ])->keyBy(fn (SettingDefinition $definition) => $definition->field());
     }
 

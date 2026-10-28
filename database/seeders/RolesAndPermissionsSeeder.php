@@ -13,7 +13,7 @@ use Illuminate\Database\Seeder;
 class RolesAndPermissionsSeeder extends Seeder
 {
     private const SYSTEM_GROUPS = [
-        'fnp_license_management' => [Permission::LicensesView, Permission::LicensesManage],
+        'fnp_license_management' => [Permission::LicensesView, Permission::LicensesManage, Permission::LicensesImport, Permission::LicensesValidate, Permission::LicensesPublish],
         'infraction_investigation' => [Permission::InfractionsView, Permission::InfractionsManage],
         'surveillance_opinion' => [],
         'automatic_dispatch' => [Permission::CommunicationsManageDispatch],

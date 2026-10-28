@@ -19,7 +19,7 @@ final class VesselStateBuilder
 
         return VesselCurrentState::updateOrCreate(['vessel_id' => $vesselId], [
             'license_status' => CurrentLicenseStatus::fromLicense($license),
-            'license_expires_on' => $license?->valid_until,
+            'license_expires_on' => $license?->expires_on,
             'last_position_at' => $lastPositionAt,
             'vms_silence_hours' => $vessel->installed_devices_count > 0 && $lastPositionAt !== null
                 ? round($lastPositionAt->diffInMinutes(now(), absolute: true) / 60, 2)

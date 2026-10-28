@@ -116,21 +116,21 @@ Nom de la spécification (v1, français) → nom technique (v2, anglais) → sit
 
 | Spécification | Table | Situation actuelle |
 |---|---|---|
-| `licence` | `licenses` | existe, à étendre |
-| `licence_zone` | `license_zone` | nouveau |
-| `licence_engin` | `gear_license` | nouveau |
-| `licence_espece` | `license_species` | nouveau |
-| `licence_condition` | `license_conditions` | nouveau |
-| `licence_document` | `license_documents` | nouveau |
-| `statut_fnp` | `fnp_statuses` | nouveau |
-| `suspension_licence` | `license_suspensions` | nouveau |
-| `revocation` | `license_revocations` | nouveau |
-| `certificat_compatibilite_vms` | `vms_compatibility_certificates` | nouveau |
-| `autorisation_externe` | `external_authorizations` | nouveau |
-| `import_licences` | `license_imports` | nouveau |
-| `import_licences_ligne` | `license_import_lines` | nouveau |
-| `registre_licences` | `license_registers` | nouveau |
-| `publication_liste_autorises` | `authorized_list_publications` | nouveau |
+| `licence` | `licenses` | étendue (phase 4a) |
+| `licence_zone` | `license_zone` | livrée (phase 4a) |
+| `licence_engin` | `gear_license` | livrée (phase 4a) |
+| `licence_espece` | `license_species` | livrée (phase 4a) |
+| `licence_condition` | `license_conditions` | livrée (phase 4a) |
+| `licence_document` | `license_documents` | livrée (phase 4a) |
+| `statut_fnp` | `fnp_statuses` | livrée (phase 4a) |
+| `suspension_licence` | `license_suspensions` | livrée (phase 4a) |
+| `revocation` | `license_revocations` | livrée (phase 4a) |
+| `certificat_compatibilite_vms` | `vms_compatibility_certificates` | livrée (phase 4a) |
+| `autorisation_externe` | `external_authorizations` | livrée (phase 4a) |
+| `import_licences` | `license_imports` | livrée (phase 4a) |
+| `import_licences_ligne` | `license_import_lines` | livrée (phase 4a) |
+| `registre_licences` | `license_registers` | livrée (phase 4a) |
+| `publication_liste_autorises` | `authorized_list_publications` | livrée (phase 4a) |
 
 ### M3 VMS, AIS, ERS
 

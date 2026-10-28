@@ -70,4 +70,9 @@ enum Permission: string
     case ReportsViewHealth = 'reports.view_health';
     case ConnectorsSync = 'connectors.sync';
     case MrepView = 'mrep.view';
+    case LicensesImport = 'licenses.import';
+    case LicensesValidate = 'licenses.validate';
+    case LicensesSuspend = 'licenses.suspend';
+    case LicensesRevoke = 'licenses.revoke';
+    case LicensesPublish = 'licenses.publish';
 }
