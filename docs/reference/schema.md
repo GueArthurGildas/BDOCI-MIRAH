@@ -370,7 +370,7 @@ erDiagram
         bool is_read
         timestamp read_at
         varchar relayed_by
-        int8 logbook_entry_id
+        int8 logbook_entry_id FK
         timestamp created_at
     }
     legal_entities {
@@ -707,8 +707,8 @@ erDiagram
         int8 dispatch_rule_id FK
         int8 communication_channel_id FK
         int8 vessel_id FK
-        int8 operation_id
-        int8 logbook_entry_id
+        int8 operation_id FK
+        int8 logbook_entry_id FK
         varchar recipient
         varchar subject
         text body
@@ -932,7 +932,7 @@ erDiagram
         timestamp closed_at
         int8 logbook_entry_id FK
         int8 operation_id FK
-        int8 entry_exit_alert_id
+        int8 entry_exit_alert_id FK
         int8 decided_by FK
         timestamp created_at
         timestamp updated_at
@@ -984,6 +984,7 @@ erDiagram
     eez_declarations ||--o{ entry_exit_alerts : "eez_declaration_id"
     eez_declarations ||--o{ entry_exit_links : "entry_declaration_id"
     eez_declarations ||--o{ entry_exit_links : "exit_declaration_id"
+    entry_exit_alerts ||--o{ watch_entries : "entry_exit_alert_id"
     external_lists ||--o{ external_list_vessel : "external_list_id"
     infraction_types ||--o{ infractions : "infraction_type_id"
     inspections ||--o{ infractions : "inspection_id"
@@ -993,8 +994,10 @@ erDiagram
     legal_entities ||--o{ vessel_actors : "legal_entity_id"
     logbook_days ||--o{ logbook_closings : "logbook_day_id"
     logbook_days ||--o{ logbook_entries : "logbook_day_id"
+    logbook_entries ||--o{ internal_notes : "logbook_entry_id"
     logbook_entries ||--o{ logbook_entries : "corrects_entry_id"
     logbook_entries ||--o{ logbook_entry_vessel : "logbook_entry_id"
+    logbook_entries ||--o{ sent_messages : "logbook_entry_id"
     logbook_entries ||--o{ surveillance_observations : "logbook_entry_id"
     logbook_entries ||--o{ watch_entries : "logbook_entry_id"
     message_templates ||--o{ dispatch_rules : "message_template_id"
@@ -1012,6 +1015,7 @@ erDiagram
     operations ||--o{ operation_instructions : "operation_id"
     operations ||--o{ operation_user : "operation_id"
     operations ||--o{ operation_vessel : "operation_id"
+    operations ||--o{ sent_messages : "operation_id"
     operations ||--o{ watch_entries : "operation_id"
     people ||--o{ vessel_actors : "person_id"
     permission_groups ||--o{ dispatch_rules : "editable_by_permission_group_id"
