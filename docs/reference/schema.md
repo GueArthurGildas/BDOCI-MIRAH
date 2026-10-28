@@ -740,7 +740,7 @@ erDiagram
         date planned_end_on
         date lifted_on
         int8 infraction_case_id FK
-        int8 vms_failure_id
+        int8 vms_failure_id FK
         int8 operation_id FK
         int8 proposed_by FK
         int8 decided_by FK
@@ -2416,6 +2416,7 @@ erDiagram
     vessels ||--o{ watch_entries : "vessel_id"
     vms_assessment_requests ||--o{ compatibility_assessments : "assessment_request_id"
     vms_failures ||--o{ cessation_orders : "vms_failure_id"
+    vms_failures ||--o{ license_suspensions : "vms_failure_id"
     vms_failures ||--o{ manual_position_reports : "vms_failure_id"
     vms_failures ||--o{ working_order_attestations : "vms_failure_id"
     witness_reports ||--o{ infraction_cases : "witness_report_id"
