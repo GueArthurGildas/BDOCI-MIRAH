@@ -22,6 +22,7 @@
 | `missions.manage` | `missions` | `update` | Gérer les missions |
 | `missions.view` | `missions` | `view` | Consulter les missions |
 | `movements.create` | `movements` | `create` | Saisir des mouvements |
+| `movements.declare` | `movements` | `update` | Saisir et suivre les déclarations ZEE |
 | `movements.view` | `movements` | `view` | Consulter les mouvements |
 | `roles.manage` | `administration` | `update` | Gérer les rôles |
 | `settings.manage` | `administration` | `update` | Gérer les paramètres |
@@ -40,6 +41,13 @@ Actions exécutées par l'`ActionRunner` (transaction, droit, événement, état
 | `licenses.record` | `licenses.manage` | `Modules\Licenses\Actions\RecordLicense` |
 | `logbook.open` | `logbook.create` | `Modules\Logbook\Actions\OpenObservation` |
 | `logbook.update` | `logbook.manage` | `Modules\Logbook\Actions\UpdateObservation` |
+| `movements.acknowledge_eez_declaration` | `movements.declare` | `Modules\Movements\Actions\AcknowledgeEezDeclaration` |
+| `movements.close_eez_declaration` | `movements.declare` | `Modules\Movements\Actions\CloseEezDeclaration` |
+| `movements.close_entry_exit_alert` | `movements.declare` | `Modules\Movements\Actions\CloseEntryExitAlert` |
+| `movements.explain_entry_exit_variance` | `movements.declare` | `Modules\Movements\Actions\ExplainEntryExitVariance` |
+| `movements.qualify_missed_declaration` | `movements.declare` | `Modules\Movements\Actions\QualifyMissedDeclaration` |
 | `movements.record` | `movements.create` | `Modules\Movements\Actions\RecordMovement` |
+| `movements.record_eez_declaration` | `movements.declare` | `Modules\Movements\Actions\RecordEezDeclaration` |
+| `movements.remind_missed_declaration` | `movements.declare` | `Modules\Movements\Actions\RemindMissedDeclaration` |
 | `vessels.register` | `vessels.manage` | `Modules\Vessels\Actions\RegisterVessel` |
 | `vessels.update` | `vessels.manage` | `Modules\Vessels\Actions\UpdateVessel` |

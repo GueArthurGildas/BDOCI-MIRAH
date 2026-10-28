@@ -133,3 +133,4 @@ Ces écarts par rapport au schéma v2 initial ont été décidés en écrivant l
 
 | `comments` | ajout de `kind` (nullable, varchar(40)) | classer un commentaire (note, statut, action) ; les commentaires de connecteurs en ont besoin et la colonne reste générique, sa valeur est validée par le module propriétaire |
 | `documents` | trigger `documents_frozen_guard` : un document figé refuse la modification et la suppression | la spécification annonce des PDF figés avec empreinte ; le verrou est porté par la base, comme celui de la main courante |
+| `eez_declaration_checks` | `comment` contient un code court (`silent_beacon`, `no_valid_license`...) traduit à l'affichage, pas un texte | aucun texte affiché en dur ; la colonne reste libre pour un commentaire saisi à la main |

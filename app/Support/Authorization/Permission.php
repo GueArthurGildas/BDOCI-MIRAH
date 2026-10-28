@@ -43,4 +43,5 @@ enum Permission: string
         };
     }
     case AuditView = 'audit.view';
+    case MovementsDeclare = 'movements.declare';
 }

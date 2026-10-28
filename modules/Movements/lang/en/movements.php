@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'title' => 'Entries and exits',
+    'title' => 'Port movements',
     'subtitle' => 'Port entries and exits of vessels',
     'list_title' => 'Movements',
     'create_title' => 'Record a movement',

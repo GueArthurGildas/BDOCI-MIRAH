@@ -29,6 +29,10 @@ final class Settings
             new SettingDefinition('alerts.licenses_expiring.enabled', 'surveillance.alerts.licenses_expiring.enabled', SettingType::Boolean, 'licenses'),
             new SettingDefinition('alerts.licenses_expiring.warning_days', 'surveillance.license_expiry_warning_days', SettingType::Integer, 'licenses', 1, 365),
             new SettingDefinition('alerts.licenses_expiring.cooldown_hours', 'surveillance.alerts.licenses_expiring.cooldown_hours', SettingType::Integer, 'licenses', 1, 168),
+            new SettingDefinition('alerts.eez_declarations.enabled', 'surveillance.alerts.eez_declarations.enabled', SettingType::Boolean, 'eez'),
+            new SettingDefinition('alerts.eez_declarations.position_window_hours', 'surveillance.eez_position_window_hours', SettingType::Integer, 'eez', 1, 48),
+            new SettingDefinition('alerts.eez_declarations.cooldown_hours', 'surveillance.alerts.eez_declarations.cooldown_hours', SettingType::Integer, 'eez', 1, 168),
+            new SettingDefinition('eez.variance_tolerance_percent', 'surveillance.eez_variance_tolerance_percent', SettingType::Integer, 'eez', 0, 100),
         ])->keyBy(fn (SettingDefinition $definition) => $definition->field());
     }
 

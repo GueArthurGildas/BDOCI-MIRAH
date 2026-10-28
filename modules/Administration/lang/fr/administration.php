@@ -102,6 +102,7 @@ return [
         'movements' => [
             'view' => 'Consulter les mouvements',
             'create' => 'Saisir des mouvements',
+            'declare' => 'Saisir et suivre les déclarations ZEE',
         ],
         'inspections' => [
             'view' => 'Consulter les inspections',

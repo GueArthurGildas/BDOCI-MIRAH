@@ -22,6 +22,7 @@ Permissions accordées par défaut à chaque rôle système (l'héritage `Direct
 | `missions.manage` | — | oui | oui | — |
 | `missions.view` | — | oui | oui | oui |
 | `movements.create` | — | oui | oui | oui |
+| `movements.declare` | — | oui | oui | oui |
 | `movements.view` | — | oui | oui | oui |
 | `roles.manage` | oui | — | — | — |
 | `settings.manage` | oui | — | — | — |

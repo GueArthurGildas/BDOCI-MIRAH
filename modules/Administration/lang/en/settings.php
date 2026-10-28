@@ -18,6 +18,10 @@ return [
             'title' => 'Silent beacon alert',
             'description' => 'Raised when installed beacons stop emitting',
         ],
+        'eez' => [
+            'title' => 'EEZ declarations alert',
+            'description' => 'Raised when a foreign vessel is in the EEZ without an entry declaration, and for open entry and exit alerts',
+        ],
         'licenses' => [
             'title' => 'Expiring license alert',
             'description' => 'Raised when licenses are about to expire',
@@ -33,5 +37,9 @@ return [
         'alerts_licenses_expiring_enabled' => 'Send the alert',
         'alerts_licenses_expiring_warning_days' => 'A license is expiring within (days)',
         'alerts_licenses_expiring_cooldown_hours' => 'Minimum delay between two alerts (hours)',
+        'alerts_eez_declarations_enabled' => 'Send the alert',
+        'alerts_eez_declarations_position_window_hours' => 'A position counts as recent within (hours)',
+        'alerts_eez_declarations_cooldown_hours' => 'Minimum delay between two alerts (hours)',
+        'eez_variance_tolerance_percent' => 'Accepted entry/exit catch variance (percent)',
     ],
 ];

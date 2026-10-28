@@ -132,6 +132,67 @@ erDiagram
         int8 filed_by FK
         timestamp created_at
     }
+    eez_declaration_catches {
+        int8 id PK
+        int8 eez_declaration_id FK
+        int8 species_id FK
+        numeric weight_kg
+        timestamp created_at
+        timestamp updated_at
+    }
+    eez_declaration_checks {
+        int8 id PK
+        int8 eez_declaration_id FK
+        varchar check_type
+        varchar result
+        varchar comment
+        timestamp created_at
+        timestamp updated_at
+    }
+    eez_declarations {
+        int8 id PK
+        int8 vessel_id FK
+        varchar type
+        timestamp received_at
+        int8 reception_channel_id FK
+        varchar entry_origin
+        int8 entered_by FK
+        timestamp crossed_at
+        numeric latitude
+        numeric longitude
+        varchar route
+        numeric speed
+        varchar destination
+        varchar reason
+        varchar declared_name
+        varchar declared_imo
+        varchar declared_mmsi
+        varchar declared_ircs
+        varchar declared_flag
+        varchar declared_owner
+        varchar status
+        timestamp created_at
+        timestamp updated_at
+    }
+    entry_exit_alerts {
+        int8 id PK
+        int8 vessel_id FK
+        int8 eez_declaration_id FK
+        varchar direction
+        timestamp alerted_at
+        varchar status
+        timestamp created_at
+        timestamp updated_at
+    }
+    entry_exit_links {
+        int8 id PK
+        int8 entry_declaration_id FK
+        int8 exit_declaration_id FK
+        numeric variance_kg
+        varchar explanation
+        timestamp created_at
+        timestamp updated_at
+    }
     infraction_types {
         int8 id PK
         varchar code
@@ -176,6 +237,15 @@ erDiagram
         date valid_from
         date valid_until
         timestamp suspended_at
+        timestamp created_at
+        timestamp updated_at
+    }
+    missed_declarations {
+        int8 id PK
+        int8 vessel_id FK
+        timestamp detected_at
+        int4 reminders
+        varchar qualification
         timestamp created_at
         timestamp updated_at
     }
@@ -436,6 +506,11 @@ erDiagram
     data_sources ||--o{ data_source_rejections : "data_source_id"
     data_sources ||--o{ data_source_syncs : "data_source_id"
     documents ||--o{ document_links : "document_id"
+    eez_declarations ||--o{ eez_declaration_catches : "eez_declaration_id"
+    eez_declarations ||--o{ eez_declaration_checks : "eez_declaration_id"
+    eez_declarations ||--o{ entry_exit_alerts : "eez_declaration_id"
+    eez_declarations ||--o{ entry_exit_links : "entry_declaration_id"
+    eez_declarations ||--o{ entry_exit_links : "exit_declaration_id"
     infraction_types ||--o{ infractions : "infraction_type_id"
     inspections ||--o{ infractions : "inspection_id"
     missions ||--o{ mission_user : "mission_id"
@@ -446,11 +521,13 @@ erDiagram
     permission_groups ||--o{ permission_group_user : "permission_group_id"
     ports ||--o{ inspections : "port_id"
     ports ||--o{ movements : "port_id"
+    reference_list_values ||--o{ eez_declarations : "reception_channel_id"
     reference_lists ||--o{ reference_list_values : "reference_list_id"
     roles ||--o{ permission_grants : "role_id"
     roles ||--o{ role_user : "role_id"
     roles ||--o{ roles : "parent_id"
     species ||--o{ catch_declarations : "species_id"
+    species ||--o{ eez_declaration_catches : "species_id"
     teams ||--o{ observations : "team_id"
     teams ||--o{ users : "team_id"
     tracking_devices ||--o{ positions : "tracking_device_id"
@@ -458,6 +535,7 @@ erDiagram
     users ||--o{ data_source_errors : "resolved_by"
     users ||--o{ data_source_rejections : "handled_by"
     users ||--o{ documents : "filed_by"
+    users ||--o{ eez_declarations : "entered_by"
     users ||--o{ mission_user : "user_id"
     users ||--o{ movements : "recorded_by"
     users ||--o{ observations : "author_id"
@@ -467,9 +545,12 @@ erDiagram
     users ||--o{ teams : "lead_user_id"
     users ||--o{ vessel_events : "user_id"
     vessels ||--o{ catch_declarations : "vessel_id"
+    vessels ||--o{ eez_declarations : "vessel_id"
+    vessels ||--o{ entry_exit_alerts : "vessel_id"
     vessels ||--o{ infractions : "vessel_id"
     vessels ||--o{ inspections : "vessel_id"
     vessels ||--o{ licenses : "vessel_id"
+    vessels ||--o{ missed_declarations : "vessel_id"
     vessels ||--o{ mission_vessel : "vessel_id"
     vessels ||--o{ movements : "vessel_id"
     vessels ||--o{ observations : "vessel_id"

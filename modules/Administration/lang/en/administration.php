@@ -102,6 +102,7 @@ return [
         'movements' => [
             'view' => 'View movements',
             'create' => 'Record movements',
+            'declare' => 'Record and follow EEZ declarations',
         ],
         'inspections' => [
             'view' => 'View inspections',

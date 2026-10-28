@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'title' => 'Entrées et sorties',
+    'title' => 'Mouvements portuaires',
     'subtitle' => 'Mouvements des navires dans les ports',
     'list_title' => 'Mouvements',
     'create_title' => 'Enregistrer un mouvement',

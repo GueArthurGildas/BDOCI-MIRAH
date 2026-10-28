@@ -170,12 +170,12 @@ Nom de la spécification (v1, français) → nom technique (v2, anglais) → sit
 
 | Spécification | Table | Situation actuelle |
 |---|---|---|
-| `declaration_zee` | `eez_declarations` | remplace `movements` (changement de sens) |
-| `declaration_zee_capture` | `eez_declaration_catches` | nouveau |
-| `lien_entree_sortie` | `entry_exit_links` | nouveau |
-| `verification_zee` | `eez_declaration_checks` | nouveau |
-| `non_declaration` | `missed_declarations` | nouveau |
-| `alerte_entree_sortie` | `entry_exit_alerts` | nouveau |
+| `declaration_zee` | `eez_declarations` | remplace `movements` (changement de sens) ; phase 4b livrée, `movements` reste pour les mouvements portuaires en attendant `mrep_port_calls` (phase 7) |
+| `declaration_zee_capture` | `eez_declaration_catches` | livrée (phase 4b) |
+| `lien_entree_sortie` | `entry_exit_links` | livrée (phase 4b) |
+| `verification_zee` | `eez_declaration_checks` | livrée (phase 4b) |
+| `non_declaration` | `missed_declarations` | livrée (phase 4b) |
+| `alerte_entree_sortie` | `entry_exit_alerts` | livrée (phase 4b), lue par la veille (phase 3a) |
 
 ### M5 Opérations, main courante, surveillance de quart
 

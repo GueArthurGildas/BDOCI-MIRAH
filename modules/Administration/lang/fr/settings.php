@@ -18,6 +18,10 @@ return [
             'title' => 'Alerte balises muettes',
             'description' => 'Émise lorsque des balises installées cessent d\'émettre',
         ],
+        'eez' => [
+            'title' => 'Alerte déclarations ZEE',
+            'description' => 'Émise lorsqu\'un navire étranger est en ZEE sans déclaration d\'entrée, et pour les alertes d\'entrée et de sortie ouvertes',
+        ],
         'licenses' => [
             'title' => 'Alerte licences à échéance',
             'description' => 'Émise lorsque des licences arrivent bientôt à échéance',
@@ -33,5 +37,9 @@ return [
         'alerts_licenses_expiring_enabled' => 'Envoyer l\'alerte',
         'alerts_licenses_expiring_warning_days' => 'Une licence arrive à échéance dans (jours)',
         'alerts_licenses_expiring_cooldown_hours' => 'Délai minimal entre deux alertes (heures)',
+        'alerts_eez_declarations_enabled' => 'Envoyer l\'alerte',
+        'alerts_eez_declarations_position_window_hours' => 'Une position est récente en deçà de (heures)',
+        'alerts_eez_declarations_cooldown_hours' => 'Délai minimal entre deux alertes (heures)',
+        'eez_variance_tolerance_percent' => 'Écart de captures toléré entre entrée et sortie (pourcentage)',
     ],
 ];

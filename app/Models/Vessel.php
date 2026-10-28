@@ -101,6 +101,11 @@ class Vessel extends Model
         return $this->hasMany(Movement::class)->latest('occurred_at');
     }
 
+    public function eezDeclarations(): HasMany
+    {
+        return $this->hasMany(EezDeclaration::class)->latest('received_at');
+    }
+
     public function observations(): HasMany
     {
         return $this->hasMany(Observation::class)->latest('observed_at');

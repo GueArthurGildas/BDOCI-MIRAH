@@ -27,6 +27,10 @@ class SettingsTest extends TestCase
             'alerts_licenses_expiring_enabled' => 1,
             'alerts_licenses_expiring_warning_days' => 30,
             'alerts_licenses_expiring_cooldown_hours' => 24,
+            'alerts_eez_declarations_enabled' => 1,
+            'alerts_eez_declarations_position_window_hours' => 6,
+            'alerts_eez_declarations_cooldown_hours' => 12,
+            'eez_variance_tolerance_percent' => 10,
         ], $overrides);
     }
 
