@@ -51,7 +51,7 @@
                                 <td>{{ $source->last_synced_at?->diffForHumans() ?? __('dashboard::dashboard.never') }}</td>
                                 <td class="text-end">{{ $source->open_errors_count }}</td>
                                 <td class="text-end">{{ $source->pending_rejections_count }}</td>
-                                <td><x-ui.status-badge :status="$source->status" /></td>
+                                <td><x-ui.status-badge :status="$source->indicator_status" /></td>
                             </tr>
                         @endforeach
                     </x-ui.table>

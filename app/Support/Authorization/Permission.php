@@ -60,4 +60,6 @@ enum Permission: string
     case WatchView = 'watch.view';
     case WatchCreate = 'watch.create';
     case WatchManage = 'watch.manage';
+    case ConnectorsSync = 'connectors.sync';
+    case MrepView = 'mrep.view';
 }

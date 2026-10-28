@@ -2,8 +2,8 @@
 
 namespace Modules\Search\Support;
 
+use App\Models\ExternalInspection;
 use App\Models\Infraction;
-use App\Models\Inspection;
 use App\Models\License;
 use App\Models\Mission;
 use App\Models\Observation;
@@ -38,10 +38,10 @@ final class SearchSources
                 ->limit(self::RESULTS_PER_SOURCE)->get()
                 ->map(fn (License $license) => new SearchResult($license->number, $license->vessel->name, self::url('licenses.index', ['search' => $license->number])))),
 
-            new SearchSource('inspections', 'icon-check-square', Permission::InspectionsView->value, fn (string $term) => Inspection::with('vessel')
-                ->where(fn (Builder $query) => $query->whereLike('external_reference', "%{$term}%")->orWhereHas('vessel', fn (Builder $query) => $query->search($term)))
-                ->latest('inspected_at')->limit(self::RESULTS_PER_SOURCE)->get()
-                ->map(fn (Inspection $inspection) => new SearchResult($inspection->external_reference, $inspection->vessel->name.' — '.$inspection->inspected_at->isoFormat('L'), self::url('inspections.show', $inspection)))),
+            new SearchSource('inspections', 'icon-check-square', Permission::InspectionsView->value, fn (string $term) => ExternalInspection::with('vessel')
+                ->where(fn (Builder $query) => $query->whereLike('reference', "%{$term}%")->orWhereHas('vessel', fn (Builder $query) => $query->search($term)))
+                ->latest('started_at')->limit(self::RESULTS_PER_SOURCE)->get()
+                ->map(fn (ExternalInspection $inspection) => new SearchResult($inspection->reference ?? $inspection->external_id, ($inspection->vessel?->name ?? '—').' — '.($inspection->started_at?->isoFormat('L') ?? '—'), self::url('inspections.show', $inspection)))),
 
             new SearchSource('infractions', 'icon-alert-triangle', Permission::InfractionsView->value, fn (string $term) => Infraction::with(['vessel', 'type'])
                 ->where(fn (Builder $query) => $query->whereLike('reference', "%{$term}%")->orWhereHas('vessel', fn (Builder $query) => $query->search($term)))

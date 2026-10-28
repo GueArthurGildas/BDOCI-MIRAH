@@ -82,6 +82,7 @@ return [
         'registry' => 'Registry',
         'operations' => 'Operations',
         'watch' => 'Watch duty',
+        'mrep' => 'MREP mirror (DPEP)',
     ],
     'permissions' => [
         'dashboard' => [
@@ -130,6 +131,7 @@ return [
         'connectors' => [
             'view' => 'View connectors',
             'manage' => 'Manage connectors',
+            'sync' => 'Synchronize connectors',
         ],
         'audit' => [
             'view' => 'View the audit log',
@@ -161,6 +163,9 @@ return [
             'view' => 'View the morning board and watch duty',
             'create' => 'Record observations, handovers and enhanced monitoring',
             'manage' => 'Plan rotations, standing instructions and watch lists',
+        ],
+        'mrep' => [
+            'view' => 'View DPEP, entry decisions and notifications',
         ],
     ],
     'connectors' => [
@@ -216,6 +221,24 @@ return [
         'error_resolved' => 'The error has been marked as resolved.',
         'error_reopened' => 'The error has been reopened.',
         'rejection_updated' => 'The rejected record has been updated.',
+        'mode' => 'Mode',
+        'stale' => 'Stale data',
+        'fresh' => 'Up to date',
+        'last_error' => 'Last error',
+        'synchronise' => 'Synchronise now',
+        'import_file' => 'JSON file to import',
+        'synchronised' => 'Synchronisation done: :received received, :rejected rejected.',
+        'mode_changed' => 'The connector mode has been changed.',
+        'no_connector' => 'No connector is available for this source yet; only monitoring applies.',
+        'change_mode' => 'Change mode',
+        'external_links' => 'External links',
+        'links' => [
+            'title' => 'External links',
+            'subtitle' => 'Address template per source; {id} is replaced by the external identifier of the vessel',
+            'model_url' => 'Address template',
+            'is_copy_fallback' => 'Offer to copy the identifier when no address can be opened',
+            'saved' => 'External links saved.',
+        ],
     ],
     'audit' => [
         'title' => 'Audit log',

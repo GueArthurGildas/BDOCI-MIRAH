@@ -107,18 +107,6 @@ return [
         'cancelled' => 'Annulée',
     ],
 
-    'data_source_kind' => [
-        'api' => 'Application / API',
-        'database' => 'Base de données',
-        'file' => 'Fichiers',
-    ],
-
-    'data_source_status' => [
-        'operational' => 'Opérationnelle',
-        'degraded' => 'Dégradée',
-        'down' => 'Indisponible',
-    ],
-
     'connector_error_code' => [
         'timeout' => 'Délai dépassé',
         'connection_refused' => 'Connexion refusée',
@@ -320,5 +308,61 @@ return [
     'watch_status' => [
         'open' => 'Ouvert',
         'closed' => 'Clos',
+    ],
+
+    'data_source_mode' => [
+        'api' => 'API',
+        'import' => 'Import contrôlé',
+        'scraping' => 'Scraping',
+        'direct_read' => 'Lecture directe de la base',
+    ],
+
+    'data_source_indicator' => [
+        'green' => 'Opérationnelle',
+        'orange' => 'Dégradée',
+        'red' => 'Indisponible',
+    ],
+
+    'external_link_source' => [
+        'themis' => 'THEMIS',
+        'neno' => 'NENO',
+        'e_inspection' => 'e-inspection',
+    ],
+
+    'mrep_purpose' => [
+        'lan' => 'Débarquement',
+        'trx' => 'Transbordement',
+        'pro' => 'Transformation',
+        'other' => 'Autre',
+    ],
+
+    'entry_decision' => [
+        'authorization' => 'Autorisation',
+        'refusal' => 'Refus',
+        'inspection_only' => 'Inspection seule',
+    ],
+
+    'inspection_location_type' => [
+        'port' => 'Au port',
+        'sea' => 'En mer',
+    ],
+
+    'captain_signature_status' => [
+        'signed' => 'Signé',
+        'refused' => 'Refusé',
+        'absent' => 'Capitaine absent',
+    ],
+
+    'inspection_document_type' => [
+        'license' => 'Licence',
+        'certificate' => 'Certificat',
+        'fishing_log' => 'Journal de pêche',
+        'hold_plan' => 'Plan de cale',
+        'other' => 'Autre',
+    ],
+
+    'mirror_origin' => [
+        'e_inspection' => 'e-inspection',
+        'fallback_entry' => 'Saisie de repli',
     ],
 ];

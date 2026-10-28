@@ -35,6 +35,8 @@ class SettingsTest extends TestCase
             'watch_shift_end_hour' => 18,
             'watch_teams_count' => 3,
             'watch_check_threshold' => 3,
+            'connectors_stale_after_hours' => 24,
+            'connectors_catch_variance_threshold_percent' => 10,
         ], $overrides);
     }
 

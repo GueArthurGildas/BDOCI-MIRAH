@@ -30,6 +30,10 @@ return [
             'title' => 'Surveillance de quart et main courante',
             'description' => 'Horaires du quart, nombre d\'équipes et seuil de vérifications (point ouvert E1, valeurs provisoires)',
         ],
+        'connectors' => [
+            'title' => 'Connecteurs',
+            'description' => 'Fraîcheur des données synchronisées et seuil d\'écart de captures propre au CSP (points ouverts, valeurs provisoires)',
+        ],
     ],
     'fields' => [
         'notifications_poll_seconds' => 'Vérifier les nouvelles notifications toutes les (secondes)',
@@ -49,5 +53,7 @@ return [
         'watch_shift_end_hour' => 'Heure de clôture de la main courante (1 à 23)',
         'watch_teams_count' => 'Nombre d\'équipes en rotation',
         'watch_check_threshold' => 'Une alerte est levée au-delà de (vérifications d\'un même navire)',
+        'connectors_stale_after_hours' => 'Une source est périmée après (heures sans synchronisation)',
+        'connectors_catch_variance_threshold_percent' => 'Seuil d\'écart de captures propre au CSP (pourcentage)',
     ],
 ];

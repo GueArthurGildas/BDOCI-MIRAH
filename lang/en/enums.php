@@ -107,18 +107,6 @@ return [
         'cancelled' => 'Cancelled',
     ],
 
-    'data_source_kind' => [
-        'api' => 'Application / API',
-        'database' => 'Database',
-        'file' => 'Files',
-    ],
-
-    'data_source_status' => [
-        'operational' => 'Operational',
-        'degraded' => 'Degraded',
-        'down' => 'Down',
-    ],
-
     'connector_error_code' => [
         'timeout' => 'Timeout',
         'connection_refused' => 'Connection refused',
@@ -320,5 +308,61 @@ return [
     'watch_status' => [
         'open' => 'Open',
         'closed' => 'Closed',
+    ],
+
+    'data_source_mode' => [
+        'api' => 'API',
+        'import' => 'Controlled import',
+        'scraping' => 'Scraping',
+        'direct_read' => 'Direct database read',
+    ],
+
+    'data_source_indicator' => [
+        'green' => 'Operational',
+        'orange' => 'Degraded',
+        'red' => 'Down',
+    ],
+
+    'external_link_source' => [
+        'themis' => 'THEMIS',
+        'neno' => 'NENO',
+        'e_inspection' => 'e-inspection',
+    ],
+
+    'mrep_purpose' => [
+        'lan' => 'Landing',
+        'trx' => 'Transshipment',
+        'pro' => 'Processing',
+        'other' => 'Other',
+    ],
+
+    'entry_decision' => [
+        'authorization' => 'Authorization',
+        'refusal' => 'Refusal',
+        'inspection_only' => 'Inspection only',
+    ],
+
+    'inspection_location_type' => [
+        'port' => 'In port',
+        'sea' => 'At sea',
+    ],
+
+    'captain_signature_status' => [
+        'signed' => 'Signed',
+        'refused' => 'Refused',
+        'absent' => 'Captain absent',
+    ],
+
+    'inspection_document_type' => [
+        'license' => 'License',
+        'certificate' => 'Certificate',
+        'fishing_log' => 'Fishing log',
+        'hold_plan' => 'Hold plan',
+        'other' => 'Other',
+    ],
+
+    'mirror_origin' => [
+        'e_inspection' => 'e-inspection',
+        'fallback_entry' => 'Fallback entry',
     ],
 ];

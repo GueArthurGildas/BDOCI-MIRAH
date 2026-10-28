@@ -9,7 +9,7 @@ use App\Enums\ZoneType;
 use App\Http\Controllers\Controller;
 use App\Models\DataSource;
 use App\Models\Infraction;
-use App\Models\Inspection;
+use App\Models\ExternalInspection;
 use App\Models\License;
 use App\Models\Observation;
 use App\Models\Vessel;
@@ -85,8 +85,8 @@ class DashboardController extends Controller
     private function inspectionsChart(Carbon $now): array
     {
         $months = collect(range(self::INSPECTION_HISTORY_MONTHS - 1, 0))->map(fn (int $monthsAgo) => $now->copy()->startOfMonth()->subMonths($monthsAgo));
-        $countsByMonth = Inspection::where('inspected_at', '>=', $months->first())
-            ->pluck('inspected_at')
+        $countsByMonth = ExternalInspection::where('started_at', '>=', $months->first())
+            ->pluck('started_at')
             ->countBy(fn (Carbon $date) => $date->format('Y-m'));
 
         return $this->barChart(

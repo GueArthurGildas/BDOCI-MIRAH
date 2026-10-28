@@ -82,6 +82,7 @@ return [
         'registry' => 'Référentiels',
         'operations' => 'Opérations',
         'watch' => 'Surveillance de quart',
+        'mrep' => 'Miroir MREP (DPEP)',
     ],
     'permissions' => [
         'dashboard' => [
@@ -130,6 +131,7 @@ return [
         'connectors' => [
             'view' => 'Consulter les connecteurs',
             'manage' => 'Gérer les connecteurs',
+            'sync' => 'Synchroniser les connecteurs',
         ],
         'audit' => [
             'view' => 'Consulter le journal d\'audit',
@@ -161,6 +163,9 @@ return [
             'view' => 'Consulter le tableau du matin et la surveillance de quart',
             'create' => 'Saisir des observations, relais et suivis renforcés',
             'manage' => 'Planifier les rotations, consignes permanentes et listes de veille',
+        ],
+        'mrep' => [
+            'view' => 'Consulter les DPEP, décisions d\'entrée et notifications',
         ],
     ],
     'connectors' => [
@@ -216,6 +221,24 @@ return [
         'error_resolved' => 'L\'erreur a été marquée comme résolue.',
         'error_reopened' => 'L\'erreur a été rouverte.',
         'rejection_updated' => 'L\'enregistrement rejeté a été mis à jour.',
+        'mode' => 'Mode',
+        'stale' => 'Données périmées',
+        'fresh' => 'À jour',
+        'last_error' => 'Dernière erreur',
+        'synchronise' => 'Synchroniser maintenant',
+        'import_file' => 'Fichier JSON à importer',
+        'synchronised' => 'Synchronisation terminée : :received reçus, :rejected rejetés.',
+        'mode_changed' => 'Le mode du connecteur a été modifié.',
+        'no_connector' => 'Aucun connecteur n\'est encore disponible pour cette source ; seul le suivi s\'applique.',
+        'change_mode' => 'Changer le mode',
+        'external_links' => 'Liens externes',
+        'links' => [
+            'title' => 'Liens externes',
+            'subtitle' => 'Modèle d\'adresse par source ; {id} est remplacé par l\'identifiant externe du navire',
+            'model_url' => 'Modèle d\'adresse',
+            'is_copy_fallback' => 'Proposer de copier l\'identifiant quand aucune adresse ne peut être ouverte',
+            'saved' => 'Liens externes enregistrés.',
+        ],
     ],
     'audit' => [
         'title' => 'Journal d\'audit',

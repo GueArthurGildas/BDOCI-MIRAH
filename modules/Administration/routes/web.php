@@ -7,6 +7,7 @@ use Modules\Administration\Http\Controllers\ConnectorCommentController;
 use Modules\Administration\Http\Controllers\ConnectorController;
 use Modules\Administration\Http\Controllers\ConnectorIssueController;
 use Modules\Administration\Http\Controllers\CustomFieldController;
+use Modules\Administration\Http\Controllers\ExternalLinkController;
 use Modules\Administration\Http\Controllers\GrantController;
 use Modules\Administration\Http\Controllers\GroupController;
 use Modules\Administration\Http\Controllers\ReferenceListController;
@@ -52,7 +53,12 @@ Route::middleware('auth')->prefix('administration')->name('administration.')->gr
             Route::post('errors/{error}/resolve', [ConnectorIssueController::class, 'resolveError'])->whereNumber('error')->name('errors.resolve');
             Route::post('errors/{error}/reopen', [ConnectorIssueController::class, 'reopenError'])->whereNumber('error')->name('errors.reopen');
             Route::patch('rejections/{rejection}', [ConnectorIssueController::class, 'handleRejection'])->whereNumber('rejection')->name('rejections.handle');
+            Route::patch('{dataSource}/mode', [ConnectorController::class, 'changeMode'])->whereNumber('dataSource')->name('mode');
+            Route::get('links', [ExternalLinkController::class, 'edit'])->name('links');
+            Route::put('links', [ExternalLinkController::class, 'update'])->name('links.update');
         });
+
+        Route::post('{dataSource}/sync', [ConnectorController::class, 'sync'])->can(Permission::ConnectorsSync->value)->whereNumber('dataSource')->name('connectors.sync');
     });
     Route::get('audit', AuditLogController::class)->can(Permission::AuditView->value)->name('audit');
 });

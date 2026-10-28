@@ -17,6 +17,7 @@ Modules déclarés dans le registre (`ModuleServiceProvider`).
 | `logbook` | Logbook | 1.0.0 | — |
 | `missions` | Missions | 1.0.0 | — |
 | `movements` | Movements | 1.0.0 | — |
+| `mrep` | Mrep | 1.0.0 | — |
 | `notifications` | Notifications | 1.0.0 | — |
 | `operations` | Operations | 1.0.0 | — |
 | `registry` | Registry | 1.0.0 | — |

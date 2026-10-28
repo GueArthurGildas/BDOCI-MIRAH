@@ -18,4 +18,20 @@ return [
         'from' => 'Du',
         'to' => 'Au',
     ],
+    'landings' => [
+        'title' => 'Débarquements',
+        'subtitle' => 'Débarquements lus depuis e-inspection (lecture seule), saisie de repli en secours',
+    ],
+    'transshipments' => [
+        'title' => 'Transbordements',
+        'subtitle' => 'Transbordements lus depuis e-inspection (lecture seule), saisie de repli en secours',
+    ],
+    'mirror' => [
+        'date' => 'Date',
+        'vessel' => 'Navire',
+        'port' => 'Port',
+        'partner' => 'Navire partenaire',
+        'origin' => 'Origine',
+        'lines' => 'Lignes',
+    ],
 ];

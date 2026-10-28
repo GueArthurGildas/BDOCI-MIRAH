@@ -30,7 +30,7 @@ class ConnectorActivitySeeder extends Seeder
         $adminId = User::role(Role::Admin->value)->value('id');
 
         foreach (self::OPEN_ISSUES as $key => $open) {
-            $source = DataSource::where('key', $key)->firstOrFail();
+            $source = DataSource::where('code', $key)->firstOrFail();
 
             $this->seedSyncs($source, $open['errors'] > 0);
 
@@ -75,7 +75,7 @@ class ConnectorActivitySeeder extends Seeder
         foreach ($comments as [$key, $kind, $body]) {
             Comment::factory()->create([
                 'object_type' => (new DataSource)->getMorphClass(),
-                'object_id' => DataSource::where('key', $key)->value('id'),
+                'object_id' => DataSource::where('code', $key)->value('id'),
                 'user_id' => $admin->id,
                 'kind' => $kind->value,
                 'body' => $body,

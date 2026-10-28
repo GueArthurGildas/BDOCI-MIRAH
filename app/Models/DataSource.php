@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Enums\DataSourceKind;
-use App\Enums\DataSourceStatus;
+use App\Enums\DataSourceIndicator;
+use App\Enums\DataSourceMode;
 use App\Enums\RejectionStatus;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
-#[Fillable(['key', 'name', 'kind', 'status', 'last_synced_at'])]
+#[Fillable(['code', 'name', 'mode', 'indicator_status', 'last_synced_at', 'last_error', 'is_stale'])]
 class DataSource extends Model
 {
     use HasFactory;
@@ -20,9 +20,10 @@ class DataSource extends Model
     protected function casts(): array
     {
         return [
-            'kind' => DataSourceKind::class,
-            'status' => DataSourceStatus::class,
+            'mode' => DataSourceMode::class,
+            'indicator_status' => DataSourceIndicator::class,
             'last_synced_at' => 'datetime',
+            'is_stale' => 'boolean',
         ];
     }
 

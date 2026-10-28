@@ -37,6 +37,8 @@ final class Settings
             new SettingDefinition('watch.shift_end_hour', 'surveillance.watch.shift_end_hour', SettingType::Integer, 'watch', 1, 23),
             new SettingDefinition('watch.teams_count', 'surveillance.watch.teams_count', SettingType::Integer, 'watch', 1, 10),
             new SettingDefinition('watch.check_threshold', 'surveillance.watch.check_threshold', SettingType::Integer, 'watch', 1, 20),
+            new SettingDefinition('connectors.stale_after_hours', 'surveillance.connectors.stale_after_hours', SettingType::Integer, 'connectors', 1, 720),
+            new SettingDefinition('connectors.catch_variance_threshold_percent', 'surveillance.connectors.catch_variance_threshold_percent', SettingType::Integer, 'connectors', 0, 100),
         ])->keyBy(fn (SettingDefinition $definition) => $definition->field());
     }
 

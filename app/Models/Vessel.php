@@ -237,6 +237,11 @@ class Vessel extends Model
         return $this->hasMany(Observation::class)->latest('observed_at');
     }
 
+    public function externalInspections(): HasMany
+    {
+        return $this->hasMany(ExternalInspection::class)->latest('started_at');
+    }
+
     public function inspections(): HasMany
     {
         return $this->hasMany(Inspection::class)->latest('inspected_at');

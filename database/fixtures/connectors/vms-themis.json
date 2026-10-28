@@ -1,0 +1,32 @@
+{
+  "records": [
+    {
+      "vessel_ref": "TH-100201",
+      "name": "AKWABA PECHE 1",
+      "imo": "9701201",
+      "ircs": "TUAB1",
+      "mmsi": "619001201",
+      "flag": "CI"
+    },
+    {
+      "vessel_ref": "TH-100202",
+      "name": "ALBACORA CINCO",
+      "imo": "9302312",
+      "ircs": "EAAL5",
+      "mmsi": "224301230",
+      "flag": "ES"
+    },
+    {
+      "vessel_ref": "TH-100203",
+      "name": "NOUVEAU CHALUTIER",
+      "imo": "9455512",
+      "ircs": "XXNC1",
+      "mmsi": "376000111",
+      "flag": "VC"
+    },
+    {
+      "vessel_ref": "TH-100204",
+      "name": "SANS IDENTIFIANT"
+    }
+  ]
+}

@@ -18,4 +18,20 @@ return [
         'from' => 'From',
         'to' => 'To',
     ],
+    'landings' => [
+        'title' => 'Landings',
+        'subtitle' => 'Landings read from e-inspection (read-only), with the fallback entry as a backup',
+    ],
+    'transshipments' => [
+        'title' => 'Transshipments',
+        'subtitle' => 'Transshipments read from e-inspection (read-only), with the fallback entry as a backup',
+    ],
+    'mirror' => [
+        'date' => 'Date',
+        'vessel' => 'Vessel',
+        'port' => 'Port',
+        'partner' => 'Partner vessel',
+        'origin' => 'Origin',
+        'lines' => 'Lines',
+    ],
 ];

@@ -4,11 +4,12 @@ namespace App\Enums;
 
 use App\Enums\Concerns\HasTranslatedLabel;
 
-enum DataSourceKind: string
+enum DataSourceMode: string
 {
     use HasTranslatedLabel;
 
     case Api = 'api';
-    case Database = 'database';
-    case File = 'file';
+    case Import = 'import';
+    case Scraping = 'scraping';
+    case DirectRead = 'direct_read';
 }

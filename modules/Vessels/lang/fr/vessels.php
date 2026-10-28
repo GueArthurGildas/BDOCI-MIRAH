@@ -185,6 +185,9 @@ return [
         'last_import_at' => 'Dernier import',
         'matching_status' => 'Rapprochement',
         'criterion' => 'Critère',
+        'link' => 'Lien',
+        'open' => 'Ouvrir',
+        'copy' => 'Copier l\'identifiant',
     ],
     'provenance' => [
         'title' => 'Provenance par champ',

@@ -1,0 +1,308 @@
+{
+  "records": [
+    {
+      "kind": "inspection",
+      "inspection_id": "EI-2026-0401",
+      "reference": "CSP/ABJ/2026/0401",
+      "vessel": {
+        "imo": "9302312"
+      },
+      "location": {
+        "type": "port",
+        "port": "Abidjan"
+      },
+      "started_at": "2026-10-02T08:30:00Z",
+      "ended_at": "2026-10-02T12:10:00Z",
+      "control_type": "landing_inspection",
+      "result": "minor_issues",
+      "captain_signature": "signed",
+      "copy_handed_over": true,
+      "documents": [
+        {
+          "type": "license",
+          "compliant": true
+        },
+        {
+          "type": "fishing_log",
+          "compliant": false
+        },
+        {
+          "type": "hold_plan",
+          "compliant": true
+        }
+      ],
+      "gears": [
+        {
+          "gear": "PS",
+          "mesh_mm": null,
+          "marking_compliant": true,
+          "compliant": true
+        }
+      ],
+      "catches": [
+        {
+          "species": "YFT",
+          "presentation": "WHL",
+          "declared_kg": 42000,
+          "observed_kg": 47500,
+          "net_kg": 47500,
+          "conversion_factor": 1.0
+        },
+        {
+          "species": "SKJ",
+          "presentation": "WHL",
+          "declared_kg": 30000,
+          "observed_kg": 29200,
+          "net_kg": 29200,
+          "conversion_factor": 1.0
+        }
+      ],
+      "infractions": []
+    },
+    {
+      "kind": "inspection",
+      "inspection_id": "EI-2026-0402",
+      "reference": "CSP/SPY/2026/0402",
+      "vessel": {
+        "ircs": "DTBX3"
+      },
+      "location": {
+        "type": "port",
+        "port": "San Pedro"
+      },
+      "started_at": "2026-10-09T09:00:00Z",
+      "ended_at": "2026-10-09T15:45:00Z",
+      "control_type": "landing_inspection",
+      "result": "non_compliant",
+      "captain_signature": "refused",
+      "copy_handed_over": false,
+      "documents": [
+        {
+          "type": "license",
+          "compliant": true
+        },
+        {
+          "type": "certificate",
+          "compliant": false
+        }
+      ],
+      "gears": [
+        {
+          "gear": "OTB",
+          "mesh_mm": 58.0,
+          "marking_compliant": false,
+          "compliant": false
+        }
+      ],
+      "catches": [
+        {
+          "species": "BET",
+          "presentation": "GUT",
+          "declared_kg": 15000,
+          "observed_kg": 21300,
+          "net_kg": 19360,
+          "conversion_factor": 1.1
+        }
+      ],
+      "infractions": [
+        {
+          "provision": "Loi n° 2016-554, art. 42 (maillage non réglementaire)",
+          "stamp": "SC-20261009-01",
+          "measures": "Engin saisi à titre conservatoire"
+        },
+        {
+          "provision": "Loi n° 2016-554, art. 55 (défaut de déclaration des captures)",
+          "stamp": "SC-20261009-02",
+          "measures": "Cale scellée"
+        }
+      ]
+    },
+    {
+      "kind": "inspection",
+      "inspection_id": "EI-2026-0403",
+      "reference": "CSP/MER/2026/0403",
+      "vessel": {
+        "imo": "9701201"
+      },
+      "location": {
+        "type": "sea",
+        "lat": 4.612,
+        "lon": -5.234
+      },
+      "started_at": "2026-10-14T06:15:00Z",
+      "ended_at": "2026-10-14T08:00:00Z",
+      "control_type": "at_sea_boarding",
+      "result": "compliant",
+      "captain_signature": "signed",
+      "copy_handed_over": true,
+      "documents": [
+        {
+          "type": "license",
+          "compliant": true
+        },
+        {
+          "type": "fishing_log",
+          "compliant": true
+        }
+      ],
+      "gears": [
+        {
+          "gear": "GNS",
+          "mesh_mm": 90.0,
+          "marking_compliant": true,
+          "compliant": true
+        }
+      ],
+      "catches": [
+        {
+          "species": "SAA",
+          "presentation": "WHL",
+          "declared_kg": 3200,
+          "observed_kg": 3150,
+          "net_kg": 3150,
+          "conversion_factor": 1.0
+        }
+      ],
+      "infractions": []
+    },
+    {
+      "kind": "inspection",
+      "inspection_id": "EI-2026-0404",
+      "reference": "CSP/ABJ/2026/0404",
+      "vessel": {
+        "imo": "9701202"
+      },
+      "location": {
+        "type": "port",
+        "port": "Abidjan"
+      },
+      "started_at": "2026-10-20T10:00:00Z",
+      "ended_at": "2026-10-20T11:30:00Z",
+      "control_type": "routine",
+      "result": "compliant",
+      "captain_signature": "signed",
+      "copy_handed_over": true,
+      "documents": [
+        {
+          "type": "license",
+          "compliant": true
+        }
+      ],
+      "gears": [],
+      "catches": [],
+      "infractions": []
+    },
+    {
+      "kind": "inspection",
+      "inspection_id": "EI-2026-0405",
+      "reference": "CSP/ABJ/2026/0405",
+      "vessel": {
+        "imo": "9999999"
+      },
+      "location": {
+        "type": "port",
+        "port": "Abidjan"
+      },
+      "started_at": "2026-10-22T10:00:00Z",
+      "control_type": "routine",
+      "result": "minor_issues",
+      "captain_signature": "absent",
+      "copy_handed_over": false,
+      "documents": [],
+      "gears": [],
+      "catches": [],
+      "infractions": []
+    },
+    {
+      "kind": "inspection",
+      "reference": "CSP/ABJ/2026/0406",
+      "vessel": {
+        "imo": "9701203"
+      },
+      "location": {
+        "type": "port",
+        "port": "Abidjan"
+      },
+      "started_at": "2026-10-23T10:00:00Z",
+      "result": "compliant"
+    },
+    {
+      "kind": "inspection",
+      "inspection_id": "EI-2026-0407",
+      "reference": "CSP/ABJ/2026/0407",
+      "vessel": {
+        "imo": "9701203"
+      },
+      "location": {
+        "type": "port",
+        "port": "Abidjan"
+      },
+      "started_at": "2026-10-24T10:00:00Z",
+      "result": "compliant",
+      "catches": [
+        {
+          "species": "XXX",
+          "declared_kg": 100,
+          "observed_kg": 100
+        }
+      ]
+    },
+    {
+      "kind": "landing",
+      "vessel": {
+        "imo": "9302312"
+      },
+      "port": "Abidjan",
+      "landed_at": "2026-10-02T07:00:00Z",
+      "lines": [
+        {
+          "species": "YFT",
+          "weight_kg": 47500
+        },
+        {
+          "species": "SKJ",
+          "weight_kg": 29200
+        }
+      ]
+    },
+    {
+      "kind": "landing",
+      "vessel": {
+        "ircs": "DTBX3"
+      },
+      "port": "San Pedro",
+      "landed_at": "2026-10-09T08:00:00Z",
+      "lines": [
+        {
+          "species": "BET",
+          "weight_kg": 21300
+        }
+      ]
+    },
+    {
+      "kind": "landing",
+      "vessel": {
+        "imo": "0000000"
+      },
+      "port": "Abidjan",
+      "landed_at": "2026-10-10T08:00:00Z",
+      "lines": []
+    },
+    {
+      "kind": "transshipment",
+      "vessel": {
+        "mmsi": "412345670"
+      },
+      "partner": {
+        "imo": "9302312"
+      },
+      "transshipped_at": "2026-09-28T14:00:00Z",
+      "lines": [
+        {
+          "species": "SKJ",
+          "weight_kg": 8000
+        }
+      ]
+    }
+  ]
+}

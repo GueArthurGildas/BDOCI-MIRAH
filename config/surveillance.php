@@ -25,5 +25,10 @@ return [
         'working_days' => array_map('intval', explode(',', env('SURVEILLANCE_WATCH_WORKING_DAYS', '1,2,3,4,5,6,7'))),
     ],
 
+    'connectors' => [
+        'stale_after_hours' => (int) env('SURVEILLANCE_CONNECTORS_STALE_AFTER_HOURS', 24),
+        'catch_variance_threshold_percent' => (int) env('SURVEILLANCE_CATCH_VARIANCE_THRESHOLD_PERCENT', 10),
+    ],
+
     'flag_states' => ['CI', 'BJ', 'BZ', 'CN', 'ES', 'FR', 'GH', 'GN', 'JP', 'KR', 'LR', 'MA', 'NG', 'PA', 'PT', 'SL', 'SN', 'TG', 'TW'],
 ];

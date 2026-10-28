@@ -30,6 +30,10 @@ return [
             'title' => 'Watch and logbook',
             'description' => 'Shift hours, number of teams and check threshold (open point E1, provisional values)',
         ],
+        'connectors' => [
+            'title' => 'Connectors',
+            'description' => 'Freshness of the synchronised data and the catch variance threshold of the CSP (open points, provisional values)',
+        ],
     ],
     'fields' => [
         'notifications_poll_seconds' => 'Check for new notifications every (seconds)',
@@ -49,5 +53,7 @@ return [
         'watch_shift_end_hour' => 'Logbook closing hour (1 to 23)',
         'watch_teams_count' => 'Number of teams in rotation',
         'watch_check_threshold' => 'An alert is raised beyond (checks of the same vessel)',
+        'connectors_stale_after_hours' => 'A source is stale after (hours without synchronisation)',
+        'connectors_catch_variance_threshold_percent' => 'Catch variance threshold of the CSP (percent)',
     ],
 ];

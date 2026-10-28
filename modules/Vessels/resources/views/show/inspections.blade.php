@@ -7,13 +7,13 @@
             <th>{{ __('vessels::vessels.columns.port') }}</th>
             <th>{{ __('vessels::vessels.columns.result') }}</th>
         </x-slot:head>
-        @forelse ($vessel->inspections as $inspection)
+        @forelse ($vessel->externalInspections as $inspection)
             <tr>
-                <td>{{ $inspection->external_reference }}</td>
-                <td>{{ $inspection->inspected_at->isoFormat('L') }}</td>
-                <td>{{ __($inspection->type->label()) }}</td>
+                <td><a href="{{ route('inspections.show', $inspection) }}">{{ $inspection->reference ?? $inspection->external_id }}</a></td>
+                <td>{{ $inspection->started_at?->isoFormat('L') ?? '—' }}</td>
+                <td>{{ $inspection->control_type ?? '—' }}</td>
                 <td>{{ $inspection->port?->name ?? '—' }}</td>
-                <td><x-ui.status-badge :status="$inspection->result" /></td>
+                <td>{{ $inspection->resultLabel() }}</td>
             </tr>
         @empty
             <x-ui.empty-row colspan="5" />

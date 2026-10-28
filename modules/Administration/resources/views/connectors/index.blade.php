@@ -2,12 +2,16 @@
     <x-ui.page-header :title="__('administration::administration.connectors.title')" :subtitle="__('administration::administration.connectors.subtitle')" />
 
     <div class="page-body">
+        @can(App\Support\Authorization\Permission::ConnectorsManage->value)
+            <p><a href="{{ route('administration.connectors.links') }}" class="btn btn-default btn-sm"><i class="feather icon-link"></i> {{ __('administration::administration.connectors.external_links') }}</a></p>
+        @endcan
         <div class="row">
             @foreach ($dataSources as $source)
                 <div class="col-xl-4 col-md-6">
-                    <x-ui.card :title="$source->name" :subtitle="__($source->kind->label())">
+                    <x-ui.card :title="$source->name" :subtitle="__($source->mode->label())">
                         <x-slot:actions>
-                            <x-ui.status-badge :status="$source->status" />
+                            @if ($source->is_stale)<span class="label label-warning">{{ __('administration::administration.connectors.stale') }}</span>@endif
+                            <x-ui.status-badge :status="$source->indicator_status" />
                         </x-slot:actions>
 
                         <x-ui.detail-list>
