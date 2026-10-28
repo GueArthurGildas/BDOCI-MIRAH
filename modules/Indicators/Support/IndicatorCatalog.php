@@ -154,9 +154,9 @@ final class IndicatorCatalog
 
     private function ongoingMissions(): Collection
     {
-        return VesselMissions::ongoing()->with('vessels')->get()
-            ->flatMap(fn ($mission) => $mission->vessels->map(fn (Vessel $vessel) => new IndicatorRow(
-                $vessel, $mission->starts_at, $mission->reference.' · '.$mission->objective, __($mission->status->label()), 'missions',
+        return VesselMissions::ongoing()->with('observedUnits.vessel')->get()
+            ->flatMap(fn ($mission) => $mission->observedUnits->pluck('vessel')->filter()->unique('id')->map(fn (Vessel $vessel) => new IndicatorRow(
+                $vessel, $mission->startsAt(), $mission->code.' · '.$mission->objectives, __($mission->status->label()), 'missions',
             )));
     }
 

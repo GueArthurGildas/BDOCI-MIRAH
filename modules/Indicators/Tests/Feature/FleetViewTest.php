@@ -3,8 +3,11 @@
 namespace Modules\Indicators\Tests\Feature;
 
 use App\Enums\InfractionCaseStatus;
+use App\Enums\MissionStatus;
 use App\Models\InfractionCase;
 use App\Models\License;
+use App\Models\Mission;
+use App\Models\ObservedUnit;
 use App\Models\Position;
 use App\Models\TrackingDevice;
 use App\Models\Vessel;
@@ -46,6 +49,8 @@ class FleetViewTest extends TestCase
         Position::factory()->for($device->vessel)->create(['recorded_at' => now()->subHours(10)]);
         License::factory()->for(Vessel::factory()->create())->expiringIn(10)->create();
         InfractionCase::factory()->create(['status' => InfractionCaseStatus::Open]);
+        $mission = Mission::factory()->create(['status' => MissionStatus::InProgress]);
+        Vessel::factory()->count(2)->create()->each(fn (Vessel $vessel) => ObservedUnit::factory()->create(['mission_id' => $mission->id, 'vessel_id' => $vessel->id]));
 
         $response = $this->get('/fleet')->assertOk();
 
@@ -57,6 +62,7 @@ class FleetViewTest extends TestCase
         $this->assertSame(1, $response->viewData('tiles')->firstWhere('key', 'silent_beacons')['count']);
         $this->assertSame(1, $response->viewData('tiles')->firstWhere('key', 'expiring_licenses')['count']);
         $this->assertSame(1, $response->viewData('tiles')->firstWhere('key', 'open_infractions')['count']);
+        $this->assertSame(2, $response->viewData('tiles')->firstWhere('key', 'ongoing_missions')['count']);
     }
 
     #[Covers('UC25', partial: true)]
