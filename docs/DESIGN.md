@@ -29,7 +29,7 @@ Le thème est posé **par-dessus Adminty** : on ne modifie jamais `resources/scs
 
 ## Navigation
 
-`App\Support\Navigation\Navigation` fournit les groupes. Chaque groupe est un onglet de la barre orange ; les éléments du groupe actif sont affichés dans la sidebar. L'élément actif est celui dont la route (ou `<route sans .index>.*`) correspond à la requête. L'icône du bandeau de page est celle de l'élément actif, sauf si `icon` est passé à `<x-ui.page-header>`.
+`App\Support\Navigation\Navigation` fournit les groupes. Chaque groupe est un onglet de la barre orange ; les éléments du groupe actif sont affichés dans la sidebar, qui reste collée sous la barre orange pendant le défilement de la page et défile seule (liste des liens) quand elle dépasse la hauteur de l'écran ; sous 992 px elle devient un menu horizontal. L'élément actif est celui dont la route (ou `<route sans .index>.*`) correspond à la requête. L'icône du bandeau de page est celle de l'élément actif, sauf si `icon` est passé à `<x-ui.page-header>`.
 
 Ajouter une entrée de menu se fait dans la classe `Navigation` (via le fournisseur du module), jamais dans les vues. Les textes passent par `lang/{en,fr}/ui.php` ou `modules/*/lang`.
 
