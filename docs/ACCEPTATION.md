@@ -12,7 +12,7 @@ Cette matrice relie chaque **cas d'usage** (UC01 à UC29) et chaque **règle de 
 
 Le statut de la colonne de droite est écrit à la main et peut dater ; le statut calculé à partir des tests est dans `docs/reference/acceptance.md`.
 
-Les phases sont celles de `docs/PLAN_REFONTE.md`, section 4. Aucun cas n'est « fait » à ce jour : le modèle actuel est une version simplifiée de la cible.
+Les phases sont celles de `docs/PLAN_REFONTE.md`. L'état de couverture par cas est dans `docs/reference/acceptance.md` (généré à partir des tests).
 
 ---
 

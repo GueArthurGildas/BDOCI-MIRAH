@@ -142,7 +142,7 @@ app/
 
 config/surveillance.php                  # seuils métier, alertes et notifications : valeurs par défaut (les réglages les surchargent)
 database/                                # migrations, factories, seeders (référentiel, données de démo, activité des connecteurs)
-docs/                                    # GUIDE, TECHNICAL, DESIGN, PLAN_REFONTE, ACCEPTATION, modèle de données, cas d'utilisation
+docs/                                    # GUIDE, TECHNICAL, DESIGN, PLAN_REFONTE, ACCEPTATION, décisions, hypothèses, schéma, référence générée
 lang/                                    # traductions partagées (ui.php, enums.php) et messages Laravel
 modules/                                 # une fonctionnalité = un module (voir ci-dessous)
 

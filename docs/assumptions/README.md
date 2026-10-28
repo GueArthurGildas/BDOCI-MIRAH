@@ -1,6 +1,6 @@
 # Hypothèses provisoires
 
-Quand une question métier reste ouverte (`docs/QUESTIONS_GILDAS.md`, section 6 du plan), la phase retient **l'option la plus raisonnable**, la consigne ici et l'isole pour qu'une réponse de Gildas se traduise par une modification locale. **Aucune hypothèse n'est une règle validée.**
+Quand une question métier reste ouverte (`docs/QUESTIONS_GILDAS.md`), la phase retient **l'option la plus raisonnable**, la consigne ici et l'isole pour qu'une réponse de Gildas se traduise par une modification locale. **Aucune hypothèse n'est une règle validée.**
 
 ## Une hypothèse, un identifiant
 

@@ -40,7 +40,7 @@ Une permission est une valeur de l'énumération `Permission` (`module.verbe`), 
 
 - Aucun texte affiché en dur : tout passe par des clés de traduction (`lang/` ou `modules/*/lang/`), y compris le résumé des événements, traduit à l'affichage.
 - Le code est en anglais ; les commentaires sont proscrits, le nommage doit se suffire.
-- Aucune règle métier n'est inventée : ce que la spécification (`database/docs/`) ne définit pas est une question ouverte dans `docs/PLAN_REFONTE.md`. Par exemple, l'état courant ne calcule ni le feu de statut, ni les infractions « ouvertes », ni le suivi renforcé.
+- Aucune règle métier n'est inventée : ce que la spécification (`database/docs/`) ne définit pas est une question ouverte dans `docs/QUESTIONS_GILDAS.md`. Par exemple, l'état courant ne calcule ni le feu de statut, ni les infractions « ouvertes », ni le suivi renforcé.
 - Aucune suppression physique des données métier. Le journal d'audit (`activity_log`) et les documents figés sont protégés par des triggers PostgreSQL.
 - Un nom de table ou de colonne suit `docs/schema/CONVENTIONS.md` ; un écart se consigne dans sa section 11.
 

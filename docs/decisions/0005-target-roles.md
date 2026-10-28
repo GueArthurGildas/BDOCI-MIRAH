@@ -22,7 +22,7 @@ Les noms de rôles sont des identifiants techniques, donc en anglais (voir 0001)
 ## Conséquences
 
 - Positives : conforme à S-004 ; les alertes métier ne sont plus envoyées à l'Admin ; seuls les administrateurs reçoivent les notifications de commentaires de connecteurs.
-- Négatives : une base déjà peuplée garderait les anciens noms de rôles (sans objet, voir 0006) ; les tests qui utilisaient l'inspecteur comme utilisateur limité utilisent maintenant l'Admin, ou un utilisateur muni d'une seule permission ; `docs/CAS_UTILISATION.md` décrit encore les anciens rôles (avertissement ajouté).
+- Négatives : une base déjà peuplée garderait les anciens noms de rôles (sans objet, voir 0006) ; les tests qui utilisaient l'inspecteur comme utilisateur limité utilisent maintenant l'Admin, ou un utilisateur muni d'une seule permission ; les documents de cadrage décrivent encore les anciens rôles.
 - Travail induit : habilitation d'inspecteur en phase 2 ; permissions de décision du Directeur en phases 4 et 6 ; restreindre le tableau de bord de l'Admin à la santé des sources en phase 9.
 
 ## Alternatives écartées

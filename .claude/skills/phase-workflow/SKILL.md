@@ -7,7 +7,7 @@ description: "Follow the refactoring plan against the BOID MIRAH specification: 
 
 ## Read first
 
-- `docs/PLAN_REFONTE.md`: phases 0 to 9, current phase, open questions. Phase 0 is done and validated; phase 1 (kernel) is in progress.
+- `docs/PLAN_REFONTE.md`: phase table, status, decisions D1 to D9, parallel execution rules. All phases are delivered; Gildas's validation is pending; open questions are in `docs/QUESTIONS_GILDAS.md` and assumptions in `docs/assumptions/`.
 - `docs/decisions/` (ADR 0001-0010): identifier language (English + glossary), PostgreSQL + PostGIS, flexible permissions, four roles (`admin`, `director`, `team_lead`, `agent`; the Admin has no business permission), reset from seeders, branch flow, validation, default thresholds, named actions.
 - Specification (Gildas): `database/docs/` (**untracked, never commit**): the specification markdown, the MCD and the MySQL schema v1. Target schema in `docs/schema/`.
 

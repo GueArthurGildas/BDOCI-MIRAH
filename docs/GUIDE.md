@@ -2,7 +2,7 @@
 
 Ce guide vous rend autonome sur le projet en une journée : installer, comprendre le vocabulaire, savoir où lire, puis réaliser les modifications courantes en suivant des recettes qui s'appuient sur du code réel.
 
-Il distingue toujours **ce qui existe** de **ce qui est la cible** décrite dans `docs/PLAN_REFONTE.md`. Quand une recette dépend d'un élément cible (action nommée, journal d'événements), elle renvoie au plan au lieu d'inventer une marche à suivre.
+Il renvoie à `docs/PLAN_REFONTE.md` pour l'état des phases. Quand une recette dépend d'un élément cible (action nommée, journal d'événements), elle renvoie au plan au lieu d'inventer une marche à suivre.
 
 | Document lié | Rôle |
 |---|---|
@@ -64,13 +64,13 @@ Le vocabulaire de la spécification (`database/docs/`) et celui du code ne se re
 |---|---|---|---|
 | **Module** | existe : un dossier `modules/<Nom>` avec ses routes, contrôleurs, vues, traductions et tests ; il ne dépend que du socle `app/` (un test le vérifie) ; déclaré dans le registre en base (`module_registry`, commande `modules:sync`) | | `app/Support/Modules/ModuleServiceProvider.php`, `docs/TECHNICAL.md` |
 | **Socle** | existe : `app/Models`, `app/Enums`, `app/Queries`, `app/Support` partagés par tous les modules | noyau de la phase 1 | `docs/TECHNICAL.md` |
-| **Navire** | existe sous forme d'une table `vessels` ; propriétaire et pavillon sont du texte | fiche unique avec identifiants multiples, sources et rapprochement (phase 2) | `app/Models/Vessel.php`, `docs/PLAN_REFONTE.md` |
+| **Navire** | une fiche unique (`vessels`) avec identifiants multiples (`vessel_identifiers`), sources et provenance par champ, file de doublons à trancher par le chef d'équipe | | `app/Models/Vessel.php`, `modules/Vessels/README.md`, `modules/Registry/README.md` |
 | **Droits** | existe : catalogue d'actions (`Permission`, `action_catalog`), rôles avec héritage, groupes, permissions limitables à une zone ou une période, résolveur branché sur les `Gate` (`app/Support/Authorization/PermissionResolver.php`) | écrans pour la portée zone et période, quand une phase l'exige | `docs/TECHNICAL.md` |
-| **Alerte** | existe : notifications en base, balise clignotante et notifications flottantes, deux alertes planifiées | alertes de la spécification avec règles et traitement (phases 3b et 5) | recette 4.2 |
+| **Alerte** | notifications en base, balise clignotante, notifications flottantes ; règles d'alerte paramétrables (`alert_rules`) pour le VMS, alertes de licence à 30/60/90 jours, alertes ZEE | | recette 4.2, `modules/Tracking/README.md` |
 | **Réglage** | existe : valeurs modifiables par l'administrateur, par-dessus `config/surveillance.php` | généralisation en seuils par module | recette 4.3 |
 | **Audit** | existe : historisation par `spatie/laravel-activitylog`, page *Journal d'audit* ; la table est inaltérable (triggers PostgreSQL), y compris pour l'Admin | table `audit_log` dédiée (plus tard) | `app/Models/Concerns/Audited.php` |
-| **Chronologie du navire** | l'affichage actuel est reconstitué par `modules/Vessels/Support/VesselTimeline.php` ; le **journal d'événements** `vessel_events` et l'**état courant** `vessel_current_states` existent (écrits par les actions, voir recette 4.9) | la vue 360° ne lira que ces deux tables (phase 8) | `app/Support/Events/VesselStateBuilder.php`, ADR 0010 |
-| **Action nommée** | existe : une classe `Action` exécutée par `ActionRunner`, qui vérifie la permission, écrit, publie l'événement, met à jour l'état courant et journalise, dans une transaction ; première action : `modules/Licenses/Actions/RecordLicense.php`. Les autres écritures passent encore par les contrôleurs, elles seront converties module par module | toutes les écritures métier | `app/Support/Actions/`, ADR 0010 |
+| **Chronologie du navire** | le **journal d'événements** `vessel_events` et l'**état courant** `vessel_current_states` (statut à feux, licence, dernière position…) sont écrits par les actions ; la vue 360° les lit via la vue `v_vessel_timeline` | | `app/Support/Events/`, `modules/Vessels/README.md` |
+| **Action nommée** | une classe `Action` exécutée par `ActionRunner` : permission, transaction, événement du navire, état courant, audit ; toutes les écritures métier des phases livrées passent par là | | `app/README.md`, recette 4.9 |
 
 Règles à connaître dès le premier jour :
 
@@ -88,11 +88,11 @@ Règles à connaître dès le premier jour :
 3. `docs/TECHNICAL.md` : sections Architecture, Anatomie d'un module, Droits d'accès, Traductions.
 4. `app/README.md` : le noyau partagé par les modules (actions, droits, notifications, réglages, documents).
 5. `docs/DESIGN.md` : avant de toucher aux vues ou au SCSS.
-6. `docs/PLAN_REFONTE.md` : sections 1 à 4, pour savoir où va le projet.
+6. `docs/PLAN_REFONTE.md` : l'état des phases et les décisions D1 à D9.
 7. `docs/ACCEPTATION.md` et `docs/reference/` : quels cas d'usage sont couverts par quels tests, et le catalogue généré du code.
 8. `docs/GLOSSAIRE.md` : quand un terme métier vous est inconnu.
 9. `docs/decisions/` : pourquoi une décision a été prise.
-10. Les documents de cadrage : `docs/CADRAGE.pdf` et `docs/CAHIER_DES_CHARGES.pdf`, puis `docs/CAS_UTILISATION.md`, qui porte un avertissement : il décrit encore les anciens rôles.
+10. Les documents de cadrage : `docs/CADRAGE.pdf` et `docs/CAHIER_DES_CHARGES.pdf`, qui décrivent encore les anciens rôles.
 11. La spécification reçue du métier, dans `database/docs/` (spécification de conception, MCD, schéma SQL v1).
 
 ---
@@ -239,12 +239,7 @@ Quand une recette change, mettez à jour le skill correspondant en même temps q
 
 ---
 
-## 5. Ce qui est à venir
+## 5. Ce qui reste à confirmer ou à brancher
 
-| Besoin | Où est la cible |
-|---|---|
-| écrans d'attribution des droits avec zone et période | phase 1 (suite), ADR 0004 |
-| rapprocher un navire, gérer ses identifiants | phase 2 |
-| main courante, opérations, tableau du matin | phase 3a |
-
-Tant que ces éléments n'existent pas, ne les simulez pas dans un module : signalez le besoin, il sera traité dans la phase correspondante.
+- Les points métier ouverts : `docs/QUESTIONS_GILDAS.md`. En attendant ses réponses, chaque choix est une hypothèse provisoire (`docs/assumptions/`, identifiant `H-<phase>-<n>`) : ne contournez pas, modifiez l'hypothèse à l'endroit indiqué par sa fiche.
+- Les sources externes (THEMIS, NENO, e-inspection, DPEP) sont alimentées par des données enregistrées tant que les accès réels ne sont pas obtenus (`modules/Administration/README.md`, `docs/assumptions/phase-7.md`).

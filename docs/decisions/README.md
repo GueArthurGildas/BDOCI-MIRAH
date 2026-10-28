@@ -2,7 +2,7 @@
 
 Chaque décision structurante du projet est consignée dans un fichier numéroté. Une ADR explique pourquoi un choix a été fait, ce qu'il implique et ce qui a été écarté, pour qu'un nouvel arrivant n'ait pas à le redécouvrir.
 
-Elles reprennent les décisions D1 à D9 du plan de refonte ([PLAN_REFONTE.md](../PLAN_REFONTE.md), section 2).
+Elles reprennent les décisions D1 à D9 du plan de refonte ([PLAN_REFONTE.md](../PLAN_REFONTE.md)).
 
 ## Index
 
