@@ -26,5 +26,26 @@
                 @endforeach
             </x-ui.table>
         </x-ui.card>
+
+        <x-ui.card :title="__('administration::administration.roles.groups_title')" :subtitle="__('administration::administration.roles.groups_subtitle')" flush>
+            <x-ui.table>
+                <x-slot:head>
+                    <th>{{ __('administration::administration.roles.group') }}</th>
+                    <th>{{ __('administration::administration.roles.permission') }}</th>
+                </x-slot:head>
+                @foreach ($groups as $group)
+                    <tr>
+                        <td class="f-w-600">{{ __($group->label()) }}</td>
+                        <td>
+                            @forelse ($group->permissions() as $permission)
+                                <span class="label label-inverse-info">{{ __('administration::administration.permissions.'.$permission->value) }}</span>
+                            @empty
+                                <span class="text-muted">{{ __('administration::administration.roles.group_pending') }}</span>
+                            @endforelse
+                        </td>
+                    </tr>
+                @endforeach
+            </x-ui.table>
+        </x-ui.card>
     </div>
 </x-layouts.app>

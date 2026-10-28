@@ -118,4 +118,25 @@ return [
         'degraded' => 'Degraded',
         'down' => 'Down',
     ],
+
+    'user_kind' => [
+        'human' => 'Person',
+        'ai_agent' => 'AI agent',
+        'system' => 'System',
+    ],
+
+    'custom_field_type' => [
+        'text' => 'Text',
+        'number' => 'Number',
+        'date' => 'Date',
+        'boolean' => 'Yes / no',
+        'list' => 'List',
+    ],
+
+    'traffic_light' => [
+        'compliant' => 'Compliant',
+        'watch' => 'Watch',
+        'suspect' => 'Suspect',
+        'infringing' => 'Infringing',
+    ],
 ];

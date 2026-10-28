@@ -13,7 +13,7 @@ class MonitoringPagesTest extends TestCase
 
     public function test_connectors_page_shows_each_data_source(): void
     {
-        $this->signInAs(Role::Supervisor);
+        $this->signInAs(Role::TeamLead);
         DataSource::factory()->create(['name' => 'e-inspection', 'rejected_count' => 3]);
 
         $this->get('/administration/connectors')->assertOk()->assertSee('e-inspection');
@@ -21,7 +21,7 @@ class MonitoringPagesTest extends TestCase
 
     public function test_sign_ins_appear_in_the_audit_log(): void
     {
-        $user = $this->signInAs(Role::Supervisor);
+        $user = $this->signInAs(Role::TeamLead);
         auth()->logout();
 
         $this->post('/login', ['email' => $user->email, 'password' => 'password']);

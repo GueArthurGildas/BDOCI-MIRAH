@@ -23,12 +23,19 @@ return [
             'is_active' => 'Account active',
             'password' => 'Password',
             'password_confirmation' => 'Password confirmation',
+            'phone' => 'Phone',
+            'whatsapp_number' => 'WhatsApp number',
+            'groups' => 'Permission groups',
             'status' => 'Status',
         ],
     ],
     'roles' => [
         'title' => 'Roles and permissions',
         'subtitle' => 'Permissions granted to each role, by module and action',
+        'groups_title' => 'Permission groups',
+        'groups_subtitle' => 'Permissions that can be attached to or detached from a user, whatever their role',
+        'group' => 'Group',
+        'group_pending' => 'Permissions are added with the relevant modules',
         'permission' => 'Permission',
     ],
     'permissions' => [
@@ -78,6 +85,22 @@ return [
         'audit' => [
             'view' => 'View the audit log',
         ],
+        'settings' => [
+            'manage' => 'Manage settings and thresholds',
+        ],
+        'reference' => [
+            'manage' => 'Manage reference lists',
+        ],
+        'ai' => [
+            'trigger' => 'Trigger the AI agent',
+            'manage' => 'Enable or disable AI agent actions',
+        ],
+    ],
+    'settings' => [
+        'title' => 'Settings',
+        'subtitle' => 'Thresholds and hours applied across the whole application',
+        'thresholds' => 'Thresholds and hours',
+        'saved' => 'Settings have been saved.',
     ],
     'connectors' => [
         'title' => 'Connectors',
@@ -109,6 +132,9 @@ return [
             'login' => 'Sign-in',
             'logout' => 'Sign-out',
             'login_failed' => 'Failed sign-in',
+            'setting_changed' => 'Setting changed',
+            'ai_action_toggled' => 'AI agent action enabled or disabled',
+            'action_executed' => 'Action executed',
             'role_changed' => 'Role changed',
         ],
         'subjects' => [

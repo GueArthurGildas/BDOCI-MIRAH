@@ -14,7 +14,7 @@ class UserAdministrationTest extends TestCase
 
     public function test_only_administrators_manage_users(): void
     {
-        $this->signInAs(Role::Supervisor);
+        $this->signInAs(Role::TeamLead);
 
         $this->get('/administration/users')->assertForbidden();
     }

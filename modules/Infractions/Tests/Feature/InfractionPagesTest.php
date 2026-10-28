@@ -29,9 +29,9 @@ class InfractionPagesTest extends TestCase
         $this->patch(route('infractions.update', $infraction), ['status' => 'closed'])->assertForbidden();
     }
 
-    public function test_supervisors_record_decisions(): void
+    public function test_team_leads_record_decisions(): void
     {
-        $this->signInAs(Role::Supervisor);
+        $this->signInAs(Role::TeamLead);
         $infraction = Infraction::factory()->create();
 
         $this->patch(route('infractions.update', $infraction), [
