@@ -58,3 +58,17 @@ La méthode actuelle (ADR [0008](decisions/0008-phase-validation.md)) interdit d
 |---|---|---|
 | D1 | Acceptez-vous que plusieurs phases indépendantes soient en cours en même temps, chacune validée séparément ? | |
 | D2 | Pouvez-vous valider plusieurs phases dans une même période (disponibilité) ? Sinon, le nombre de flux simultanés est limité à ce que vous pouvez relire. | |
+
+## E. Hypothèses retenues en attendant vos réponses
+
+Pour livrer une application complète, 74 hypothèses provisoires ont été retenues (`docs/assumptions/`, index dans le README). Chacune a une fiche (question, option retenue, alternatives, où la changer, tests concernés) : une réponse de votre part se traduit par une modification à un seul endroit. Les plus structurantes à confirmer en premier :
+
+| # | Hypothèse | Sujet |
+|---|---|---|
+| E1 | H-8-1, H-8-2 | règles du statut à feux et formule du score de vigilance (questions A1 et A2) |
+| E2 | H-4a-1 | licence retenue quand un navire en a plusieurs (question A3) |
+| E3 | H-3a-1 | équipes, jours travaillés, heure de clôture (E1 de la spécification) |
+| E4 | H-6-3, H-6-2 | nomenclature des infractions et autorisation des missions (V21) |
+| E5 | H-7-1 | accès aux sources externes : seul le jeu de données enregistré est branché |
+| E6 | H-5-1, H-5-2 | fournisseur d'e-mail et consentement WhatsApp (V10, V11) |
+| E7 | H-3b-1, H-3b-2 | positions pour la « photo » et localités à compter (V18, V20) |

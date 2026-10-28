@@ -130,6 +130,25 @@ flowchart LR
   P8 --> P9[9 Pilotage complet et agent IA]
 ```
 
+### État d'avancement (fin de la nuit du 2026-10-28)
+
+Toutes les phases sont livrées en **version fonctionnelle** : tables migrées, modèles, actions, écrans des flux principaux, données de démonstration et tests (637 tests verts). Les questions métier restées ouvertes ont été tranchées par l'option la plus raisonnable et consignées comme **hypothèses provisoires** dans `docs/assumptions/` (74 entrées, `H-<phase>-<n>`), isolées pour qu'une réponse de Gildas soit une modification locale (voir son README). Les phases ont été menées en parallèle (ADR 0012) ; la validation de Gildas reste à obtenir phase par phase.
+
+| Phase | État | Hypothèses | Lacunes connues (voir le README du module et le fichier d'hypothèses) |
+|---|---|---|---|
+| 0 | validée | — | — |
+| 1 | livrée | — | étiquettes (question A4), hiérarchie de zones |
+| 2 | livrée | H-2-1 à H-2-8 | import par fichier ou API (phase 7), recherche dans les référentiels |
+| 3a | livrée | H-3a-1 à H-3a-8 | clôture automatique de la main courante, test « suspect » |
+| 3b | livrée | H-3b-1 à H-3b-8 | départ de port avec VMS en panne, écran des captures d'écran et des anomalies d'identité |
+| 4a | livrée | H-4a-1 à H-4a-8 | champs extensibles sur les licences, circuit proposition puis décision |
+| 4b | livrée | H-4b-1 à H-4b-7 | scraping, accusés d'e-mail, sorties non déclarées |
+| 5 | livrée | H-5-1 à H-5-9 | pilote WhatsApp réel, écran d'activation de l'agent IA |
+| 6 | livrée | H-6-1 à H-6-10 | rejet d'une mesure proposée, effet automatique sur la licence |
+| 7 | livrée | H-7-1 à H-7-8 | accès réels (API, scraping, DPEP), alerte connecteur rouge |
+| 8 | livrée | H-8-1 à H-8-4 | onglets MREP et main courante, séries par période et zone |
+| 9 | livrée | H-9-1 à H-9-4 | listes et seuils par module (UC24), qualité des données, sauvegardes |
+
 ### Phase 0 — Décisions et documentation · taille S · **faite et validée**
 
 Livrables :
