@@ -24,4 +24,8 @@ enum Permission: string
     case UsersManage = 'users.manage';
     case ConnectorsView = 'connectors.view';
     case AuditView = 'audit.view';
+    case SettingsManage = 'settings.manage';
+    case ReferenceDataManage = 'reference.manage';
+    case AiTrigger = 'ai.trigger';
+    case AiActionsManage = 'ai.manage';
 }

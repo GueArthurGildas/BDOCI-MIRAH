@@ -38,9 +38,27 @@ return [
 
     'roles' => [
         'admin' => 'Administrateur',
-        'supervisor' => 'Responsable CSP',
+        'director' => 'Directeur',
+        'team_lead' => 'Chef d\'équipe',
         'surveillance_agent' => 'Agent de surveillance',
         'inspector' => 'Inspecteur',
+    ],
+
+    'permission_groups' => [
+        'license_management' => 'Gestion FNP / licences',
+        'infraction_investigation' => 'Instruction des infractions',
+        'surveillance_opinion' => 'Avis surveillance',
+        'automatic_sending' => 'Gestion des envois automatiques',
+        'ai_trigger' => 'Déclencher l\'agent IA',
+    ],
+
+    'settings' => [
+        'beacon_silence_threshold_hours' => 'Rupture d\'émission de la balise (heures)',
+        'license_expiry_warning_days' => 'Alerte avant expiration d\'une licence (jours)',
+        'verifications_before_suspect' => 'Vérifications avant passage en navire suspect',
+        'catch_discrepancy_threshold_percent' => 'Seuil d\'écart captures déclarées / constatées (%)',
+        'shift_start' => 'Début du quart',
+        'shift_end' => 'Fin du quart',
     ],
 
     'history' => [

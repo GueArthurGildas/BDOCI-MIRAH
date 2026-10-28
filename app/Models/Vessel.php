@@ -7,7 +7,11 @@ use App\Enums\VesselCategory;
 use App\Enums\VesselStatus;
 use App\Enums\VesselType;
 use App\Models\Concerns\Audited;
+use App\Models\Concerns\HasCustomFields;
+use App\Models\Concerns\HasDocuments;
 use App\Support\Localization\Countries;
+use App\Support\Settings\SettingKey;
+use App\Support\Settings\Settings;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -23,7 +27,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 ])]
 class Vessel extends Model
 {
-    use Audited, HasFactory, SoftDeletes;
+    use Audited, HasCustomFields, HasDocuments, HasFactory, SoftDeletes;
 
     protected function casts(): array
     {
@@ -47,7 +51,7 @@ class Vessel extends Model
 
         return match (true) {
             $lastEmission === null => BeaconStatus::NoData,
-            $lastEmission->lt(now()->subHours(config('surveillance.beacon_silence_threshold_hours'))) => BeaconStatus::Silent,
+            $lastEmission->lt(now()->subHours(app(Settings::class)->int(SettingKey::BeaconSilenceThresholdHours))) => BeaconStatus::Silent,
             default => BeaconStatus::Emitting,
         };
     }
@@ -59,6 +63,16 @@ class Vessel extends Model
             ->orWhereLike('registration_number', "%{$term}%")
             ->orWhereLike('imo_number', "%{$term}%")
             ->orWhereLike('call_sign', "%{$term}%")));
+    }
+
+    public function events(): HasMany
+    {
+        return $this->hasMany(VesselEvent::class)->latest('occurred_at');
+    }
+
+    public function currentState(): HasOne
+    {
+        return $this->hasOne(VesselCurrentState::class);
     }
 
     public function licenses(): HasMany

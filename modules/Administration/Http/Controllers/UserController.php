@@ -5,6 +5,7 @@ namespace Modules\Administration\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Team;
 use App\Models\User;
+use App\Support\Authorization\PermissionGroup;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -40,8 +41,8 @@ class UserController extends Controller
 
     public function store(UserRequest $request): RedirectResponse
     {
-        $user = User::create($request->safe()->except('role'));
-        $this->assignRole($user, $request->validated('role'));
+        $user = User::create($request->safe()->except(['role', 'groups']));
+        $this->assignRoles($user, $request->validated('role'), $request->validated('groups', []));
 
         return to_route('administration.users.index')->with('status', __('administration::administration.users.created'));
     }
@@ -53,26 +54,28 @@ class UserController extends Controller
 
     public function update(UserRequest $request, User $user): RedirectResponse
     {
-        $user->update(array_filter($request->safe()->except('role'), fn ($value, string $field) => $field !== 'password' || filled($value), ARRAY_FILTER_USE_BOTH));
-        $this->assignRole($user, $request->validated('role'));
+        $user->update(array_filter($request->safe()->except(['role', 'groups']), fn ($value, string $field) => $field !== 'password' || filled($value), ARRAY_FILTER_USE_BOTH));
+        $this->assignRoles($user, $request->validated('role'), $request->validated('groups', []));
 
         return to_route('administration.users.index')->with('status', __('administration::administration.users.updated'));
     }
 
-    private function assignRole(User $user, string $role): void
+    /** @param array<int, string> $groups */
+    private function assignRoles(User $user, string $role, array $groups): void
     {
+        $roles = [$role, ...array_map(fn (string $group) => PermissionGroup::from($group)->roleName(), $groups)];
         $previousRoles = $user->getRoleNames()->all();
 
-        if ($previousRoles === [$role]) {
+        if (collect($previousRoles)->sort()->values()->all() === collect($roles)->sort()->values()->all()) {
             return;
         }
 
-        $user->syncRoles([$role]);
+        $user->syncRoles($roles);
 
         activity(self::AUDIT_LOG)
             ->performedOn($user)
             ->event('role_changed')
-            ->withProperties(['old' => $previousRoles, 'new' => [$role]])
+            ->withProperties(['old' => $previousRoles, 'new' => $roles])
             ->log('role_changed');
     }
 

@@ -5,7 +5,8 @@ namespace App\Support\Authorization;
 enum Role: string
 {
     case Admin = 'admin';
-    case Supervisor = 'supervisor';
+    case Director = 'director';
+    case TeamLead = 'team_lead';
     case SurveillanceAgent = 'surveillance_agent';
     case Inspector = 'inspector';
 
@@ -22,15 +23,36 @@ enum Role: string
             ->all();
     }
 
+    public function inheritsFrom(): ?self
+    {
+        return match ($this) {
+            self::Director => self::TeamLead,
+            self::TeamLead => self::SurveillanceAgent,
+            default => null,
+        };
+    }
+
     /** @return array<int, Permission> */
     public function permissions(): array
     {
-        return match ($this) {
-            self::Admin => Permission::cases(),
-            self::Supervisor => array_values(array_filter(
-                Permission::cases(),
-                fn (Permission $permission) => $permission !== Permission::UsersManage,
-            )),
+        $own = match ($this) {
+            self::Admin => [
+                Permission::UsersManage,
+                Permission::ConnectorsView,
+                Permission::AuditView,
+                Permission::SettingsManage,
+                Permission::ReferenceDataManage,
+                Permission::AiActionsManage,
+            ],
+            self::Director => [],
+            self::TeamLead => [
+                Permission::VesselsManage,
+                Permission::LicensesManage,
+                Permission::InfractionsManage,
+                Permission::MissionsManage,
+                Permission::ConnectorsView,
+                Permission::AuditView,
+            ],
             self::SurveillanceAgent => [
                 Permission::DashboardView,
                 Permission::VesselsView,
@@ -56,5 +78,12 @@ enum Role: string
                 Permission::MissionsView,
             ],
         };
+
+        $inherited = $this->inheritsFrom()?->permissions() ?? [];
+
+        return collect([...$inherited, ...$own])
+            ->unique(fn (Permission $permission) => $permission->value)
+            ->values()
+            ->all();
     }
 }

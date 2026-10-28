@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Support\Authorization\Permission;
+use App\Support\Authorization\PermissionGroup;
 use App\Support\Authorization\Role;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission as PermissionModel;
@@ -20,9 +21,17 @@ class RolesAndPermissionsSeeder extends Seeder
         app(PermissionRegistrar::class)->forgetCachedPermissions();
 
         foreach (Role::cases() as $role) {
-            RoleModel::findOrCreate($role->value)->syncPermissions(
-                array_map(fn (Permission $permission) => $permission->value, $role->permissions()),
-            );
+            RoleModel::findOrCreate($role->value)->syncPermissions($this->names($role->permissions()));
         }
+
+        foreach (PermissionGroup::cases() as $group) {
+            RoleModel::findOrCreate($group->roleName())->syncPermissions($this->names($group->permissions()));
+        }
+    }
+
+    /** @param array<int, Permission> $permissions */
+    private function names(array $permissions): array
+    {
+        return array_map(fn (Permission $permission) => $permission->value, $permissions);
     }
 }

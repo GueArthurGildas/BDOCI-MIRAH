@@ -30,7 +30,11 @@
                         <td>{{ $user->team?->name ?? '—' }}</td>
                         <td>
                             @foreach ($user->roles as $role)
-                                {{ __(App\Support\Authorization\Role::from($role->name)->label()) }}
+                                @if ($case = App\Support\Authorization\Role::tryFrom($role->name))
+                                    {{ __($case->label()) }}
+                                @else
+                                    <span class="label label-inverse-info">{{ __(App\Support\Authorization\PermissionGroup::from(substr($role->name, strlen(App\Support\Authorization\PermissionGroup::ROLE_PREFIX)))->label()) }}</span>
+                                @endif
                             @endforeach
                         </td>
                         <td>

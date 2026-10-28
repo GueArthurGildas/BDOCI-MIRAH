@@ -19,7 +19,7 @@ make setup
 | Application | http://localhost:8000   |
 | E-mails     | http://localhost:8025   |
 
-Comptes de démo (après `make fresh`, mot de passe `password`) : `admin@example.com`, `supervisor@example.com`, `agent@example.com`, `inspector@example.com`
+Comptes de démo (après `make fresh`, mot de passe `password`) : `admin@example.com`, `director@example.com`, `team-lead@example.com`, `agent@example.com`, `inspector@example.com`
 
 ## Commandes
 

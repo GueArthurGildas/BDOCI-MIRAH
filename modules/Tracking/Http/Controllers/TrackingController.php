@@ -11,6 +11,8 @@ use App\Models\TrackingDevice;
 use App\Models\Zone;
 use App\Queries\ZoneSituation;
 use App\Support\Presentation\VesselLink;
+use App\Support\Settings\SettingKey;
+use App\Support\Settings\Settings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
@@ -119,7 +121,7 @@ class TrackingController extends Controller
                 $filters['status'] ?? null,
                 fn (Collection $devices, string $status) => $devices->filter(fn (TrackingDevice $device) => $device->vessel->beaconStatus()->value === $status),
             ),
-            'thresholdHours' => config('surveillance.beacon_silence_threshold_hours'),
+            'thresholdHours' => app(Settings::class)->int(SettingKey::BeaconSilenceThresholdHours),
         ]);
     }
 

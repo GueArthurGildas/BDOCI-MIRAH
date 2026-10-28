@@ -13,14 +13,15 @@ class DatabaseSeeder extends Seeder
 
     private const DEMO_USERS = [
         'admin@example.com' => Role::Admin,
-        'supervisor@example.com' => Role::Supervisor,
+        'director@example.com' => Role::Director,
+        'team-lead@example.com' => Role::TeamLead,
         'agent@example.com' => Role::SurveillanceAgent,
         'inspector@example.com' => Role::Inspector,
     ];
 
     public function run(): void
     {
-        $this->call([RolesAndPermissionsSeeder::class, ReferenceDataSeeder::class]);
+        $this->call([RolesAndPermissionsSeeder::class, CoreDataSeeder::class, ReferenceDataSeeder::class]);
 
         foreach (self::DEMO_USERS as $email => $role) {
             User::factory()->create(['email' => $email])->assignRole($role->value);

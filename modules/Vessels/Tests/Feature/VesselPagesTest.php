@@ -56,9 +56,9 @@ class VesselPagesTest extends TestCase
         $this->post('/vessels', [])->assertForbidden();
     }
 
-    public function test_supervisors_can_create_and_update_vessels(): void
+    public function test_team_leads_can_create_and_update_vessels(): void
     {
-        $this->signInAs(Role::Supervisor);
+        $this->signInAs(Role::TeamLead);
         $payload = [
             'name' => 'BANDAMA 7',
             'registration_number' => 'AN-7777',
@@ -79,7 +79,7 @@ class VesselPagesTest extends TestCase
 
     public function test_registration_number_must_be_unique(): void
     {
-        $this->signInAs(Role::Supervisor);
+        $this->signInAs(Role::TeamLead);
         Vessel::factory()->create(['registration_number' => 'AN-0001']);
 
         $this->post('/vessels', ['registration_number' => 'AN-0001'])

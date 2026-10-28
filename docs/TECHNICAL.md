@@ -273,10 +273,29 @@ Les permissions (`<module>.<action>`) sont déclarées dans l'enum `App\Support\
 
 | Rôle | Profil |
 |---|---|
-| `admin` | administration technique, tous les droits |
-| `supervisor` | responsable du CSP : tout sauf la gestion des comptes |
+| `admin` | administration technique uniquement (comptes, paramètres, listes de référence, journal) — aucun droit métier |
+| `director` | direction : hérite de `team_lead` et voit tout (vue 360°) |
+| `team_lead` | chef d'équipe : hérite de `surveillance_agent`, gère navires, licences, infractions, missions |
 | `surveillance_agent` | équipe de surveillance : suivi, main courante, mouvements, consultation |
 | `inspector` | inspection / contrôle : consultation de l'historique, des inspections et des infractions |
+
+L'héritage est porté par `Role::inheritsFrom()` (Directeur ⊃ Chef d'équipe ⊃ Agent de surveillance).
+
+**Groupes de permissions** (`PermissionGroup`) : droits additionnels accordables à un utilisateur en plus de son rôle (gestion des licences, instruction des infractions, avis de surveillance, envois automatiques, déclenchement de l'agent IA). Ils sont stockés comme des rôles Spatie préfixés `group.`.
+
+### Socle commun (phase 1)
+
+| Élément | Où |
+|---|---|
+| Paramètres modifiables (seuils, horaires) avec repli sur `config/surveillance.php` | `App\Support\Settings\Settings`, `SettingKey`, table `settings`, page *Administration › Paramètres* |
+| Listes de référence et champs personnalisés | tables `reference_lists`, `reference_values`, `custom_field_definitions`, `custom_field_values`; trait `HasCustomFields` |
+| Documents (immuables une fois gelés) | `Document`, trait `HasDocuments` |
+| Journal d'événements d'un navire et état courant | `vessel_events`, `vessel_current_states`; `VesselEventRecorder`, `VesselStateUpdater` |
+| Journal d'audit en ajout seul | trigger PostgreSQL sur `activity_log` (modification et suppression refusées) |
+| Actions nommées (utilisables par l'humain ou l'agent IA) | `App\Support\Actions\*` — l'agent IA n'agit que si l'action est `aiExecutable()`, activée dans les paramètres, et demandée par un humain disposant de `ai.trigger` et du droit de l'action |
+| Page d'accueil | `/` → `home` redirige vers le premier élément de menu autorisé |
+
+> `php artisan activitylog:clean` est incompatible avec le journal en ajout seul : ne pas le planifier.
 
 Pour protéger une route : `->can(Permission::VesselsView->value)`. Pour afficher un élément de menu : passer `permission:` à `$navigation->add()`.
 

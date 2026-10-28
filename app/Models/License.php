@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Enums\LicenseStatus;
 use App\Enums\LicenseType;
 use App\Models\Concerns\Audited;
+use App\Support\Settings\SettingKey;
+use App\Support\Settings\Settings;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -56,6 +58,6 @@ class License extends Model
 
     private static function expiryWarningDate(): Carbon
     {
-        return today()->addDays(config('surveillance.license_expiry_warning_days'));
+        return today()->addDays(app(Settings::class)->int(SettingKey::LicenseExpiryWarningDays));
     }
 }

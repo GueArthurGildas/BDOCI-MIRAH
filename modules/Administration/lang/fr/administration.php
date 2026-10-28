@@ -23,12 +23,19 @@ return [
             'is_active' => 'Compte actif',
             'password' => 'Mot de passe',
             'password_confirmation' => 'Confirmation du mot de passe',
+            'phone' => 'Téléphone',
+            'whatsapp_number' => 'Numéro WhatsApp',
+            'groups' => 'Groupes de permissions',
             'status' => 'Statut',
         ],
     ],
     'roles' => [
         'title' => 'Rôles et permissions',
         'subtitle' => 'Permissions accordées à chaque rôle, par module et par action',
+        'groups_title' => 'Groupes de permissions',
+        'groups_subtitle' => 'Permissions que l\'on peut attacher ou détacher d\'un utilisateur, quel que soit son rôle',
+        'group' => 'Groupe',
+        'group_pending' => 'Permissions ajoutées avec les modules concernés',
         'permission' => 'Permission',
     ],
     'permissions' => [
@@ -78,6 +85,22 @@ return [
         'audit' => [
             'view' => 'Consulter le journal d\'audit',
         ],
+        'settings' => [
+            'manage' => 'Gérer les paramètres et seuils',
+        ],
+        'reference' => [
+            'manage' => 'Gérer les listes de référence',
+        ],
+        'ai' => [
+            'trigger' => 'Déclencher l\'agent IA',
+            'manage' => 'Activer ou couper les actions de l\'agent IA',
+        ],
+    ],
+    'settings' => [
+        'title' => 'Paramètres',
+        'subtitle' => 'Seuils et horaires appliqués à toute l\'application',
+        'thresholds' => 'Seuils et horaires',
+        'saved' => 'Les paramètres ont été enregistrés.',
     ],
     'connectors' => [
         'title' => 'Connecteurs',
@@ -109,6 +132,9 @@ return [
             'login' => 'Connexion',
             'logout' => 'Déconnexion',
             'login_failed' => 'Échec de connexion',
+            'setting_changed' => 'Changement de paramètre',
+            'ai_action_toggled' => 'Action de l\'agent IA activée ou coupée',
+            'action_executed' => 'Action exécutée',
             'role_changed' => 'Changement de rôle',
         ],
         'subjects' => [

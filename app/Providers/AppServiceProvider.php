@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Support\Actions\ActionRegistry;
 use App\Support\Localization\Locales;
 use App\Support\Navigation\Navigation;
+use App\Support\Settings\Settings;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
@@ -12,6 +14,8 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(Navigation::class);
+        $this->app->singleton(ActionRegistry::class);
+        $this->app->singleton(Settings::class);
         $this->app->singleton(Locales::class, fn () => new Locales(config('app.supported_locales')));
     }
 

@@ -22,7 +22,7 @@ class SearchPageTest extends TestCase
 
     public function test_results_are_grouped_by_source(): void
     {
-        $this->signInAs(Role::Supervisor);
+        $this->signInAs(Role::TeamLead);
         $vessel = Vessel::factory()->create(['name' => 'MARAHOUÉ 12']);
         Infraction::factory()->for($vessel)->create(['reference' => 'PV-2026-555']);
 

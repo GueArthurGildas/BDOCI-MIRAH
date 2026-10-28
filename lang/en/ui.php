@@ -38,9 +38,27 @@ return [
 
     'roles' => [
         'admin' => 'Administrator',
-        'supervisor' => 'CSP supervisor',
+        'director' => 'Director',
+        'team_lead' => 'Team lead',
         'surveillance_agent' => 'Surveillance agent',
         'inspector' => 'Inspector',
+    ],
+
+    'permission_groups' => [
+        'license_management' => 'License management',
+        'infraction_investigation' => 'Infraction investigation',
+        'surveillance_opinion' => 'Surveillance opinion',
+        'automatic_sending' => 'Automatic sending management',
+        'ai_trigger' => 'Trigger the AI agent',
+    ],
+
+    'settings' => [
+        'beacon_silence_threshold_hours' => 'Beacon emission break (hours)',
+        'license_expiry_warning_days' => 'Warning before a license expires (days)',
+        'verifications_before_suspect' => 'Verifications before a vessel becomes suspect',
+        'catch_discrepancy_threshold_percent' => 'Declared vs observed catch discrepancy threshold (%)',
+        'shift_start' => 'Shift start',
+        'shift_end' => 'Shift end',
     ],
 
     'history' => [
