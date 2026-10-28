@@ -6,14 +6,13 @@ use App\Enums\CatchSource;
 use App\Enums\InfractionStatus;
 use App\Enums\InspectionResult;
 use App\Enums\InspectionType;
-use App\Enums\LicenseType;
+use App\Enums\LicenseSegment;
 use App\Enums\MissionStatus;
 use App\Enums\MissionType;
 use App\Enums\MovementDirection;
 use App\Enums\ObservationLevel;
 use App\Enums\ObservationStatus;
 use App\Enums\TrackingSystem;
-use App\Enums\VesselCategory;
 use App\Enums\VesselStatus;
 use App\Enums\VesselType;
 use App\Enums\ZoneType;
@@ -138,18 +137,18 @@ class DemoDataSeeder extends Seeder
     {
         $vessels->values()->each(function (Vessel $vessel, int $index) {
             $factory = License::factory()->for($vessel)->state([
-                'type' => $vessel->flag === 'CI' ? LicenseType::Artisanal : LicenseType::Industrial,
+                'segment' => $vessel->flag === 'CI' ? LicenseSegment::Artisanal : LicenseSegment::Industrial,
             ]);
 
             match (true) {
                 $index < 6 => $factory->expiringIn(fake()->numberBetween(3, 28))->create(),
                 $index < 11 => $factory->expired()->create(),
-                $index < 13 => $factory->create(['suspended_at' => now()->subWeeks(2)]),
+                $index < 13 => $factory->suspended()->create(),
                 default => $factory->create(),
             };
 
             if ($index % 2 === 0) {
-                License::factory()->for($vessel)->expired()->create(['type' => LicenseType::Industrial]);
+                License::factory()->for($vessel)->expired()->create(['segment' => LicenseSegment::Industrial]);
             }
         });
     }

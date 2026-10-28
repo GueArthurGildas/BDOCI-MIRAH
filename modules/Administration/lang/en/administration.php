@@ -95,6 +95,11 @@ return [
         'licenses' => [
             'view' => 'View licenses',
             'manage' => 'Manage licenses',
+            'import' => 'Import and enter licenses in batches',
+            'validate' => 'Validate licenses in batches',
+            'suspend' => 'Suspend licenses and lift suspensions',
+            'revoke' => 'Revoke licenses',
+            'publish' => 'Publish the authorized vessels list and the annual register',
         ],
         'tracking' => [
             'view' => 'View tracking',

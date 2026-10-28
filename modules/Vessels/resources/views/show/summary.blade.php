@@ -12,8 +12,8 @@
         <x-ui.detail :label="__('vessels::vessels.fields.status')"><x-ui.status-badge :status="$vessel->status" /></x-ui.detail>
         <x-ui.detail :label="__('vessels::vessels.fields.license')">
             @if ($vessel->currentLicense)
-                <x-ui.status-badge :status="$vessel->currentLicense->status" />
-                <span class="text-muted f-12 m-l-5">{{ $vessel->currentLicense->valid_until->isoFormat('L') }}</span>
+                <x-ui.status-badge :status="$vessel->currentLicense->standing" />
+                <span class="text-muted f-12 m-l-5">{{ $vessel->currentLicense->expires_on->isoFormat('L') }}</span>
             @else
                 {{ __('vessels::vessels.summary.no_license') }}
             @endif

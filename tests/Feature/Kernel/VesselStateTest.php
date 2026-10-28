@@ -38,7 +38,7 @@ class VesselStateTest extends TestCase
         $expired = Vessel::factory()->create();
         License::factory()->for($expired)->expired()->create();
         $suspended = Vessel::factory()->create();
-        License::factory()->for($suspended)->create(['suspended_at' => now()]);
+        License::factory()->for($suspended)->suspended()->create();
 
         $this->assertSame(CurrentLicenseStatus::Active, $this->stateOf($active)->license_status);
         $this->assertSame(CurrentLicenseStatus::Active, $this->stateOf($expiring)->license_status);

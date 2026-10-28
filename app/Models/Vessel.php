@@ -14,6 +14,7 @@ use App\Enums\VesselCategory;
 use App\Enums\VesselStatus;
 use App\Enums\VesselType;
 use App\Models\Concerns\Audited;
+use App\Support\Licenses\CurrentLicense;
 use App\Support\Localization\Countries;
 use App\Support\Vessels\VesselRelationsSynchronizer;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
@@ -189,12 +190,17 @@ class Vessel extends Model
 
     public function licenses(): HasMany
     {
-        return $this->hasMany(License::class)->latest('valid_until');
+        return $this->hasMany(License::class)->latest('expires_on');
     }
 
     public function currentLicense(): HasOne
     {
-        return $this->hasOne(License::class)->ofMany('valid_until', 'max');
+        return $this->hasOne(License::class)->ofMany(CurrentLicense::ORDER_COLUMN, CurrentLicense::ORDER_AGGREGATE);
+    }
+
+    public function fnpStatus(): HasOne
+    {
+        return $this->hasOne(FnpStatus::class);
     }
 
     public function events(): HasMany

@@ -40,7 +40,7 @@ class ActionRunnerTest extends TestCase
             public function handle(ActionContext $context, array $input): License
             {
                 $license = License::factory()->create(['vessel_id' => $input['vessel_id'], 'number' => 'LIC-ACTION']);
-                $context->publish($license->vessel_id, 'licenses', 'license.recorded', $license, 'licenses::events.recorded', ['number' => $license->number, 'valid_until' => $license->valid_until->toDateString()]);
+                $context->publish($license->vessel_id, 'licenses', 'license.recorded', $license, 'licenses::events.recorded', ['number' => $license->number, 'expires_on' => $license->expires_on->toDateString()]);
 
                 if ($this->fails) {
                     throw new RuntimeException('failure after the write');

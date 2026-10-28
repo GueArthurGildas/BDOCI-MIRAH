@@ -21,16 +21,12 @@ return [
         'inactive' => 'Inactif',
     ],
 
-    'license_type' => [
-        'industrial' => 'Industrielle',
-        'artisanal' => 'Artisanale',
-    ],
-
     'license_status' => [
         'valid' => 'Valide',
         'expiring' => 'Expire bientôt',
         'expired' => 'Expirée',
         'suspended' => 'Suspendue',
+        'revoked' => 'Révoquée',
     ],
 
     'tracking_system' => [
@@ -320,5 +316,58 @@ return [
     'watch_status' => [
         'open' => 'Ouvert',
         'closed' => 'Clos',
+    ],
+
+    'license_segment' => [
+        'artisanal' => 'Artisanale',
+        'semi_industrial' => 'Semi-industrielle',
+        'industrial' => 'Industrielle',
+    ],
+
+    'license_record_status' => [
+        'active' => 'Active',
+        'suspended' => 'Suspendue',
+        'expired' => 'Expirée',
+        'revoked' => 'Révoquée',
+    ],
+
+    'license_origin' => [
+        'import' => 'Import de fichier',
+        'batch' => 'Saisie par lot',
+        'manual' => 'Saisie manuelle',
+    ],
+
+    'suspension_reason' => [
+        'force_majeure' => 'Force majeure',
+        'stocks' => 'Stocks',
+        'art_105' => 'Article 105',
+        'art_106' => 'Article 106',
+        'vms_overdue' => 'Réparation VMS hors délai',
+        'other' => 'Autre',
+    ],
+
+    'fnp_registration' => [
+        'registered' => 'Inscrit',
+        'deregistered' => 'Radié',
+    ],
+
+    'fnp_deregistration_reason' => [
+        'destruction' => 'Destruction',
+        'unauthorized_modification' => 'Modification non autorisée',
+        'flag_change' => 'Changement de pavillon',
+        'inn_list' => 'Liste INN',
+        'five_years_without_license' => 'Cinq ans sans licence',
+    ],
+
+    'license_import_status' => [
+        'preview' => 'Aperçu',
+        'valid' => 'Validé',
+        'cancelled' => 'Annulé',
+    ],
+
+    'license_import_line_status' => [
+        'to_validate' => 'À valider',
+        'valid' => 'Validée',
+        'rejected' => 'Rejetée',
     ],
 ];

@@ -546,7 +546,7 @@ CREATE TABLE licenses (
     expires_on date NOT NULL,
     status varchar(40) NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'suspended', 'expired', 'revoked')),
     entered_by bigint,
-    origin varchar(40) NOT NULL CHECK (origin IN ('import', 'batch', 'manual')),
+    origin varchar(40) NOT NULL DEFAULT 'manual' CHECK (origin IN ('import', 'batch', 'manual')),
     created_at timestamp(0) NULL,
     updated_at timestamp(0) NULL,
     UNIQUE (number)
@@ -676,7 +676,8 @@ CREATE TABLE authorized_list_publications (
     document_id bigint,
     published_at timestamp(0) NOT NULL,
     created_at timestamp(0) NULL,
-    updated_at timestamp(0) NULL
+    updated_at timestamp(0) NULL,
+    UNIQUE (version)
 );
 
 CREATE TABLE beacons (

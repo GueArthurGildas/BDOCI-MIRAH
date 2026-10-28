@@ -20,7 +20,12 @@ Permissions accordées par défaut à chaque rôle système (l'héritage `Direct
 | `infractions.manage` | — | oui | oui | — |
 | `infractions.view` | — | oui | oui | oui |
 | `inspections.view` | — | oui | oui | oui |
+| `licenses.import` | — | oui | oui | — |
 | `licenses.manage` | — | oui | oui | — |
+| `licenses.publish` | — | oui | oui | — |
+| `licenses.revoke` | — | oui | oui | — |
+| `licenses.suspend` | — | oui | oui | — |
+| `licenses.validate` | — | oui | oui | — |
 | `licenses.view` | — | oui | oui | oui |
 | `logbook.close` | — | oui | oui | — |
 | `logbook.create` | — | oui | oui | oui |

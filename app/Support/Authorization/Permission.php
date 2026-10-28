@@ -60,4 +60,9 @@ enum Permission: string
     case WatchView = 'watch.view';
     case WatchCreate = 'watch.create';
     case WatchManage = 'watch.manage';
+    case LicensesImport = 'licenses.import';
+    case LicensesValidate = 'licenses.validate';
+    case LicensesSuspend = 'licenses.suspend';
+    case LicensesRevoke = 'licenses.revoke';
+    case LicensesPublish = 'licenses.publish';
 }

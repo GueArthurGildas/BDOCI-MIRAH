@@ -63,6 +63,14 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
+    authorized_list_publications {
+        int8 id PK
+        int4 version
+        int8 document_id FK
+        timestamp published_at
+        timestamp created_at
+        timestamp updated_at
+    }
     catch_declarations {
         int8 id PK
         int8 vessel_id FK
@@ -291,6 +299,16 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
+    external_authorizations {
+        int8 id PK
+        int8 vessel_id FK
+        int8 institution_id FK
+        varchar number
+        date valid_from
+        date valid_to
+        timestamp created_at
+        timestamp updated_at
+    }
     external_list_vessel {
         int8 vessel_id FK
         int8 external_list_id FK
@@ -304,6 +322,16 @@ erDiagram
         varchar label
         timestamp created_at
         timestamp updated_at
+    }
+    fnp_statuses {
+        int8 vessel_id FK
+        varchar status
+        varchar deregistration_reason
+        date status_on
+    }
+    gear_license {
+        int8 license_id FK
+        int8 gear_id FK
     }
     gears {
         int8 id PK
@@ -383,16 +411,92 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
+    license_conditions {
+        int8 id PK
+        int8 license_id FK
+        varchar body
+        timestamp created_at
+        timestamp updated_at
+    }
+    license_documents {
+        int8 id PK
+        int8 document_id FK
+        int8 license_id FK
+        int8 vessel_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
+    license_import_lines {
+        int8 id PK
+        int8 license_import_id FK
+        int8 vessel_id FK
+        jsonb data
+        varchar status
+        varchar rejection_reason
+        int8 license_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
+    license_imports {
+        int8 id PK
+        int8 document_id FK
+        varchar status
+        int8 created_by FK
+        timestamp validated_at
+        timestamp created_at
+        timestamp updated_at
+    }
+    license_registers {
+        int2 year
+        int8 document_id FK
+        timestamp generated_at
+    }
+    license_revocations {
+        int8 id PK
+        int8 license_id FK
+        varchar reason
+        date revoked_on
+        int8 decided_by FK
+        int8 infraction_case_id
+        bool is_repeat_offense
+        timestamp created_at
+        timestamp updated_at
+    }
+    license_species {
+        int8 license_id FK
+        int8 species_id FK
+    }
+    license_suspensions {
+        int8 id PK
+        int8 license_id FK
+        varchar reason
+        date started_on
+        date planned_end_on
+        date lifted_on
+        int8 infraction_case_id
+        int8 vms_failure_id
+        int8 operation_id FK
+        int8 proposed_by FK
+        int8 decided_by FK
+        timestamp created_at
+        timestamp updated_at
+    }
+    license_zone {
+        int8 license_id FK
+        int8 zone_id FK
+    }
     licenses {
         int8 id PK
         int8 vessel_id FK
         varchar number
-        varchar type
-        date valid_from
-        date valid_until
-        timestamp suspended_at
+        varchar segment
+        date issued_on
+        date expires_on
         timestamp created_at
         timestamp updated_at
+        varchar status
+        int8 entered_by FK
+        varchar origin
     }
     logbook_closings {
         int8 logbook_day_id FK
@@ -923,6 +1027,14 @@ erDiagram
         varchar fao_identifier
         bool license_not_provided
     }
+    vms_compatibility_certificates {
+        int8 id PK
+        int8 vessel_id FK
+        date issued_on
+        date expires_on
+        timestamp created_at
+        timestamp updated_at
+    }
     watch_entries {
         int8 id PK
         int8 vessel_id FK
@@ -977,7 +1089,11 @@ erDiagram
     data_sources ||--o{ data_source_rejections : "data_source_id"
     data_sources ||--o{ data_source_syncs : "data_source_id"
     dispatch_rules ||--o{ sent_messages : "dispatch_rule_id"
+    documents ||--o{ authorized_list_publications : "document_id"
     documents ||--o{ document_links : "document_id"
+    documents ||--o{ license_documents : "document_id"
+    documents ||--o{ license_imports : "document_id"
+    documents ||--o{ license_registers : "document_id"
     documents ||--o{ logbook_days : "pdf_document_id"
     eez_declarations ||--o{ eez_declaration_catches : "eez_declaration_id"
     eez_declarations ||--o{ eez_declaration_checks : "eez_declaration_id"
@@ -985,12 +1101,23 @@ erDiagram
     eez_declarations ||--o{ entry_exit_links : "entry_declaration_id"
     eez_declarations ||--o{ entry_exit_links : "exit_declaration_id"
     external_lists ||--o{ external_list_vessel : "external_list_id"
+    gears ||--o{ gear_license : "gear_id"
     infraction_types ||--o{ infractions : "infraction_type_id"
     inspections ||--o{ infractions : "inspection_id"
     institutions ||--o{ contacts : "institution_id"
+    institutions ||--o{ external_authorizations : "institution_id"
     institutions ||--o{ external_lists : "institution_id"
     legal_entities ||--o{ people : "legal_entity_id"
     legal_entities ||--o{ vessel_actors : "legal_entity_id"
+    license_imports ||--o{ license_import_lines : "license_import_id"
+    licenses ||--o{ gear_license : "license_id"
+    licenses ||--o{ license_conditions : "license_id"
+    licenses ||--o{ license_documents : "license_id"
+    licenses ||--o{ license_import_lines : "license_id"
+    licenses ||--o{ license_revocations : "license_id"
+    licenses ||--o{ license_species : "license_id"
+    licenses ||--o{ license_suspensions : "license_id"
+    licenses ||--o{ license_zone : "license_id"
     logbook_days ||--o{ logbook_closings : "logbook_day_id"
     logbook_days ||--o{ logbook_entries : "logbook_day_id"
     logbook_entries ||--o{ logbook_entries : "corrects_entry_id"
@@ -1006,6 +1133,7 @@ erDiagram
     observations ||--o{ surveillance_observations : "legacy_observation_id"
     operation_categories ||--o{ operation_counters : "category_id"
     operation_categories ||--o{ operations : "category_id"
+    operations ||--o{ license_suspensions : "operation_id"
     operations ||--o{ logbook_entries : "operation_id"
     operations ||--o{ operation_contexts : "operation_id"
     operations ||--o{ operation_events : "operation_id"
@@ -1030,6 +1158,7 @@ erDiagram
     shift_handovers ||--o{ relays : "shift_handover_id"
     species ||--o{ catch_declarations : "species_id"
     species ||--o{ eez_declaration_catches : "species_id"
+    species ||--o{ license_species : "species_id"
     surveillance_observations ||--o{ relays : "surveillance_observation_id"
     teams ||--o{ internal_notes : "recipient_team_id"
     teams ||--o{ observations : "team_id"
@@ -1046,6 +1175,11 @@ erDiagram
     users ||--o{ eez_declarations : "entered_by"
     users ||--o{ internal_notes : "author_id"
     users ||--o{ internal_notes : "recipient_user_id"
+    users ||--o{ license_imports : "created_by"
+    users ||--o{ license_revocations : "decided_by"
+    users ||--o{ license_suspensions : "decided_by"
+    users ||--o{ license_suspensions : "proposed_by"
+    users ||--o{ licenses : "entered_by"
     users ||--o{ logbook_closings : "closed_by"
     users ||--o{ logbook_entries : "entered_by"
     users ||--o{ mission_user : "user_id"
@@ -1070,10 +1204,14 @@ erDiagram
     vessels ||--o{ check_counters : "vessel_id"
     vessels ||--o{ eez_declarations : "vessel_id"
     vessels ||--o{ entry_exit_alerts : "vessel_id"
+    vessels ||--o{ external_authorizations : "vessel_id"
     vessels ||--o{ external_list_vessel : "vessel_id"
+    vessels ||--o{ fnp_statuses : "vessel_id"
     vessels ||--o{ infractions : "vessel_id"
     vessels ||--o{ inspections : "vessel_id"
     vessels ||--o{ internal_notes : "vessel_id"
+    vessels ||--o{ license_documents : "vessel_id"
+    vessels ||--o{ license_import_lines : "vessel_id"
     vessels ||--o{ licenses : "vessel_id"
     vessels ||--o{ logbook_entry_vessel : "vessel_id"
     vessels ||--o{ missed_declarations : "vessel_id"
@@ -1094,8 +1232,10 @@ erDiagram
     vessels ||--o{ vessel_identifiers : "vessel_id"
     vessels ||--o{ vessel_sources : "candidate_vessel_id"
     vessels ||--o{ vessel_sources : "vessel_id"
+    vessels ||--o{ vms_compatibility_certificates : "vessel_id"
     vessels ||--o{ watch_entries : "vessel_id"
     zones ||--o{ catch_declarations : "zone_id"
+    zones ||--o{ license_zone : "zone_id"
     zones ||--o{ missions : "zone_id"
     zones ||--o{ observations : "zone_id"
     zones ||--o{ permission_grants : "zone_id"

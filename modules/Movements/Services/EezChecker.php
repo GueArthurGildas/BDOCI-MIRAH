@@ -6,6 +6,7 @@ use App\Enums\BeaconStatus;
 use App\Enums\EezCheckResult;
 use App\Enums\EezCheckType;
 use App\Enums\EezReason;
+use App\Enums\LicenseRecordStatus;
 use App\Models\EezDeclaration;
 use App\Models\License;
 use App\Models\Vessel;
@@ -51,9 +52,9 @@ class EezChecker
         $day = ($declaration->crossed_at ?? $declaration->received_at)->toDateString();
 
         $valid = License::where('vessel_id', $vessel->id)
-            ->whereNull('suspended_at')
-            ->whereDate('valid_from', '<=', $day)
-            ->whereDate('valid_until', '>=', $day)
+            ->where('status', LicenseRecordStatus::Active->value)
+            ->where(fn ($query) => $query->whereNull('issued_on')->orWhereDate('issued_on', '<=', $day))
+            ->whereDate('expires_on', '>=', $day)
             ->exists();
 
         return $this->result($valid, 'no_valid_license');

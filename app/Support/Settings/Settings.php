@@ -37,6 +37,8 @@ final class Settings
             new SettingDefinition('watch.shift_end_hour', 'surveillance.watch.shift_end_hour', SettingType::Integer, 'watch', 1, 23),
             new SettingDefinition('watch.teams_count', 'surveillance.watch.teams_count', SettingType::Integer, 'watch', 1, 10),
             new SettingDefinition('watch.check_threshold', 'surveillance.watch.check_threshold', SettingType::Integer, 'watch', 1, 20),
+            new SettingDefinition('alerts.licenses_expiring.second_warning_days', 'surveillance.license_expiry_second_warning_days', SettingType::Integer, 'licenses', 1, 730),
+            new SettingDefinition('alerts.licenses_expiring.third_warning_days', 'surveillance.license_expiry_third_warning_days', SettingType::Integer, 'licenses', 1, 730),
         ])->keyBy(fn (SettingDefinition $definition) => $definition->field());
     }
 

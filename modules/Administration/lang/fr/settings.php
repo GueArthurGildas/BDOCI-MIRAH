@@ -49,5 +49,7 @@ return [
         'watch_shift_end_hour' => 'Heure de clôture de la main courante (1 à 23)',
         'watch_teams_count' => 'Nombre d\'équipes en rotation',
         'watch_check_threshold' => 'Une alerte est levée au-delà de (vérifications d\'un même navire)',
+        'alerts_licenses_expiring_second_warning_days' => 'Une licence arrive à échéance (deuxième alerte, jours)',
+        'alerts_licenses_expiring_third_warning_days' => 'Une licence arrive à échéance (troisième alerte, jours)',
     ],
 ];

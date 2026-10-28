@@ -22,9 +22,9 @@ class RecordLicenseTest extends TestCase
         return array_merge([
             'vessel_id' => $vessel->id,
             'number' => 'LIC-2026-0100',
-            'type' => 'industrial',
-            'valid_from' => today()->subMonth()->toDateString(),
-            'valid_until' => today()->addMonths(11)->toDateString(),
+            'segment' => 'industrial',
+            'issued_on' => today()->subMonth()->toDateString(),
+            'expires_on' => today()->addMonths(11)->toDateString(),
         ], $overrides);
     }
 
@@ -33,7 +33,7 @@ class RecordLicenseTest extends TestCase
         $actor = $this->signInAs(Role::TeamLead);
         $vessel = Vessel::factory()->create();
 
-        $this->post(route('licenses.store'), $this->payload($vessel))->assertRedirect(route('licenses.index'));
+        $this->post(route('licenses.store'), $this->payload($vessel))->assertRedirect(route('licenses.show', License::sole()));
 
         $license = License::sole();
         $this->assertSame($vessel->id, $license->vessel_id);
@@ -46,7 +46,7 @@ class RecordLicenseTest extends TestCase
 
         $state = $vessel->fresh()->currentState;
         $this->assertSame(CurrentLicenseStatus::Active, $state->license_status);
-        $this->assertSame($license->valid_until->toDateString(), $state->license_expires_on->toDateString());
+        $this->assertSame($license->expires_on->toDateString(), $state->license_expires_on->toDateString());
 
         $this->assertSame($actor->id, Activity::where('event', 'licenses.record')->sole()->causer_id);
     }
@@ -97,9 +97,9 @@ class RecordLicenseTest extends TestCase
         License::factory()->create(['number' => 'LIC-TAKEN']);
 
         $this->post(route('licenses.store'), $this->payload($vessel, ['number' => 'LIC-TAKEN']))->assertSessionHasErrors('number');
-        $this->post(route('licenses.store'), $this->payload($vessel, ['valid_until' => today()->subYear()->toDateString()]))->assertSessionHasErrors('valid_until');
+        $this->post(route('licenses.store'), $this->payload($vessel, ['expires_on' => today()->subYears(2)->toDateString()]))->assertSessionHasErrors('expires_on');
         $this->post(route('licenses.store'), $this->payload($vessel, ['vessel_id' => 999999]))->assertSessionHasErrors('vessel_id');
-        $this->post(route('licenses.store'), $this->payload($vessel, ['type' => 'nonsense']))->assertSessionHasErrors('type');
+        $this->post(route('licenses.store'), $this->payload($vessel, ['segment' => 'nonsense']))->assertSessionHasErrors('segment');
 
         $this->assertSame(1, License::count());
         $this->assertSame(0, VesselEvent::count());

@@ -13,7 +13,7 @@ final class VesselTimeline
     {
         return collect()
             ->concat($vessel->licenses->map(fn ($license) => self::entry(
-                $license->valid_from, 'icon-file-text', 'primary',
+                $license->issued_on ?? $license->created_at, 'icon-file-text', 'primary',
                 __('vessels::vessels.timeline.license', ['number' => $license->number]),
             )))
             ->concat($vessel->movements->map(fn ($movement) => self::entry(

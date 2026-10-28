@@ -49,5 +49,7 @@ return [
         'watch_shift_end_hour' => 'Logbook closing hour (1 to 23)',
         'watch_teams_count' => 'Number of teams in rotation',
         'watch_check_threshold' => 'An alert is raised beyond (checks of the same vessel)',
+        'alerts_licenses_expiring_second_warning_days' => 'A license expires (second alert, days)',
+        'alerts_licenses_expiring_third_warning_days' => 'A license expires (third alert, days)',
     ],
 ];
