@@ -82,6 +82,7 @@ return [
         'registry' => 'Référentiels',
         'operations' => 'Opérations',
         'watch' => 'Surveillance de quart',
+        'reports' => 'Rapports et archives',
     ],
     'permissions' => [
         'dashboard' => [
@@ -161,6 +162,16 @@ return [
             'view' => 'Consulter le tableau du matin et la surveillance de quart',
             'create' => 'Saisir des observations, relais et suivis renforcés',
             'manage' => 'Planifier les rotations, consignes permanentes et listes de veille',
+        ],
+        'reports' => [
+            'view' => 'Consulter les rapports, exports et archives',
+            'manage' => 'Gérer les rapports programmés',
+            'generate' => 'Produire les rapports programmés',
+            'export_operations' => 'Exporter les opérations',
+            'export_vessels' => 'Exporter les navires',
+            'export_logbook' => 'Exporter les lignes de main courante',
+            'archive' => 'Archiver les anciennes opérations',
+            'view_health' => 'Voir le bandeau de santé du système',
         ],
     ],
     'connectors' => [

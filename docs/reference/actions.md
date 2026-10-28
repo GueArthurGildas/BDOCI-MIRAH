@@ -36,6 +36,14 @@
 | `operations.view` | `operations` | `view` | Consulter les opérations |
 | `registry.manage` | `registry` | `update` | Gérer les référentiels |
 | `registry.view` | `registry` | `view` | Consulter les référentiels |
+| `reports.archive` | `reports` | `update` | Archiver les anciennes opérations |
+| `reports.export_logbook` | `reports` | `update` | Exporter les lignes de main courante |
+| `reports.export_operations` | `reports` | `update` | Exporter les opérations |
+| `reports.export_vessels` | `reports` | `update` | Exporter les navires |
+| `reports.generate` | `reports` | `update` | Produire les rapports programmés |
+| `reports.manage` | `reports` | `update` | Gérer les rapports programmés |
+| `reports.view` | `reports` | `view` | Consulter les rapports, exports et archives |
+| `reports.view_health` | `reports` | `update` | Voir le bandeau de santé du système |
 | `roles.manage` | `administration` | `update` | Gérer les rôles |
 | `settings.manage` | `administration` | `update` | Gérer les paramètres |
 | `tracking.view` | `tracking` | `view` | Consulter le suivi des positions |
@@ -90,6 +98,12 @@ Actions exécutées par l'`ActionRunner` (transaction, droit, événement, état
 | `registry.create_record` | `registry.manage` | `Modules\Registry\Actions\CreateRegistryRecord` |
 | `registry.update_record` | `registry.manage` | `Modules\Registry\Actions\UpdateRegistryRecord` |
 | `registry.update_source_priorities` | `registry.manage` | `Modules\Registry\Actions\UpdateSourcePriorities` |
+| `reports.archive_operation` | `reports.archive` | `Modules\Reports\Actions\ArchiveOperation` |
+| `reports.export_logbook` | `reports.export_logbook` | `Modules\Reports\Actions\ExportLogbook` |
+| `reports.export_operations` | `reports.export_operations` | `Modules\Reports\Actions\ExportOperations` |
+| `reports.export_vessels` | `reports.export_vessels` | `Modules\Reports\Actions\ExportVessels` |
+| `reports.generate` | `reports.generate` | `Modules\Reports\Actions\GenerateScheduledReport` |
+| `reports.save_scheduled_report` | `reports.manage` | `Modules\Reports\Actions\SaveScheduledReport` |
 | `vessels.add_actor` | `vessels.manage` | `Modules\Vessels\Actions\AddVesselActor` |
 | `vessels.add_identifier` | `vessels.manage` | `Modules\Vessels\Actions\AddVesselIdentifier` |
 | `vessels.ingest_source` | `vessels.manage` | `Modules\Vessels\Actions\IngestVesselSource` |

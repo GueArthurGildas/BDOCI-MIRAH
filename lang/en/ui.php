@@ -88,4 +88,10 @@ return [
             'message' => 'The application is temporarily unavailable. Please try again later.',
         ],
     ],
+
+    'health' => [
+        'title' => 'System health',
+        'message' => '{1} :count data source needs attention:|[2,*] :count data sources need attention:',
+        'details' => 'See the connectors',
+    ],
 ];

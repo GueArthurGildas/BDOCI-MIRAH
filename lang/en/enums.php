@@ -321,4 +321,20 @@ return [
         'open' => 'Open',
         'closed' => 'Closed',
     ],
+
+    'report_frequency' => [
+        'weekly' => 'Weekly',
+        'monthly' => 'Monthly',
+        'yearly' => 'Yearly',
+    ],
+
+    'report_format' => [
+        'pdf' => 'PDF',
+        'excel' => 'Excel',
+    ],
+
+    'export_format' => [
+        'csv' => 'CSV',
+        'pdf' => 'PDF',
+    ],
 ];
