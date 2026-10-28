@@ -80,6 +80,8 @@ return [
         'roles' => 'Rôles',
         'communications' => 'Communications',
         'registry' => 'Référentiels',
+        'operations' => 'Opérations',
+        'watch' => 'Surveillance de quart',
     ],
     'permissions' => [
         'dashboard' => [
@@ -101,6 +103,7 @@ return [
             'view' => 'Consulter la main courante',
             'create' => 'Saisir des observations',
             'manage' => 'Suivre les observations',
+            'close' => 'Clôturer la main courante du jour',
         ],
         'movements' => [
             'view' => 'Consulter les mouvements',
@@ -148,6 +151,16 @@ return [
             'manage_templates' => 'Gérer les modèles de message',
             'manage_dispatch' => 'Gérer les règles d\'envoi automatique',
             'trigger_ai_agent' => 'Déclencher l\'agent IA pour les communications',
+        ],
+        'operations' => [
+            'view' => 'Consulter les opérations',
+            'create' => 'Ouvrir des opérations',
+            'manage' => 'Suivre et clôturer les opérations',
+        ],
+        'watch' => [
+            'view' => 'Consulter le tableau du matin et la surveillance de quart',
+            'create' => 'Saisir des observations, relais et suivis renforcés',
+            'manage' => 'Planifier les rotations, consignes permanentes et listes de veille',
         ],
     ],
     'connectors' => [

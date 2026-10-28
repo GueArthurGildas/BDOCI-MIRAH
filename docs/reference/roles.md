@@ -22,6 +22,7 @@ Permissions accordées par défaut à chaque rôle système (l'héritage `Direct
 | `inspections.view` | — | oui | oui | oui |
 | `licenses.manage` | — | oui | oui | — |
 | `licenses.view` | — | oui | oui | oui |
+| `logbook.close` | — | oui | oui | — |
 | `logbook.create` | — | oui | oui | oui |
 | `logbook.manage` | — | oui | oui | oui |
 | `logbook.view` | — | oui | oui | oui |
@@ -30,6 +31,9 @@ Permissions accordées par défaut à chaque rôle système (l'héritage `Direct
 | `movements.create` | — | oui | oui | oui |
 | `movements.declare` | — | oui | oui | oui |
 | `movements.view` | — | oui | oui | oui |
+| `operations.create` | — | oui | oui | oui |
+| `operations.manage` | — | oui | oui | — |
+| `operations.view` | — | oui | oui | oui |
 | `registry.manage` | — | oui | oui | — |
 | `registry.view` | — | oui | oui | oui |
 | `roles.manage` | oui | — | — | — |
@@ -39,3 +43,6 @@ Permissions accordées par défaut à chaque rôle système (l'héritage `Direct
 | `vessels.manage` | — | oui | oui | — |
 | `vessels.match` | — | oui | oui | — |
 | `vessels.view` | — | oui | oui | oui |
+| `watch.create` | — | oui | oui | oui |
+| `watch.manage` | — | oui | oui | — |
+| `watch.view` | — | oui | oui | oui |

@@ -268,4 +268,57 @@ return [
         'keep_separate' => 'Keep separate',
         'reject' => 'Reject',
     ],
+
+    'operation_category_code' => [
+        'vms' => 'VMS (beacons)',
+        'ers' => 'ERS (electronic fishing logs)',
+        'mep' => 'MEP (set-up)',
+        'inn' => 'IUU (illegal fishing)',
+        'div' => 'Miscellaneous',
+    ],
+
+    'operation_status' => [
+        'open' => 'Open',
+        'in_progress' => 'In progress',
+        'closed' => 'Closed',
+        'archived' => 'Archived',
+    ],
+
+    'logbook_day_status' => [
+        'open' => 'Open',
+        'closed' => 'Closed',
+        'locked' => 'Locked',
+    ],
+
+    'logbook_direction' => [
+        'received' => 'Received',
+        'sent' => 'Sent',
+    ],
+
+    'logbook_handling_status' => [
+        'to_handle' => 'To handle',
+        'in_progress' => 'In progress',
+        'closed' => 'Closed',
+    ],
+
+    'surveillance_observation_status' => [
+        'monitoring' => 'Monitoring',
+        'closed' => 'Closed',
+        'operation' => 'Operation opened',
+    ],
+
+    'watch_origin' => [
+        'director_list_themis' => 'Director\'s list (THEMIS)',
+        'director_list_manual' => 'Director\'s list (manual entry)',
+        'logbook' => 'Cited in the logbook',
+        'eez_entry' => 'EEZ entry',
+        'eez_exit' => 'EEZ exit',
+        'enhanced_monitoring' => 'Enhanced monitoring',
+        'more_than_3_checks' => 'More than 3 checks',
+    ],
+
+    'watch_status' => [
+        'open' => 'Open',
+        'closed' => 'Closed',
+    ],
 ];

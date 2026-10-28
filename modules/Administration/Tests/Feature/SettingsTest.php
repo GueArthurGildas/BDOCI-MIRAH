@@ -31,6 +31,10 @@ class SettingsTest extends TestCase
             'alerts_eez_declarations_position_window_hours' => 6,
             'alerts_eez_declarations_cooldown_hours' => 12,
             'eez_variance_tolerance_percent' => 10,
+            'watch_shift_start_hour' => 8,
+            'watch_shift_end_hour' => 18,
+            'watch_teams_count' => 3,
+            'watch_check_threshold' => 3,
         ], $overrides);
     }
 

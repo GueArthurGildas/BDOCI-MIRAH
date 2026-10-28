@@ -94,6 +94,10 @@ enum Role: string
                 Permission::CommunicationsSend,
                 Permission::CommunicationsCreateNote,
                 Permission::RegistryView,
+                Permission::OperationsView,
+                Permission::OperationsCreate,
+                Permission::WatchView,
+                Permission::WatchCreate,
             ],
         };
     }

@@ -22,6 +22,7 @@
 | `inspections.view` | `inspections` | `view` | Consulter les inspections |
 | `licenses.manage` | `licenses` | `update` | Gérer les licences |
 | `licenses.view` | `licenses` | `view` | Consulter les licences |
+| `logbook.close` | `logbook` | `update` | Clôturer la main courante du jour |
 | `logbook.create` | `logbook` | `create` | Saisir des observations |
 | `logbook.manage` | `logbook` | `update` | Suivre les observations |
 | `logbook.view` | `logbook` | `view` | Consulter la main courante |
@@ -30,6 +31,9 @@
 | `movements.create` | `movements` | `create` | Saisir des mouvements |
 | `movements.declare` | `movements` | `update` | Saisir et suivre les déclarations ZEE |
 | `movements.view` | `movements` | `view` | Consulter les mouvements |
+| `operations.create` | `operations` | `create` | Ouvrir des opérations |
+| `operations.manage` | `operations` | `update` | Suivre et clôturer les opérations |
+| `operations.view` | `operations` | `view` | Consulter les opérations |
 | `registry.manage` | `registry` | `update` | Gérer les référentiels |
 | `registry.view` | `registry` | `view` | Consulter les référentiels |
 | `roles.manage` | `administration` | `update` | Gérer les rôles |
@@ -39,6 +43,9 @@
 | `vessels.manage` | `vessels` | `update` | Gérer les navires |
 | `vessels.match` | `vessels` | `update` | Trancher les doublons de navires |
 | `vessels.view` | `vessels` | `view` | Consulter les navires |
+| `watch.create` | `watch` | `create` | Saisir des observations, relais et suivis renforcés |
+| `watch.manage` | `watch` | `update` | Planifier les rotations, consignes permanentes et listes de veille |
+| `watch.view` | `watch` | `view` | Consulter le tableau du matin et la surveillance de quart |
 
 ## Actions nommées
 
@@ -61,7 +68,11 @@ Actions exécutées par l'`ActionRunner` (transaction, droit, événement, état
 | `communications.update_channel` | `communications.manage_dispatch` | `Modules\Communications\Actions\UpdateCommunicationChannel` |
 | `infractions.update` | `infractions.manage` | `Modules\Infractions\Actions\UpdateInfraction` |
 | `licenses.record` | `licenses.manage` | `Modules\Licenses\Actions\RecordLicense` |
+| `logbook.add_entry` | `logbook.create` | `Modules\Logbook\Actions\AddLogbookEntry` |
+| `logbook.close_day` | `logbook.close` | `Modules\Logbook\Actions\CloseLogbookDay` |
 | `logbook.open` | `logbook.create` | `Modules\Logbook\Actions\OpenObservation` |
+| `logbook.rectify_entry` | `logbook.create` | `Modules\Logbook\Actions\RectifyLogbookEntry` |
+| `logbook.set_entry_handling` | `logbook.manage` | `Modules\Logbook\Actions\SetLogbookEntryHandling` |
 | `logbook.update` | `logbook.manage` | `Modules\Logbook\Actions\UpdateObservation` |
 | `movements.acknowledge_eez_declaration` | `movements.declare` | `Modules\Movements\Actions\AcknowledgeEezDeclaration` |
 | `movements.close_eez_declaration` | `movements.declare` | `Modules\Movements\Actions\CloseEezDeclaration` |
@@ -71,6 +82,11 @@ Actions exécutées par l'`ActionRunner` (transaction, droit, événement, état
 | `movements.record` | `movements.create` | `Modules\Movements\Actions\RecordMovement` |
 | `movements.record_eez_declaration` | `movements.declare` | `Modules\Movements\Actions\RecordEezDeclaration` |
 | `movements.remind_missed_declaration` | `movements.declare` | `Modules\Movements\Actions\RemindMissedDeclaration` |
+| `operations.add_event` | `operations.create` | `Modules\Operations\Actions\AddOperationEvent` |
+| `operations.close` | `operations.manage` | `Modules\Operations\Actions\CloseOperation` |
+| `operations.give_instruction` | `operations.manage` | `Modules\Operations\Actions\GiveOperationInstruction` |
+| `operations.open` | `operations.create` | `Modules\Operations\Actions\OpenOperation` |
+| `operations.update` | `operations.manage` | `Modules\Operations\Actions\UpdateOperation` |
 | `registry.create_record` | `registry.manage` | `Modules\Registry\Actions\CreateRegistryRecord` |
 | `registry.update_record` | `registry.manage` | `Modules\Registry\Actions\UpdateRegistryRecord` |
 | `registry.update_source_priorities` | `registry.manage` | `Modules\Registry\Actions\UpdateSourcePriorities` |
@@ -81,3 +97,13 @@ Actions exécutées par l'`ActionRunner` (transaction, droit, événement, état
 | `vessels.register` | `vessels.manage` | `Modules\Vessels\Actions\RegisterVessel` |
 | `vessels.settle_duplicate` | `vessels.match` | `Modules\Vessels\Actions\SettleVesselDuplicate` |
 | `vessels.update` | `vessels.manage` | `Modules\Vessels\Actions\UpdateVessel` |
+| `watch.acknowledge_relay` | `watch.create` | `Modules\Watch\Actions\AcknowledgeRelay` |
+| `watch.add_to_director_list` | `watch.manage` | `Modules\Watch\Actions\AddVesselToDirectorList` |
+| `watch.close_entry` | `watch.manage` | `Modules\Watch\Actions\CloseWatchEntry` |
+| `watch.create_standing_instruction` | `watch.manage` | `Modules\Watch\Actions\CreateStandingInstruction` |
+| `watch.end_standing_instruction` | `watch.manage` | `Modules\Watch\Actions\EndStandingInstruction` |
+| `watch.place_under_enhanced_monitoring` | `watch.create` | `Modules\Watch\Actions\PlaceVesselUnderEnhancedMonitoring` |
+| `watch.plan_rotations` | `watch.manage` | `Modules\Watch\Actions\PlanRotations` |
+| `watch.record_observation` | `watch.create` | `Modules\Watch\Actions\RecordSurveillanceObservation` |
+| `watch.set_observation_status` | `watch.create` | `Modules\Watch\Actions\SetSurveillanceObservationStatus` |
+| `watch.start_handover` | `watch.create` | `Modules\Watch\Actions\StartShiftHandover` |

@@ -18,7 +18,9 @@ Modules déclarés dans le registre (`ModuleServiceProvider`).
 | `missions` | Missions | 1.0.0 | — |
 | `movements` | Movements | 1.0.0 | — |
 | `notifications` | Notifications | 1.0.0 | — |
+| `operations` | Operations | 1.0.0 | — |
 | `registry` | Registry | 1.0.0 | — |
 | `search` | Rechercher | 1.0.0 | — |
 | `tracking` | Tracking | 1.0.0 | — |
 | `vessels` | Vessels | 1.0.0 | — |
+| `watch` | Watch | 1.0.0 | — |

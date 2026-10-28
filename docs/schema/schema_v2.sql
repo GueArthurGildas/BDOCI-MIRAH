@@ -1218,7 +1218,8 @@ CREATE TABLE surveillance_observations (
     body text,
     status varchar(40) NOT NULL DEFAULT 'monitoring' CHECK (status IN ('monitoring', 'closed', 'operation')),
     created_by bigint,
-    created_at timestamp(0) NOT NULL
+    created_at timestamp(0) NOT NULL,
+    legacy_observation_id bigint UNIQUE
 );
 
 CREATE TABLE relays (

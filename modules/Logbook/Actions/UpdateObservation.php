@@ -7,9 +7,12 @@ use App\Models\Observation;
 use App\Support\Actions\Action;
 use App\Support\Actions\ActionContext;
 use App\Support\Authorization\Permission;
+use App\Support\Logbook\ObservationMirror;
 
 class UpdateObservation extends Action
 {
+    public function __construct(private readonly ObservationMirror $mirror) {}
+
     public function code(): string
     {
         return 'logbook.update';
@@ -30,6 +33,8 @@ class UpdateObservation extends Action
             'follow_up' => $input['follow_up'] ?? null,
             'closed_at' => $status === ObservationStatus::Closed ? ($observation->closed_at ?? now()) : null,
         ]);
+
+        $this->mirror->sync($observation);
 
         if ($observation->vessel_id) {
             $context->publish(

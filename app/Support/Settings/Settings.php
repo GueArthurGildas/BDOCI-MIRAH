@@ -33,6 +33,10 @@ final class Settings
             new SettingDefinition('alerts.eez_declarations.position_window_hours', 'surveillance.eez_position_window_hours', SettingType::Integer, 'eez', 1, 48),
             new SettingDefinition('alerts.eez_declarations.cooldown_hours', 'surveillance.alerts.eez_declarations.cooldown_hours', SettingType::Integer, 'eez', 1, 168),
             new SettingDefinition('eez.variance_tolerance_percent', 'surveillance.eez_variance_tolerance_percent', SettingType::Integer, 'eez', 0, 100),
+            new SettingDefinition('watch.shift_start_hour', 'surveillance.watch.shift_start_hour', SettingType::Integer, 'watch', 0, 23),
+            new SettingDefinition('watch.shift_end_hour', 'surveillance.watch.shift_end_hour', SettingType::Integer, 'watch', 1, 23),
+            new SettingDefinition('watch.teams_count', 'surveillance.watch.teams_count', SettingType::Integer, 'watch', 1, 10),
+            new SettingDefinition('watch.check_threshold', 'surveillance.watch.check_threshold', SettingType::Integer, 'watch', 1, 20),
         ])->keyBy(fn (SettingDefinition $definition) => $definition->field());
     }
 

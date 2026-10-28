@@ -80,6 +80,8 @@ return [
         'roles' => 'Roles',
         'communications' => 'Communications',
         'registry' => 'Registry',
+        'operations' => 'Operations',
+        'watch' => 'Watch duty',
     ],
     'permissions' => [
         'dashboard' => [
@@ -101,6 +103,7 @@ return [
             'view' => 'View the logbook',
             'create' => 'Record observations',
             'manage' => 'Follow up observations',
+            'close' => 'Close the daily logbook',
         ],
         'movements' => [
             'view' => 'View movements',
@@ -148,6 +151,16 @@ return [
             'manage_templates' => 'Manage message templates',
             'manage_dispatch' => 'Manage automatic dispatch rules',
             'trigger_ai_agent' => 'Trigger the AI agent for communications',
+        ],
+        'operations' => [
+            'view' => 'View operations',
+            'create' => 'Open operations',
+            'manage' => 'Follow and close operations',
+        ],
+        'watch' => [
+            'view' => 'View the morning board and watch duty',
+            'create' => 'Record observations, handovers and enhanced monitoring',
+            'manage' => 'Plan rotations, standing instructions and watch lists',
         ],
     ],
     'connectors' => [

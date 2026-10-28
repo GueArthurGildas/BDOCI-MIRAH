@@ -181,27 +181,27 @@ Nom de la spécification (v1, français) → nom technique (v2, anglais) → sit
 
 | Spécification | Table | Situation actuelle |
 |---|---|---|
-| `categorie_operation` | `operation_categories` | nouveau |
-| `compteur_operation` | `operation_counters` | nouveau |
-| `operation` | `operations` | nouveau |
-| `operation_contexte` | `operation_contexts` | nouveau |
-| `operation_navire` | `operation_vessel` | nouveau |
-| `operation_personnel` | `operation_user` | nouveau |
-| `operation_evenement` | `operation_events` | nouveau |
-| `operation_instruction` | `operation_instructions` | nouveau |
-| `main_courante_jour` | `logbook_days` | nouveau |
-| `cloture_mc` | `logbook_closings` | nouveau |
-| `mc_evenement` | `logbook_entries` | nouveau |
-| `mc_evenement_navire` | `logbook_entry_vessel` | nouveau |
-| `rotation` | `rotations` | nouveau |
-| `releve_quart` | `shift_handovers` | nouveau |
-| `observation_surveillance` | `surveillance_observations` | remplace `observations` |
-| `relais` | `relays` | nouveau |
-| `consigne_permanente` | `standing_instructions` | nouveau |
-| `comptage_zone` | `zone_counts` | nouveau |
-| `regle_coherence` | `consistency_rules` | nouveau |
-| `compteur_verification` | `check_counters` | nouveau |
-| `veille_navire` | `watch_entries` | nouveau |
+| `categorie_operation` | `operation_categories` | créé (phase 3a) |
+| `compteur_operation` | `operation_counters` | créé (phase 3a) |
+| `operation` | `operations` | créé (phase 3a) |
+| `operation_contexte` | `operation_contexts` | créé (phase 3a) |
+| `operation_navire` | `operation_vessel` | créé (phase 3a) |
+| `operation_personnel` | `operation_user` | créé (phase 3a) |
+| `operation_evenement` | `operation_events` | créé (phase 3a) |
+| `operation_instruction` | `operation_instructions` | créé (phase 3a) |
+| `main_courante_jour` | `logbook_days` | créé (phase 3a) |
+| `cloture_mc` | `logbook_closings` | créé (phase 3a) |
+| `mc_evenement` | `logbook_entries` | créé (phase 3a) |
+| `mc_evenement_navire` | `logbook_entry_vessel` | créé (phase 3a) |
+| `rotation` | `rotations` | créé (phase 3a) |
+| `releve_quart` | `shift_handovers` | créé (phase 3a) |
+| `observation_surveillance` | `surveillance_observations` | créée (phase 3a) ; reflète l'ancienne `observations`, conservée |
+| `relais` | `relays` | créé (phase 3a) |
+| `consigne_permanente` | `standing_instructions` | créé (phase 3a) |
+| `comptage_zone` | `zone_counts` | créé (phase 3a) |
+| `regle_coherence` | `consistency_rules` | créé (phase 3a) |
+| `compteur_verification` | `check_counters` | créé (phase 3a) |
+| `veille_navire` | `watch_entries` | créé (phase 3a) |
 
 ### M6 MREP (miroir en lecture seule)
 

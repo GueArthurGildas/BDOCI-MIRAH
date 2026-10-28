@@ -1255,6 +1255,7 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 | `statut` | `status` | varchar(40) |
 | `cree_par` | `created_by` | bigint |
 | `cree_le` | `created_at` | timestamp(0) |
+| (absente) | `legacy_observation_id` | bigint, unique, ajout de l'implémentation |
 
 ### `relays` (spécification : `relais`)
 

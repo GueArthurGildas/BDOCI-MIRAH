@@ -11,6 +11,7 @@ class LogbookServiceProvider extends ModuleServiceProvider
 {
     protected function navigation(Navigation $navigation): void
     {
-        $navigation->add('logbook::logbook.title', 'logbook.index', 'icon-book', NavigationGroup::Surveillance, order: 40, permission: Permission::LogbookView->value);
+        $navigation->add('logbook::logbook.days.nav', 'logbook.days.index', 'icon-book', NavigationGroup::Surveillance, order: 40, permission: Permission::LogbookView->value);
+        $navigation->add('logbook::logbook.observations_nav', 'logbook.index', 'icon-eye', NavigationGroup::Surveillance, order: 41, permission: Permission::LogbookView->value);
     }
 }
