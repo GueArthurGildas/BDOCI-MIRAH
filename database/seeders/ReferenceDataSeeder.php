@@ -71,7 +71,7 @@ class ReferenceDataSeeder extends Seeder
         }
 
         foreach (self::INFRACTION_TYPES as [$code, $name, $legalBasis]) {
-            InfractionType::create(['code' => $code, 'name' => $name, 'legal_basis' => $legalBasis]);
+            InfractionType::create(['code' => $code, 'label' => $name, 'legal_basis' => $legalBasis]);
         }
 
         foreach (self::TEAMS as $team) {

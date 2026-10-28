@@ -11,6 +11,8 @@ class InfractionsServiceProvider extends ModuleServiceProvider
 {
     protected function navigation(Navigation $navigation): void
     {
-        $navigation->add('infractions::infractions.title', 'infractions.index', 'icon-alert-triangle', NavigationGroup::Controls, order: 20, permission: Permission::InfractionsView->value);
+        $navigation
+            ->add('infractions::infractions.title', 'infractions.index', 'icon-alert-triangle', NavigationGroup::Controls, order: 20, permission: Permission::InfractionsView->value)
+            ->add('infractions::infractions.nomenclature', 'infractions.types.index', 'icon-list', NavigationGroup::Administration, order: 60, permission: Permission::InfractionsManageTypes->value);
     }
 }

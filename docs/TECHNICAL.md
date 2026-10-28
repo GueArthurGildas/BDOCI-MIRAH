@@ -267,9 +267,10 @@ Les notifications utilisent la table `notifications` de Laravel (modèle fourni 
 | `Registry` | référentiels (pays, organismes, personnes, codes FAO, ports, listes externes, annuaire, agents) et priorité des sources | `registry.view`, `registry.manage` |
 | `Licenses` | liste et échéances ; alerte planifiée des licences à échéance | `licenses.view` |
 | `Inspections` | liste et détail | `inspections.view` |
-| `Infractions` | liste, détail, décisions et suites | `infractions.*` |
+| `Infractions` | dossier d'infraction (preuves, scellés, saisies, mesures conservatoires décidées par le Directeur, PV figé, suites, décisions, paiements, recours, récidive), nomenclature éditable par l'Admin | `infractions.*` |
 | `Catches` | déclarations et totaux par espèce | `catches.view` |
-| `Missions` | liste et détail | `missions.view` |
+| `Missions` | programmation, autorisation par type (V21), équipe et moyens, briefing, trace GPX PostGIS, unité rencontrée à trois niveaux, bilan calculé | `missions.*` |
+| `Witnesses` | signalements de témoins, exploitabilité, enquête, classement ou transmission, diffusion de la liste des navires autorisés | `witnesses.*` |
 | `Search` | recherche transversale (en-tête) | selon les sources |
 | `Notifications` | page des notifications de l'utilisateur et flux JSON lu par la balise de l'en-tête | utilisateur connecté |
 | `Communications` | messages (modèles, envoi, accusé), notes par boutons, règles d'envoi automatique (plafond par jour, condition d'arrêt), canaux et consentements WhatsApp ; commande planifiée `communications:dispatch` | `communications.*` |

@@ -38,6 +38,14 @@ return [
             'title' => 'Connectors',
             'description' => 'Freshness of the synchronised data and the catch variance threshold of the CSP (open points, provisional values)',
         ],
+        'infractions' => [
+            'title' => 'Repeat offenses',
+            'description' => 'Number of cases from which a vessel, captain or shipowner is a repeat offender (open point, provisional value H-6-1)',
+        ],
+        'missions' => [
+            'title' => 'Mission authorization',
+            'description' => 'The Director authorizes by default; tick a mission type to let the Team lead authorize it too (open point V21, provisional values H-6-2)',
+        ],
     ],
     'fields' => [
         'notifications_poll_seconds' => 'Check for new notifications every (seconds)',
@@ -63,5 +71,11 @@ return [
         'connectors_catch_variance_threshold_percent' => 'Catch variance threshold of the CSP (percent)',
         'alerts_licenses_expiring_second_warning_days' => 'A license expires (second alert, days)',
         'alerts_licenses_expiring_third_warning_days' => 'A license expires (third alert, days)',
+        'infractions_repeat_threshold' => 'Repeat offense from (infraction cases)',
+        'missions_team_lead_authorizes_maritime' => 'The Team lead may authorize missions of type: maritime',
+        'missions_team_lead_authorizes_lagoon' => 'The Team lead may authorize missions of type: lagoon',
+        'missions_team_lead_authorizes_continental' => 'The Team lead may authorize missions of type: continental',
+        'missions_team_lead_authorizes_port' => 'The Team lead may authorize missions of type: port',
+        'missions_team_lead_authorizes_aerial_drone' => 'The Team lead may authorize missions of type: aerial or drone',
     ],
 ];

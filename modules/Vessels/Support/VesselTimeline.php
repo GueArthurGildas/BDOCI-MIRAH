@@ -31,15 +31,15 @@ final class VesselTimeline
                 __('vessels::vessels.timeline.inspection', ['result' => $inspection->resultLabel()]),
                 $inspection->control_type,
             )))
-            ->concat($vessel->infractions->map(fn ($infraction) => self::entry(
-                $infraction->detected_at, 'icon-alert-triangle', 'danger',
-                __('vessels::vessels.timeline.infraction', ['reference' => $infraction->reference]),
-                $infraction->type->name,
+            ->concat($vessel->infractionCases->map(fn ($case) => self::entry(
+                $case->opened_at, 'icon-alert-triangle', 'danger',
+                __('vessels::vessels.timeline.infraction', ['reference' => $case->reference]),
+                $case->upheld->map(fn ($upheld) => $upheld->type->label)->implode(', ') ?: $case->facts,
             )))
-            ->concat($vessel->missions->map(fn ($mission) => self::entry(
-                $mission->starts_at, 'icon-flag', 'success',
-                __('vessels::vessels.timeline.mission', ['reference' => $mission->reference]),
-                $mission->objective,
+            ->concat($vessel->missions->filter(fn ($mission) => $mission->startsAt() !== null)->map(fn ($mission) => self::entry(
+                $mission->startsAt(), 'icon-flag', 'success',
+                __('vessels::vessels.timeline.mission', ['reference' => $mission->code]),
+                $mission->objectives,
             )))
             ->sortByDesc('date')
             ->values();

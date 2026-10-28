@@ -2,10 +2,9 @@
 
 namespace Tests\Feature\Kernel;
 
-use App\Enums\InfractionStatus;
 use App\Enums\MovementDirection;
 use App\Enums\ObservationStatus;
-use App\Models\Infraction;
+use App\Models\InfractionCase;
 use App\Models\Observation;
 use App\Models\Port;
 use App\Models\Vessel;
@@ -81,17 +80,18 @@ class ConvertedActionsTest extends TestCase
         $this->assertJournaled('observation.updated', 'logbook', $vessel->id, 'logbook.update', $actor->id);
     }
 
-    public function test_updating_an_infraction_writes_the_journal_and_nothing_when_forbidden(): void
+    public function test_updating_an_infraction_case_writes_the_journal_and_nothing_when_forbidden(): void
     {
-        $infraction = Infraction::factory()->create();
+        $case = InfractionCase::factory()->create();
+        $payload = ['facts' => 'Faits corrigés.', 'qualification' => 'established'];
 
         $this->signInAs(Role::Agent);
-        $this->patch(route('infractions.update', $infraction), ['status' => InfractionStatus::Closed->value])->assertForbidden();
+        $this->patch(route('infractions.update', $case), $payload)->assertForbidden();
         $this->assertSame(0, VesselEvent::count());
 
         $actor = $this->signInAs(Role::TeamLead);
-        $this->patch(route('infractions.update', $infraction), ['status' => InfractionStatus::Sanctioned->value])->assertRedirect();
+        $this->patch(route('infractions.update', $case), $payload)->assertRedirect();
 
-        $this->assertJournaled('infraction.updated', 'infractions', $infraction->vessel_id, 'infractions.update', $actor->id);
+        $this->assertJournaled('infraction.updated', 'infractions', $case->vessel_id, 'infractions.update', $actor->id);
     }
 }

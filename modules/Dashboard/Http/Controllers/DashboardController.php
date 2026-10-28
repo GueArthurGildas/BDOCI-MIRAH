@@ -2,14 +2,14 @@
 
 namespace Modules\Dashboard\Http\Controllers;
 
-use App\Enums\InfractionStatus;
+use App\Enums\InfractionCaseStatus;
 use App\Enums\LicenseStatus;
 use App\Enums\VesselStatus;
 use App\Enums\ZoneType;
 use App\Http\Controllers\Controller;
 use App\Models\DataSource;
-use App\Models\Infraction;
 use App\Models\ExternalInspection;
+use App\Models\InfractionCase;
 use App\Models\License;
 use App\Models\Observation;
 use App\Models\Vessel;
@@ -66,16 +66,16 @@ class DashboardController extends Controller
 
     private function infractionsChart(): array
     {
-        $counts = Infraction::toBase()->selectRaw('status, count(*) as total')->groupBy('status')->pluck('total', 'status');
-        $statuses = InfractionStatus::cases();
+        $counts = InfractionCase::toBase()->selectRaw('status, count(*) as total')->groupBy('status')->pluck('total', 'status');
+        $statuses = InfractionCaseStatus::cases();
 
         return [
             'type' => 'doughnut',
             'data' => [
-                'labels' => array_map(fn (InfractionStatus $status) => __($status->label()), $statuses),
+                'labels' => array_map(fn (InfractionCaseStatus $status) => __($status->label()), $statuses),
                 'datasets' => [[
-                    'data' => array_map(fn (InfractionStatus $status) => (int) $counts->get($status->value, 0), $statuses),
-                    'backgroundColor' => array_map(fn (InfractionStatus $status) => ThemeColor::hex($status->color()), $statuses),
+                    'data' => array_map(fn (InfractionCaseStatus $status) => (int) $counts->get($status->value, 0), $statuses),
+                    'backgroundColor' => array_map(fn (InfractionCaseStatus $status) => ThemeColor::hex($status->color()), $statuses),
                 ]],
             ],
             'options' => ['plugins' => ['legend' => ['position' => 'right']]],

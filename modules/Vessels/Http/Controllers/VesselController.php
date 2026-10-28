@@ -56,7 +56,7 @@ class VesselController extends Controller
             'movements.port',
             'observations.author',
             'externalInspections.port',
-            'infractions.type',
+            'infractionCases.upheld.type',
             'catchDeclarations.species',
             'missions',
             'flagCountry',

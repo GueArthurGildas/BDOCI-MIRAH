@@ -8,7 +8,9 @@ enum MissionType: string
 {
     use HasTranslatedLabel;
 
-    case SeaPatrol = 'sea_patrol';
-    case PortControl = 'port_control';
-    case JointOperation = 'joint_operation';
+    case Maritime = 'maritime';
+    case Lagoon = 'lagoon';
+    case Continental = 'continental';
+    case Port = 'port';
+    case AerialDrone = 'aerial_drone';
 }

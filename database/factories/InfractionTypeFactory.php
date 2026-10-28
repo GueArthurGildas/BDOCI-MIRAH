@@ -10,7 +10,8 @@ class InfractionTypeFactory extends Factory
     {
         return [
             'code' => fake()->unique()->bothify('INF-##'),
-            'name' => fake()->sentence(3),
+            'label' => fake()->sentence(3),
+            'is_active' => true,
         ];
     }
 }

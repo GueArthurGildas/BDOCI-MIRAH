@@ -63,6 +63,30 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
+    appeals {
+        int8 id PK
+        int8 decision_id FK
+        date filed_on
+        varchar outcome
+        timestamp created_at
+        timestamp updated_at
+    }
+    assets {
+        int8 id PK
+        varchar type
+        varchar label
+        bool is_active
+        timestamp created_at
+        timestamp updated_at
+    }
+    authorized_list_distributions {
+        int8 id PK
+        int8 authorized_list_publication_id FK
+        varchar recipient
+        timestamp sent_at
+        timestamp created_at
+        timestamp updated_at
+    }
     authorized_list_publications {
         int8 id PK
         int4 version
@@ -202,6 +226,16 @@ erDiagram
         text last_error
         bool is_stale
     }
+    decisions {
+        int8 id PK
+        int8 follow_up_id FK
+        varchar label
+        int8 decided_by FK
+        timestamp decided_at
+        bool is_penalty
+        timestamp created_at
+        timestamp updated_at
+    }
     declared_observed_catches {
         int8 id PK
         int8 inspection_id FK
@@ -315,6 +349,14 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
+    evidence_items {
+        int8 id PK
+        int8 infraction_case_id FK
+        varchar description
+        int8 document_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
     export_log {
         int8 id PK
         int8 user_id FK
@@ -396,28 +438,36 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
-    infraction_types {
-        int8 id PK
-        varchar code
-        varchar name
-        varchar legal_basis
-        timestamp created_at
-        timestamp updated_at
-    }
-    infractions {
+    infraction_cases {
         int8 id PK
         varchar reference
         int8 vessel_id FK
+        int8 captain_id FK
+        int8 shipowner_id FK
+        int8 operation_id FK
         int8 inspection_id FK
-        int8 infraction_type_id FK
-        timestamp detected_at
+        int8 mission_id FK
+        int8 alert_id
+        int8 witness_report_id FK
+        varchar qualification
         text facts
-        text evidence
+        text captain_observations
         varchar status
-        text decision
-        varchar sanction
+        int8 opened_by FK
+        timestamp opened_at
         timestamp created_at
         timestamp updated_at
+    }
+    infraction_types {
+        int8 id PK
+        varchar code
+        varchar label
+        varchar legal_basis
+        timestamp created_at
+        timestamp updated_at
+        varchar severity
+        varchar potential_penalty
+        bool is_active
     }
     inspection_documents {
         int8 id PK
@@ -443,19 +493,6 @@ erDiagram
         varchar provision
         varchar stamp
         text measures
-        timestamp created_at
-        timestamp updated_at
-    }
-    inspections {
-        int8 id PK
-        int8 vessel_id FK
-        int8 port_id FK
-        varchar external_reference
-        varchar type
-        timestamp inspected_at
-        varchar inspectors
-        varchar result
-        text findings
         timestamp created_at
         timestamp updated_at
     }
@@ -550,7 +587,7 @@ erDiagram
         varchar reason
         date revoked_on
         int8 decided_by FK
-        int8 infraction_case_id
+        int8 infraction_case_id FK
         bool is_repeat_offense
         timestamp created_at
         timestamp updated_at
@@ -566,7 +603,7 @@ erDiagram
         date started_on
         date planned_end_on
         date lifted_on
-        int8 infraction_case_id
+        int8 infraction_case_id FK
         int8 vms_failure_id
         int8 operation_id FK
         int8 proposed_by FK
@@ -590,6 +627,15 @@ erDiagram
         varchar status
         int8 entered_by FK
         varchar origin
+    }
+    litigation_follow_ups {
+        int8 id PK
+        int8 infraction_case_id FK
+        varchar type
+        timestamp opened_at
+        timestamp closed_at
+        timestamp created_at
+        timestamp updated_at
     }
     logbook_closings {
         int8 logbook_day_id FK
@@ -648,24 +694,100 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
-    mission_user {
+    mission_assets {
+        int8 id PK
         int8 mission_id FK
-        int8 user_id FK
+        int8 asset_id FK
+        numeric engine_hours
+        numeric nautical_miles
+        numeric planned_fuel_l
+        numeric consumed_fuel_l
+        varchar state
+        text breakdown
+        numeric budget
+        timestamp created_at
+        timestamp updated_at
     }
-    mission_vessel {
+    mission_authorizations {
+        int8 id PK
         int8 mission_id FK
-        int8 vessel_id FK
+        int8 authorized_by FK
+        varchar authorizing_role
+        timestamp authorized_at
+        timestamp created_at
+        timestamp updated_at
+    }
+    mission_briefings {
+        int8 mission_id FK
+        timestamp held_at
+        text notes
+    }
+    mission_debriefings {
+        int8 mission_id FK
+        timestamp held_at
+        text notes
+    }
+    mission_events {
+        int8 id PK
+        int8 mission_id FK
+        timestamp occurred_at
+        text body
+        timestamp created_at
+        timestamp updated_at
+    }
+    mission_participants {
+        int8 id PK
+        int8 mission_id FK
+        int8 agent_id FK
+        varchar role
+        varchar agency
+        varchar grade
+        bool is_mission_lead
+        timestamp created_at
+        timestamp updated_at
+    }
+    mission_preparations {
+        int8 mission_id FK
+        jsonb checklist
+    }
+    mission_reviews {
+        int8 mission_id FK
+        int4 agents_count
+        numeric duration_hours
+        numeric nautical_miles
+        numeric fuel_l
+        int4 sighted_units_count
+        int4 approached_units_count
+        int4 inspected_units_count
+        int4 compliant_count
+        int4 non_compliant_count
+        int4 infractions_count
+        int4 violation_reports_count
+        int4 diversions_count
+        int4 immobilizations_count
+        int4 seizures_count
+        int4 arrests_count
+        int4 penalties_count
+        timestamp calculated_at
     }
     missions {
         int8 id PK
-        varchar reference
-        int8 zone_id FK
+        varchar code
+        varchar nature
         varchar type
-        text objective
-        timestamp starts_at
-        timestamp ends_at
+        varchar origin
+        text objectives
+        timestamp planned_start_at
+        timestamp planned_end_at
+        timestamp actual_start_at
+        timestamp actual_end_at
+        jsonb zones
+        jsonb points_gps
         varchar status
-        text results
+        int8 operation_id FK
+        int8 alert_id
+        int8 witness_report_id FK
+        int8 created_by FK
         timestamp created_at
         timestamp updated_at
     }
@@ -783,6 +905,38 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
+    observed_units {
+        int8 id PK
+        int8 mission_id FK
+        int8 vessel_id FK
+        varchar level
+        varchar sighting_source
+        varchar recorded_name
+        varchar recorded_marks
+        varchar observed_activity
+        numeric latitude
+        numeric longitude
+        timestamp observed_at
+        int8 inspection_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
+    observer_boardings {
+        int8 id PK
+        int8 mission_id FK
+        int8 observer_id FK
+        int8 vessel_id FK
+        date started_on
+        date ended_on
+        timestamp created_at
+        timestamp updated_at
+    }
+    observers {
+        int8 id PK
+        int8 person_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
     operation_archives {
         int8 operation_id FK
         timestamp archived_at
@@ -852,6 +1006,24 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
+    patrol_tracks {
+        int8 id PK
+        int8 mission_id FK
+        int8 document_id FK
+        jsonb zones_crossed
+        timestamp created_at
+        timestamp updated_at
+        geometry geometry
+    }
+    payments {
+        int8 id PK
+        int8 decision_id FK
+        numeric amount
+        bpchar currency
+        date paid_on
+        timestamp created_at
+        timestamp updated_at
+    }
     people {
         int8 id PK
         varchar name
@@ -911,6 +1083,16 @@ erDiagram
         numeric speed_knots
         int2 course
     }
+    precautionary_measures {
+        int8 id PK
+        int8 infraction_case_id FK
+        varchar type
+        int8 proposed_by FK
+        int8 decided_by FK
+        timestamp decided_at
+        timestamp created_at
+        timestamp updated_at
+    }
     presentations {
         int8 id PK
         varchar code
@@ -946,6 +1128,49 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
+    report_decisions {
+        int8 id PK
+        int8 witness_report_id FK
+        varchar decision
+        int8 decided_by FK
+        timestamp decided_at
+        timestamp created_at
+        timestamp updated_at
+    }
+    report_investigations {
+        int8 witness_report_id FK
+        jsonb elements
+        text notes
+    }
+    report_usabilities {
+        int8 witness_report_id FK
+        bool is_usable
+        text interview_report
+    }
+    reported_vessels {
+        int8 id PK
+        int8 witness_report_id FK
+        int2 rank
+        int8 vessel_id FK
+        numeric latitude
+        numeric longitude
+        varchar name
+        varchar flag
+        varchar registration_port
+        varchar type
+        varchar ircs
+        varchar registration
+        varchar other_marks
+        varchar gear
+        bool is_fishing
+        varchar route
+        bool is_drifting
+        bool is_resupplying
+        bool is_transshipping
+        text description
+        timestamp created_at
+        timestamp updated_at
+    }
     role_user {
         int8 user_id FK
         int8 role_id FK
@@ -974,6 +1199,22 @@ erDiagram
         varchar format
         int8 recipient_id FK
         bool is_active
+        timestamp created_at
+        timestamp updated_at
+    }
+    seals {
+        int8 id PK
+        int8 infraction_case_id FK
+        varchar number
+        timestamp placed_at
+        timestamp created_at
+        timestamp updated_at
+    }
+    seizures {
+        int8 id PK
+        int8 infraction_case_id FK
+        varchar item
+        varchar decision
         timestamp created_at
         timestamp updated_at
     }
@@ -1069,6 +1310,14 @@ erDiagram
         timestamp transshipped_at
         varchar origin
         jsonb lines
+        timestamp created_at
+        timestamp updated_at
+    }
+    upheld_infractions {
+        int8 id PK
+        int8 infraction_case_id FK
+        int8 infraction_type_id FK
+        timestamp upheld_at
         timestamp created_at
         timestamp updated_at
     }
@@ -1209,6 +1458,16 @@ erDiagram
         varchar fao_identifier
         bool license_not_provided
     }
+    violation_reports {
+        int8 id PK
+        int8 infraction_case_id FK
+        varchar number
+        timestamp notified_at
+        bool is_signature_refused
+        int8 document_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
     vms_compatibility_certificates {
         int8 id PK
         int8 vessel_id FK
@@ -1228,6 +1487,28 @@ erDiagram
         int8 operation_id FK
         int8 entry_exit_alert_id FK
         int8 decided_by FK
+        timestamp created_at
+        timestamp updated_at
+    }
+    witness_reports {
+        int8 id PK
+        timestamp received_at
+        int8 witness_id FK
+        numeric latitude
+        numeric longitude
+        varchar channel
+        int8 operation_id FK
+        int8 entered_by FK
+        varchar status
+        timestamp created_at
+        timestamp updated_at
+    }
+    witnesses {
+        int8 id PK
+        varchar name
+        varchar category
+        varchar email
+        varchar phone
         timestamp created_at
         timestamp updated_at
     }
@@ -1256,7 +1537,10 @@ erDiagram
     action_catalog ||--o{ ai_agent_actions : "action_id"
     action_catalog ||--o{ permission_grants : "action_id"
     agents ||--o{ accreditations : "agent_id"
+    agents ||--o{ mission_participants : "agent_id"
     ai_agent_actions ||--o{ internal_notes : "ai_agent_action_id"
+    assets ||--o{ mission_assets : "asset_id"
+    authorized_list_publications ||--o{ authorized_list_distributions : "authorized_list_publication_id"
     communication_channels ||--o{ sent_messages : "communication_channel_id"
     countries ||--o{ contacts : "country_id"
     countries ||--o{ institutions : "country_id"
@@ -1270,13 +1554,18 @@ erDiagram
     data_sources ||--o{ data_source_errors : "data_source_id"
     data_sources ||--o{ data_source_rejections : "data_source_id"
     data_sources ||--o{ data_source_syncs : "data_source_id"
+    decisions ||--o{ appeals : "decision_id"
+    decisions ||--o{ payments : "decision_id"
     dispatch_rules ||--o{ sent_messages : "dispatch_rule_id"
     documents ||--o{ authorized_list_publications : "document_id"
     documents ||--o{ document_links : "document_id"
+    documents ||--o{ evidence_items : "document_id"
     documents ||--o{ license_documents : "document_id"
     documents ||--o{ license_imports : "document_id"
     documents ||--o{ license_registers : "document_id"
     documents ||--o{ logbook_days : "pdf_document_id"
+    documents ||--o{ patrol_tracks : "document_id"
+    documents ||--o{ violation_reports : "document_id"
     eez_declarations ||--o{ eez_declaration_catches : "eez_declaration_id"
     eez_declarations ||--o{ eez_declaration_checks : "eez_declaration_id"
     eez_declarations ||--o{ entry_exit_alerts : "eez_declaration_id"
@@ -1284,18 +1573,29 @@ erDiagram
     eez_declarations ||--o{ entry_exit_links : "exit_declaration_id"
     entry_exit_alerts ||--o{ watch_entries : "entry_exit_alert_id"
     external_inspections ||--o{ declared_observed_catches : "inspection_id"
+    external_inspections ||--o{ infraction_cases : "inspection_id"
     external_inspections ||--o{ inspection_documents : "inspection_id"
     external_inspections ||--o{ inspection_gears : "inspection_id"
     external_inspections ||--o{ inspection_infractions : "inspection_id"
     external_inspections ||--o{ mrep_port_calls : "inspection_id"
+    external_inspections ||--o{ observed_units : "inspection_id"
     external_lists ||--o{ external_list_vessel : "external_list_id"
     gears ||--o{ gear_license : "gear_id"
     gears ||--o{ inspection_gears : "gear_id"
-    infraction_types ||--o{ infractions : "infraction_type_id"
-    inspections ||--o{ infractions : "inspection_id"
+    infraction_cases ||--o{ evidence_items : "infraction_case_id"
+    infraction_cases ||--o{ license_revocations : "infraction_case_id"
+    infraction_cases ||--o{ license_suspensions : "infraction_case_id"
+    infraction_cases ||--o{ litigation_follow_ups : "infraction_case_id"
+    infraction_cases ||--o{ precautionary_measures : "infraction_case_id"
+    infraction_cases ||--o{ seals : "infraction_case_id"
+    infraction_cases ||--o{ seizures : "infraction_case_id"
+    infraction_cases ||--o{ upheld_infractions : "infraction_case_id"
+    infraction_cases ||--o{ violation_reports : "infraction_case_id"
+    infraction_types ||--o{ upheld_infractions : "infraction_type_id"
     institutions ||--o{ contacts : "institution_id"
     institutions ||--o{ external_authorizations : "institution_id"
     institutions ||--o{ external_lists : "institution_id"
+    legal_entities ||--o{ infraction_cases : "shipowner_id"
     legal_entities ||--o{ people : "legal_entity_id"
     legal_entities ||--o{ vessel_actors : "legal_entity_id"
     license_imports ||--o{ license_import_lines : "license_import_id"
@@ -1307,6 +1607,7 @@ erDiagram
     licenses ||--o{ license_species : "license_id"
     licenses ||--o{ license_suspensions : "license_id"
     licenses ||--o{ license_zone : "license_id"
+    litigation_follow_ups ||--o{ decisions : "follow_up_id"
     logbook_days ||--o{ logbook_closings : "logbook_day_id"
     logbook_days ||--o{ logbook_entries : "logbook_day_id"
     logbook_entries ||--o{ internal_notes : "logbook_entry_id"
@@ -1317,18 +1618,31 @@ erDiagram
     logbook_entries ||--o{ watch_entries : "logbook_entry_id"
     message_templates ||--o{ dispatch_rules : "message_template_id"
     message_templates ||--o{ sent_messages : "message_template_id"
-    missions ||--o{ mission_user : "mission_id"
-    missions ||--o{ mission_vessel : "mission_id"
+    missions ||--o{ infraction_cases : "mission_id"
+    missions ||--o{ mission_assets : "mission_id"
+    missions ||--o{ mission_authorizations : "mission_id"
+    missions ||--o{ mission_briefings : "mission_id"
+    missions ||--o{ mission_debriefings : "mission_id"
+    missions ||--o{ mission_events : "mission_id"
+    missions ||--o{ mission_participants : "mission_id"
+    missions ||--o{ mission_preparations : "mission_id"
+    missions ||--o{ mission_reviews : "mission_id"
+    missions ||--o{ observed_units : "mission_id"
+    missions ||--o{ observer_boardings : "mission_id"
+    missions ||--o{ patrol_tracks : "mission_id"
     module_registry ||--o{ action_catalog : "module_id"
     module_registry ||--o{ vessel_events : "module_id"
     mrep_dpeps ||--o{ mrep_entry_decisions : "dpep_id"
     mrep_dpeps ||--o{ mrep_notifications : "dpep_id"
     mrep_dpeps ||--o{ mrep_port_calls : "dpep_id"
     observations ||--o{ surveillance_observations : "legacy_observation_id"
+    observers ||--o{ observer_boardings : "observer_id"
     operation_categories ||--o{ operation_counters : "category_id"
     operation_categories ||--o{ operations : "category_id"
+    operations ||--o{ infraction_cases : "operation_id"
     operations ||--o{ license_suspensions : "operation_id"
     operations ||--o{ logbook_entries : "operation_id"
+    operations ||--o{ missions : "operation_id"
     operations ||--o{ operation_archives : "operation_id"
     operations ||--o{ operation_contexts : "operation_id"
     operations ||--o{ operation_events : "operation_id"
@@ -1337,12 +1651,14 @@ erDiagram
     operations ||--o{ operation_vessel : "operation_id"
     operations ||--o{ sent_messages : "operation_id"
     operations ||--o{ watch_entries : "operation_id"
+    operations ||--o{ witness_reports : "operation_id"
+    people ||--o{ infraction_cases : "captain_id"
+    people ||--o{ observers : "person_id"
     people ||--o{ vessel_actors : "person_id"
     permission_groups ||--o{ dispatch_rules : "editable_by_permission_group_id"
     permission_groups ||--o{ permission_grants : "permission_group_id"
     permission_groups ||--o{ permission_group_user : "permission_group_id"
     ports ||--o{ external_inspections : "port_id"
-    ports ||--o{ inspections : "port_id"
     ports ||--o{ landings : "port_id"
     ports ||--o{ movements : "port_id"
     ports ||--o{ mrep_dpeps : "port_id"
@@ -1372,9 +1688,11 @@ erDiagram
     users ||--o{ comments : "user_id"
     users ||--o{ data_source_errors : "resolved_by"
     users ||--o{ data_source_rejections : "handled_by"
+    users ||--o{ decisions : "decided_by"
     users ||--o{ documents : "filed_by"
     users ||--o{ eez_declarations : "entered_by"
     users ||--o{ export_log : "user_id"
+    users ||--o{ infraction_cases : "opened_by"
     users ||--o{ internal_notes : "author_id"
     users ||--o{ internal_notes : "recipient_user_id"
     users ||--o{ license_imports : "created_by"
@@ -1384,7 +1702,8 @@ erDiagram
     users ||--o{ licenses : "entered_by"
     users ||--o{ logbook_closings : "closed_by"
     users ||--o{ logbook_entries : "entered_by"
-    users ||--o{ mission_user : "user_id"
+    users ||--o{ mission_authorizations : "authorized_by"
+    users ||--o{ missions : "created_by"
     users ||--o{ movements : "recorded_by"
     users ||--o{ observations : "author_id"
     users ||--o{ operation_instructions : "given_by"
@@ -1392,7 +1711,10 @@ erDiagram
     users ||--o{ operations : "closed_by"
     users ||--o{ operations : "created_by"
     users ||--o{ permission_group_user : "user_id"
+    users ||--o{ precautionary_measures : "decided_by"
+    users ||--o{ precautionary_measures : "proposed_by"
     users ||--o{ relays : "read_acknowledged_by"
+    users ||--o{ report_decisions : "decided_by"
     users ||--o{ role_user : "user_id"
     users ||--o{ scheduled_reports : "recipient_id"
     users ||--o{ sent_messages : "user_id"
@@ -1402,6 +1724,7 @@ erDiagram
     users ||--o{ vessel_events : "user_id"
     users ||--o{ vessel_sources : "settled_by"
     users ||--o{ watch_entries : "decided_by"
+    users ||--o{ witness_reports : "entered_by"
     vessel_types ||--o{ vessels : "vessel_type_id"
     vessels ||--o{ catch_declarations : "vessel_id"
     vessels ||--o{ check_counters : "vessel_id"
@@ -1411,8 +1734,7 @@ erDiagram
     vessels ||--o{ external_inspections : "vessel_id"
     vessels ||--o{ external_list_vessel : "vessel_id"
     vessels ||--o{ fnp_statuses : "vessel_id"
-    vessels ||--o{ infractions : "vessel_id"
-    vessels ||--o{ inspections : "vessel_id"
+    vessels ||--o{ infraction_cases : "vessel_id"
     vessels ||--o{ internal_notes : "vessel_id"
     vessels ||--o{ landings : "vessel_id"
     vessels ||--o{ license_documents : "vessel_id"
@@ -1420,13 +1742,15 @@ erDiagram
     vessels ||--o{ licenses : "vessel_id"
     vessels ||--o{ logbook_entry_vessel : "vessel_id"
     vessels ||--o{ missed_declarations : "vessel_id"
-    vessels ||--o{ mission_vessel : "vessel_id"
     vessels ||--o{ movements : "vessel_id"
     vessels ||--o{ mrep_dpeps : "vessel_id"
     vessels ||--o{ mrep_gies_refusals : "vessel_id"
     vessels ||--o{ observations : "vessel_id"
+    vessels ||--o{ observed_units : "vessel_id"
+    vessels ||--o{ observer_boardings : "vessel_id"
     vessels ||--o{ operation_vessel : "vessel_id"
     vessels ||--o{ positions : "vessel_id"
+    vessels ||--o{ reported_vessels : "vessel_id"
     vessels ||--o{ sent_messages : "vessel_id"
     vessels ||--o{ standing_instructions : "vessel_id"
     vessels ||--o{ surveillance_observations : "vessel_id"
@@ -1443,9 +1767,15 @@ erDiagram
     vessels ||--o{ vessel_sources : "vessel_id"
     vessels ||--o{ vms_compatibility_certificates : "vessel_id"
     vessels ||--o{ watch_entries : "vessel_id"
+    witness_reports ||--o{ infraction_cases : "witness_report_id"
+    witness_reports ||--o{ missions : "witness_report_id"
+    witness_reports ||--o{ report_decisions : "witness_report_id"
+    witness_reports ||--o{ report_investigations : "witness_report_id"
+    witness_reports ||--o{ report_usabilities : "witness_report_id"
+    witness_reports ||--o{ reported_vessels : "witness_report_id"
+    witnesses ||--o{ witness_reports : "witness_id"
     zones ||--o{ catch_declarations : "zone_id"
     zones ||--o{ license_zone : "zone_id"
-    zones ||--o{ missions : "zone_id"
     zones ||--o{ observations : "zone_id"
     zones ||--o{ permission_grants : "zone_id"
     zones ||--o{ ports : "zone_id"

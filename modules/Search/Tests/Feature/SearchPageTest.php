@@ -2,7 +2,7 @@
 
 namespace Modules\Search\Tests\Feature;
 
-use App\Models\Infraction;
+use App\Models\InfractionCase;
 use App\Models\Observation;
 use App\Models\Vessel;
 use App\Support\Authorization\Permission;
@@ -25,12 +25,12 @@ class SearchPageTest extends TestCase
     {
         $this->signInAs(Role::TeamLead);
         $vessel = Vessel::factory()->create(['name' => 'MARAHOUÉ 12']);
-        Infraction::factory()->for($vessel)->create(['reference' => 'PV-2026-555']);
+        InfractionCase::factory()->for($vessel)->create(['reference' => 'DI-2026-5555']);
 
         $this->get('/search?q=marahoué')
             ->assertOk()
             ->assertSee(route('vessels.show', $vessel))
-            ->assertSee('PV-2026-555');
+            ->assertSee('DI-2026-5555');
     }
 
     public function test_results_only_include_sources_the_user_may_see(): void

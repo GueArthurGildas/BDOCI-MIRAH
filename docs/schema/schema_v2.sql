@@ -1548,6 +1548,7 @@ CREATE TABLE infraction_cases (
     alert_id bigint,
     witness_report_id bigint,
     qualification varchar(40) NOT NULL DEFAULT 'presumed' CHECK (qualification IN ('presumed', 'established')),
+    facts text,
     captain_observations text,
     status varchar(40) NOT NULL DEFAULT 'open' CHECK (status IN ('open', 'instruction', 'decision', 'closed')),
     opened_by bigint,

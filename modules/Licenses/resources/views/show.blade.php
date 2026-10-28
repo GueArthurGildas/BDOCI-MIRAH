@@ -117,6 +117,7 @@
                         @can(App\Support\Authorization\Permission::LicensesSuspend->value)
                             <form method="POST" action="{{ route('licenses.suspensions.store', $license) }}" class="p-3">
                                 @csrf
+                                <input type="hidden" name="infraction_case_id" value="{{ request('infraction_case') }}">
                                 <p class="text-muted f-12">{{ __('licenses::licenses.suspension.rule', ['months' => config('surveillance.license_suspension_max_months')]) }}</p>
                                 <x-ui.form.select name="reason" :label="__('licenses::licenses.suspension.reason')" :options="App\Enums\SuspensionReason::options()" required />
                                 <x-ui.form.input name="started_on" type="date" :label="__('licenses::licenses.suspension.started_on')" :value="today()->toDateString()" required />
@@ -139,6 +140,7 @@
                         @can(App\Support\Authorization\Permission::LicensesRevoke->value)
                             <form method="POST" action="{{ route('licenses.revocation.store', $license) }}">
                                 @csrf
+                                <input type="hidden" name="infraction_case_id" value="{{ request('infraction_case') }}">
                                 <x-ui.form.input name="reason" :label="__('licenses::licenses.revocation.reason')" maxlength="255" required />
                                 <x-ui.form.input name="revoked_on" type="date" :label="__('licenses::licenses.revocation.revoked_on')" :value="today()->toDateString()" required />
                                 <x-ui.form.checkbox name="is_repeat_offense" :label="__('licenses::licenses.revocation.is_repeat_offense')" />

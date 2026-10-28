@@ -18,7 +18,11 @@
 | `connectors.sync` | `administration` | `update` | Synchroniser les connecteurs |
 | `connectors.view` | `administration` | `view` | Consulter les connecteurs |
 | `dashboard.view` | `dashboard` | `view` | Consulter le tableau de bord |
+| `infractions.create` | `infractions` | `create` | Ouvrir des dossiers d'infraction |
+| `infractions.decide` | `infractions` | `update` | Décider des suites, enregistrer paiements et recours |
+| `infractions.decide_measures` | `infractions` | `update` | Décider des mesures conservatoires (Directeur) |
 | `infractions.manage` | `infractions` | `update` | Gérer les infractions |
+| `infractions.manage_types` | `infractions` | `update` | Gérer la nomenclature des infractions |
 | `infractions.view` | `infractions` | `view` | Consulter les infractions |
 | `inspections.view` | `inspections` | `view` | Consulter les inspections |
 | `licenses.import` | `licenses` | `update` | Importer et saisir des licences par lot |
@@ -32,6 +36,9 @@
 | `logbook.create` | `logbook` | `create` | Saisir des observations |
 | `logbook.manage` | `logbook` | `update` | Suivre les observations |
 | `logbook.view` | `logbook` | `view` | Consulter la main courante |
+| `missions.authorize` | `missions` | `update` | Autoriser des missions |
+| `missions.authorize_as_director` | `missions` | `update` | Autoriser des missions au titre du Directeur |
+| `missions.create` | `missions` | `create` | Programmer des missions |
 | `missions.manage` | `missions` | `update` | Gérer les missions |
 | `missions.view` | `missions` | `view` | Consulter les missions |
 | `movements.create` | `movements` | `create` | Saisir des mouvements |
@@ -61,6 +68,9 @@
 | `watch.create` | `watch` | `create` | Saisir des observations, relais et suivis renforcés |
 | `watch.manage` | `watch` | `update` | Planifier les rotations, consignes permanentes et listes de veille |
 | `watch.view` | `watch` | `view` | Consulter le tableau du matin et la surveillance de quart |
+| `witnesses.create` | `witnesses` | `create` | Enregistrer des signalements de témoins |
+| `witnesses.manage` | `witnesses` | `update` | Instruire, classer ou transmettre les signalements et diffuser la liste des navires autorisés |
+| `witnesses.view` | `witnesses` | `view` | Consulter les signalements de témoins |
 
 ## Actions nommées
 
@@ -84,7 +94,22 @@ Actions exécutées par l'`ActionRunner` (transaction, droit, événement, état
 | `communications.send_message` | `communications.send` | `Modules\Communications\Actions\SendMessage` |
 | `communications.send_prepared_message` | `communications.send` | `Modules\Communications\Actions\SendPreparedMessage` |
 | `communications.update_channel` | `communications.manage_dispatch` | `Modules\Communications\Actions\UpdateCommunicationChannel` |
-| `infractions.update` | `infractions.manage` | `Modules\Infractions\Actions\UpdateInfraction` |
+| `infractions.add_evidence` | `infractions.manage` | `Modules\Infractions\Actions\AddEvidenceItem` |
+| `infractions.close` | `infractions.decide` | `Modules\Infractions\Actions\CloseInfractionCase` |
+| `infractions.decide_measure` | `infractions.decide_measures` | `Modules\Infractions\Actions\DecidePrecautionaryMeasure` |
+| `infractions.file_appeal` | `infractions.decide` | `Modules\Infractions\Actions\FileAppeal` |
+| `infractions.open` | `infractions.create` | `Modules\Infractions\Actions\OpenInfractionCase` |
+| `infractions.open_follow_up` | `infractions.decide` | `Modules\Infractions\Actions\OpenLitigationFollowUp` |
+| `infractions.propose_measure` | `infractions.manage` | `Modules\Infractions\Actions\ProposePrecautionaryMeasure` |
+| `infractions.record_appeal_outcome` | `infractions.decide` | `Modules\Infractions\Actions\RecordAppealOutcome` |
+| `infractions.record_decision` | `infractions.decide` | `Modules\Infractions\Actions\RecordDecision` |
+| `infractions.record_payment` | `infractions.decide` | `Modules\Infractions\Actions\RecordPayment` |
+| `infractions.record_seal` | `infractions.manage` | `Modules\Infractions\Actions\RecordSeal` |
+| `infractions.record_seizure` | `infractions.manage` | `Modules\Infractions\Actions\RecordSeizure` |
+| `infractions.record_violation_report` | `infractions.manage` | `Modules\Infractions\Actions\RecordViolationReport` |
+| `infractions.save_type` | `infractions.manage_types` | `Modules\Infractions\Actions\SaveInfractionType` |
+| `infractions.update` | `infractions.manage` | `Modules\Infractions\Actions\UpdateInfractionCase` |
+| `infractions.uphold` | `infractions.manage` | `Modules\Infractions\Actions\UpholdInfraction` |
 | `licenses.attach_document` | `licenses.manage` | `Modules\Licenses\Actions\AttachLicenseDocument` |
 | `licenses.cancel_import` | `licenses.import` | `Modules\Licenses\Actions\CancelLicenseImport` |
 | `licenses.generate_register` | `licenses.publish` | `Modules\Licenses\Actions\GenerateLicenseRegister` |
@@ -108,6 +133,22 @@ Actions exécutées par l'`ActionRunner` (transaction, droit, événement, état
 | `logbook.rectify_entry` | `logbook.create` | `Modules\Logbook\Actions\RectifyLogbookEntry` |
 | `logbook.set_entry_handling` | `logbook.manage` | `Modules\Logbook\Actions\SetLogbookEntryHandling` |
 | `logbook.update` | `logbook.manage` | `Modules\Logbook\Actions\UpdateObservation` |
+| `missions.add_event` | `missions.manage` | `Modules\Missions\Actions\AddMissionEvent` |
+| `missions.add_participant` | `missions.manage` | `Modules\Missions\Actions\AddMissionParticipant` |
+| `missions.assign_asset` | `missions.manage` | `Modules\Missions\Actions\AssignMissionAsset` |
+| `missions.authorize` | `missions.authorize` | `Modules\Missions\Actions\AuthorizeMission` |
+| `missions.close` | `missions.manage` | `Modules\Missions\Actions\CloseMission` |
+| `missions.complete` | `missions.manage` | `Modules\Missions\Actions\CompleteMission` |
+| `missions.compute_review` | `missions.manage` | `Modules\Missions\Actions\ComputeMissionReview` |
+| `missions.import_track` | `missions.manage` | `Modules\Missions\Actions\ImportPatrolTrack` |
+| `missions.record_asset_usage` | `missions.manage` | `Modules\Missions\Actions\RecordAssetUsage` |
+| `missions.record_observed_unit` | `missions.manage` | `Modules\Missions\Actions\RecordObservedUnit` |
+| `missions.record_observer_boarding` | `missions.manage` | `Modules\Missions\Actions\RecordObserverBoarding` |
+| `missions.save_asset` | `missions.manage` | `Modules\Missions\Actions\SaveAsset` |
+| `missions.save_briefing` | `missions.manage` | `Modules\Missions\Actions\SaveMissionBriefing` |
+| `missions.save_debriefing` | `missions.manage` | `Modules\Missions\Actions\SaveMissionDebriefing` |
+| `missions.schedule` | `missions.create` | `Modules\Missions\Actions\ScheduleMission` |
+| `missions.start` | `missions.manage` | `Modules\Missions\Actions\StartMission` |
 | `movements.acknowledge_eez_declaration` | `movements.declare` | `Modules\Movements\Actions\AcknowledgeEezDeclaration` |
 | `movements.close_eez_declaration` | `movements.declare` | `Modules\Movements\Actions\CloseEezDeclaration` |
 | `movements.close_entry_exit_alert` | `movements.declare` | `Modules\Movements\Actions\CloseEntryExitAlert` |
@@ -147,3 +188,9 @@ Actions exécutées par l'`ActionRunner` (transaction, droit, événement, état
 | `watch.record_observation` | `watch.create` | `Modules\Watch\Actions\RecordSurveillanceObservation` |
 | `watch.set_observation_status` | `watch.create` | `Modules\Watch\Actions\SetSurveillanceObservationStatus` |
 | `watch.start_handover` | `watch.create` | `Modules\Watch\Actions\StartShiftHandover` |
+| `witnesses.decide` | `witnesses.manage` | `Modules\Witnesses\Actions\DecideWitnessReport` |
+| `witnesses.link_operation` | `witnesses.create` | `Modules\Witnesses\Actions\LinkReportOperation` |
+| `witnesses.record` | `witnesses.create` | `Modules\Witnesses\Actions\RecordWitnessReport` |
+| `witnesses.record_distribution` | `witnesses.manage` | `Modules\Witnesses\Actions\RecordAuthorizedListDistribution` |
+| `witnesses.save_investigation` | `witnesses.manage` | `Modules\Witnesses\Actions\SaveReportInvestigation` |
+| `witnesses.save_usability` | `witnesses.manage` | `Modules\Witnesses\Actions\SaveReportUsability` |

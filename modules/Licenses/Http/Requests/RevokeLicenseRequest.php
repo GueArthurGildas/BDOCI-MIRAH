@@ -12,6 +12,7 @@ class RevokeLicenseRequest extends FormRequest
             'reason' => ['required', 'string', 'max:255'],
             'revoked_on' => ['required', 'date'],
             'is_repeat_offense' => ['nullable', 'boolean'],
+            'infraction_case_id' => ['nullable', 'exists:infraction_cases,id'],
         ];
     }
 

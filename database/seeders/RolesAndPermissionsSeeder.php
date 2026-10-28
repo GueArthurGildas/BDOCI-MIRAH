@@ -14,7 +14,7 @@ class RolesAndPermissionsSeeder extends Seeder
 {
     private const SYSTEM_GROUPS = [
         'fnp_license_management' => [Permission::LicensesView, Permission::LicensesManage, Permission::LicensesImport, Permission::LicensesValidate, Permission::LicensesPublish],
-        'infraction_investigation' => [Permission::InfractionsView, Permission::InfractionsManage],
+        'infraction_investigation' => [Permission::InfractionsView, Permission::InfractionsManage, Permission::InfractionsCreate],
         'surveillance_opinion' => [],
         'automatic_dispatch' => [Permission::CommunicationsManageDispatch],
         'trigger_ai_agent' => [Permission::CommunicationsTriggerAiAgent],

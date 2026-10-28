@@ -75,4 +75,14 @@ enum Permission: string
     case LicensesSuspend = 'licenses.suspend';
     case LicensesRevoke = 'licenses.revoke';
     case LicensesPublish = 'licenses.publish';
+    case InfractionsCreate = 'infractions.create';
+    case InfractionsDecide = 'infractions.decide';
+    case InfractionsDecideMeasures = 'infractions.decide_measures';
+    case InfractionsManageTypes = 'infractions.manage_types';
+    case MissionsCreate = 'missions.create';
+    case MissionsAuthorize = 'missions.authorize';
+    case MissionsAuthorizeAsDirector = 'missions.authorize_as_director';
+    case WitnessesView = 'witnesses.view';
+    case WitnessesCreate = 'witnesses.create';
+    case WitnessesManage = 'witnesses.manage';
 }

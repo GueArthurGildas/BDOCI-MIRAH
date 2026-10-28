@@ -218,7 +218,7 @@ Nom de la spécification (v1, français) → nom technique (v2, anglais) → sit
 
 | Spécification | Table | Situation actuelle |
 |---|---|---|
-| `inspection_externe` | `external_inspections` | livré (phase 7) ; remplace `inspections`, conservée tant que la phase 6 n'a pas repris `infractions.inspection_id` |
+| `inspection_externe` | `external_inspections` | livré (phase 7) ; remplace `inspections` (supprimée en phase 6, `infraction_cases.inspection_id` pointe ici) |
 | `inspection_document` | `inspection_documents` | livré (phase 7) |
 | `inspection_engin` | `inspection_gears` | livré (phase 7) |
 | `capture_declaree_constatee` | `declared_observed_catches` | livré (phase 7) ; `catch_declarations` reste en place pour la page des captures (phase 3a/8) |
@@ -230,49 +230,49 @@ Nom de la spécification (v1, français) → nom technique (v2, anglais) → sit
 
 | Spécification | Table | Situation actuelle |
 |---|---|---|
-| `temoin` | `witnesses` | nouveau |
-| `signalement` | `witness_reports` | nouveau |
-| `signalement_navire` | `reported_vessels` | nouveau |
-| `exploitabilite` | `report_usabilities` | nouveau |
-| `enquete` | `report_investigations` | nouveau |
-| `decision_signalement` | `report_decisions` | nouveau |
-| `diffusion_liste_autorises` | `authorized_list_distributions` | nouveau |
+| `temoin` | `witnesses` | livré (phase 6) |
+| `signalement` | `witness_reports` | livré (phase 6) |
+| `signalement_navire` | `reported_vessels` | livré (phase 6) |
+| `exploitabilite` | `report_usabilities` | livré (phase 6) |
+| `enquete` | `report_investigations` | livré (phase 6) |
+| `decision_signalement` | `report_decisions` | livré (phase 6) |
+| `diffusion_liste_autorises` | `authorized_list_distributions` | livré (phase 6, module Witnesses) |
 
 ### M8 Infractions et suites
 
 | Spécification | Table | Situation actuelle |
 |---|---|---|
-| `referentiel_infraction` | `infraction_types` | existe |
-| `dossier_infraction` | `infraction_cases` | remplace `infractions` |
-| `infraction_retenue` | `upheld_infractions` | nouveau |
-| `preuve` | `evidence_items` | nouveau |
-| `scelle` | `seals` | nouveau |
-| `mesure_conservatoire` | `precautionary_measures` | nouveau |
-| `saisie` | `seizures` | nouveau |
-| `pv` | `violation_reports` | nouveau |
-| `suite_contentieux` | `litigation_follow_ups` | nouveau |
-| `decision` | `decisions` | nouveau |
-| `paiement` | `payments` | nouveau |
-| `recours` | `appeals` | nouveau |
+| `referentiel_infraction` | `infraction_types` | étendu (phase 6 : gravité, sanction encourue, actif ; `name` devient `label`) |
+| `dossier_infraction` | `infraction_cases` | livré (phase 6) ; remplace `infractions` (données reprises, ajout de `facts`) |
+| `infraction_retenue` | `upheld_infractions` | livré (phase 6) |
+| `preuve` | `evidence_items` | livré (phase 6) |
+| `scelle` | `seals` | livré (phase 6) |
+| `mesure_conservatoire` | `precautionary_measures` | livré (phase 6) |
+| `saisie` | `seizures` | livré (phase 6) |
+| `pv` | `violation_reports` | livré (phase 6) |
+| `suite_contentieux` | `litigation_follow_ups` | livré (phase 6) |
+| `decision` | `decisions` | livré (phase 6) |
+| `paiement` | `payments` | livré (phase 6) |
+| `recours` | `appeals` | livré (phase 6) |
 
 ### M9 Missions et moyens
 
 | Spécification | Table | Situation actuelle |
 |---|---|---|
-| `mission` | `missions` | existe, à étendre |
-| `mission_autorisation` | `mission_authorizations` | nouveau |
-| `mission_participant` | `mission_participants` | remplace `mission_user` |
-| `observateur` | `observers` | nouveau |
-| `embarquement_observateur` | `observer_boardings` | nouveau |
-| `moyen` | `assets` | nouveau |
-| `mission_moyen` | `mission_assets` | nouveau |
-| `mission_briefing` | `mission_briefings` | nouveau |
-| `mission_preparation` | `mission_preparations` | nouveau |
-| `trace_patrouille` | `patrol_tracks` | nouveau |
-| `mission_unite_observee` | `observed_units` | remplace `mission_vessel` |
-| `mission_evenement` | `mission_events` | nouveau |
-| `mission_debriefing` | `mission_debriefings` | nouveau |
-| `mission_bilan` | `mission_reviews` | nouveau |
+| `mission` | `missions` | livré (phase 6) ; l'ancienne table est reprise puis supprimée |
+| `mission_autorisation` | `mission_authorizations` | livré (phase 6) |
+| `mission_participant` | `mission_participants` | livré (phase 6) ; remplace `mission_user` |
+| `observateur` | `observers` | livré (phase 6) |
+| `embarquement_observateur` | `observer_boardings` | livré (phase 6) |
+| `moyen` | `assets` | livré (phase 6) |
+| `mission_moyen` | `mission_assets` | livré (phase 6) |
+| `mission_briefing` | `mission_briefings` | livré (phase 6) |
+| `mission_preparation` | `mission_preparations` | livré (phase 6) |
+| `trace_patrouille` | `patrol_tracks` | livré (phase 6) |
+| `mission_unite_observee` | `observed_units` | livré (phase 6) ; remplace `mission_vessel` |
+| `mission_evenement` | `mission_events` | livré (phase 6) |
+| `mission_debriefing` | `mission_debriefings` | livré (phase 6) |
+| `mission_bilan` | `mission_reviews` | livré (phase 6) |
 
 ### M12 Communications et alertes
 

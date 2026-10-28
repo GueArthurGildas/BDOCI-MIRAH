@@ -205,7 +205,7 @@ class RoleAdministrationTest extends TestCase
         $agent = $resolver->actionsForRole($role(Role::Agent));
         $teamLead = $resolver->actionsForRole($role(Role::TeamLead));
         $this->assertSame([], array_diff($agent, $teamLead));
-        $this->assertEqualsCanonicalizing($teamLead, $resolver->actionsForRole($role(Role::Director)));
+        $this->assertEqualsCanonicalizing([...$teamLead, Permission::InfractionsDecideMeasures->value, Permission::MissionsAuthorizeAsDirector->value], $resolver->actionsForRole($role(Role::Director)));
         $this->assertEqualsCanonicalizing(array_map(fn (Permission $permission) => $permission->value, Role::Agent->permissions()), $agent);
         $this->assertEqualsCanonicalizing(array_map(fn (Permission $permission) => $permission->value, Role::TeamLead->permissions()), $teamLead);
     }

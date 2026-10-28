@@ -21,6 +21,7 @@ use Modules\Search\Providers\SearchServiceProvider;
 use Modules\Tracking\Providers\TrackingServiceProvider;
 use Modules\Vessels\Providers\VesselsServiceProvider;
 use Modules\Watch\Providers\WatchServiceProvider;
+use Modules\Witnesses\Providers\WitnessesServiceProvider;
 
 return [
     AppServiceProvider::class,
@@ -44,4 +45,5 @@ return [
     TrackingServiceProvider::class,
     VesselsServiceProvider::class,
     WatchServiceProvider::class,
+    WitnessesServiceProvider::class,
 ];

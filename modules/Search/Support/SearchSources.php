@@ -3,7 +3,7 @@
 namespace Modules\Search\Support;
 
 use App\Models\ExternalInspection;
-use App\Models\Infraction;
+use App\Models\InfractionCase;
 use App\Models\License;
 use App\Models\Mission;
 use App\Models\Observation;
@@ -43,15 +43,15 @@ final class SearchSources
                 ->latest('started_at')->limit(self::RESULTS_PER_SOURCE)->get()
                 ->map(fn (ExternalInspection $inspection) => new SearchResult($inspection->reference ?? $inspection->external_id, ($inspection->vessel?->name ?? '—').' — '.($inspection->started_at?->isoFormat('L') ?? '—'), self::url('inspections.show', $inspection)))),
 
-            new SearchSource('infractions', 'icon-alert-triangle', Permission::InfractionsView->value, fn (string $term) => Infraction::with(['vessel', 'type'])
+            new SearchSource('infractions', 'icon-alert-triangle', Permission::InfractionsView->value, fn (string $term) => InfractionCase::with(['vessel', 'upheld.type'])
                 ->where(fn (Builder $query) => $query->whereLike('reference', "%{$term}%")->orWhereHas('vessel', fn (Builder $query) => $query->search($term)))
-                ->latest('detected_at')->limit(self::RESULTS_PER_SOURCE)->get()
-                ->map(fn (Infraction $infraction) => new SearchResult($infraction->reference, $infraction->vessel->name.' — '.$infraction->type->name, self::url('infractions.show', $infraction)))),
+                ->latest('opened_at')->limit(self::RESULTS_PER_SOURCE)->get()
+                ->map(fn (InfractionCase $case) => new SearchResult($case->reference, $case->vessel->name.' — '.($case->upheld->map(fn ($upheld) => $upheld->type->label)->implode(', ') ?: $case->facts), self::url('infractions.show', $case)))),
 
             new SearchSource('missions', 'icon-flag', Permission::MissionsView->value, fn (string $term) => Mission::query()
-                ->where(fn (Builder $query) => $query->whereLike('reference', "%{$term}%")->orWhereLike('objective', "%{$term}%"))
-                ->latest('starts_at')->limit(self::RESULTS_PER_SOURCE)->get()
-                ->map(fn (Mission $mission) => new SearchResult($mission->reference, $mission->objective, self::url('missions.show', $mission)))),
+                ->where(fn (Builder $query) => $query->whereLike('code', "%{$term}%")->orWhereLike('objectives', "%{$term}%"))
+                ->latest('planned_start_at')->limit(self::RESULTS_PER_SOURCE)->get()
+                ->map(fn (Mission $mission) => new SearchResult($mission->code, (string) $mission->objectives, self::url('missions.show', $mission)))),
 
             new SearchSource('observations', 'icon-book', Permission::LogbookView->value, fn (string $term) => Observation::with('vessel')
                 ->where(fn (Builder $query) => $query->whereLike('description', "%{$term}%")->orWhereHas('vessel', fn (Builder $query) => $query->search($term)))

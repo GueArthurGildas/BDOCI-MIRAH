@@ -38,6 +38,14 @@ return [
             'title' => 'Connecteurs',
             'description' => 'Fraîcheur des données synchronisées et seuil d\'écart de captures propre au CSP (points ouverts, valeurs provisoires)',
         ],
+        'infractions' => [
+            'title' => 'Récidive des infractions',
+            'description' => 'Nombre de dossiers à partir duquel un navire, un capitaine ou un armateur est en récidive (point ouvert, valeur provisoire H-6-1)',
+        ],
+        'missions' => [
+            'title' => 'Autorisation des missions',
+            'description' => 'Par défaut le Directeur autorise ; cocher un type de mission permet aussi au Chef d\'équipe de l\'autoriser (point ouvert V21, valeurs provisoires H-6-2)',
+        ],
     ],
     'fields' => [
         'notifications_poll_seconds' => 'Vérifier les nouvelles notifications toutes les (secondes)',
@@ -63,5 +71,11 @@ return [
         'connectors_catch_variance_threshold_percent' => 'Seuil d\'écart de captures propre au CSP (pourcentage)',
         'alerts_licenses_expiring_second_warning_days' => 'Une licence arrive à échéance (deuxième alerte, jours)',
         'alerts_licenses_expiring_third_warning_days' => 'Une licence arrive à échéance (troisième alerte, jours)',
+        'infractions_repeat_threshold' => 'Récidive à partir de (dossiers d\'infraction)',
+        'missions_team_lead_authorizes_maritime' => 'Le Chef d\'équipe peut autoriser les missions de type : maritime',
+        'missions_team_lead_authorizes_lagoon' => 'Le Chef d\'équipe peut autoriser les missions de type : lagunaire',
+        'missions_team_lead_authorizes_continental' => 'Le Chef d\'équipe peut autoriser les missions de type : continental',
+        'missions_team_lead_authorizes_port' => 'Le Chef d\'équipe peut autoriser les missions de type : portuaire',
+        'missions_team_lead_authorizes_aerial_drone' => 'Le Chef d\'équipe peut autoriser les missions de type : aérien ou drone',
     ],
 ];

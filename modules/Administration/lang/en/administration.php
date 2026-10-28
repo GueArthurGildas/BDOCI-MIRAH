@@ -84,6 +84,7 @@ return [
         'watch' => 'Watch duty',
         'reports' => 'Reports and archives',
         'mrep' => 'MREP mirror (DPEP)',
+        'witnesses' => 'Witness reports',
     ],
     'permissions' => [
         'dashboard' => [
@@ -123,6 +124,10 @@ return [
         'infractions' => [
             'view' => 'View infractions',
             'manage' => 'Manage infractions',
+            'create' => 'Open infraction cases',
+            'decide' => 'Decide follow-ups, record payments and appeals',
+            'decide_measures' => 'Decide precautionary measures (Director)',
+            'manage_types' => 'Manage the infraction nomenclature',
         ],
         'catches' => [
             'view' => 'View catches',
@@ -130,6 +135,9 @@ return [
         'missions' => [
             'view' => 'View missions',
             'manage' => 'Manage missions',
+            'create' => 'Schedule missions',
+            'authorize' => 'Authorize missions',
+            'authorize_as_director' => 'Authorize missions as Director',
         ],
         'users' => [
             'manage' => 'Manage users',
@@ -182,6 +190,11 @@ return [
         ],
         'mrep' => [
             'view' => 'View DPEP, entry decisions and notifications',
+        ],
+        'witnesses' => [
+            'view' => 'View witness reports',
+            'create' => 'Record witness reports',
+            'manage' => 'Investigate, dismiss or forward reports and distribute the authorized list',
         ],
     ],
     'connectors' => [
@@ -302,6 +315,34 @@ return [
             'reference_list_value' => 'Reference value',
             'custom_field_definition' => 'Custom field',
             'user' => 'User',
+            'infraction_case' => 'Infraction case',
+            'infraction_type' => 'Infraction (nomenclature)',
+            'upheld_infraction' => 'Upheld infraction',
+            'evidence_item' => 'Evidence',
+            'seal' => 'Seal',
+            'seizure' => 'Seizure',
+            'precautionary_measure' => 'Precautionary measure',
+            'violation_report' => 'Violation report',
+            'litigation_follow_up' => 'Litigation follow-up',
+            'decision' => 'Decision',
+            'payment' => 'Payment',
+            'appeal' => 'Appeal',
+            'mission_authorization' => 'Mission authorization',
+            'mission_participant' => 'Mission participant',
+            'mission_asset' => 'Mission asset',
+            'mission_briefing' => 'Mission briefing',
+            'mission_debriefing' => 'Mission debriefing',
+            'mission_event' => 'Mission event',
+            'mission_review' => 'Mission review',
+            'observed_unit' => 'Encountered unit',
+            'patrol_track' => 'Patrol track',
+            'observer_boarding' => 'Observer boarding',
+            'asset' => 'Asset',
+            'witness_report' => 'Witness report',
+            'report_usability' => 'Report usability',
+            'report_investigation' => 'Report investigation',
+            'report_decision' => 'Report decision',
+            'authorized_list_distribution' => 'List distribution',
         ],
     ],
 ];
