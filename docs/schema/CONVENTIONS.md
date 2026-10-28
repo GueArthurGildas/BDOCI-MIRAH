@@ -133,3 +133,5 @@ Ces écarts par rapport au schéma v2 initial ont été décidés en écrivant l
 
 | `comments` | ajout de `kind` (nullable, varchar(40)) | classer un commentaire (note, statut, action) ; les commentaires de connecteurs en ont besoin et la colonne reste générique, sa valeur est validée par le module propriétaire |
 | `documents` | trigger `documents_frozen_guard` : un document figé refuse la modification et la suppression | la spécification annonce des PDF figés avec empreinte ; le verrou est porté par la base, comme celui de la main courante |
+| `surveillance_observations` | ajout de `legacy_observation_id` (bigint, unique ; la migration le relie à `observations`, table transitoire absente du schéma cible) ; l'ancienne table `observations` reste en place (pages existantes) | chaque observation de l'ancienne main courante est reflétée dans `surveillance_observations` (copie à la migration puis miroir à l'écriture, hypothèse H-3a-6) |
+| `logbook_days` | le statut `closed` n'est pas utilisé : la clôture génère le PDF et passe directement à `locked` | hypothèse H-3a-4 |

@@ -78,6 +78,8 @@ return [
         'audit' => 'Audit log',
         'settings' => 'Settings',
         'roles' => 'Roles',
+        'operations' => 'Operations',
+        'watch' => 'Watch duty',
     ],
     'permissions' => [
         'dashboard' => [
@@ -98,6 +100,7 @@ return [
             'view' => 'View the logbook',
             'create' => 'Record observations',
             'manage' => 'Follow up observations',
+            'close' => 'Close the daily logbook',
         ],
         'movements' => [
             'view' => 'View movements',
@@ -132,6 +135,16 @@ return [
         ],
         'roles' => [
             'manage' => 'Manage roles',
+        ],
+        'operations' => [
+            'view' => 'View operations',
+            'create' => 'Open operations',
+            'manage' => 'Follow and close operations',
+        ],
+        'watch' => [
+            'view' => 'View the morning board and watch duty',
+            'create' => 'Record observations, handovers and enhanced monitoring',
+            'manage' => 'Plan rotations, standing instructions and watch lists',
         ],
     ],
     'connectors' => [

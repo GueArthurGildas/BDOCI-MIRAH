@@ -27,6 +27,10 @@ class SettingsTest extends TestCase
             'alerts_licenses_expiring_enabled' => 1,
             'alerts_licenses_expiring_warning_days' => 30,
             'alerts_licenses_expiring_cooldown_hours' => 24,
+            'watch_shift_start_hour' => 8,
+            'watch_shift_end_hour' => 18,
+            'watch_teams_count' => 3,
+            'watch_check_threshold' => 3,
         ], $overrides);
     }
 

@@ -7,9 +7,12 @@ use App\Models\Observation;
 use App\Support\Actions\Action;
 use App\Support\Actions\ActionContext;
 use App\Support\Authorization\Permission;
+use App\Support\Logbook\ObservationMirror;
 
 class OpenObservation extends Action
 {
+    public function __construct(private readonly ObservationMirror $mirror) {}
+
     public function code(): string
     {
         return 'logbook.open';
@@ -28,6 +31,8 @@ class OpenObservation extends Action
             'team_id' => $context->actor->team_id,
             'status' => ObservationStatus::Open,
         ]);
+
+        $this->mirror->sync($observation);
 
         if ($observation->vessel_id) {
             $context->publish(

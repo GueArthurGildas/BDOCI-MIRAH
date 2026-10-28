@@ -78,6 +78,8 @@ return [
         'audit' => 'Journal d\'audit',
         'settings' => 'Paramètres',
         'roles' => 'Rôles',
+        'operations' => 'Opérations',
+        'watch' => 'Surveillance de quart',
     ],
     'permissions' => [
         'dashboard' => [
@@ -98,6 +100,7 @@ return [
             'view' => 'Consulter la main courante',
             'create' => 'Saisir des observations',
             'manage' => 'Suivre les observations',
+            'close' => 'Clôturer la main courante du jour',
         ],
         'movements' => [
             'view' => 'Consulter les mouvements',
@@ -132,6 +135,16 @@ return [
         ],
         'roles' => [
             'manage' => 'Gérer les rôles',
+        ],
+        'operations' => [
+            'view' => 'Consulter les opérations',
+            'create' => 'Ouvrir des opérations',
+            'manage' => 'Suivre et clôturer les opérations',
+        ],
+        'watch' => [
+            'view' => 'Consulter le tableau du matin et la surveillance de quart',
+            'create' => 'Saisir des observations, relais et suivis renforcés',
+            'manage' => 'Planifier les rotations, consignes permanentes et listes de veille',
         ],
     ],
     'connectors' => [

@@ -22,6 +22,10 @@ return [
             'title' => 'Alerte licences à échéance',
             'description' => 'Émise lorsque des licences arrivent bientôt à échéance',
         ],
+        'watch' => [
+            'title' => 'Surveillance de quart et main courante',
+            'description' => 'Horaires du quart, nombre d\'équipes et seuil de vérifications (point ouvert E1, valeurs provisoires)',
+        ],
     ],
     'fields' => [
         'notifications_poll_seconds' => 'Vérifier les nouvelles notifications toutes les (secondes)',
@@ -33,5 +37,9 @@ return [
         'alerts_licenses_expiring_enabled' => 'Envoyer l\'alerte',
         'alerts_licenses_expiring_warning_days' => 'Une licence arrive à échéance dans (jours)',
         'alerts_licenses_expiring_cooldown_hours' => 'Délai minimal entre deux alertes (heures)',
+        'watch_shift_start_hour' => 'Heure de début du quart (0 à 23)',
+        'watch_shift_end_hour' => 'Heure de clôture de la main courante (1 à 23)',
+        'watch_teams_count' => 'Nombre d\'équipes en rotation',
+        'watch_check_threshold' => 'Une alerte est levée au-delà de (vérifications d\'un même navire)',
     ],
 ];

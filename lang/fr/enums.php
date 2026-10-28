@@ -168,4 +168,57 @@ return [
         'boolean' => 'Oui / non',
         'list' => 'Liste',
     ],
+
+    'operation_category_code' => [
+        'vms' => 'VMS (balises)',
+        'ers' => 'ERS (journaux de pêche électroniques)',
+        'mep' => 'MEP (mise en place)',
+        'inn' => 'INN (pêche illicite)',
+        'div' => 'Divers',
+    ],
+
+    'operation_status' => [
+        'open' => 'Ouverte',
+        'in_progress' => 'En cours',
+        'closed' => 'Clôturée',
+        'archived' => 'Archivée',
+    ],
+
+    'logbook_day_status' => [
+        'open' => 'Ouverte',
+        'closed' => 'Close',
+        'locked' => 'Verrouillée',
+    ],
+
+    'logbook_direction' => [
+        'received' => 'Reçu',
+        'sent' => 'Émis',
+    ],
+
+    'logbook_handling_status' => [
+        'to_handle' => 'À traiter',
+        'in_progress' => 'En cours',
+        'closed' => 'Clos',
+    ],
+
+    'surveillance_observation_status' => [
+        'monitoring' => 'En suivi',
+        'closed' => 'Clôturée',
+        'operation' => 'Opération ouverte',
+    ],
+
+    'watch_origin' => [
+        'director_list_themis' => 'Liste du Directeur (THEMIS)',
+        'director_list_manual' => 'Liste du Directeur (saisie)',
+        'logbook' => 'Cité en main courante',
+        'eez_entry' => 'Entrée en ZEE',
+        'eez_exit' => 'Sortie de ZEE',
+        'enhanced_monitoring' => 'Suivi renforcé',
+        'more_than_3_checks' => 'Plus de 3 vérifications',
+    ],
+
+    'watch_status' => [
+        'open' => 'Ouvert',
+        'closed' => 'Clos',
+    ],
 ];

@@ -43,4 +43,11 @@ enum Permission: string
         };
     }
     case AuditView = 'audit.view';
+    case LogbookClose = 'logbook.close';
+    case OperationsView = 'operations.view';
+    case OperationsCreate = 'operations.create';
+    case OperationsManage = 'operations.manage';
+    case WatchView = 'watch.view';
+    case WatchCreate = 'watch.create';
+    case WatchManage = 'watch.manage';
 }

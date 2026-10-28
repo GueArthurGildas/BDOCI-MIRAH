@@ -22,6 +22,10 @@ return [
             'title' => 'Expiring license alert',
             'description' => 'Raised when licenses are about to expire',
         ],
+        'watch' => [
+            'title' => 'Watch and logbook',
+            'description' => 'Shift hours, number of teams and check threshold (open point E1, provisional values)',
+        ],
     ],
     'fields' => [
         'notifications_poll_seconds' => 'Check for new notifications every (seconds)',
@@ -33,5 +37,9 @@ return [
         'alerts_licenses_expiring_enabled' => 'Send the alert',
         'alerts_licenses_expiring_warning_days' => 'A license is expiring within (days)',
         'alerts_licenses_expiring_cooldown_hours' => 'Minimum delay between two alerts (hours)',
+        'watch_shift_start_hour' => 'Shift start hour (0 to 23)',
+        'watch_shift_end_hour' => 'Logbook closing hour (1 to 23)',
+        'watch_teams_count' => 'Number of teams in rotation',
+        'watch_check_threshold' => 'An alert is raised beyond (checks of the same vessel)',
     ],
 ];
