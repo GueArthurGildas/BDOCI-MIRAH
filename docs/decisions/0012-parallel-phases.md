@@ -1,6 +1,6 @@
 # 0012 — Exécution de phases en parallèle
 
-**Statut** : proposé le 2026-10-28, **à valider par Gildas** (il modifie la règle de l'ADR 0008, qui reprend la méthode imposée par la spécification).
+**Statut** : appliqué le 2026-10-28 sur décision du responsable technique pour livrer une application complète sans attendre les réponses ouvertes ; **à confirmer par Gildas** (il modifie la règle de l'ADR 0008, qui reprend la méthode imposée par la spécification). Les points métier non tranchés suivent le registre `docs/assumptions/`.
 
 ## Contexte
 

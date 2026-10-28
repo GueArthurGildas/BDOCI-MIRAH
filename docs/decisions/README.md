@@ -19,7 +19,7 @@ Elles reprennent les décisions D1 à D9 du plan de refonte ([PLAN_REFONTE.md](.
 | [0009](0009-default-thresholds.md) | Seuils par défaut | recommandation acceptée | 3b, 4a |
 | [0010](0010-named-actions-and-event-journal.md) | Actions nommées, journal d'événements et état courant | accepté, en cours | 1 |
 | [0011](0011-permission-resolver-and-grants.md) | Résolveur de permissions, groupes et héritage de rôles | accepté | 1 |
-| [0012](0012-parallel-phases.md) | Exécution de phases en parallèle | proposé, à valider par Gildas | 2 à 9 |
+| [0012](0012-parallel-phases.md) | Exécution de phases en parallèle | appliqué, à confirmer par Gildas | 2 à 9 |
 
 ## Format
 
