@@ -14,6 +14,7 @@
                     <th>{{ __('administration::administration.roles.name') }}</th>
                     <th>{{ __('administration::administration.roles.description') }}</th>
                     <th>{{ __('administration::administration.roles.type') }}</th>
+                    <th>{{ __('administration::administration.roles.inherits_from') }}</th>
                     <th class="text-end">{{ __('administration::administration.roles.users_count') }}</th>
                     <th class="text-end">{{ __('administration::administration.roles.permissions_count') }}</th>
                     <th></th>
@@ -28,8 +29,9 @@
                                 {{ __($isSystem ? 'administration::administration.roles.system' : 'administration::administration.roles.custom') }}
                             </span>
                         </td>
+                        <td>{{ $role->parent ? App\Support\Authorization\Role::labelFor($role->parent->name) : '—' }}</td>
                         <td class="text-end">{{ $role->users_count }}</td>
-                        <td class="text-end">{{ $role->permissions->count() }}</td>
+                        <td class="text-end">{{ count($effective[$role->id]) }}</td>
                         <td class="text-end text-nowrap">
                             <a href="{{ route('administration.roles.edit', $role) }}" class="btn btn-sm btn-outline-primary">{{ __('ui.edit') }}</a>
                             @unless ($isSystem)
@@ -60,7 +62,7 @@
                         <td>{{ __('administration::administration.permissions.'.$permission->value) }}</td>
                         @foreach ($roles as $role)
                             <td class="text-center">
-                                @if ($role->permissions->contains('name', $permission->value))
+                                @if (in_array($permission->value, $effective[$role->id], true))
                                     <i class="feather icon-check text-success f-18" aria-label="{{ __('ui.yes') }}"></i>
                                 @else
                                     <i class="feather icon-minus text-muted" aria-label="{{ __('ui.no') }}"></i>

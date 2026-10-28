@@ -17,7 +17,7 @@ Permissions are the actions of the catalog, declared in code. The Admin grants t
 3. **Translate** in `modules/Administration/lang/{en,fr}/administration.php`: `permissions.<module>.<action>`, plus `permission_groups.<module>` for a new module (forms and matrix read them).
 4. **Protect** the route (`->can(Permission::X->value)`), the navigation entry (`permission:`), and Blade (`@can`). For zone-scoped checks pass the zone: `Gate::allows($code, $zone)`.
 5. **Catalog**: `php artisan permissions:sync` records the action in `action_catalog` (the seeder does it too). **Run it on every deployment after `migrate`.**
-6. **Tests**: `signInAs(Role::X)` for a role, `signInWithPermissions(Permission::A, ...)` for a user holding only those permissions (`tests/TestCase.php`). Never call Spatie's `givePermissionTo` / `syncPermissions`: its permission tables are unused. Change grants through `App\Support\Authorization\GrantService` (it refreshes the resolver); group membership through `$user->permissionGroups()` (the pivot refreshes it).
+6. **Tests**: `signInAs(Role::X)` for a role, `signInWithPermissions(Permission::A, ...)` for a user holding only those permissions (`tests/TestCase.php`). Spatie Permission is gone: there is no `givePermissionTo`. Change grants through `App\Support\Authorization\GrantService` (it refreshes the resolver); group membership through `$user->permissionGroups()` (the pivot refreshes it).
 
 ## Existing databases
 

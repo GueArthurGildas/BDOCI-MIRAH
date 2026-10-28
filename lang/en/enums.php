@@ -146,4 +146,26 @@ return [
         'status' => 'Situation update',
         'action' => 'Operation launched',
     ],
+
+    'current_license_status' => [
+        'not_provided' => 'Not provided',
+        'active' => 'Active',
+        'suspended' => 'Suspended',
+        'expired' => 'Expired',
+        'revoked' => 'Revoked',
+    ],
+
+    'user_type' => [
+        'human' => 'Human',
+        'ai_agent' => 'AI agent',
+        'system' => 'System',
+    ],
+
+    'custom_field_type' => [
+        'text' => 'Text',
+        'number' => 'Number',
+        'date' => 'Date',
+        'boolean' => 'Yes / no',
+        'list' => 'List',
+    ],
 ];

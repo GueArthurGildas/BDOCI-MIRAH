@@ -7,6 +7,7 @@ use App\Models\License;
 use App\Models\User;
 use App\Support\Authorization\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Attributes\Covers;
 use Tests\TestCase;
 
 class LicensePagesTest extends TestCase
@@ -29,6 +30,7 @@ class LicensePagesTest extends TestCase
             ->assertSee(route('vessels.show', $license->vessel));
     }
 
+    #[Covers('UC29', partial: true)]
     public function test_licenses_can_be_filtered_by_status(): void
     {
         $this->signInAs(Role::Agent);

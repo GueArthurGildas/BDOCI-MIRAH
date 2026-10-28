@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Support\Authorization\Role;
+use App\Support\Events\VesselStateBuilder;
+use App\Support\Modules\ModuleRegistry;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -27,5 +29,8 @@ class DatabaseSeeder extends Seeder
         }
 
         $this->call([DemoDataSeeder::class, ConnectorActivitySeeder::class]);
+
+        app(ModuleRegistry::class)->sync();
+        app(VesselStateBuilder::class)->rebuildAll();
     }
 }

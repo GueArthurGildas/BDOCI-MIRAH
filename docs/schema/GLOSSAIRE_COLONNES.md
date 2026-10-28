@@ -64,7 +64,7 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 |---|---|---|
 | `id` | `id` | bigint |
 | `code` | `code` | varchar(60) |
-| `libelle` | `label` | varchar(120) |
+| `libelle` | `label` | varchar(120) (nullable) |
 
 ### `users` (spécification : `utilisateur`)
 
@@ -112,7 +112,6 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 | `module_id` | `module_id` | bigint |
 | `code` | `code` | varchar(80) |
 | `verbe` | `verb` | varchar(40) |
-| `libelle` | `label` | varchar(160) |
 | `agent_ia_possible` | `ai_agent_allowed` | boolean |
 | `agent_ia_actif` | `ai_agent_enabled` | boolean |
 
@@ -172,6 +171,7 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 | `objet_type` | `object_type` | varchar(80) |
 | `objet_id` | `object_id` | bigint |
 | `utilisateur_id` | `user_id` | bigint |
+| (absente de la spécification) | `kind` | varchar(40) |
 | `texte` | `body` | text |
 | `created_at` | `created_at` | timestamp(0) |
 
@@ -469,7 +469,7 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 | `module_id` | `module_id` | bigint |
 | `objet_type` | `object_type` | varchar(80) |
 | `objet_id` | `object_id` | bigint |
-| `resume` | `summary` | varchar(500) |
+| `resume` | `summary_key`, `summary_params` | varchar(120), jsonb |
 | `zone_id` | `zone_id` | bigint |
 | `utilisateur_id` | `user_id` | bigint |
 | `source` | `source` | varchar(30) |

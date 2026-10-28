@@ -8,6 +8,7 @@ use App\Models\Observation;
 use App\Models\User;
 use App\Support\Authorization\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Attributes\Covers;
 use Tests\TestCase;
 
 class DashboardTest extends TestCase
@@ -27,6 +28,7 @@ class DashboardTest extends TestCase
             ->assertForbidden();
     }
 
+    #[Covers('UC25', partial: true)]
     public function test_dashboard_shows_key_indicators(): void
     {
         $this->signInAs(Role::Agent);

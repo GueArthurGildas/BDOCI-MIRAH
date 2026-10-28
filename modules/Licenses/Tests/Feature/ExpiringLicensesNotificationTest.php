@@ -3,10 +3,15 @@
 namespace Modules\Licenses\Tests\Feature;
 
 use App\Models\License;
+use App\Models\PermissionGroup;
+use App\Models\User;
 use App\Support\Authorization\Role;
+use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Attributes\Covers;
 use Tests\TestCase;
 
+#[Covers('RG07', 'UC03', partial: true)]
 class ExpiringLicensesNotificationTest extends TestCase
 {
     use RefreshDatabase;
@@ -41,5 +46,17 @@ class ExpiringLicensesNotificationTest extends TestCase
         $this->artisan('licenses:notify-expiring')->assertSuccessful();
 
         $this->assertSame(0, $inspector->notifications()->count());
+    }
+
+    public function test_members_of_a_group_granting_the_permission_are_notified_too(): void
+    {
+        $this->seed(RolesAndPermissionsSeeder::class);
+        $member = User::factory()->create();
+        $member->permissionGroups()->attach(PermissionGroup::where('code', 'fnp_license_management')->sole());
+        License::factory()->expiringIn(10)->create();
+
+        $this->artisan('licenses:notify-expiring')->assertSuccessful();
+
+        $this->assertSame(1, $member->notifications()->count());
     }
 }

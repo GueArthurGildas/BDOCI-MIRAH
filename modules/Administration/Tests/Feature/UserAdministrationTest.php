@@ -6,8 +6,10 @@ use App\Models\User;
 use App\Support\Authorization\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Activitylog\Models\Activity;
+use Tests\Attributes\Covers;
 use Tests\TestCase;
 
+#[Covers('UC24', partial: true)]
 class UserAdministrationTest extends TestCase
 {
     use RefreshDatabase;

@@ -146,4 +146,26 @@ return [
         'status' => 'Point de situation',
         'action' => 'Opération lancée',
     ],
+
+    'current_license_status' => [
+        'not_provided' => 'Non renseignée',
+        'active' => 'Active',
+        'suspended' => 'Suspendue',
+        'expired' => 'Expirée',
+        'revoked' => 'Révoquée',
+    ],
+
+    'user_type' => [
+        'human' => 'Humain',
+        'ai_agent' => 'Agent IA',
+        'system' => 'Système',
+    ],
+
+    'custom_field_type' => [
+        'text' => 'Texte',
+        'number' => 'Nombre',
+        'date' => 'Date',
+        'boolean' => 'Oui / non',
+        'list' => 'Liste',
+    ],
 ];

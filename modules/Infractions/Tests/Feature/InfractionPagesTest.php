@@ -6,12 +6,14 @@ use App\Enums\InfractionStatus;
 use App\Models\Infraction;
 use App\Support\Authorization\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Attributes\Covers;
 use Tests\TestCase;
 
 class InfractionPagesTest extends TestCase
 {
     use RefreshDatabase;
 
+    #[Covers('UC16', partial: true)]
     public function test_infractions_can_be_filtered_by_status(): void
     {
         $this->signInAs(Role::Agent);
@@ -21,6 +23,7 @@ class InfractionPagesTest extends TestCase
         $this->get('/infractions?status=reported')->assertOk()->assertSee('PV-OPEN')->assertDontSee('PV-CLOSED');
     }
 
+    #[Covers('UC17', partial: true)]
     public function test_agents_cannot_update_infractions(): void
     {
         $this->signInAs(Role::Agent);
@@ -29,6 +32,7 @@ class InfractionPagesTest extends TestCase
         $this->patch(route('infractions.update', $infraction), ['status' => 'closed'])->assertForbidden();
     }
 
+    #[Covers('RG09', 'UC17', partial: true)]
     public function test_supervisors_record_decisions(): void
     {
         $this->signInAs(Role::TeamLead);

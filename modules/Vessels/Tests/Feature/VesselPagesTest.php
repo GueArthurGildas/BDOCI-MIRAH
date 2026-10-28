@@ -8,6 +8,7 @@ use App\Models\Position;
 use App\Models\Vessel;
 use App\Support\Authorization\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Attributes\Covers;
 use Tests\TestCase;
 
 class VesselPagesTest extends TestCase
@@ -35,6 +36,7 @@ class VesselPagesTest extends TestCase
         $this->get('/vessels?search=akwaba')->assertSee('AKWABA 1')->assertDontSee('VEDETTE CSP 01');
     }
 
+    #[Covers('RG08', 'UC25', partial: true)]
     public function test_vessel_profile_gathers_its_history(): void
     {
         $this->signInAs(Role::Agent);
@@ -56,6 +58,7 @@ class VesselPagesTest extends TestCase
         $this->post('/vessels', [])->assertForbidden();
     }
 
+    #[Covers('UC01', partial: true)]
     public function test_supervisors_can_create_and_update_vessels(): void
     {
         $this->signInAs(Role::TeamLead);
@@ -77,6 +80,7 @@ class VesselPagesTest extends TestCase
         $this->assertSame('Armement Ivoirien', $vessel->fresh()->owner);
     }
 
+    #[Covers('RG02', 'UC01', partial: true)]
     public function test_registration_number_must_be_unique(): void
     {
         $this->signInAs(Role::TeamLead);

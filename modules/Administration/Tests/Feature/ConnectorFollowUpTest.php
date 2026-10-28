@@ -4,19 +4,20 @@ namespace Modules\Administration\Tests\Feature;
 
 use App\Enums\ConnectorCommentKind;
 use App\Enums\RejectionStatus;
+use App\Models\Comment;
 use App\Models\DataSource;
-use App\Models\DataSourceComment;
 use App\Models\DataSourceError;
 use App\Models\DataSourceRejection;
 use App\Models\DataSourceSync;
 use App\Models\User;
 use App\Support\Authorization\Permission;
 use App\Support\Authorization\Role;
-use Database\Seeders\RolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Activitylog\Models\Activity;
+use Tests\Attributes\Covers;
 use Tests\TestCase;
 
+#[Covers('UC23', partial: true)]
 class ConnectorFollowUpTest extends TestCase
 {
     use RefreshDatabase;
@@ -28,7 +29,7 @@ class ConnectorFollowUpTest extends TestCase
         $error = DataSourceError::factory()->for($source)->create(['message' => 'Remote host refused the connection']);
         $rejection = DataSourceRejection::factory()->for($source)->create(['external_ref' => 'REC-4242', 'details' => 'Field "latitude" is required']);
         DataSourceSync::factory()->for($source)->create(['message' => 'Partial import']);
-        DataSourceComment::factory()->for($source)->create(['body' => 'Supplier contacted this morning']);
+        Comment::factory()->forDataSource($source)->create(['body' => 'Supplier contacted this morning']);
 
         $this->get(route('administration.connectors.show', $source))
             ->assertOk()
@@ -61,9 +62,7 @@ class ConnectorFollowUpTest extends TestCase
 
     public function test_viewers_without_the_manage_permission_cannot_act(): void
     {
-        $this->seed(RolesAndPermissionsSeeder::class);
-        $viewer = User::factory()->create()->givePermissionTo(Permission::ConnectorsView->value);
-        $this->actingAs($viewer);
+        $this->signInWithPermissions(Permission::ConnectorsView);
         $source = DataSource::factory()->create();
         $error = DataSourceError::factory()->for($source)->create();
 
@@ -86,9 +85,9 @@ class ConnectorFollowUpTest extends TestCase
             'notify' => 1,
         ])->assertRedirect(route('administration.connectors.show', [$source, 'tab' => 'comments']));
 
-        $comment = DataSourceComment::sole();
+        $comment = Comment::sole();
         $this->assertSame($author->id, $comment->user_id);
-        $this->assertSame(ConnectorCommentKind::Action, $comment->kind);
+        $this->assertSame(ConnectorCommentKind::Action->value, $comment->kind);
         $this->assertSame(1, $colleague->notifications()->count());
         $this->assertSame('THEMIS feed', $colleague->notifications()->first()->data['params']['connector']);
         $this->assertSame(0, $author->notifications()->count());
@@ -104,7 +103,7 @@ class ConnectorFollowUpTest extends TestCase
 
         $this->post(route('administration.connectors.comments.store', $source), ['kind' => 'note', 'body' => 'For later', 'notify' => 0]);
 
-        $this->assertSame(1, DataSourceComment::count());
+        $this->assertSame(1, Comment::count());
         $this->assertSame(0, $colleague->notifications()->count());
     }
 
@@ -116,7 +115,7 @@ class ConnectorFollowUpTest extends TestCase
         $this->post(route('administration.connectors.comments.store', $source), ['kind' => 'nonsense', 'body' => ''])
             ->assertSessionHasErrors(['kind', 'body']);
 
-        $this->assertSame(0, DataSourceComment::count());
+        $this->assertSame(0, Comment::count());
     }
 
     public function test_errors_can_be_resolved_and_reopened(): void

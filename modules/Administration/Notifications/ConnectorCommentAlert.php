@@ -2,7 +2,7 @@
 
 namespace Modules\Administration\Notifications;
 
-use App\Models\DataSourceComment;
+use App\Models\Comment;
 use App\Support\Notifications\Alert;
 use App\Support\Notifications\AlertLevel;
 
@@ -16,11 +16,11 @@ class ConnectorCommentAlert extends Alert
 
     private readonly string $author;
 
-    public function __construct(DataSourceComment $comment)
+    public function __construct(Comment $comment)
     {
         $this->commentId = $comment->id;
-        $this->dataSourceId = $comment->data_source_id;
-        $this->connector = $comment->dataSource->name;
+        $this->dataSourceId = $comment->object_id;
+        $this->connector = $comment->object->name;
         $this->author = $comment->author->name;
     }
 

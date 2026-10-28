@@ -5,10 +5,8 @@ namespace Modules\Search\Tests\Feature;
 use App\Models\Infraction;
 use App\Models\Observation;
 use App\Models\Vessel;
-use App\Support\Authorization\Role;
-use App\Models\User;
 use App\Support\Authorization\Permission;
-use Database\Seeders\RolesAndPermissionsSeeder;
+use App\Support\Authorization\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -37,8 +35,7 @@ class SearchPageTest extends TestCase
 
     public function test_results_only_include_sources_the_user_may_see(): void
     {
-        $this->seed(RolesAndPermissionsSeeder::class);
-        $this->actingAs(User::factory()->create()->givePermissionTo(Permission::VesselsView->value));
+        $this->signInWithPermissions(Permission::VesselsView);
         Observation::factory()->create(['description' => 'Comportement suspect de ALBACORA']);
 
         $this->get('/search?q=albacora')

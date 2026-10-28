@@ -22,7 +22,7 @@
             <div class="gs-comment-head">
                 <span>
                     <strong>{{ $comment->author?->name ?? __('ui.history.system') }}</strong>
-                    <x-ui.status-badge :status="$comment->kind" />
+                    <x-ui.status-badge :status="App\Enums\ConnectorCommentKind::from($comment->kind)" />
                 </span>
                 <small class="text-muted">{{ $comment->created_at->isoFormat('L LT') }} · {{ $comment->created_at->diffForHumans() }}</small>
             </div>

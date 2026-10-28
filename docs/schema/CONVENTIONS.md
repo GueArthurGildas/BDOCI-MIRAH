@@ -61,7 +61,7 @@ Choix de vocabulaire qui engagent le métier. Chacun est modifiable tant que les
 | `organisme` | `institutions` | ORGP devient `rfmo`, ORP devient `rfb` |
 | `capitaine_de_peche` | `fishing_captain` | |
 | `referentiel_infraction` | `infraction_types` | garde le nom de la table actuelle |
-| `permission` | `permission_grants` | évite le conflit avec la table `permissions` de Spatie |
+| `permission` | `permission_grants` | nom au pluriel, plus explicite |
 | `journal_audit` | `audit_log` | remplacera `activity_log` |
 | `etat_connecteur` | `data_sources` | voir le point 9 |
 | `main_courante`, `mc_evenement` | `logbook_days`, `logbook_entries` | |
@@ -103,7 +103,7 @@ Choix de vocabulaire qui engagent le métier. Chacun est modifiable tant que les
 | `status` (`operational`, `degraded`, `down`) | `indicator_status` (`green`, `orange`, `red`) |
 | `name` | à conserver (absent de la spécification) |
 
-`data_source_syncs` et `data_source_rejections` correspondent à `journal_synchro` et `rejet_import`. `data_source_errors` et `data_source_comments` (suivi humain, notification des autres administrateurs) n'existent pas dans la spécification et sont conservées.
+`data_source_syncs` et `data_source_rejections` correspondent à `journal_synchro` et `rejet_import`. `data_source_errors` (suivi humain des erreurs) n'existe pas dans la spécification et est conservée. Les commentaires de connecteurs (`data_source_comments`) ont été repliés dans la table générique `comments`.
 
 ## 10. Écarts de la version 1 relevés pendant la traduction
 
@@ -116,3 +116,20 @@ Choix de vocabulaire qui engagent le métier. Chacun est modifiable tant que les
 5. Le mot `saisie` désigne tantôt une saisie manuelle (origines : `manual_entry`), tantôt une saisie douanière (mesures conservatoires : `catch_seizure`, `gear_seizure`) : les deux sens sont distingués.
 6. La clause `CHECK` de `permission` (un rôle ou un groupe, jamais les deux) est conservée sous la forme `(role_id IS NOT NULL) <> (permission_group_id IS NOT NULL)`.
 7. Le seuil de silence VMS par défaut de `regle_alerte` est de 4 h : notre configuration actuelle est de 2 h (décision D9 : la spécification prévaut).
+
+## 11. Écarts décidés à l'implémentation
+
+Ces écarts par rapport au schéma v2 initial ont été décidés en écrivant les migrations ; le fichier SQL est tenu à jour avec eux.
+
+| Table | Écart | Raison |
+|---|---|---|
+| `vessel_events` | `summary` (texte de 500 caractères) devient `summary_key` + `summary_params` (jsonb) | le résumé est traduit à l'affichage dans la langue de chaque lecteur (règle : aucun texte affiché en dur) |
+| `activity_log` | sert de journal d'audit, rendu inaltérable par des triggers, en attendant la table `audit_log` | le paquet d'historisation écrit déjà dans cette table ; l'identité de l'agent IA et l'adresse IP sont dans `properties` |
+| `users` | `password` devient nullable ; `type` est contraint à `human`, `ai_agent`, `system` | les comptes de type agent IA et système n'ont pas de mot de passe |
+| `action_catalog` | pas de colonne `label` | le libellé d'une action est traduit à partir de son code (`permissions.<module>.<action>`) |
+| `permission_groups` | `label` nullable, ajout de `is_system` | les cinq groupes de la spécification sont traduits à partir de leur code ; les groupes créés par l'administrateur portent leur nom |
+| `roles` | `name` (au lieu de `code`), `description`, `parent_id` ; pas de colonne `label` ni `is_system` | le nom d'un rôle personnalisé tient lieu de libellé ; les rôles système se reconnaissent à l'énumération `Role` |
+| `permission_grants` | utilisée pour les rôles **et** les groupes, comme le schéma, comme seule source des droits | le résolveur lit cette seule table |
+
+| `comments` | ajout de `kind` (nullable, varchar(40)) | classer un commentaire (note, statut, action) ; les commentaires de connecteurs en ont besoin et la colonne reste générique, sa valeur est validée par le module propriétaire |
+| `documents` | trigger `documents_frozen_guard` : un document figé refuse la modification et la suppression | la spécification annonce des PDF figés avec empreinte ; le verrou est porté par la base, comme celui de la main courante |

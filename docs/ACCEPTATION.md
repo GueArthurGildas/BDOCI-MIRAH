@@ -10,6 +10,8 @@ Cette matrice relie chaque **cas d'usage** (UC01 à UC29) et chaque **règle de 
 | partiel | une partie du cas est couverte (lecture seule, version simplifiée, un seul seuil…) |
 | fait | le cas est couvert comme la spécification le décrit |
 
+Le statut de la colonne de droite est écrit à la main et peut dater ; le statut calculé à partir des tests est dans `docs/reference/acceptance.md`.
+
 Les phases sont celles de `docs/PLAN_REFONTE.md`, section 4. Aucun cas n'est « fait » à ce jour : le modèle actuel est une version simplifiée de la cible.
 
 ---
@@ -19,7 +21,7 @@ Les phases sont celles de `docs/PLAN_REFONTE.md`, section 4. Aucun cas n'est « 
 | Id | Intitulé | Acteur | Modules | Phase | Couverture actuelle | Statut |
 |---|---|---|---|---|---|---|
 | UC01 | Créer ou rapprocher un navire | Agent, Chef d'équipe | M1, M10 | 2 | `VesselPagesTest::test_supervisors_can_create_and_update_vessels`, `test_registration_number_must_be_unique` (création et unicité, sans rapprochement ni file de doublons) | partiel |
-| UC02 | Enregistrer une licence délivrée | Groupe FNP/licences | M2 | 1 (tranche verticale), 4a | aucune (la page des licences est en lecture seule : `LicensePagesTest`) | à faire |
+| UC02 | Enregistrer une licence délivrée | Groupe FNP/licences | M2 | 1 (tranche verticale), 4a | `RecordLicenseTest` (saisie unitaire avec événement, état courant et audit) ; l'import et la validation par lot restent à faire | partiel |
 | UC03 | Suivre les expirations, suspendre ou révoquer | Groupe FNP/licences, Directeur | M2, M8 | 4a | `tests/Feature/Domain/LicenseStatusTest::test_status_is_derived_from_validity_dates_and_suspension` (statut calculé), `ExpiringLicensesNotificationTest` (alerte d'échéance, un seul seuil) | partiel |
 | UC04 | Vérifier la conformité d'une balise | CSP, armateur, installateur | M3 | 3b | aucune | à faire |
 | UC05 | Prendre son service et surveiller à chaque créneau | Équipe de quart | M5, M3 | 3a, 3b | `TrackingPagesTest::test_zone_situation_counts_vessels_present_at_a_given_time`, `test_map_shows_the_last_position_of_each_vessel` (situation et comptage par zone, sans créneau ni tests assistés) | partiel |
@@ -41,7 +43,7 @@ Les phases sont celles de `docs/PLAN_REFONTE.md`, section 4. Aucun cas n'est « 
 | UC21 | Laisser une note à un collègue | Agent | M12 | 5 | aucune | à faire |
 | UC22 | Ouvrir THEMIS sur la fiche du navire | Agent | M3, M10 | 3b | aucune | à faire |
 | UC23 | Piloter les connecteurs | Admin | M10 | 7 | `ConnectorFollowUpTest` (suivi des erreurs, rejets, synchronisations et commentaires avec notification des administrateurs), `MonitoringPagesTest::test_connectors_page_shows_each_data_source` (connecteurs réels et relance absents) | partiel |
-| UC24 | Gérer utilisateurs, droits, paramètres | Admin | M10 | 9 | `UserAdministrationTest`, `RoleAdministrationTest`, `SettingsTest`, `MonitoringPagesTest::test_sign_ins_appear_in_the_audit_log` (sans groupes, listes ni seuils par module) | partiel |
+| UC24 | Gérer utilisateurs, droits, paramètres | Admin | M10 | 9 | `UserAdministrationTest`, `RoleAdministrationTest`, `SettingsTest`, `MonitoringPagesTest::test_sign_ins_appear_in_the_audit_log`, `GroupAdministrationTest`, `PermissionResolverTest` (groupes et héritage faits ; listes paramétrables et seuils par module restent à faire) | partiel |
 | UC25 | Obtenir la vue 360° d'un navire ou de la flotte | Directeur | tous | 8 | `VesselPagesTest::test_vessel_profile_gathers_its_history`, `DashboardTest::test_dashboard_shows_key_indicators` (fiche et indicateurs, sans événements persistés ni vue flotte) | partiel |
 | UC26 | Voir les navires à surveiller à l'ouverture | Tous | M5, M4, M10 | 3a | aucune (la cloche de `NotificationsTest` n'est pas le tableau du matin) | à faire |
 | UC27 | Confier une tâche à l'agent IA | Opérateur autorisé | M10, M12 | 9 | aucune | à faire |
@@ -67,25 +69,19 @@ Les phases sont celles de `docs/PLAN_REFONTE.md`, section 4. Aucun cas n'est « 
 
 ---
 
-## 3. Convention cible : `#[Covers('UC05')]`
+## 3. Convention `#[Covers('UC05')]`
 
-Aujourd'hui le lien entre un test et un cas d'usage est écrit à la main dans ce document. La cible est de le porter par le test lui-même, pour qu'il ne puisse pas se périmer en silence.
+Le lien entre un test et un cas d'usage est porté par le test lui-même, pour qu'il ne puisse pas se périmer en silence.
 
-**Attribut.** Un attribut PHP `Covers`, défini dans le projet (par exemple `tests/Attributes/Covers.php`, à créer en phase 1), s'applique à la classe ou à la méthode de test. Il accepte un ou plusieurs identifiants :
+**Attribut.** `Tests\Attributes\Covers` s'applique à une classe ou à une méthode de test, de façon répétable, et accepte un ou plusieurs identifiants. `partial: true` déclare que le test ne couvre qu'une partie du cas ou de la règle :
 
 ```php
-#[Covers('UC05', 'RG04')]
+#[Covers('UC05', 'RG04', partial: true)]
 public function test_zone_situation_counts_vessels_present_at_a_given_time(): void
 ```
 
-Il ne remplace pas `#[CoversClass]` de PHPUnit, qui sert à la couverture de code : c'est un attribut distinct, propre à ce projet. Il n'existe pas encore.
+Il ne remplace pas `#[CoversClass]` de PHPUnit, qui sert à la couverture de code.
 
-**Commande `docs:acceptance`.** Commande Artisan à écrire (phase 1, avec `docs:generate` décrit dans la section 5 du plan). Elle lira les attributs `#[Covers]` par réflexion et produira ce fichier. Elle devra aussi :
+**Commande `php artisan docs:acceptance`.** Elle lit les attributs par réflexion et écrit `docs/reference/acceptance.md` : pour chaque identifiant de ce document, le statut (« à faire » sans test, « partiel » si tous les tests déclarent `partial: true`, « fait » sinon) et les tests qui le couvrent. Elle signale les cas sans test et échoue si un test cite un identifiant absent de ce document. Avec `--check`, elle échoue aussi si le rapport n'est plus à jour ; `GeneratedDocumentationTest` l'exécute à chaque lancement des tests.
 
-- signaler les cas d'usage et règles sans aucun test ;
-- signaler les identifiants cités par un test mais inconnus de la spécification ;
-- échouer en intégration continue si `docs/ACCEPTATION.md` n'est pas à jour.
-
-**Statuts.** Une fois la commande en place, le statut ne se saisit plus : « à faire » quand aucun test ne couvre l'identifiant, « partiel » ou « fait » selon un marqueur que le test déclare (par exemple `#[Covers('UC05', partial: true)]`). La forme exacte de ce marqueur sera arrêtée en phase 1.
-
-**D'ici là.** Quand vous écrivez un test qui recouvre un cas d'usage ou une règle, mettez à jour la ligne correspondante de ce document dans le même commit.
+**Ce document.** Il reste la source des identifiants, des intitulés, des phases et de l'analyse (colonnes « Garantie visée » et « Couverture actuelle »). Le statut qui fait foi est celui de `docs/reference/acceptance.md`. Quand vous écrivez un test qui recouvre un cas d'usage ou une règle, ajoutez `#[Covers]` puis relancez `php artisan docs:acceptance`.

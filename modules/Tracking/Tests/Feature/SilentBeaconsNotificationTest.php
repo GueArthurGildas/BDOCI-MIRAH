@@ -6,12 +6,14 @@ use App\Models\Position;
 use App\Models\TrackingDevice;
 use App\Support\Authorization\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Attributes\Covers;
 use Tests\TestCase;
 
 class SilentBeaconsNotificationTest extends TestCase
 {
     use RefreshDatabase;
 
+    #[Covers('UC06', partial: true)]
     public function test_tracking_viewers_are_notified_once_per_cooldown_when_beacons_are_silent(): void
     {
         $agent = $this->signInAs(Role::Agent);

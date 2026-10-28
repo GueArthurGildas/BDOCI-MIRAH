@@ -6,6 +6,7 @@ use App\Enums\ConnectorCommentKind;
 use App\Http\Controllers\Controller;
 use App\Models\DataSource;
 use App\Support\Authorization\Permission;
+use App\Support\Documents\CommentService;
 use App\Support\Notifications\Notifier;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class ConnectorCommentController extends Controller
 {
     private const MAX_LENGTH = 2000;
 
-    public function store(Request $request, DataSource $dataSource, Notifier $notifier): RedirectResponse
+    public function store(Request $request, DataSource $dataSource, Notifier $notifier, CommentService $comments): RedirectResponse
     {
         $validated = $request->validate([
             'kind' => ['required', Rule::enum(ConnectorCommentKind::class)],
@@ -27,11 +28,7 @@ class ConnectorCommentController extends Controller
             'body' => __('administration::administration.connectors.comment_body'),
         ]);
 
-        $comment = $dataSource->comments()->create([
-            'user_id' => $request->user()->id,
-            'kind' => $validated['kind'],
-            'body' => $validated['body'],
-        ]);
+        $comment = $comments->add($dataSource, $request->user(), $validated['body'], $validated['kind']);
 
         if ($request->boolean('notify')) {
             $notifier->notifyPermissionHolders(Permission::ConnectorsManage, new ConnectorCommentAlert($comment), cooldownHours: 1, except: $request->user());

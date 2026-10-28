@@ -9,5 +9,9 @@
                 @include('administration::roles.form')
             </form>
         </x-ui.card>
+
+        @unless ($isLocked ?? false)
+            @include('administration::grants.panel', ['scopedGrants' => $scopedGrants, 'action' => route('administration.roles.grants.store', $role), 'actionOptions' => $actionOptions, 'zoneOptions' => $zoneOptions])
+        @endunless
     </div>
 </x-layouts.app>

@@ -2,25 +2,22 @@
 
 namespace App\Models;
 
-use App\Enums\ConnectorCommentKind;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-#[Fillable(['data_source_id', 'user_id', 'kind', 'body'])]
-class DataSourceComment extends Model
+#[Fillable(['object_type', 'object_id', 'user_id', 'kind', 'body'])]
+class Comment extends Model
 {
     use HasFactory;
 
-    protected function casts(): array
-    {
-        return ['kind' => ConnectorCommentKind::class];
-    }
+    const UPDATED_AT = null;
 
-    public function dataSource(): BelongsTo
+    public function object(): MorphTo
     {
-        return $this->belongsTo(DataSource::class);
+        return $this->morphTo('object');
     }
 
     public function author(): BelongsTo

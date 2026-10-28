@@ -2,7 +2,7 @@
 
 namespace App\Support\Authorization;
 
-use Spatie\Permission\Models\Role as RoleModel;
+use App\Models\RoleRecord as RoleModel;
 
 enum Role: string
 {
@@ -23,6 +23,15 @@ enum Role: string
     public function label(): string
     {
         return "ui.roles.{$this->value}";
+    }
+
+    public function parent(): ?self
+    {
+        return match ($this) {
+            self::Director => self::TeamLead,
+            self::TeamLead => self::Agent,
+            default => null,
+        };
     }
 
     public function description(): string

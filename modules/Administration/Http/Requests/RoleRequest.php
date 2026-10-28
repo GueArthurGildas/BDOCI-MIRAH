@@ -21,6 +21,7 @@ class RoleRequest extends FormRequest
         return [
             'name' => $isSystem ? ['prohibited'] : ['required', 'string', 'max:'.self::NAME_MAX_LENGTH, Rule::unique('roles', 'name')->ignore($role)],
             'description' => $isSystem ? ['prohibited'] : ['nullable', 'string', 'max:'.self::DESCRIPTION_MAX_LENGTH],
+            'parent_id' => $isSystem ? ['prohibited'] : ['nullable', Rule::exists('roles', 'id'), Rule::notIn($role?->selfAndDescendantIds() ?? [])],
             'permissions' => ['nullable', 'array'],
             'permissions.*' => [Rule::enum(Permission::class)],
         ];
@@ -31,6 +32,7 @@ class RoleRequest extends FormRequest
         return [
             'name' => __('administration::administration.roles.name'),
             'description' => __('administration::administration.roles.description'),
+            'parent_id' => __('administration::administration.roles.parent'),
         ];
     }
 }

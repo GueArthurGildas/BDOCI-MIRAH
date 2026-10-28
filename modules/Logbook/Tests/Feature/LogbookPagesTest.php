@@ -9,6 +9,7 @@ use App\Models\Team;
 use App\Models\Vessel;
 use App\Support\Authorization\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Attributes\Covers;
 use Tests\TestCase;
 
 class LogbookPagesTest extends TestCase
@@ -22,6 +23,7 @@ class LogbookPagesTest extends TestCase
         $this->get('/logbook')->assertForbidden();
     }
 
+    #[Covers('RG10', 'UC12', partial: true)]
     public function test_pending_filter_only_lists_items_to_hand_over(): void
     {
         $this->signInAs(Role::Agent);
@@ -34,6 +36,7 @@ class LogbookPagesTest extends TestCase
             ->assertDontSee('Situation régularisée');
     }
 
+    #[Covers('RG08', 'UC08', partial: true)]
     public function test_agents_record_observations_with_their_team(): void
     {
         $team = Team::factory()->create();
@@ -53,6 +56,7 @@ class LogbookPagesTest extends TestCase
         $this->assertSame(ObservationStatus::Open, $observation->status);
     }
 
+    #[Covers('UC12', partial: true)]
     public function test_closing_an_observation_records_its_closing_time_and_history(): void
     {
         $this->signInAs(Role::Agent);

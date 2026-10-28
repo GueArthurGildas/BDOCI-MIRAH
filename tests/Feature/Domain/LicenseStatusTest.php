@@ -5,12 +5,14 @@ namespace Tests\Feature\Domain;
 use App\Enums\LicenseStatus;
 use App\Models\License;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Attributes\Covers;
 use Tests\TestCase;
 
 class LicenseStatusTest extends TestCase
 {
     use RefreshDatabase;
 
+    #[Covers('RG07', 'UC03', partial: true)]
     public function test_status_is_derived_from_validity_dates_and_suspension(): void
     {
         $this->assertSame(LicenseStatus::Valid, License::factory()->expiringIn(120)->create()->status);
@@ -19,6 +21,7 @@ class LicenseStatusTest extends TestCase
         $this->assertSame(LicenseStatus::Suspended, License::factory()->create(['suspended_at' => now()])->status);
     }
 
+    #[Covers('RG01', partial: true)]
     public function test_licenses_can_be_filtered_by_status(): void
     {
         $valid = License::factory()->expiringIn(120)->create();

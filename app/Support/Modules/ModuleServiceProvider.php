@@ -13,6 +13,8 @@ abstract class ModuleServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
+        $this->app->make(ModuleRegistry::class)->declare($this->moduleNamespace(), Str::headline($this->moduleName()));
+
         $this->loadModuleRoutes();
         $this->loadViewsFrom($this->modulePath('resources/views'), $this->moduleNamespace());
         $this->loadTranslationsFrom($this->modulePath('lang'), $this->moduleNamespace());
@@ -25,13 +27,9 @@ abstract class ModuleServiceProvider extends ServiceProvider
         }
     }
 
-    protected function navigation(Navigation $navigation): void
-    {
-    }
+    protected function navigation(Navigation $navigation): void {}
 
-    protected function schedule(Schedule $schedule): void
-    {
-    }
+    protected function schedule(Schedule $schedule): void {}
 
     /** @return array<int, class-string> */
     protected function consoleCommands(): array

@@ -69,17 +69,15 @@ Tables techniques Laravel hors périmètre métier (`cache`, `cache_locks`, `job
 
 Le cahier des charges §5 distingue « Agent » (identité professionnelle, service, profil, habilitation, statut) et « Utilisateur / rôle » (compte, profil, service, rôles, permissions, statut) comme deux entités. L'implémentation les **fusionne** dans `users` — simplification raisonnable tant qu'un agent n'existe pas sans compte applicatif, mais à confirmer : les champs `inspectors` (texte libre sur `inspections`) suggèrent que certains agents cités dans une inspection n'ont pas forcément de compte `User`.
 
-Rôles et permissions portés par le package `spatie/laravel-permission` :
+Rôles et permissions (voir les ADR 0004 et 0011) :
 
-#### `roles` / `permissions` / `model_has_roles` / `model_has_permissions` / `role_has_permissions` (S-002, S-003)
+#### `roles` / `role_user` / `permission_grants` (S-002, S-003)
 
 | Table | Rôle |
 |---|---|
-| `roles` (`id`, `name`, `guard_name`) | Rôle applicatif : `admin`, `director`, `team_lead`, `agent` (anciennement `supervisor`, `surveillance_agent`, `inspector`) ; colonne `description` pour les rôles personnalisés |
-| `permissions` (`id`, `name`, `guard_name`) | Permission unitaire `<module>.<action>` |
-| `model_has_roles` | Association polymorphe `User` ↔ `Role` |
-| `model_has_permissions` | Association polymorphe `User` ↔ `Permission` (droits directs) |
-| `role_has_permissions` | Association `Role` ↔ `Permission` |
+| `roles` (`id`, `name`, `description`, `parent_id`) | Rôle applicatif : `admin`, `director`, `team_lead`, `agent` (anciennement `supervisor`, `surveillance_agent`, `inspector`) ; colonne `description` pour les rôles personnalisés |
+| `role_user` | Association `User` ↔ `Role` |
+| `permission_grants` | Permission `<module>.<action>` accordée à un rôle ou à un groupe, avec zone et période facultatives |
 
 #### `activity_log` — Journal d'audit (S-005, F-004, JOURNAL D'AUDIT / ÉVÉNEMENT)
 
@@ -363,9 +361,8 @@ erDiagram
     TEAM ||--o{ USER : "team_id"
     TEAM ||--o{ OBSERVATION : "team_id"
 
-    USER }o--o{ ROLE : "model_has_roles"
-    ROLE }o--o{ PERMISSION : "role_has_permissions"
-    USER }o--o{ PERMISSION : "model_has_permissions"
+    USER }o--o{ ROLE : "role_user"
+    ROLE ||--o{ PERMISSION : "permission_grants"
     USER ||--o{ MOVEMENT : "recorded_by"
     USER ||--o{ OBSERVATION : "author_id"
     USER }o--o{ MISSION : "mission_user"
@@ -531,12 +528,13 @@ erDiagram
     ROLE {
         bigint id PK
         string name
-        string guard_name
+        bigint parent_id
     }
     PERMISSION {
         bigint id PK
-        string name
-        string guard_name
+        bigint role_id
+        bigint action_id
+        bigint zone_id
     }
     ACTIVITY_LOG {
         bigint id PK
@@ -570,7 +568,6 @@ erDiagram
 - `ACTIVITY_LOG.subject` est une relation polymorphe : elle s'applique à toute entité auditée (`Vessel`, `License`, `Inspection`, `Infraction`, `Observation`, `Movement`, `Mission`, `CatchDeclaration`, `User`…), non représentable par une seule ligne — voir trait `User ||--o{ ACTIVITY_LOG` pour le seul rôle de causer.
 - `DOCUMENT.documentable` est également polymorphe (type `documentable_type`/`documentable_id`) ; les quatre traits dessinés (`Mission`, `Inspection`, `Infraction`, `Vessel`) correspondent aux entités pour lesquelles les documents cite explicitement des pièces (F-005, F-006) ou des preuves (Infraction) — une seule ligne par rattachement effectif, pas une relation 4-aire.
 - `data_sources` (connecteurs) est une table de référence sans lien direct au modèle métier (F-012) — volontairement absente du diagramme.
-- `permissions`/`roles` suivent le schéma standard `spatie/laravel-permission`, teams désactivées (le `team_id` de `roles` n'est pas celui des équipes de surveillance CSP).
 
 ## 4. Correspondance avec les documents de cadrage
 

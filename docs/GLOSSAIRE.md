@@ -58,22 +58,22 @@ Nom de la spécification (v1, français) → nom technique (v2, anglais) → sit
 
 | Spécification | Table | Situation actuelle |
 |---|---|---|
-| `module_registre` | `module_registry` | nouveau |
+| `module_registre` | `module_registry` | créé (phase 1) |
 | `pays` | `countries` | nouveau |
 | `zone` | `zones` | existe (géométrie JSON vers PostGIS) |
 | `equipe` | `teams` | existe |
-| `role` | `roles` | existe (Spatie), à étendre (parent ; `description` déjà ajoutée) |
-| `groupe` | `permission_groups` | nouveau |
+| `role` | `roles` | créée (phase 1), avec `parent_id` et `description` |
+| `groupe` | `permission_groups` | créé (phase 1) |
 | `utilisateur` | `users` | existe, à étendre (type, fonction, téléphone) |
-| `utilisateur_role` | `role_user` | remplace `model_has_roles` |
-| `utilisateur_groupe` | `permission_group_user` | nouveau |
+| `utilisateur_role` | `role_user` | créée (phase 1) |
+| `utilisateur_groupe` | `permission_group_user` | créé (phase 1) |
 | `utilisateur_equipe` | `team_user` | nouveau |
-| `action_catalogue` | `action_catalog` | nouveau |
-| `permission` | `permission_grants` | remplace `role_has_permissions`, `model_has_permissions`, `permissions` |
+| `action_catalogue` | `action_catalog` | créé (phase 1) |
+| `permission` | `permission_grants` | créé (phase 1) |
 | `journal_audit` | `audit_log` | remplace `activity_log` (durci) |
 | `document` | `documents` | nouveau |
 | `document_lien` | `document_links` | nouveau |
-| `commentaire` | `comments` | absorbera `data_source_comments` |
+| `commentaire` | `comments` | a absorbé `data_source_comments` |
 | `liste_reference` | `reference_lists` | nouveau |
 | `liste_valeur` | `reference_list_values` | nouveau |
 | `champ_definition` | `custom_field_definitions` | nouveau |
@@ -105,8 +105,8 @@ Nom de la spécification (v1, français) → nom technique (v2, anglais) → sit
 | `contact` | `contacts` | nouveau |
 | `agent` | `agents` | nouveau |
 | `habilitation` | `accreditations` | nouveau |
-| `evenement_navire` | `vessel_events` | nouveau |
-| `etat_courant_navire` | `vessel_current_states` | nouveau |
+| `evenement_navire` | `vessel_events` | créé (phase 1) |
+| `etat_courant_navire` | `vessel_current_states` | créé (phase 1) |
 | `etat_connecteur` | `data_sources` | existe (voir CONVENTIONS, point 9) |
 | `journal_synchro` | `data_source_syncs` | existe |
 | `rejet_import` | `data_source_rejections` | existe |
@@ -300,7 +300,7 @@ Nom de la spécification (v1, français) → nom technique (v2, anglais) → sit
 |---|---|---|
 | `activity_log` | `audit_log` | durci : journal en ajout seul |
 | `catch_declarations` | `declared_observed_catches, ers_catch_lines` | absorbée |
-| `data_source_comments` | `comments` | deviendra générique (rattachable à tout objet) |
+| `data_source_comments` | `comments` | repliée dans la table générique (objet rattaché = le connecteur, colonne `kind` conservée) |
 | `data_source_errors` | `(propre à l'application)` | suivi humain des erreurs de connecteur, conservé |
 | `data_source_rejections` | `data_source_rejections` | alignée |
 | `data_source_syncs` | `data_source_syncs` | alignée |
@@ -312,15 +312,11 @@ Nom de la spécification (v1, français) → nom technique (v2, anglais) → sit
 | `mission_user` | `mission_participants` | remplacée |
 | `mission_vessel` | `observed_units` | remplacée |
 | `missions` | `missions` | étendue |
-| `model_has_permissions` | `permission_grants` | remplacée (Spatie) |
-| `model_has_roles` | `role_user` | remplacée (Spatie) |
 | `movements` | `eez_declarations, mrep_port_calls` | change de sens |
 | `notifications` | `(propre à l'application)` | canal in_app du module Communications, conservée |
 | `observations` | `surveillance_observations, logbook_entries` | remplacée |
-| `permissions` | `permission_grants, action_catalog` | remplacée (Spatie) |
 | `ports` | `ports` | alignée |
 | `positions` | `positions` | à partitionner par mois |
-| `role_has_permissions` | `permission_grants` | remplacée (Spatie) |
 | `roles` | `roles` | étendue |
 | `settings` | `threshold_parameters` | absorbée |
 | `species` | `species` | alignée |

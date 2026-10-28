@@ -6,12 +6,14 @@ use App\Models\CatchDeclaration;
 use App\Models\Species;
 use App\Support\Authorization\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Attributes\Covers;
 use Tests\TestCase;
 
 class CatchPagesTest extends TestCase
 {
     use RefreshDatabase;
 
+    #[Covers('UC19', partial: true)]
     public function test_declarations_are_totalled_for_the_selected_species(): void
     {
         $this->signInAs(Role::Agent);

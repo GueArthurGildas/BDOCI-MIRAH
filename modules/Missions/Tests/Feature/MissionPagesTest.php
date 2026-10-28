@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Vessel;
 use App\Support\Authorization\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Attributes\Covers;
 use Tests\TestCase;
 
 class MissionPagesTest extends TestCase
@@ -18,6 +19,7 @@ class MissionPagesTest extends TestCase
         $this->actingAs(User::factory()->create())->get('/missions')->assertForbidden();
     }
 
+    #[Covers('UC18', partial: true)]
     public function test_mission_detail_shows_vessels_and_agents(): void
     {
         $this->signInAs(Role::Agent);

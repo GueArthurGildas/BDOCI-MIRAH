@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 #[Fillable(['key', 'name', 'kind', 'status', 'last_synced_at'])]
 class DataSource extends Model
@@ -40,9 +41,9 @@ class DataSource extends Model
         return $this->hasMany(DataSourceRejection::class)->latest('received_at');
     }
 
-    public function comments(): HasMany
+    public function comments(): MorphMany
     {
-        return $this->hasMany(DataSourceComment::class)->latest();
+        return $this->morphMany(Comment::class, 'object')->latest('id');
     }
 
     public function scopeWithIssueCounts(Builder $query): void

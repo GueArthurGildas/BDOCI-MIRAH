@@ -2,11 +2,15 @@
 
 namespace Modules\Administration\Tests\Feature;
 
+use App\Models\Position;
 use App\Models\Setting;
+use App\Models\TrackingDevice;
 use App\Support\Authorization\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Attributes\Covers;
 use Tests\TestCase;
 
+#[Covers('UC24', partial: true)]
 class SettingsTest extends TestCase
 {
     use RefreshDatabase;
@@ -34,6 +38,7 @@ class SettingsTest extends TestCase
         $this->put(route('administration.settings.update'), $this->validPayload())->assertForbidden();
     }
 
+    #[Covers('RG07', partial: true)]
     public function test_administrators_can_change_settings_and_they_apply_immediately(): void
     {
         $this->signInAs(Role::Admin);
@@ -84,8 +89,8 @@ class SettingsTest extends TestCase
         $agent = $this->signInAs(Role::Agent);
         $this->signInAs(Role::Admin);
         $this->put(route('administration.settings.update'), $this->validPayload(['alerts_beacons_silent_enabled' => 0]));
-        $device = \App\Models\TrackingDevice::factory()->create();
-        \App\Models\Position::factory()->for($device->vessel)->create(['recorded_at' => now()->subHours(10)]);
+        $device = TrackingDevice::factory()->create();
+        Position::factory()->for($device->vessel)->create(['recorded_at' => now()->subHours(10)]);
 
         $this->artisan('tracking:notify-silent-beacons')->assertSuccessful();
 

@@ -287,4 +287,6 @@ return [
         'work'                     => 'travail',
         'year'                     => 'année',
     ],
+
+    'custom_field_invalid' => 'La valeur de :attribute ne correspond pas au type du champ.',
 ];

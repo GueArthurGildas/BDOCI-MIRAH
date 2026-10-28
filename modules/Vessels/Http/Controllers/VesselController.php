@@ -6,10 +6,13 @@ use App\Enums\VesselCategory;
 use App\Enums\VesselStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Vessel;
+use App\Support\Actions\ActionRunner;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
+use Modules\Vessels\Actions\RegisterVessel;
+use Modules\Vessels\Actions\UpdateVessel;
 use Modules\Vessels\Http\Requests\VesselRequest;
 use Modules\Vessels\Support\VesselTimeline;
 
@@ -67,9 +70,9 @@ class VesselController extends Controller
         return view('vessels::create', ['vessel' => new Vessel]);
     }
 
-    public function store(VesselRequest $request): RedirectResponse
+    public function store(VesselRequest $request, ActionRunner $actions): RedirectResponse
     {
-        $vessel = Vessel::create($request->validated());
+        $vessel = $actions->run(RegisterVessel::class, $request->user(), $request->validated());
 
         return to_route('vessels.show', $vessel)->with('status', __('vessels::vessels.created'));
     }
@@ -79,9 +82,9 @@ class VesselController extends Controller
         return view('vessels::edit', compact('vessel'));
     }
 
-    public function update(VesselRequest $request, Vessel $vessel): RedirectResponse
+    public function update(VesselRequest $request, Vessel $vessel, ActionRunner $actions): RedirectResponse
     {
-        $vessel->update($request->validated());
+        $actions->run(UpdateVessel::class, $request->user(), ['vessel_id' => $vessel->id, 'attributes' => $request->validated()]);
 
         return to_route('vessels.show', $vessel)->with('status', __('vessels::vessels.updated'));
     }

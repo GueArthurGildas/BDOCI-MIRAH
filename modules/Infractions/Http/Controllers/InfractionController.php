@@ -6,11 +6,13 @@ use App\Enums\InfractionStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Infraction;
 use App\Models\InfractionType;
+use App\Support\Actions\ActionRunner;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
+use Modules\Infractions\Actions\UpdateInfraction;
 use Modules\Infractions\Http\Requests\UpdateInfractionRequest;
 
 class InfractionController extends Controller
@@ -54,9 +56,9 @@ class InfractionController extends Controller
         return view('infractions::show', compact('infraction'));
     }
 
-    public function update(UpdateInfractionRequest $request, Infraction $infraction): RedirectResponse
+    public function update(UpdateInfractionRequest $request, Infraction $infraction, ActionRunner $actions): RedirectResponse
     {
-        $infraction->update($request->validated());
+        $actions->run(UpdateInfraction::class, $request->user(), ['infraction_id' => $infraction->id, 'attributes' => $request->validated()]);
 
         return to_route('infractions.show', $infraction)->with('status', __('infractions::infractions.updated'));
     }

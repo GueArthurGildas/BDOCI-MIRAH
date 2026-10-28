@@ -7,12 +7,14 @@ use App\Models\Infraction;
 use App\Models\Inspection;
 use App\Support\Authorization\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Attributes\Covers;
 use Tests\TestCase;
 
 class InspectionPagesTest extends TestCase
 {
     use RefreshDatabase;
 
+    #[Covers('UC19', partial: true)]
     public function test_inspections_can_be_filtered_by_result(): void
     {
         $this->signInAs(Role::Agent);
@@ -25,6 +27,7 @@ class InspectionPagesTest extends TestCase
             ->assertDontSee('EI-COMPLIANT');
     }
 
+    #[Covers('UC19', partial: true)]
     public function test_inspection_detail_lists_related_infractions(): void
     {
         $this->signInAs(Role::Agent);

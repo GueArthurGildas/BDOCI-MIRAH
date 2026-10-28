@@ -249,7 +249,7 @@ Les tests placés dans `modules/*/Tests`, `tests/Feature` et `tests/Unit` sont l
 | `Species`, `CatchDeclaration` | captures et débarquements | F-008 |
 | `Mission` | missions et opérations (navires, agents, zone) | F-005 |
 | `Team`, `User` | équipes de surveillance et comptes (activables) | S-011 |
-| `DataSource`, `DataSourceSync`, `DataSourceError`, `DataSourceRejection`, `DataSourceComment` | état des connecteurs, historique des synchronisations, erreurs, enregistrements rejetés et commentaires de suivi | F-012 |
+| `DataSource`, `DataSourceSync`, `DataSourceError`, `DataSourceRejection` | état des connecteurs, historique des synchronisations, erreurs et enregistrements rejetés (les commentaires de suivi sont des `Comment` génériques) | F-012 |
 | `Setting` | réglages modifiables par l'administrateur (notifications, seuils d'alerte) | — |
 
 Les notifications utilisent la table `notifications` de Laravel (modèle fourni par le framework, sans classe dans `app/Models`). Les modifications des données métier sont historisées automatiquement dans le journal d'audit (`spatie/laravel-activitylog`, trait `App\Models\Concerns\Audited`).
@@ -275,7 +275,7 @@ Les notifications utilisent la table `notifications` de Laravel (modèle fourni 
 
 ### Droits d'accès
 
-Les permissions (`<module>.<action>`) sont déclarées dans l'enum `App\Support\Authorization\Permission`, et les rôles dans `App\Support\Authorization\Role` avec la liste de leurs permissions. `make fresh` (ou `RolesAndPermissionsSeeder`) les synchronise en base. La page *Administration › Rôles et permissions* permet de créer, modifier et supprimer des rôles personnalisés, de choisir les permissions de chaque rôle et affiche la matrice complète.
+Les permissions (`<module>.<action>`) sont les **actions** du catalogue : elles sont déclarées dans l'enum `App\Support\Authorization\Permission` et enregistrées en base (`action_catalog`) par `php artisan permissions:sync` (ou `RolesAndPermissionsSeeder`, `make fresh`). **À lancer à chaque déploiement** après `migrate`.
 
 | Rôle | Profil |
 |---|---|
@@ -284,7 +284,17 @@ Les permissions (`<module>.<action>`) sont déclarées dans l'enum `App\Support\
 | `team_lead` | chef d'équipe, équivalent de l'ancien « responsable du CSP » : valide la saisie des agents, pilote l'équipe de quart |
 | `agent` | opérateur CSP ou inspecteur : suivi, main courante, mouvements, consultation |
 
-Les descriptions de ces rôles sont affichées dans la page des rôles ; pour un rôle personnalisé, elle est saisie par l'administrateur. Un administrateur peut modifier les permissions des rôles système, sauf celles du rôle `admin` (jeu fixe, pour éviter de se couper l'accès).
+Les descriptions de ces rôles sont affichées dans la page des rôles ; pour un rôle personnalisé, elle est saisie par l'administrateur.
+
+**Comment une permission est accordée** (`App\Support\Authorization\PermissionResolver`, branché sur les `Gate`, donc `can()`, `->can()` et `@can` ne changent pas) :
+
+- **Rôles** : un rôle peut avoir un rôle parent dont il hérite des permissions. Les rôles système forment la chaîne `director` > `team_lead` > `agent` ; un rôle personnalisé peut hériter de n'importe quel rôle.
+- **Groupes** : un utilisateur peut appartenir à des groupes (`permission_groups`) qui lui ajoutent des permissions en plus de son rôle. Les cinq groupes de la spécification existent (gestion FNP et licences, instruction des infractions, avis surveillance, gestion des envois automatiques, déclencher l'agent IA) ; l'administrateur en crée d'autres.
+- **Portée** : une permission accordée (`permission_grants`) peut être limitée à une **zone** (`Gate::allows($permission, $zone)`) ou à une **période** (`valid_from`, `valid_to`). Le résolveur les gère ; les écrans de l'administration permettent d'accorder des permissions limitées depuis la fiche d'un rôle ou d'un groupe.
+- Le résolveur mémorise les droits d'un utilisateur pour la durée d'une requête ; ils sont recalculés après toute modification faite par `GrantService`, par un changement de groupe ou de rôle de l'utilisateur.
+- Spatie Permission a été retiré : les rôles (`roles`, `role_user`) sont gérés par `App\Models\RoleRecord` et le trait `App\Models\Concerns\HasRoles` (`assignRole`, `syncRoles`, `hasRole`, `getRoleNames`, portée `User::role()`). Seul `spatie/laravel-activitylog` reste, pour l'audit.
+
+L'administrateur gère rôles, groupes et attributions depuis *Administration › Rôles et permissions* et *Groupes de permissions* : il peut modifier les permissions des rôles système, sauf celles du rôle `admin` (jeu fixe, pour éviter de se couper l'accès).
 
 Pour protéger une route : `->can(Permission::VesselsView->value)`. Pour afficher un élément de menu : passer `permission:` à `$navigation->add()`.
 

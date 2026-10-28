@@ -4,6 +4,7 @@ namespace App\Support\Notifications;
 
 use App\Models\User;
 use App\Support\Authorization\Permission;
+use App\Support\Authorization\PermissionResolver;
 
 final class Notifier
 {
@@ -11,9 +12,8 @@ final class Notifier
     {
         $notified = 0;
 
-        User::permission($permission->value)
-            ->where('is_active', true)
-            ->when($except, fn ($query) => $query->whereKeyNot($except->id))
+        app(PermissionResolver::class)->holders($permission->value)
+            ->reject(fn (User $user) => $user->is($except))
             ->each(function (User $user) use ($alert, $cooldownHours, &$notified) {
                 if ($this->wasRecentlyNotified($user, $alert->key(), $cooldownHours)) {
                     return;

@@ -62,15 +62,15 @@ Le vocabulaire de la spécification (`database/docs/`) et celui du code ne se re
 
 | Notion | Aujourd'hui | Cible | Où lire |
 |---|---|---|---|
-| **Module** | existe : un dossier `modules/<Nom>` avec ses routes, contrôleurs, vues, traductions et tests ; il ne dépend que du socle `app/` | ajout d'un registre en base (`module_registry`) | `app/Support/Modules/ModuleServiceProvider.php`, `docs/TECHNICAL.md` |
+| **Module** | existe : un dossier `modules/<Nom>` avec ses routes, contrôleurs, vues, traductions et tests ; il ne dépend que du socle `app/` (un test le vérifie) ; déclaré dans le registre en base (`module_registry`, commande `modules:sync`) | | `app/Support/Modules/ModuleServiceProvider.php`, `docs/TECHNICAL.md` |
 | **Socle** | existe : `app/Models`, `app/Enums`, `app/Queries`, `app/Support` partagés par tous les modules | noyau de la phase 1 | `docs/TECHNICAL.md` |
 | **Navire** | existe sous forme d'une table `vessels` ; propriétaire et pavillon sont du texte | fiche unique avec identifiants multiples, sources et rapprochement (phase 2) | `app/Models/Vessel.php`, `docs/PLAN_REFONTE.md` |
-| **Droits** | existe : permissions déclarées dans `app/Support/Authorization/Permission.php`, quatre rôles système dans `Role.php`, rôles personnalisés créés depuis l'administration | catalogue d'actions par module, groupes, portée zone et période (phase 1) | `docs/TECHNICAL.md` |
+| **Droits** | existe : catalogue d'actions (`Permission`, `action_catalog`), rôles avec héritage, groupes, permissions limitables à une zone ou une période, résolveur branché sur les `Gate` (`app/Support/Authorization/PermissionResolver.php`) | écrans pour la portée zone et période, quand une phase l'exige | `docs/TECHNICAL.md` |
 | **Alerte** | existe : notifications en base, balise clignotante et notifications flottantes, deux alertes planifiées | alertes de la spécification avec règles et traitement (phases 3b et 5) | recette 4.2 |
 | **Réglage** | existe : valeurs modifiables par l'administrateur, par-dessus `config/surveillance.php` | généralisation en seuils par module | recette 4.3 |
-| **Audit** | existe : historisation automatique par `spatie/laravel-activitylog`, page *Journal d'audit* | journal immuable, y compris pour l'Admin (phase 1) | `app/Models/Concerns/Audited.php` |
-| **Chronologie du navire** | reconstituée à l'affichage par `modules/Vessels/Support/VesselTimeline.php` | **événement du navire** (`vessel_events`) écrit à chaque fait, avec **état courant** (`vessel_current_states`) | `docs/PLAN_REFONTE.md`, section 3 |
-| **Action nommée** | n'existe pas : les contrôleurs écrivent directement | classe `Action` qui vérifie la permission, écrit, publie l'événement, met à jour l'état courant et journalise | `docs/PLAN_REFONTE.md`, section 3 |
+| **Audit** | existe : historisation par `spatie/laravel-activitylog`, page *Journal d'audit* ; la table est inaltérable (triggers PostgreSQL), y compris pour l'Admin | table `audit_log` dédiée (plus tard) | `app/Models/Concerns/Audited.php` |
+| **Chronologie du navire** | l'affichage actuel est reconstitué par `modules/Vessels/Support/VesselTimeline.php` ; le **journal d'événements** `vessel_events` et l'**état courant** `vessel_current_states` existent (écrits par les actions, voir recette 4.9) | la vue 360° ne lira que ces deux tables (phase 8) | `app/Support/Events/VesselStateBuilder.php`, ADR 0010 |
+| **Action nommée** | existe : une classe `Action` exécutée par `ActionRunner`, qui vérifie la permission, écrit, publie l'événement, met à jour l'état courant et journalise, dans une transaction ; première action : `modules/Licenses/Actions/RecordLicense.php`. Les autres écritures passent encore par les contrôleurs, elles seront converties module par module | toutes les écritures métier | `app/Support/Actions/`, ADR 0010 |
 
 Règles à connaître dès le premier jour :
 
@@ -86,13 +86,14 @@ Règles à connaître dès le premier jour :
 1. `README.md` : installation et commandes.
 2. Ce guide, jusqu'à la section 2.
 3. `docs/TECHNICAL.md` : sections Architecture, Anatomie d'un module, Droits d'accès, Traductions.
-4. `docs/DESIGN.md` : avant de toucher aux vues ou au SCSS.
-5. `docs/PLAN_REFONTE.md` : sections 1 à 4, pour savoir où va le projet.
-6. `docs/ACCEPTATION.md` : quels cas d'usage sont couverts par quels tests.
-7. `docs/GLOSSAIRE.md` : quand un terme métier vous est inconnu.
-8. `docs/decisions/` : pourquoi une décision a été prise.
-9. Les documents de cadrage : `docs/CADRAGE.pdf` et `docs/CAHIER_DES_CHARGES.pdf`, puis `docs/MODELE_DONNEES.md` et `docs/CAS_UTILISATION.md`. Ces deux derniers portent un avertissement : ils décrivent encore les anciens rôles.
-10. La spécification reçue du métier, dans `database/docs/` (spécification de conception, MCD, schéma SQL v1).
+4. `app/README.md` : le noyau partagé par les modules (actions, droits, notifications, réglages, documents).
+5. `docs/DESIGN.md` : avant de toucher aux vues ou au SCSS.
+6. `docs/PLAN_REFONTE.md` : sections 1 à 4, pour savoir où va le projet.
+7. `docs/ACCEPTATION.md` et `docs/reference/` : quels cas d'usage sont couverts par quels tests, et le catalogue généré du code.
+8. `docs/GLOSSAIRE.md` : quand un terme métier vous est inconnu.
+9. `docs/decisions/` : pourquoi une décision a été prise.
+10. Les documents de cadrage : `docs/CADRAGE.pdf` et `docs/CAHIER_DES_CHARGES.pdf`, puis `docs/MODELE_DONNEES.md` et `docs/CAS_UTILISATION.md`. Ces deux derniers portent un avertissement : ils décrivent encore les anciens rôles.
+11. La spécification reçue du métier, dans `database/docs/` (spécification de conception, MCD, schéma SQL v1).
 
 ---
 
@@ -140,16 +141,16 @@ Les réglages se superposent à `config/surveillance.php` : le code continue de 
 
 La page est *Administration > Paramètres* (`modules/Administration/Http/Controllers/SettingsController.php`), réservée à la permission `settings.manage`. N'y mettez jamais de valeur sensible.
 
-### 4.4 Ajouter une permission et la donner à un rôle
+### 4.4 Ajouter une permission et la donner à un rôle ou à un groupe
 
-1. **Déclarer** un cas dans `app/Support/Authorization/Permission.php`, au format `<module>.<action>`.
-2. **Attribuer** la permission aux rôles concernés dans `Role::permissions()` (`app/Support/Authorization/Role.php`).
-3. **Libellés** : `permissions.<module>.<action>` dans `modules/Administration/lang/en/administration.php` et `modules/Administration/lang/fr/administration.php`. Pour un nouveau module, ajouter aussi `permission_groups.<module>` dans les mêmes fichiers.
+1. **Déclarer** un cas dans `app/Support/Authorization/Permission.php`, au format `<module>.<action>`. La méthode `module()` y rattache l'action à son module (les préfixes `users`, `roles`, `settings`, `connectors` et `audit` relèvent de l'administration).
+2. **Attribuer** la permission aux rôles concernés dans `Role::permissions()` (`app/Support/Authorization/Role.php`). Un rôle hérite de ses parents (`Role::parent()`) : ne listez que ce que le rôle ajoute, le seeder retire ce qui est déjà hérité. Pour un groupe système, voir `SYSTEM_GROUPS` dans `database/seeders/RolesAndPermissionsSeeder.php`.
+3. **Libellés** : `permissions.<module>.<action>` dans `modules/Administration/lang/{en,fr}/administration.php`. Pour un nouveau module, ajouter aussi `permission_groups.<module>`.
 4. **Protéger** : `->can(Permission::X->value)` sur la route, et `permission:` dans l'entrée de menu (recette 4.1).
-5. **Bases existantes** : `RolesAndPermissionsSeeder` (`database/seeders/RolesAndPermissionsSeeder.php`) crée la permission, mais ne synchronise les permissions d'un rôle que lorsque ce rôle est créé (et toujours pour `admin`). Sur une base existante, accordez la permission depuis *Administration > Rôles et permissions* ; en local, `make fresh` repart de zéro.
-6. **Test** : `signInAs(Role::Agent)` (`tests/TestCase.php`) puis vérifier l'accès ou le refus ; `modules/Administration/Tests/Feature/RoleAdministrationTest.php` montre un rôle personnalisé qui accorde exactement ses permissions.
+5. **Catalogue** : `php artisan permissions:sync` enregistre la nouvelle action dans `action_catalog` (le seeder le fait aussi). Sur une base existante, la permission n'est accordée à aucun rôle : l'administrateur l'accorde depuis les pages Rôles ou Groupes (en développement : `php artisan migrate:fresh --seed`).
+6. **Test** : `signInAs(Role::Agent)` pour tester un rôle, `signInWithPermissions(Permission::X, ...)` pour un utilisateur qui n'a que ces permissions (`tests/TestCase.php`). Voir `modules/Administration/Tests/Feature/RoleAdministrationTest.php`, `GroupAdministrationTest.php` et `tests/Feature/Kernel/PermissionResolverTest.php`.
 
-Un administrateur peut aussi créer des rôles et choisir leurs permissions depuis la page des rôles, sans toucher au code. Une permission, elle, n'existe que si le code la vérifie.
+Un administrateur crée aussi des rôles et des groupes et choisit leurs permissions sans toucher au code. Une permission, elle, n'existe que si le code la vérifie.
 
 ### 4.5 Ajouter une migration
 
@@ -193,15 +194,56 @@ make artisan c="test --filter=test_licenses_can_be_filtered_by_status"   # une m
 
 Avant de commiter, lancez toute la suite : elle inclut la complétude des traductions et les règles de navigation.
 
+### 4.9 Ajouter une action nommée
+
+Toute écriture métier qui doit laisser une trace (événement du navire, état courant, audit) passe par une action. Référence : `modules/Licenses/Actions/RecordLicense.php`.
+
+1. **Créer la classe** dans `modules/<Module>/Actions/`, qui étend `App\Support\Actions\Action` : `code()` (par exemple `licenses.record`), `permission()` (une valeur de `Permission`) et `handle(ActionContext $context, array $input)`.
+2. **Écrire et publier** dans `handle` : créer ou modifier les modèles, puis `$context->publish(...)` pour chaque fait à inscrire dans le journal du navire (module, type, objet concerné, clé de traduction du résumé et ses paramètres). Ne rien traduire dans `handle` : la clé est traduite à l'affichage.
+3. **Traduire** le résumé dans `modules/<Module>/lang/{en,fr}/events.php`.
+4. **Appeler** l'action depuis le contrôleur : `$actions->run(RecordLicense::class, $request->user(), $request->validated())`, où `$actions` est un `App\Support\Actions\ActionRunner` injecté. La validation reste dans la `FormRequest`.
+5. **Tester** : l'événement, l'état courant, l'audit, le refus sans permission et le retour en arrière en cas d'échec (voir `modules/Licenses/Tests/Feature/RecordLicenseTest.php` et `tests/Feature/Kernel/ActionRunnerTest.php`).
+
+L'`ActionRunner` fait le reste, dans une seule transaction : contrôle de la permission, écriture des événements, rafraîchissement de l'état courant des navires touchés, entrée d'audit. Si l'une de ces étapes échoue, rien n'est écrit.
+
+### 4.10 Tenir la documentation générée à jour
+
+`docs/reference/` n'est jamais écrit à la main : il est produit par le code.
+
+| Fichier | Contenu | Commande |
+|---|---|---|
+| `modules.md`, `actions.md`, `roles.md`, `routes.md`, `schema.md` | modules, permissions et actions, rôles × permissions, routes, schéma de données (Mermaid) | `php artisan docs:generate` |
+| `acceptance.md` | couverture des cas d'usage et règles de gestion par les tests | `php artisan docs:acceptance` |
+
+Après avoir ajouté une migration, une permission, une action, une route ou un module, lancez `php artisan docs:generate`. Après avoir écrit un test qui recouvre un cas d'usage (UC) ou une règle (RG), ajoutez `#[Covers('UC02', partial: true)]` à la classe ou à la méthode (`partial: true` tant que le cas n'est pas couvert en entier), puis `php artisan docs:acceptance`. `tests/Feature/Docs/GeneratedDocumentationTest.php` échoue si l'un des deux n'est pas à jour : c'est la même vérification que `--check`.
+
+### 4.11 Travailler avec Claude Code
+
+Le dépôt contient des *skills* Claude Code dans `.claude/skills/` : ce sont les recettes ci-dessus, sous une forme que l'assistant applique automatiquement quand la demande correspond. Ils sont chargés au démarrage d'une session.
+
+| Skill | Quand |
+|---|---|
+| `new-module` | créer un module |
+| `add-action` | écriture métier tracée (recette 4.9) |
+| `add-alert` | nouvelle alerte planifiée (recette 4.2) |
+| `add-permission` | nouvelle permission (recette 4.4) |
+| `add-setting` | nouveau réglage administrable (recette 4.3) |
+| `add-migration` | table ou colonne du schéma v2 (recette 4.5) |
+| `page-ui` | vues, composants, thème |
+| `ui-verify` | vérifier une page dans un navigateur sans interface |
+| `dev-env` | Docker, base de données, tests, pièges connus |
+| `phase-workflow` | suivre le plan de refonte et ses règles |
+| `project-commit` | conventions de commit |
+
+Quand une recette change, mettez à jour le skill correspondant en même temps que ce guide.
+
 ---
 
 ## 5. Ce qui est à venir
 
 | Besoin | Où est la cible |
 |---|---|
-| écrire un fait métier de façon traçable (action nommée) | `docs/PLAN_REFONTE.md`, section 3, phase 1 |
-| faire apparaître un fait dans la chronologie du navire (événement) | idem |
-| rattacher un cas d'usage à un test | `docs/ACCEPTATION.md` |
+| écrans d'attribution des droits avec zone et période | phase 1 (suite), ADR 0004 |
 | rapprocher un navire, gérer ses identifiants | phase 2 |
 | main courante, opérations, tableau du matin | phase 3a |
 

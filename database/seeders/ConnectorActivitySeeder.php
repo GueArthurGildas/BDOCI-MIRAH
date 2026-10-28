@@ -4,8 +4,8 @@ namespace Database\Seeders;
 
 use App\Enums\ConnectorCommentKind;
 use App\Enums\RejectionStatus;
+use App\Models\Comment;
 use App\Models\DataSource;
-use App\Models\DataSourceComment;
 use App\Models\DataSourceError;
 use App\Models\DataSourceRejection;
 use App\Models\DataSourceSync;
@@ -73,10 +73,11 @@ class ConnectorActivitySeeder extends Seeder
         ];
 
         foreach ($comments as [$key, $kind, $body]) {
-            DataSourceComment::factory()->create([
-                'data_source_id' => DataSource::where('key', $key)->value('id'),
+            Comment::factory()->create([
+                'object_type' => (new DataSource)->getMorphClass(),
+                'object_id' => DataSource::where('key', $key)->value('id'),
                 'user_id' => $admin->id,
-                'kind' => $kind,
+                'kind' => $kind->value,
                 'body' => $body,
             ]);
         }

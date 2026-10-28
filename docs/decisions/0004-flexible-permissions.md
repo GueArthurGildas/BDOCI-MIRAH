@@ -1,6 +1,6 @@
 # 0004 — Droits flexibles derrière les `Gate`
 
-**Statut** : accepté le 2026-10-27, décision de l'utilisateur (option B de D4). En cours : une première partie est livrée.
+**Statut** : accepté le 2026-10-27, décision de l'utilisateur (option B de D4). En cours : première partie livrée, groupes, héritage et portée réalisés par l'ADR 0011.
 
 ## Contexte
 
@@ -12,7 +12,7 @@
 
 Le modèle de la spécification sera introduit en phase 1, **derrière les `Gate` existantes** : les appels `can()` ne changent pas, seule la résolution des droits change.
 
-Déjà livré, sur Spatie :
+Déjà livré (Spatie Permission a ensuite été retiré, voir ADR 0011) :
 
 - une page Administration › Rôles et permissions : création, modification et suppression de rôles, choix des permissions par module, journal d'audit des changements (événements `created`, `updated`, `permissions_changed`, `deleted`) ;
 - permission `roles.manage`, réservée à l'Admin ;

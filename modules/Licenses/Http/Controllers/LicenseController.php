@@ -6,10 +6,15 @@ use App\Enums\LicenseStatus;
 use App\Enums\LicenseType;
 use App\Http\Controllers\Controller;
 use App\Models\License;
+use App\Models\Vessel;
+use App\Support\Actions\ActionRunner;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
+use Modules\Licenses\Actions\RecordLicense;
+use Modules\Licenses\Http\Requests\StoreLicenseRequest;
 
 class LicenseController extends Controller
 {
@@ -41,5 +46,21 @@ class LicenseController extends Controller
                 $status->value => License::withStatus($status)->count(),
             ]),
         ]);
+    }
+
+    public function create(): View
+    {
+        return view('licenses::create', [
+            'vessels' => Vessel::orderBy('name')->get(['id', 'name', 'registration_number'])
+                ->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => "{$vessel->name} ({$vessel->registration_number})"])
+                ->all(),
+        ]);
+    }
+
+    public function store(StoreLicenseRequest $request, ActionRunner $actions): RedirectResponse
+    {
+        $actions->run(RecordLicense::class, $request->user(), $request->validated());
+
+        return to_route('licenses.index')->with('status', __('licenses::licenses.recorded'));
     }
 }

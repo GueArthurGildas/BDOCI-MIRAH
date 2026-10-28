@@ -26,5 +26,21 @@ enum Permission: string
     case ConnectorsManage = 'connectors.manage';
     case SettingsManage = 'settings.manage';
     case RolesManage = 'roles.manage';
+
+    public function module(): string
+    {
+        $prefix = str($this->value)->before('.')->toString();
+
+        return in_array($prefix, ['users', 'roles', 'settings', 'connectors', 'audit'], true) ? 'administration' : $prefix;
+    }
+
+    public function verb(): string
+    {
+        return match (str($this->value)->afterLast('.')->toString()) {
+            'view' => 'view',
+            'create' => 'create',
+            default => 'update',
+        };
+    }
     case AuditView = 'audit.view';
 }

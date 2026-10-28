@@ -7,11 +7,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Movement;
 use App\Models\Port;
 use App\Models\Vessel;
+use App\Support\Actions\ActionRunner;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
+use Modules\Movements\Actions\RecordMovement;
 use Modules\Movements\Http\Requests\StoreMovementRequest;
 
 class MovementController extends Controller
@@ -54,9 +56,9 @@ class MovementController extends Controller
         ]);
     }
 
-    public function store(StoreMovementRequest $request): RedirectResponse
+    public function store(StoreMovementRequest $request, ActionRunner $actions): RedirectResponse
     {
-        Movement::create([...$request->validated(), 'recorded_by' => $request->user()->id]);
+        $actions->run(RecordMovement::class, $request->user(), $request->validated());
 
         return to_route('movements.index')->with('status', __('movements::movements.created'));
     }

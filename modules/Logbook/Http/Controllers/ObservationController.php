@@ -9,11 +9,14 @@ use App\Models\Observation;
 use App\Models\Team;
 use App\Models\Vessel;
 use App\Models\Zone;
+use App\Support\Actions\ActionRunner;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
+use Modules\Logbook\Actions\OpenObservation;
+use Modules\Logbook\Actions\UpdateObservation;
 use Modules\Logbook\Http\Requests\StoreObservationRequest;
 use Modules\Logbook\Http\Requests\UpdateObservationRequest;
 
@@ -57,14 +60,9 @@ class ObservationController extends Controller
         ]);
     }
 
-    public function store(StoreObservationRequest $request): RedirectResponse
+    public function store(StoreObservationRequest $request, ActionRunner $actions): RedirectResponse
     {
-        $observation = Observation::create([
-            ...$request->validated(),
-            'author_id' => $request->user()->id,
-            'team_id' => $request->user()->team_id,
-            'status' => ObservationStatus::Open,
-        ]);
+        $observation = $actions->run(OpenObservation::class, $request->user(), $request->validated());
 
         return to_route('logbook.show', $observation)->with('status', __('logbook::logbook.created'));
     }
@@ -76,15 +74,9 @@ class ObservationController extends Controller
         return view('logbook::show', compact('observation'));
     }
 
-    public function update(UpdateObservationRequest $request, Observation $observation): RedirectResponse
+    public function update(UpdateObservationRequest $request, Observation $observation, ActionRunner $actions): RedirectResponse
     {
-        $status = ObservationStatus::from($request->validated('status'));
-
-        $observation->update([
-            'status' => $status,
-            'follow_up' => $request->validated('follow_up'),
-            'closed_at' => $status === ObservationStatus::Closed ? ($observation->closed_at ?? now()) : null,
-        ]);
+        $actions->run(UpdateObservation::class, $request->user(), [...$request->validated(), 'observation_id' => $observation->id]);
 
         return to_route('logbook.show', $observation)->with('status', __('logbook::logbook.updated'));
     }

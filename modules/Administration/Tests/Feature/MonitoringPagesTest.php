@@ -6,12 +6,14 @@ use App\Models\DataSource;
 use App\Models\DataSourceRejection;
 use App\Support\Authorization\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Attributes\Covers;
 use Tests\TestCase;
 
 class MonitoringPagesTest extends TestCase
 {
     use RefreshDatabase;
 
+    #[Covers('UC23', partial: true)]
     public function test_connectors_page_shows_each_data_source(): void
     {
         $this->signInAs(Role::TeamLead);
@@ -24,6 +26,7 @@ class MonitoringPagesTest extends TestCase
             ->assertViewHas('dataSources', fn ($sources) => $sources->first()->pending_rejections_count === 3);
     }
 
+    #[Covers('UC24', partial: true)]
     public function test_sign_ins_appear_in_the_audit_log(): void
     {
         $user = $this->signInAs(Role::Admin);

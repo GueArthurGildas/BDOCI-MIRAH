@@ -5,12 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['name'])]
+#[Fillable(['name', 'lead_user_id'])]
 class Team extends Model
 {
     use HasFactory;
+
+    public function lead(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'lead_user_id');
+    }
 
     public function members(): HasMany
     {

@@ -1,0 +1,38 @@
+<?php
+
+namespace Modules\Vessels\Actions;
+
+use App\Models\Vessel;
+use App\Support\Actions\Action;
+use App\Support\Actions\ActionContext;
+use App\Support\Authorization\Permission;
+
+class UpdateVessel extends Action
+{
+    public function code(): string
+    {
+        return 'vessels.update';
+    }
+
+    public function permission(): Permission
+    {
+        return Permission::VesselsManage;
+    }
+
+    public function handle(ActionContext $context, array $input): Vessel
+    {
+        $vessel = Vessel::findOrFail($input['vessel_id']);
+        $vessel->update($input['attributes']);
+
+        $context->publish(
+            vessel: $vessel,
+            module: 'vessels',
+            type: 'vessel.updated',
+            subject: $vessel,
+            summaryKey: 'vessels::events.updated',
+            params: ['name' => $vessel->name],
+        );
+
+        return $vessel;
+    }
+}

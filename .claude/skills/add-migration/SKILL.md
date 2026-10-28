@@ -21,5 +21,6 @@ Sources of truth: `docs/schema/schema_v2.sql` (reference DDL, validated on PostG
 
 1. Model (`#[Fillable([...])]`, casts to enums), factory, and seed data when the demo needs it.
 2. If a name or type deviates from `schema_v2.sql`, edit the SQL, `GLOSSAIRE_COLONNES.md` and add a row to section 11 of `CONVENTIONS.md`. `tests/Feature/GlossaryTest.php` fails when an application table is missing from `docs/GLOSSAIRE.md`; update its "Situation actuelle" cell.
-3. Run the suite **twice** in a row (a second run catches migrations that are not replayable): `docker compose exec -T app php artisan test`.
-4. One phase at a time; wait for Gildas' validation before the next (see the `phase-workflow` skill).
+3. Run `php artisan docs:generate` (the schema reference in `docs/reference/schema.md` changes with every migration; `GeneratedDocumentationTest` fails otherwise).
+4. Run the suite **twice** in a row (a second run catches migrations that are not replayable): `docker compose exec -T app php artisan test`.
+5. One phase at a time; wait for Gildas' validation before the next (see the `phase-workflow` skill).

@@ -71,6 +71,16 @@ class Vessel extends Model
         return $this->hasOne(License::class)->ofMany('valid_until', 'max');
     }
 
+    public function events(): HasMany
+    {
+        return $this->hasMany(VesselEvent::class)->latest('occurred_at');
+    }
+
+    public function currentState(): HasOne
+    {
+        return $this->hasOne(VesselCurrentState::class);
+    }
+
     public function trackingDevices(): HasMany
     {
         return $this->hasMany(TrackingDevice::class)->latest('installed_at');

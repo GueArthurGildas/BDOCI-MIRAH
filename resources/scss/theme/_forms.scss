@@ -47,3 +47,12 @@ label,
         text-transform: uppercase;
     }
 }
+
+.gs-member-list {
+    max-height: 260px;
+    padding: 10px 14px;
+    overflow-y: auto;
+    background: var(--gs-surface-alt);
+    border: 1px solid var(--gs-line);
+    border-radius: var(--gs-radius-sm);
+}

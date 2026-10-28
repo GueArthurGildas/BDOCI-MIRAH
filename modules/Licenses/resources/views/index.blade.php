@@ -24,6 +24,14 @@
         </x-ui.filters>
 
         <x-ui.card :title="__('licenses::licenses.list_title')" :subtitle="trans_choice('ui.results_count', $licenses->total())" flush>
+            @can(App\Support\Authorization\Permission::LicensesManage->value)
+                <x-slot:actions>
+                    <a href="{{ route('licenses.create') }}" class="btn btn-primary btn-sm">
+                        <i class="feather icon-plus"></i> {{ __('licenses::licenses.new') }}
+                    </a>
+                </x-slot:actions>
+            @endcan
+
             <x-ui.table :paginator="$licenses">
                 <x-slot:head>
                     <th>{{ __('licenses::licenses.fields.number') }}</th>

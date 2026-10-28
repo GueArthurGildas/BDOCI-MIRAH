@@ -9,6 +9,7 @@ use App\Models\Vessel;
 use App\Models\Zone;
 use App\Support\Authorization\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Attributes\Covers;
 use Tests\TestCase;
 
 class TrackingPagesTest extends TestCase
@@ -22,6 +23,7 @@ class TrackingPagesTest extends TestCase
         $this->get('/tracking/map')->assertForbidden();
     }
 
+    #[Covers('UC05', partial: true)]
     public function test_map_shows_the_last_position_of_each_vessel(): void
     {
         $this->signInAs(Role::Agent);
@@ -35,6 +37,7 @@ class TrackingPagesTest extends TestCase
             ->assertSee('TIAGBA 9');
     }
 
+    #[Covers('RG06', 'UC05', partial: true)]
     public function test_zone_situation_counts_vessels_present_at_a_given_time(): void
     {
         $this->signInAs(Role::Agent);
@@ -52,6 +55,7 @@ class TrackingPagesTest extends TestCase
             ->assertViewHas('vesselCountByZone', fn ($counts) => $counts->get($sanPedro->id) === 1 && ! $counts->has($abidjan->id));
     }
 
+    #[Covers('RG04', 'UC06', partial: true)]
     public function test_silent_beacons_are_detected(): void
     {
         $this->signInAs(Role::Agent);

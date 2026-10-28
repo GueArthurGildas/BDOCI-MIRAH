@@ -21,7 +21,7 @@ Ce plan compare l'application actuelle à la spécification de `database/docs/` 
 |---|---|---|
 | Tables applicatives | 175 (+ 6 vues, 3 triggers) | 31 (dont 6 ajoutées récemment : notifications, paramètres, suivi des connecteurs) |
 | Modules | 12 (+ noyau) | 14 modules, découpés autrement |
-| Droits | rôles hérités, groupes, catalogue d'actions, portée zone/période | 4 rôles fixes en code (Spatie), sans groupes ni portée |
+| Droits | rôles hérités, groupes, catalogue d'actions, portée zone/période | 4 rôles fixes en code, sans groupes ni portée (état initial) |
 | Journal commun | `evenement_navire` + `etat_courant_navire` | aucun (chronologie reconstituée à l'affichage) |
 | Écritures métier | « actions nommées » (permission, écriture, événement, état courant, audit) | contrôleurs qui écrivent directement |
 
@@ -98,7 +98,7 @@ Ces éléments sont à construire **avant** les modules, parce que tous en dépe
 2. **Journal d'événements** `vessel_events` et **état courant** `vessel_current_states`, plus une commande `vessels:rebuild-state`.
 3. **Registre des modules** `module_registry` (code, version, actif, dépendances), alimenté par les `ModuleServiceProvider`. Règle vérifiée par un test : un module ne dépend que du noyau.
 4. **Droits flexibles** : rôles avec parent, groupes, catalogue d'actions par module, permissions limitées par zone et période. Les 4 rôles de base et les 5 groupes de la spec sont créés par seeder.
-   - **Déjà livré** (sur Spatie) : page Rôles et permissions de l'Admin avec création, modification et suppression de rôles, choix des permissions par module, journal d'audit des changements. Rôles système non renommables ni supprimables ; rôle administrateur verrouillé (toutes les permissions, pour éviter de se couper l'accès) ; suppression refusée tant qu'un utilisateur porte le rôle.
+   - **Déjà livré** : page Rôles et permissions de l'Admin avec création, modification et suppression de rôles, choix des permissions par module, journal d'audit des changements. Rôles système non renommables ni supprimables ; rôle administrateur verrouillé (toutes les permissions, pour éviter de se couper l'accès) ; suppression refusée tant qu'un utilisateur porte le rôle.
    - **Les permissions elles-mêmes sont le catalogue d'actions** : chaque module les déclare dans le code (une permission sans code qui la vérifie n'aurait aucun effet). L'Admin les accorde aux rôles ; une nouvelle permission apparaît quand un module livre une nouvelle action. Ce modèle se prolonge naturellement vers `action_catalog` en phase 1.
    - **Quatre rôles livrés** : `admin`, `director`, `team_lead`, `agent`, chacun avec une description (traduite pour les rôles système, saisie par l'administrateur pour les rôles personnalisés). L'Admin n'a plus de droit métier (comptes, rôles, paramètres, connecteurs, audit, plus l'accès au tableau de bord, qui porte la santé des sources) ; Directeur et Chef d'équipe ont aujourd'hui les mêmes permissions, leur différence apparaîtra avec les actions de décision (phases 4 et 6).
    - **Reste à faire** : groupes, héritage de rôles, portée zone/période.
@@ -143,12 +143,31 @@ Livrables :
 
 **Critère de sortie** : ADR, schéma v2 et glossaire validés par Gildas, notamment les traductions listées au point 3 de `docs/schema/CONVENTIONS.md`. Gildas a accepté les changements de base de données le 2026-10-27.
 
-### Phase 1 — Noyau · taille L (21 tables)
+### Phase 1 — Noyau · taille L (21 tables) · **en cours**
 
-Section 3 en entier. Première **tranche verticale** pour prouver le patron : « enregistrer une licence » (UC02) de bout en bout (permission, écriture, événement, état courant, audit, test).
+Section 3 en entier. Première **tranche verticale** pour prouver le patron : « enregistrer une licence » (UC02) de bout en bout.
+
+**Fait** (voir ADR 0010) :
+
+- Actions nommées : `Action`, `ActionRunner` (transaction, droits, événements, état courant, audit), première action `RecordLicense` et sa page.
+- Journal `vessel_events`, état courant `vessel_current_states` et commande de reconstruction (planifiée toutes les heures).
+- Registre des modules `module_registry`, et test d'indépendance des modules.
+- Audit inaltérable (triggers PostgreSQL sur `activity_log`).
+- Utilisateurs : type (humain, agent IA, système), fonction, téléphone, WhatsApp, dernière connexion ; chef d'équipe sur les équipes.
+- Rôles : CRUD, quatre rôles, descriptions (voir 3, point 4).
+- Droits flexibles (ADR 0011) : catalogue d'actions, héritage de rôles (`director` > `team_lead` > `agent`), groupes (les cinq de la spécification et groupes personnalisés), droits limitables à une zone ou une période, résolveur derrière les `Gate`, administration des groupes et de leurs membres, attribution de groupes depuis la fiche utilisateur.
+
+**Reste à faire**
+
+- Droits flexibles : les écrans d'attribution avec zone et période sont faits (panneau « Permissions limitées » sur la fiche d'un rôle ou d'un groupe, accès `roles.manage`, audités ; le rôle Admin n'en reçoit pas). Reste : hiérarchie de zones, permissions des groupes « avis surveillance », « envois automatiques » et « agent IA » (avec les phases 5 et 9). Spatie Permission est retiré : rôles et attributions sont portés par `RoleRecord`, `HasRoles` et `role_user`.
+- Génériques : tables, modèles et tests faits (`documents` avec trigger de verrou des documents figés, `document_links`, `comments`, `reference_lists`, `reference_list_values`, `custom_field_definitions`, `custom_field_values`). Services faits (`DocumentStore` : dépôt, empreinte SHA-256, rattachement, gel, contrôle d'intégrité ; `CommentService` ; `CustomFields` : valeurs typées et validées). Écrans d'administration faits (listes de référence avec valeurs désactivables, champs extensibles dont seul le libellé et la visibilité se modifient ; accès `settings.manage`). Commentaires de connecteurs repliés dans `comments`. Reste : étiquettes.
+- `php artisan docs:generate` (modules, actions, rôles, routes, schéma dans `docs/reference/`) et `docs:acceptance` (couverture par attribut `#[Covers]`) : faits, contrôlés par `GeneratedDocumentationTest`. README du noyau fait (`app/README.md`).
+- Écritures métier converties en actions : navires (`RegisterVessel`, `UpdateVessel`), mouvements (`RecordMovement`), main courante (`OpenObservation`, `UpdateObservation`), infractions (`UpdateInfraction`). Reste : les écritures de l'administration (comptes, rôles, groupes, paramètres, connecteurs), déjà tracées par l'audit mais sans événement de navire, à convertir seulement si le besoin d'un journal métier apparaît.
+
+**Questions ouvertes pour Gildas** (aucune règle n'est inventée) : règles du statut à feux (conforme, à surveiller, suspect, en infraction) ; quelles infractions comptent comme « ouvertes » ; la licence retenue pour un navire qui en a plusieurs (aujourd'hui : date de fin la plus tardive) ; étiquettes génériques, absentes du schéma SQL ; lien entre un champ extensible de type « liste » et sa liste de référence, absent du schéma SQL (aucune colonne pour le porter).
 
 - **Réutilise** : `Notifications`, `Settings`, `activity_log`, `ModuleServiceProvider`.
-- **Remplace** : Spatie et les rôles figés dans `Role`/`Permission`.
+- **Remplace** : Spatie Permission (retiré) et les rôles figés dans `Role`/`Permission`.
 - **Critères** : l'Admin n'a aucun droit métier ; un droit se modifie sans changer le code ; le journal refuse toute modification ; un test d'architecture interdit les dépendances entre modules.
 
 ### Phase 2 — M1 Référentiels et navires · taille L (27 tables)
@@ -221,6 +240,49 @@ En-tête et statut à feux, onglets par module, chronologie filtrable, indicateu
 Rapports programmés, exports journalisés par droit, archivage à 5 ans (lecture seule), bandeau « santé du système », agent IA (première action : créer une note, V25).
 
 - **Couvre** UC24, UC27.
+
+### Exécution en parallèle (proposition, ADR 0012)
+
+Cette section est une **proposition** soumise à Gildas : tant que l'ADR 0012 n'est pas accepté, la règle de l'ADR 0008 (une phase à la fois) s'applique.
+
+**Dépendances de données réelles**, calculées sur les clés étrangères de `docs/schema/schema_v2.sql` (nombre de clés d'une phase vers une autre ; le noyau, phase 1, est requis par toutes) :
+
+| Phase | Dépend de | Remarque |
+|---|---|---|
+| 2 | noyau | 10 clés ; tout le reste référence `vessels` |
+| 3a | 2 (6) ; 3b (2), 4b (1) | `surveillance_observations.slot_position_id`, `zone_counts.control_slot_id`, `watch_entries.entry_exit_alert_id` |
+| 3b | 2 (21) ; 3a (3) | `alerts` et `vms_failures` vers `operations` et `logbook_entries` |
+| 4a | 2 (9) ; 3a (1), 3b (1), 6 (2) | seules les suspensions et révocations pointent vers `operations`, `vms_failures`, `infraction_cases` |
+| 4b | 2 (4) | indépendante des autres |
+| 5 | 2 (2) ; 3a (3) | `sent_messages` et `internal_notes` vers `operations` et `logbook_entries` |
+| 6 | 2 (8) ; 3a (3), 3b (2), 4a (1), 7 (2) | `external_inspections` (miroir de la phase 7) : à livrer avant, ou en premier dans la 6 |
+| 7 | 2 (11) | les miroirs ne dépendent que du noyau et de la phase 2 |
+| 8 | toutes | lecture seule |
+| 9 | noyau (2) ; 3a (1) | `operation_archives.operation_id` |
+
+**Techniques pour décorréler**
+
+- **Clés étrangères tardives** : la colonne existe dans la migration de sa phase, sans contrainte ; la phase qui livre la table cible ajoute la contrainte dans une migration de jonction. Les cycles 3a ↔ 3b se résolvent ainsi.
+- **Connecteur factice** dès la première phase d'un module (déjà prévu), pour tester sans accès réel.
+- **Questions bloquantes** (section 6) : une phase démarre sans la réponse et s'arrête avant le point qui en dépend.
+
+**Vagues proposées** (une phase naît quand ses dépendances sont validées) :
+
+| Vague | Phases | Condition |
+|---|---|---|
+| 0 | Fin de la phase 1 | validation de Gildas |
+| 1 | 2 | chemin critique ; en parallèle : questions de la section 6 et `docs/QUESTIONS_GILDAS.md` |
+| 2 | 3a, 3b, 4a puis 4b, 5, miroirs de la 7 | phase 2 validée ; trois flux au plus : A = 3a, B = 3b, C = 4a puis 4b puis 5 ; les miroirs 7 prennent le premier flux libre |
+| 3 | 6 | 3a, 3b, 4a, 5 et `external_inspections` validés |
+| 4 | 7 (connecteurs réels), puis 8, puis 9 | accords externes (V9, V12, V17, DPEP) ; 8 lit tous les modules |
+
+**Règles de travail**
+
+1. Un flux = un arbre de travail Git distinct (`git worktree`) sur une branche dédiée, créée depuis `y-branch` ; la décision D7 est complétée en conséquence. Intégration dans `y-branch` phase par phase, après validation, par fusion rebasée.
+2. Fichiers partagés, sources de conflits : énumération `App\Support\Authorization\Permission` et `Role::permissions()`, traductions `administration.permissions.*`, `docs/GLOSSAIRE.md`, `docs/schema/GLOSSAIRE_COLONNES.md`, `docs/ACCEPTATION.md`, `docs/reference/` (généré), `DatabaseSeeder`, ce plan. Chaque flux ajoute ses lignes en fin de bloc ; après chaque intégration on exécute `php artisan docs:generate` et `docs:acceptance`, jamais de fusion manuelle des fichiers générés.
+3. Migrations : un préfixe d'horodatage par flux (par exemple `2026_11_<flux>...`) pour éviter les collisions d'ordre ; une migration de jonction par paire de phases liées.
+4. Base de données de développement et tests : une base par arbre de travail (voir la compétence `dev-env`).
+5. Chaque phase garde sa définition de « terminé » et sa validation par Gildas ; aucune règle métier n'est inventée pour avancer.
 
 ### Définition de « terminé » (toute phase)
 
@@ -325,12 +387,12 @@ Noms proposés si D1 = anglais. « existe » signale une table déjà présente 
 | `zone`, `port`, `regle_de_zone` | `zones`, `ports`, `zone_rules` | `zones`, `ports` existent |
 | `espece`, `engin`, `presentation` | `species`, `gears`, `presentations` | `species` existe |
 | `equipe` | `teams` | existe |
-| `utilisateur`, `role`, `groupe` | `users`, `roles`, `permission_groups` | `users`, `roles` existent (Spatie) |
+| `utilisateur`, `role`, `groupe` | `users`, `roles`, `permission_groups` | `users`, `roles` existent |
 | `action_catalogue`, `permission` | `action_catalog`, `grants` | nouveau (remplace Spatie) |
 | `journal_audit` | `activity_log` durci | existe |
 | `module_registre` | `module_registry` | nouveau |
 | `parametre_seuil` | `settings` généralisé | existe (`settings`) |
-| `document`, `document_lien`, `commentaire` | `documents`, `document_links`, `comments` | nouveau ; `data_source_comments` s'y fond |
+| `document`, `document_lien`, `commentaire` | `documents`, `document_links`, `comments` | nouveau ; `data_source_comments` y a été replié |
 | `liste_reference`, `liste_valeur`, `champ_definition`, `champ_valeur` | `reference_lists`, `reference_list_values`, `custom_field_definitions`, `custom_field_values` | nouveau |
 | `evenement_navire`, `etat_courant_navire` | `vessel_events`, `vessel_current_states` | nouveau |
 | `licence` et dérivés | `licenses`, `license_zones`, `license_gears`, `license_species`, `license_suspensions`, `license_revocations`, `fnp_statuses` | `licenses` existe |

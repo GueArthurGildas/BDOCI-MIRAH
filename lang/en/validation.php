@@ -287,4 +287,6 @@ return [
         'work'                     => 'work',
         'year'                     => 'year',
     ],
+
+    'custom_field_invalid' => 'The :attribute value does not match the field type.',
 ];
