@@ -11,12 +11,18 @@ enum TrackingSystem: string implements HasBadge
 
     case Vms = 'vms';
     case Ais = 'ais';
+    case SatAis = 'sat_ais';
+    case Manual = 'manual';
+    case Radar = 'radar';
 
     public function color(): string
     {
         return match ($this) {
             self::Vms => 'primary',
             self::Ais => 'info',
+            self::SatAis => 'info',
+            self::Manual => 'warning',
+            self::Radar => 'default',
         };
     }
 }

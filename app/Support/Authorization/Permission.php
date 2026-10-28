@@ -75,4 +75,8 @@ enum Permission: string
     case LicensesSuspend = 'licenses.suspend';
     case LicensesRevoke = 'licenses.revoke';
     case LicensesPublish = 'licenses.publish';
+    case TrackingCreate = 'tracking.create';
+    case VmsView = 'vms.view';
+    case VmsCreate = 'vms.create';
+    case VmsManage = 'vms.manage';
 }

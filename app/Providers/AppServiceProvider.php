@@ -10,12 +10,16 @@ use App\Support\Localization\Locales;
 use App\Support\Modules\ModuleRegistry;
 use App\Support\Navigation\Navigation;
 use App\Support\Settings\Settings;
+use App\Support\Vms\LocalPositionFeed;
+use App\Support\Vms\PositionFeed;
+use App\Support\Vms\SilenceThreshold;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Foundation\Http\Events\RequestHandled;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use InvalidArgumentException;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +30,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(ModuleRegistry::class);
         $this->app->singleton(PermissionResolver::class);
         $this->app->singleton(ActionCatalog::class);
+        $this->app->singleton(SilenceThreshold::class);
+        $this->app->bind(PositionFeed::class, fn () => match (config('surveillance.vms.position_feed')) {
+            'fake' => new LocalPositionFeed,
+            default => throw new InvalidArgumentException('Unsupported position feed driver.'),
+        });
         $this->app->singleton(Locales::class, fn () => new Locales(config('app.supported_locales')));
     }
 

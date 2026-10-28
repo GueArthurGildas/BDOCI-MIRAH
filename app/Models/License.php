@@ -120,7 +120,7 @@ class License extends Model
     }
 
     /** @return array<int, string> */
-    private static function blockedStatuses(): array
+    public static function blockedStatuses(): array
     {
         return [LicenseRecordStatus::Suspended->value, LicenseRecordStatus::Revoked->value];
     }

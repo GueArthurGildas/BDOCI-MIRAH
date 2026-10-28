@@ -44,7 +44,6 @@ return [
         'notifications_toast_seconds' => 'Toast display duration (seconds)',
         'notifications_max_toasts' => 'Maximum toasts per check',
         'alerts_beacons_silent_enabled' => 'Send the alert',
-        'alerts_beacons_silent_threshold_hours' => 'A beacon is silent after (hours without emission)',
         'alerts_beacons_silent_cooldown_hours' => 'Minimum delay between two alerts (hours)',
         'alerts_licenses_expiring_enabled' => 'Send the alert',
         'alerts_licenses_expiring_warning_days' => 'A license is expiring within (days)',

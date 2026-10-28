@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'beacon_silence_threshold_hours' => (int) env('SURVEILLANCE_BEACON_SILENCE_THRESHOLD_HOURS', 2),
+    'beacon_silence_threshold_hours' => (int) env('SURVEILLANCE_BEACON_SILENCE_THRESHOLD_HOURS', 4),
     'notification_poll_seconds' => (int) env('SURVEILLANCE_NOTIFICATION_POLL_SECONDS', 30),
     'notification_toast_seconds' => (int) env('SURVEILLANCE_NOTIFICATION_TOAST_SECONDS', 8),
     'notification_max_toasts' => (int) env('SURVEILLANCE_NOTIFICATION_MAX_TOASTS', 3),
@@ -33,6 +33,18 @@ return [
     'connectors' => [
         'stale_after_hours' => (int) env('SURVEILLANCE_CONNECTORS_STALE_AFTER_HOURS', 24),
         'catch_variance_threshold_percent' => (int) env('SURVEILLANCE_CATCH_VARIANCE_THRESHOLD_PERCENT', 10),
+    ],
+    'vms' => [
+        'position_feed' => env('SURVEILLANCE_POSITION_FEED', 'fake'),
+        'themis_vessel_url' => env('SURVEILLANCE_THEMIS_VESSEL_URL'),
+        'counting_localities' => ['Abidjan', 'San Pedro', 'Sassandra'],
+        'failure_repair_deadline_days' => [
+            'foreign' => 5, 'ivorian' => 10, 'chartered' => 10, 'tuna_vessel' => 30,
+        ],
+        'failure_report_frequency_hours' => [
+            'foreign' => 4, 'ivorian' => 4, 'chartered' => 6, 'tuna_vessel' => 6,
+        ],
+        'slot_window_hours' => 2,
     ],
 
     'flag_states' => ['CI', 'BJ', 'BZ', 'CN', 'ES', 'FR', 'GH', 'GN', 'JP', 'KR', 'LR', 'MA', 'NG', 'PA', 'PT', 'SL', 'SN', 'TG', 'TW'],

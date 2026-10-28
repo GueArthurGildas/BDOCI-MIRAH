@@ -20,6 +20,7 @@ use Modules\Reports\Providers\ReportsServiceProvider;
 use Modules\Search\Providers\SearchServiceProvider;
 use Modules\Tracking\Providers\TrackingServiceProvider;
 use Modules\Vessels\Providers\VesselsServiceProvider;
+use Modules\Vms\Providers\VmsServiceProvider;
 use Modules\Watch\Providers\WatchServiceProvider;
 
 return [
@@ -43,5 +44,6 @@ return [
     SearchServiceProvider::class,
     TrackingServiceProvider::class,
     VesselsServiceProvider::class,
+    VmsServiceProvider::class,
     WatchServiceProvider::class,
 ];

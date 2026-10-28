@@ -31,7 +31,7 @@ class NotificationsTest extends TestCase
             ->assertJsonCount(1, 'items')
             ->assertJsonPath('items.0.level', 'danger')
             ->assertJsonPath('items.0.title', __('tracking::alerts.beacons_silent.title'))
-            ->assertJsonPath('items.0.message', trans_choice('tracking::alerts.beacons_silent.message', 3, ['count' => 3, 'hours' => config('surveillance.beacon_silence_threshold_hours')]));
+            ->assertJsonPath('items.0.message', trans_choice('tracking::alerts.beacons_silent.message', 3, ['count' => 3, 'hours' => 4]));
     }
 
     public function test_opening_a_notification_marks_it_read_and_redirects_to_its_target(): void

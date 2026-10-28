@@ -53,11 +53,15 @@
 | `reports.view_health` | `reports` | `update` | Voir le bandeau de santé du système |
 | `roles.manage` | `administration` | `update` | Gérer les rôles |
 | `settings.manage` | `administration` | `update` | Gérer les paramètres |
+| `tracking.create` | `tracking` | `create` | Traiter les alertes, ouvrir des créneaux et confirmer les tests |
 | `tracking.view` | `tracking` | `view` | Consulter le suivi des positions |
 | `users.manage` | `administration` | `update` | Gérer les utilisateurs |
 | `vessels.manage` | `vessels` | `update` | Gérer les navires |
 | `vessels.match` | `vessels` | `update` | Trancher les doublons de navires |
 | `vessels.view` | `vessels` | `view` | Consulter les navires |
+| `vms.create` | `vms` | `create` | Affecter des balises, déclarer des avaries et saisir des déclarations ERS |
+| `vms.manage` | `vms` | `update` | Gérer balises, installateurs, obligations, arrêts techniques et ordres de cessation |
+| `vms.view` | `vms` | `view` | Voir les balises, avaries et déclarations ERS |
 | `watch.create` | `watch` | `create` | Saisir des observations, relais et suivis renforcés |
 | `watch.manage` | `watch` | `update` | Planifier les rotations, consignes permanentes et listes de veille |
 | `watch.view` | `watch` | `view` | Consulter le tableau du matin et la surveillance de quart |
@@ -130,6 +134,12 @@ Actions exécutées par l'`ActionRunner` (transaction, droit, événement, état
 | `reports.export_vessels` | `reports.export_vessels` | `Modules\Reports\Actions\ExportVessels` |
 | `reports.generate` | `reports.generate` | `Modules\Reports\Actions\GenerateScheduledReport` |
 | `reports.save_scheduled_report` | `reports.manage` | `Modules\Reports\Actions\SaveScheduledReport` |
+| `tracking.acknowledge_alert` | `tracking.create` | `Modules\Tracking\Actions\AcknowledgeAlert` |
+| `tracking.confirm_slot_position` | `tracking.create` | `Modules\Tracking\Actions\ConfirmSlotPosition` |
+| `tracking.handle_alert` | `tracking.create` | `Modules\Tracking\Actions\HandleAlert` |
+| `tracking.open_slot` | `tracking.create` | `Modules\Tracking\Actions\OpenControlSlot` |
+| `tracking.run_sweep` | `tracking.create` | `Modules\Tracking\Actions\RunSweep` |
+| `tracking.save_alert_rule` | `settings.manage` | `Modules\Tracking\Actions\SaveAlertRule` |
 | `vessels.add_actor` | `vessels.manage` | `Modules\Vessels\Actions\AddVesselActor` |
 | `vessels.add_identifier` | `vessels.manage` | `Modules\Vessels\Actions\AddVesselIdentifier` |
 | `vessels.ingest_source` | `vessels.manage` | `Modules\Vessels\Actions\IngestVesselSource` |
@@ -137,6 +147,20 @@ Actions exécutées par l'`ActionRunner` (transaction, droit, événement, état
 | `vessels.register` | `vessels.manage` | `Modules\Vessels\Actions\RegisterVessel` |
 | `vessels.settle_duplicate` | `vessels.match` | `Modules\Vessels\Actions\SettleVesselDuplicate` |
 | `vessels.update` | `vessels.manage` | `Modules\Vessels\Actions\UpdateVessel` |
+| `vms.assign_beacon` | `vms.create` | `Modules\Vms\Actions\AssignBeacon` |
+| `vms.authorize_cutoff` | `vms.manage` | `Modules\Vms\Actions\AuthorizeEmissionCutoff` |
+| `vms.create_beacon` | `vms.manage` | `Modules\Vms\Actions\CreateBeacon` |
+| `vms.create_installer` | `vms.manage` | `Modules\Vms\Actions\CreateApprovedInstaller` |
+| `vms.declare_failure` | `vms.create` | `Modules\Vms\Actions\DeclareVmsFailure` |
+| `vms.issue_cessation_order` | `vms.manage` | `Modules\Vms\Actions\IssueCessationOrder` |
+| `vms.record_assessment` | `vms.create` | `Modules\Vms\Actions\RecordCompatibilityAssessment` |
+| `vms.record_attestation` | `vms.create` | `Modules\Vms\Actions\RecordWorkingOrderAttestation` |
+| `vms.record_ers` | `vms.create` | `Modules\Vms\Actions\RecordErsDeclaration` |
+| `vms.record_installation` | `vms.create` | `Modules\Vms\Actions\RecordBeaconInstallation` |
+| `vms.record_manual_report` | `vms.create` | `Modules\Vms\Actions\RecordManualPositionReport` |
+| `vms.request_assessment` | `vms.create` | `Modules\Vms\Actions\RequestVmsAssessment` |
+| `vms.request_new_beacon` | `vms.create` | `Modules\Vms\Actions\RequestNewBeacon` |
+| `vms.set_obligations` | `vms.manage` | `Modules\Vms\Actions\SetReportingObligations` |
 | `watch.acknowledge_relay` | `watch.create` | `Modules\Watch\Actions\AcknowledgeRelay` |
 | `watch.add_to_director_list` | `watch.manage` | `Modules\Watch\Actions\AddVesselToDirectorList` |
 | `watch.close_entry` | `watch.manage` | `Modules\Watch\Actions\CloseWatchEntry` |

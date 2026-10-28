@@ -38,6 +38,7 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 | `libelle` | `label` | varchar(120) |
 | `type` | `type` | varchar(40) |
 | `geometrie` | `geometry` | geometry(Geometry, 4326) |
+| (aucune) | `geom` | geometry(Geometry, 4326) |
 | `actif` | `is_active` | boolean |
 
 ### `teams` (spécification : `equipe`)
@@ -785,12 +786,13 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 |---|---|---|
 | `id` | `id` | bigint |
 | `navire_id` | `vessel_id` | bigint |
-| `source` | `source` | varchar(40) |
-| `date_emission` | `emitted_at` | timestamp(0) |
+| (aucune) | `tracking_device_id` | bigint |
+| `source` | `system` | varchar(40) |
+| `date_emission` | `recorded_at` | timestamp(0) |
 | `date_reception` | `received_at` | timestamp(0) |
 | `latitude` | `latitude` | numeric(9,6) |
 | `longitude` | `longitude` | numeric(9,6) |
-| `vitesse` | `speed` | numeric(5,2) |
+| `vitesse` | `speed_knots` | numeric(5,2) |
 | `cap` | `course` | smallint |
 | `activite` | `activity` | varchar(40) |
 | `statut_navigation` | `navigation_status` | varchar(40) |

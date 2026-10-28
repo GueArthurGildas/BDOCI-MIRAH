@@ -52,6 +52,7 @@ class RecordSurveillanceObservation extends Action
 
         $observation = SurveillanceObservation::create([
             'vessel_id' => $input['vessel_id'],
+            'slot_position_id' => $input['slot_position_id'] ?? null,
             'logbook_entry_id' => $entry->id,
             'body' => $input['body'],
             'status' => SurveillanceObservationStatus::Monitoring,

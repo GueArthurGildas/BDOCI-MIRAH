@@ -21,8 +21,8 @@ class SilentBeaconsNotificationTest extends TestCase
         $device = TrackingDevice::factory()->create();
         Position::factory()->for($device->vessel)->create(['recorded_at' => now()->subHours(10)]);
 
-        $this->artisan('tracking:notify-silent-beacons')->assertSuccessful();
-        $this->artisan('tracking:notify-silent-beacons')->assertSuccessful();
+        $this->artisan('tracking:evaluate-alert-rules')->assertSuccessful();
+        $this->artisan('tracking:evaluate-alert-rules')->assertSuccessful();
 
         $this->assertSame(1, $agent->notifications()->count());
         $this->assertSame(0, $admin->notifications()->count());
@@ -35,7 +35,7 @@ class SilentBeaconsNotificationTest extends TestCase
         $device = TrackingDevice::factory()->create();
         Position::factory()->for($device->vessel)->create(['recorded_at' => now()->subMinutes(10)]);
 
-        $this->artisan('tracking:notify-silent-beacons')->assertSuccessful();
+        $this->artisan('tracking:evaluate-alert-rules')->assertSuccessful();
 
         $this->assertSame(0, $agent->notifications()->count());
     }
@@ -46,9 +46,9 @@ class SilentBeaconsNotificationTest extends TestCase
         $device = TrackingDevice::factory()->create();
         Position::factory()->for($device->vessel)->create(['recorded_at' => now()->subHours(10)]);
 
-        $this->artisan('tracking:notify-silent-beacons');
+        $this->artisan('tracking:evaluate-alert-rules');
         $this->travel(5)->hours();
-        $this->artisan('tracking:notify-silent-beacons');
+        $this->artisan('tracking:evaluate-alert-rules');
 
         $this->assertSame(2, $agent->notifications()->count());
     }

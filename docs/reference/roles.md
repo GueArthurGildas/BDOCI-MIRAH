@@ -53,11 +53,15 @@ Permissions accordées par défaut à chaque rôle système (l'héritage `Direct
 | `reports.view_health` | oui | oui | oui | — |
 | `roles.manage` | oui | — | — | — |
 | `settings.manage` | oui | — | — | — |
+| `tracking.create` | — | oui | oui | oui |
 | `tracking.view` | — | oui | oui | oui |
 | `users.manage` | oui | — | — | — |
 | `vessels.manage` | — | oui | oui | — |
 | `vessels.match` | — | oui | oui | — |
 | `vessels.view` | — | oui | oui | oui |
+| `vms.create` | — | oui | oui | oui |
+| `vms.manage` | — | oui | oui | — |
+| `vms.view` | — | oui | oui | oui |
 | `watch.create` | — | oui | oui | oui |
 | `watch.manage` | — | oui | oui | — |
 | `watch.view` | — | oui | oui | oui |

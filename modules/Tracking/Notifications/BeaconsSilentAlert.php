@@ -4,6 +4,7 @@ namespace Modules\Tracking\Notifications;
 
 use App\Support\Notifications\Alert;
 use App\Support\Notifications\AlertLevel;
+use App\Support\Vms\SilenceThreshold;
 
 class BeaconsSilentAlert extends Alert
 {
@@ -31,7 +32,7 @@ class BeaconsSilentAlert extends Alert
 
     protected function params(): array
     {
-        return ['count' => $this->count, 'hours' => config('surveillance.beacon_silence_threshold_hours')];
+        return ['count' => $this->count, 'hours' => (int) round(app(SilenceThreshold::class)->hours())];
     }
 
     protected function target(): array

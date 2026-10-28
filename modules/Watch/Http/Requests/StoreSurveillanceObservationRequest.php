@@ -10,6 +10,7 @@ class StoreSurveillanceObservationRequest extends FormRequest
     {
         return [
             'vessel_id' => ['required', 'exists:vessels,id'],
+            'slot_position_id' => ['nullable', 'exists:slot_positions,id'],
             'body' => ['required', 'string', 'max:5000'],
             'relay_to_team_id' => ['nullable', 'exists:teams,id'],
         ];

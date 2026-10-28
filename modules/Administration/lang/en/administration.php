@@ -84,6 +84,7 @@ return [
         'watch' => 'Watch duty',
         'reports' => 'Reports and archives',
         'mrep' => 'MREP mirror (DPEP)',
+        'vms' => 'Beacons, failures and ERS',
     ],
     'permissions' => [
         'dashboard' => [
@@ -105,6 +106,7 @@ return [
         ],
         'tracking' => [
             'view' => 'View tracking',
+            'create' => 'Handle alerts, open control slots and confirm tests',
         ],
         'logbook' => [
             'view' => 'View the logbook',
@@ -183,7 +185,13 @@ return [
         'mrep' => [
             'view' => 'View DPEP, entry decisions and notifications',
         ],
+        'vms' => [
+            'view' => 'View beacons, failures and ERS declarations',
+            'create' => 'Assign beacons, declare failures and record ERS declarations',
+            'manage' => 'Manage beacons, installers, obligations, technical stops and cessation orders',
+        ],
     ],
+
     'connectors' => [
         'title' => 'Connectors',
         'subtitle' => 'State of data sources, synchronizations, errors, rejected records and follow-up',

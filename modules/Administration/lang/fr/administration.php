@@ -84,6 +84,7 @@ return [
         'watch' => 'Surveillance de quart',
         'reports' => 'Rapports et archives',
         'mrep' => 'Miroir MREP (DPEP)',
+        'vms' => 'Balises, avaries et ERS',
     ],
     'permissions' => [
         'dashboard' => [
@@ -105,6 +106,7 @@ return [
         ],
         'tracking' => [
             'view' => 'Consulter le suivi des positions',
+            'create' => 'Traiter les alertes, ouvrir des créneaux et confirmer les tests',
         ],
         'logbook' => [
             'view' => 'Consulter la main courante',
@@ -183,7 +185,13 @@ return [
         'mrep' => [
             'view' => 'Consulter les DPEP, décisions d\'entrée et notifications',
         ],
+        'vms' => [
+            'view' => 'Voir les balises, avaries et déclarations ERS',
+            'create' => 'Affecter des balises, déclarer des avaries et saisir des déclarations ERS',
+            'manage' => 'Gérer balises, installateurs, obligations, arrêts techniques et ordres de cessation',
+        ],
     ],
+
     'connectors' => [
         'title' => 'Connecteurs',
         'subtitle' => 'État des sources de données, synchronisations, erreurs, enregistrements rejetés et suivi',
