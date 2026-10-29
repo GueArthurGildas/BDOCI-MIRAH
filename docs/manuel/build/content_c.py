@@ -183,6 +183,7 @@ def roadmap():
     out += h2('Ce qui a été ajouté ces derniers jours', 'What was added in recent days')
     out += ul([
         ('Nouvelle interface calquée sur la référence GESICA : menu en pastilles avec compteurs, tableaux encadrés avec filtres par colonne, onglets orange et gris.', 'New interface modelled on the GESICA reference: pill menu with counters, framed tables with column filters, orange and grey tabs.'),
+        ('Visite guidée de la page, lancée à la demande depuis le bouton Guide utilisateur, sur une trentaine d\'écrans.', 'Guided tour of the page, started on demand from the User guide button, on about thirty screens.'),
         ('Fenêtres : confirmation avant les actions importantes, aperçu rapide d\'un navire, message de réussite à coche verte.', 'Windows: confirmation before important actions, vessel quick view, green-check success message.'),
         ('Barre d\'outils des listes : nombre de lignes, recherche, exports CSV et PDF.', 'List toolbar: number of rows, search, CSV and PDF exports.'),
     ])
@@ -233,8 +234,9 @@ def training():
         ('Exercice 1 (20 min) : se connecter, changer de langue, parcourir chaque famille de menus.', 'Exercise 1 (20 min): sign in, switch language, browse every menu family.'),
         ('Exercice 2 (20 min) : sur la liste des navires, filtrer par pavillon, changer le nombre de lignes, ouvrir un aperçu rapide puis une fiche complète.', 'Exercise 2 (20 min): on the vessel list, filter by flag, change the number of rows, open a quick view then a full record.'),
         ('Exercice 3 (10 min) : repérer le statut à feux d\'un navire et en lire les raisons.', 'Exercise 3 (10 min): spot a vessel\'s traffic-light status and read the reasons.'),
+        ('Exercice 4 (10 min) : lancer la visite guidée sur trois écrans différents et la quitter avec la touche Échap.', 'Exercise 4 (10 min): start the guided tour on three different screens and leave it with the Esc key.'),
     ])
-    out += check([('Je sais dire ce que fait chaque famille de menus.', 'I can say what each menu family does.'), ('Je sais ouvrir l\'aperçu rapide et la fiche d\'un navire.', 'I can open a vessel\'s quick view and record.'), ('Je sais ce que signifie le rond orange d\'un menu.', 'I know what the orange circle on a menu means.')])
+    out += check([('Je sais lancer la visite guidée de la page où je suis.', 'I can start the guided tour of the page I am on.'), ('Je sais dire ce que fait chaque famille de menus.', 'I can say what each menu family does.'), ('Je sais ouvrir l\'aperçu rapide et la fiche d\'un navire.', 'I can open a vessel\'s quick view and record.'), ('Je sais ce que signifie le rond orange d\'un menu.', 'I know what the orange circle on a menu means.')])
     out += h2('Séance 1 — Agent (3 h)', 'Session 1 — Agent (3 h)')
     out += p('<strong>Objectifs</strong> : tenir un quart du début à la fin sans rien clôturer ni décider.', '<strong>Objectives</strong>: run a shift from start to finish without closing or deciding anything.')
     out += ol([
@@ -308,6 +310,7 @@ def faq():
     ], [38, 62])
     out += h2('Raccourcis utiles', 'Useful shortcuts')
     out += ul([
+        ('Bouton Guide utilisateur (ou icône ?) : visite guidée de la page courante.', 'User guide button (or ? icon): guided tour of the current page.'),
         ('Œil à côté d\'un navire : aperçu rapide sans quitter la liste.', 'Eye next to a vessel: quick view without leaving the list.'),
         ('Rond orange du menu : éléments en attente.', 'Orange circle on the menu: items waiting.'),
         ('Icône de plein écran d\'une carte : agrandir un tableau ou un graphique ; tiret : replier.', 'Full-screen icon on a card: enlarge a table or a chart; dash: collapse.'),
@@ -360,6 +363,7 @@ def annex():
     out += table([('Code', 'Code'), ('Droit', 'Right'), ('Agent', 'Agent'), ('Chef', 'Lead'), ('Dir.', 'Dir.'), ('Adm.', 'Adm.')], rows, [24, 44, 8, 8, 8, 8])
     out += h1('Annexe B — Aide-mémoire des écrans par rôle', 'Annex B — Screens cheat sheet by role', numbered=False)
     out += table([('Je veux…', 'I want to…'), ('Je vais dans…', 'I go to…'), ('Rôle minimum', 'Minimum role')], [
+        [('Comprendre la page où je suis', 'Understand the page I am on'), ('Bouton Guide utilisateur (menu latéral) ou icône ?', 'User guide button (side menu) or ? icon'), ('Agent', 'Agent')],
         [('Voir la situation d\'ensemble', 'See the overall situation'), ('Pilotage › Tableau de bord / Vue flotte', 'Overview › Dashboard / Fleet view'), ('Agent / Chef d\'équipe', 'Agent / Team lead')],
         [('Trouver un navire', 'Find a vessel'), ('Référentiel › Navires', 'Registry › Vessels'), ('Agent', 'Agent')],
         [('Prendre mon poste', 'Start my shift'), ('Surveillance › Tableau du matin, Rotations et relèves', 'Surveillance › Morning board, Rotations and handovers'), ('Agent', 'Agent')],

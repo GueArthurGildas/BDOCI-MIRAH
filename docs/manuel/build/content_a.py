@@ -100,6 +100,17 @@ def interface():
     out += h2('Notifications', 'Notifications')
     out += p('La <strong>cloche</strong> affiche le nombre de notifications non lues ; elle clignote quand une alerte vient d\'arriver, et un message éclair apparaît brièvement. L\'écran <em>Notifications</em> (Pilotage) liste tout l\'historique et permet de tout marquer comme lu. Les alertes envoyées dépendent de votre rôle : balise silencieuse, licence qui expire, relais à acquitter, etc.',
              'The <strong>bell</strong> shows the number of unread notifications; it blinks when an alert has just arrived, and a short toast message appears. The <em>Notifications</em> screen (Overview) lists the whole history and lets you mark everything as read. The alerts sent depend on your role: silent beacon, licence expiring, relay to acknowledge, etc.')
+    out += h2('La visite guidée de la page', 'The guided tour of the page')
+    out += p('Sur n\'importe quel écran, le bouton <strong>Guide utilisateur</strong> du menu latéral (ou l\'icône <strong>?</strong> de la barre orange) lance une visite de <strong>la page où vous êtes</strong>. Une première fenêtre dit à quoi sert la page ; puis chaque élément important est mis en lumière, le reste de l\'écran s\'assombrit, et une bulle explique en deux lignes ce qu\'on peut y faire ou ce que fait le bouton.',
+             'On any screen, the <strong>User guide</strong> button in the side menu (or the <strong>?</strong> icon in the orange bar) starts a tour of <strong>the page you are on</strong>. A first window says what the page is for; then each important element is highlighted, the rest of the screen dims, and a bubble explains in two lines what you can do there or what the button does.')
+    out += ul([
+        ('<strong>Suivant</strong> et <strong>Précédent</strong> (ou les flèches du clavier) font avancer ; <strong>Terminer</strong>, la croix ou la touche <kbd>Échap</kbd> ferment la visite. Le compteur « Étape 3 sur 6 » indique où vous en êtes.', '<strong>Next</strong> and <strong>Previous</strong> (or the keyboard arrows) move along; <strong>Done</strong>, the cross or the <kbd>Esc</kbd> key close the tour. The “Step 3 of 6” counter shows where you are.'),
+        ('La visite ne s\'ouvre <strong>jamais seule</strong> : elle n\'apparaît que si vous la demandez.', 'The tour <strong>never opens by itself</strong>: it only appears when you ask for it.'),
+        ('Elle s\'adapte à votre rôle : un bouton que vous n\'avez pas le droit d\'utiliser n\'est pas présenté.', 'It adapts to your role: a button you are not allowed to use is not presented.'),
+        ('Les principaux écrans ont une visite dédiée ; les autres affichent une visite générale du menu, des onglets et des outils.', 'The main screens have a dedicated tour; the others show a general tour of the menu, tabs and tools.'),
+    ])
+    out += img('tour-intro', 'La fenêtre d\'introduction de la visite guidée.', 'The introduction window of the guided tour.')
+    out += img('tour-step', 'Une étape de la visite : l\'élément est mis en lumière et expliqué.', 'A tour step: the element is highlighted and explained.')
     out += h2('Rechercher, langue, plein écran', 'Search, language, full screen')
     out += ul([
         ('La <strong>loupe</strong> lance une recherche transversale (navires, inspections…) limitée à ce que vos droits vous permettent de voir.', 'The <strong>magnifier</strong> runs a cross-cutting search (vessels, inspections…) limited to what your rights allow you to see.'),

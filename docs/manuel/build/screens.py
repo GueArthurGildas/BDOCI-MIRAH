@@ -34,6 +34,8 @@ PAGES = [
     ('agent', 'missions', 'missions', None),
     ('agent', 'notifications', 'notifications', None),
     ('agent', 'infractions-quick', 'infractions', ('click', '[data-gs-modal]')),
+    ('agent', 'tour-intro', 'vessels', ('tour', 0)),
+    ('agent', 'tour-step', 'vessels', ('tour', 2)),
     ('teamlead', 'rotations', 'watch/rotations', None),
     ('teamlead', 'slots', 'tracking/slots', None),
     ('teamlead', 'duplicates', 'vessels/duplicates', None),
@@ -80,6 +82,10 @@ def build_html(html, action, lang):
     if action is None:
         return html
     kind, value = action
+    if kind == 'tour':
+        nexts = ''.join(f"setTimeout(()=>document.querySelector('[data-tour=next]').click(),{2400 + i * 700});" for i in range(value))
+        script = f"<script>window.addEventListener('load',()=>{{setTimeout(()=>document.querySelector('.gs-guide [data-gs-guide]').click(),1800);{nexts}}})</script></body>"
+        return html.replace('</body>', script)
     if kind == 'click':
         script = f"<script>window.addEventListener('load',()=>setTimeout(()=>document.querySelector('{value}').click(),1800))</script></body>"
         return html.replace('</body>', script)
@@ -150,7 +156,7 @@ def main():
                     name = f'{lang}_{role}_{slug}.html'
                     (WORK / name).write_text(build_html(html, action, lang))
                     target = OUT / lang / f'{slug}.png'
-                    subprocess.run(['timeout', '90', 'google-chrome', '--headless=new', '--no-sandbox', '--disable-gpu', '--hide-scrollbars', f'--screenshot={target}', '--window-size=1440,900', '--virtual-time-budget=12000', f'http://127.0.0.1:{port}/{name}'], capture_output=True)
+                    subprocess.run(['timeout', '90', 'google-chrome', '--headless=new', '--no-sandbox', '--disable-gpu', '--hide-scrollbars', '--force-prefers-reduced-motion', f'--screenshot={target}', '--window-size=1440,900', '--virtual-time-budget=12000', f'http://127.0.0.1:{port}/{name}'], capture_output=True)
                     if target.exists():
                         Image.open(target).convert('RGB').save(target.with_suffix('.jpg'), quality=82, optimize=True)
                         target.unlink()
