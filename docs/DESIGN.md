@@ -25,7 +25,7 @@ Le thème est posé **par-dessus Adminty** : on ne modifie jamais `resources/scs
 - **Rayons** (`_tokens.scss`) : `--gs-radius` (12px) pour les surfaces (cartes, bandeau, menus déroulants), `--gs-radius-sm` (8px) pour les contrôles (boutons, champs, étiquettes, onglets) et `--gs-radius-pill` pour les éléments en gélule (lignes du menu latéral). Aucune valeur de rayon en dur ailleurs.
 - **Cercle (`50%`)** pour les avatars, pastilles d'icône, pastilles de compteur et logos ronds.
 - Un enfant d'une carte n'a pas son propre rayon : la carte est en `overflow: hidden` et découpe ses coins (par exemple l'en-tête de tableau).
-- **Tableaux** : une carte qui contient un `<x-ui.table>` est encadrée de bleu nuit (`--gs-frame`, rayon `--gs-radius-frame`) ; son titre et ses boutons sont sur le cadre, le tableau est sur une surface blanche arrondie, l'en-tête de colonnes est bleu nuit. Le style repose sur `.card:has(.table-responsive)` : aucune classe à ajouter. Les filtres par colonne et les exports de la maquette GESICA ne sont pas génériques : ils se construisent page par page.
+- **Tableaux** : une carte qui contient un `<x-ui.table>` est encadrée de bleu nuit (`--gs-frame`, rayon `--gs-radius-frame`) ; son titre et ses boutons sont sur le cadre, le tableau est sur une surface blanche arrondie, l'en-tête de colonnes est bleu nuit. Le style repose sur `.card:has(.table-hover)` : aucune classe à ajouter. Les filtres par colonne et les exports de la maquette GESICA ne sont pas génériques : ils se construisent page par page.
 - Orange = marque et actions, noir = structure (traits, bandeaux, en-têtes de tableau), vert/rouge/bleu = états.
 
 ## Navigation
