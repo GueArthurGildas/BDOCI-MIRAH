@@ -1,4 +1,4 @@
-<x-ui.card :title="__('vessels::vessels.header.title')">
+<x-ui.card data-guide="header" :title="__('vessels::vessels.header.title')">
     <div class="row align-items-center">
         <div class="col-lg-3">
             <p class="text-muted f-12 m-b-5">{{ __('vessels::vessels.header.status_light') }}</p>

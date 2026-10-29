@@ -7,7 +7,7 @@
     <div class="page-body">
         <div class="row">
             <div class="col-xl-7">
-                <x-ui.card :title="__('operations::operations.details_title')">
+                <x-ui.card data-guide="details" :title="__('operations::operations.details_title')">
                     <x-ui.detail-list>
                         <x-ui.detail :label="__('operations::operations.fields.category')">{{ __($operation->category->code->label()) }}</x-ui.detail>
                         <x-ui.detail :label="__('operations::operations.fields.status')"><x-ui.status-badge :status="$operation->status" /></x-ui.detail>
@@ -40,7 +40,7 @@
                     </x-ui.card>
                 @endif
 
-                <x-ui.card :title="__('operations::operations.events_title')" flush>
+                <x-ui.card data-guide="events" :title="__('operations::operations.events_title')" flush>
                     <x-ui.table>
                         <x-slot:head>
                             <th>{{ __('operations::operations.fields.occurred_at') }}</th>
@@ -80,7 +80,7 @@
             <div class="col-xl-5">
                 @unless ($isClosed)
                     @can(App\Support\Authorization\Permission::OperationsCreate->value)
-                        <x-ui.card :title="__('operations::operations.add_event')">
+                        <x-ui.card data-guide="add_event" :title="__('operations::operations.add_event')">
                             <form method="POST" action="{{ route('operations.events.store', $operation) }}">
                                 @csrf
                                 <x-ui.form.input name="occurred_at" type="datetime-local" :label="__('operations::operations.fields.occurred_at')" :value="now()->format('Y-m-d\TH:i')" />
@@ -91,7 +91,7 @@
                     @endcan
                 @endunless
 
-                <x-ui.card :title="__('operations::operations.instructions_title')">
+                <x-ui.card data-guide="instructions" :title="__('operations::operations.instructions_title')">
                     @forelse ($operation->instructions as $instruction)
                         <div class="m-b-15">
                             <p class="m-b-5 text-pre-line">{{ $instruction->body }}</p>
@@ -126,7 +126,7 @@
                             </form>
                         </x-ui.card>
 
-                        <x-ui.card :title="__('operations::operations.close_title')">
+                        <x-ui.card data-guide="close" :title="__('operations::operations.close_title')">
                             <form data-confirm="{{ __('operations::confirm.close') }}" data-confirm-label="{{ __('operations::confirm.close_yes') }}" method="POST" action="{{ route('operations.close', $operation) }}">
                                 @csrf
                                 <x-ui.form.textarea name="result" :label="__('operations::operations.fields.result')" rows="3" required />

@@ -7,7 +7,7 @@
     <div class="page-body">
         <div class="row">
             <div class="col-xl-8">
-                <x-ui.card :title="__('logbook::logbook.entries.title')" :subtitle="__('logbook::logbook.days.fields.status').' : '.__($day->status->label())" flush>
+                <x-ui.card data-guide="entries" :title="__('logbook::logbook.entries.title')" :subtitle="__('logbook::logbook.days.fields.status').' : '.__($day->status->label())" flush>
                     <x-ui.table>
                         <x-slot:head>
                             <th>{{ __('logbook::logbook.entries.fields.occurred_at') }}</th>
@@ -79,7 +79,7 @@
             <div class="col-xl-4">
                 @if ($isOpen)
                     @can(App\Support\Authorization\Permission::LogbookCreate->value)
-                        <x-ui.card :title="__('logbook::logbook.entries.new')">
+                        <x-ui.card data-guide="new_entry" :title="__('logbook::logbook.entries.new')">
                             <form method="POST" action="{{ route('logbook.entries.store') }}">
                                 @csrf
                                 <x-ui.form.input name="occurred_at" type="datetime-local" :label="__('logbook::logbook.entries.fields.occurred_at')" :value="now()->format('Y-m-d\TH:i')" />
@@ -104,7 +104,7 @@
                     @endcan
 
                     @can(App\Support\Authorization\Permission::LogbookClose->value)
-                        <x-ui.card :title="__('logbook::logbook.days.close_title')" :subtitle="__('logbook::logbook.days.close_hint')">
+                        <x-ui.card data-guide="close_day" :title="__('logbook::logbook.days.close_title')" :subtitle="__('logbook::logbook.days.close_hint')">
                             <form data-confirm="{{ __('logbook::confirm.close_day') }}" data-confirm-label="{{ __('logbook::confirm.close_day_yes') }}" method="POST" action="{{ route('logbook.days.close', $day) }}">
                                 @csrf
                                 <button type="submit" class="btn btn-success"><i class="feather icon-lock"></i> {{ __('logbook::logbook.days.close') }}</button>
@@ -112,7 +112,7 @@
                         </x-ui.card>
                     @endcan
                 @else
-                    <x-ui.card :title="__('logbook::logbook.days.pdf_title')">
+                    <x-ui.card data-guide="pdf" :title="__('logbook::logbook.days.pdf_title')">
                         <x-ui.detail-list>
                             <x-ui.detail :label="__('logbook::logbook.days.fields.locked_at')">{{ $day->locked_at?->isoFormat('L LT') }}</x-ui.detail>
                             <x-ui.detail :label="__('logbook::logbook.days.fields.closed_by')">{{ $day->closing?->closer?->name }}</x-ui.detail>

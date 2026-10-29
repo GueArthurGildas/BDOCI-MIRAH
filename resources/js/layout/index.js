@@ -4,6 +4,7 @@ import { initConfirmations } from './confirm';
 import { initPopup } from './popup';
 import { initRemoteModals } from './remote-modal';
 import { initFullScreenToggle } from './fullscreen';
+import { initGuide } from './guide';
 import { initNotifications } from './notifications';
 import { hidePreloader } from './preloader';
 import { initTooltips } from './tooltips';
@@ -14,6 +15,7 @@ export function initLayout() {
     initConfirmations();
     initRemoteModals();
     initPopup();
+    initGuide();
     initFullScreenToggle();
     initTooltips();
     initNotifications();

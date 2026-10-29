@@ -11,7 +11,7 @@ return [
     'search' => 'Search',
     'notifications' => 'Notifications',
     'fullscreen' => 'Full screen',
-    'guide_in_progress' => 'Guide in progress',
+    'guide_hint' => 'A quick tour of this page',
     'user_guide' => 'User guide',
     'results_count' => '{0} No results|{1} :count result|[2,*] :count results',
     'no_results' => 'No results.',

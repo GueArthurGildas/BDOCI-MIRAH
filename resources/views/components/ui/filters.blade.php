@@ -1,6 +1,6 @@
 @props(['action'])
 
-<x-ui.card :title="__('ui.filters')">
+<x-ui.card data-guide="filter_card" :title="__('ui.filters')">
     <form method="GET" action="{{ $action }}" class="row g-3 align-items-end">
         {{ $slot }}
 

@@ -30,12 +30,12 @@
 
         <div class="row">
             <div class="col-xl-6">
-                <x-ui.card :title="__('dashboard::dashboard.zones_title')" :subtitle="__('dashboard::dashboard.zones_subtitle', ['time' => $now->isoFormat('LT')])">
+                <x-ui.card data-guide="zones" :title="__('dashboard::dashboard.zones_title')" :subtitle="__('dashboard::dashboard.zones_subtitle', ['time' => $now->isoFormat('LT')])">
                     <x-ui.chart :config="$zonesChart" height="260" />
                 </x-ui.card>
             </div>
             <div class="col-xl-6">
-                <x-ui.card :title="__('dashboard::dashboard.infractions_title')">
+                <x-ui.card data-guide="infractions" :title="__('dashboard::dashboard.infractions_title')">
                     <x-ui.chart :config="$infractionsChart" height="260" />
                 </x-ui.card>
             </div>
@@ -48,7 +48,7 @@
                 </x-ui.card>
             </div>
             <div class="col-xl-7">
-                <x-ui.card :title="__('dashboard::dashboard.sources_title')" flush>
+                <x-ui.card data-guide="sources" :title="__('dashboard::dashboard.sources_title')" flush>
                     <x-ui.table>
                         <x-slot:head>
                             <th>{{ __('dashboard::dashboard.columns.source') }}</th>
@@ -71,7 +71,7 @@
             </div>
         </div>
 
-        <x-ui.card :title="__('dashboard::dashboard.observations_title')" flush>
+        <x-ui.card data-guide="observations" :title="__('dashboard::dashboard.observations_title')" flush>
             <x-ui.table>
                 <x-slot:head>
                     <th>{{ __('dashboard::dashboard.columns.date') }}</th>

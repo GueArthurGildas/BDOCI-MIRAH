@@ -25,7 +25,7 @@
             @endforeach
         </div>
 
-        <x-ui.card :title="__('indicators::indicators.fleet.distribution')" :subtitle="__('indicators::indicators.fleet.distribution_hint')">
+        <x-ui.card data-guide="distribution" :title="__('indicators::indicators.fleet.distribution')" :subtitle="__('indicators::indicators.fleet.distribution_hint')">
             <div class="row">
                 @foreach (App\Enums\VesselStatusLight::cases() as $light)
                     <div class="col-md-3">
@@ -38,7 +38,7 @@
             </div>
         </x-ui.card>
 
-        <x-ui.card :title="__('indicators::indicators.fleet.ranking')" :subtitle="__('indicators::indicators.fleet.ranking_hint')" flush>
+        <x-ui.card data-guide="ranking" :title="__('indicators::indicators.fleet.ranking')" :subtitle="__('indicators::indicators.fleet.ranking_hint')" flush>
             <x-ui.table>
                 <x-slot:head>
                     <th>{{ __('indicators::indicators.columns.vessel') }}</th>

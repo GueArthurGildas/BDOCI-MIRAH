@@ -8,7 +8,7 @@
         <div class="row">
             @foreach ($dataSources as $source)
                 <div class="col-xl-4 col-md-6">
-                    <x-ui.card :title="$source->name" :subtitle="__($source->mode->label())">
+                    <x-ui.card data-guide="source" :title="$source->name" :subtitle="__($source->mode->label())">
                         <x-slot:actions>
                             @if ($source->is_stale)<span class="label label-warning">{{ __('administration::administration.connectors.stale') }}</span>@endif
                             <x-ui.status-badge :status="$source->indicator_status" />

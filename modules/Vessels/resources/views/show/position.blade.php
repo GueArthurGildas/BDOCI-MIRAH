@@ -1,6 +1,6 @@
 @php($position = $vessel->latestPosition)
 
-<x-ui.card :title="__('vessels::vessels.summary.last_position')" :subtitle="$position ? __('vessels::vessels.summary.last_emission').' : '.$position->recorded_at->isoFormat('L LT').' ('.$position->recorded_at->diffForHumans().')' : __('vessels::vessels.summary.no_position')">
+<x-ui.card data-guide="position" :title="__('vessels::vessels.summary.last_position')" :subtitle="$position ? __('vessels::vessels.summary.last_emission').' : '.$position->recorded_at->isoFormat('L LT').' ('.$position->recorded_at->diffForHumans().')' : __('vessels::vessels.summary.no_position')">
     @if ($position)
         <div class="row">
             <div class="col-lg-8">

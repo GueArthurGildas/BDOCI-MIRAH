@@ -14,7 +14,7 @@
     <div class="page-body">
         <div class="row">
             <div class="col-xl-8">
-                <x-ui.card :title="__('missions::missions.sections.mission')">
+                <x-ui.card data-guide="mission" :title="__('missions::missions.sections.mission')">
                     <x-slot:actions>
                         @if ($status === MissionStatus::Scheduled && $canAuthorize && Gate::allows(Permission::MissionsAuthorize->value))
                             <form data-confirm="{{ __('missions::confirm.authorize') }}" data-confirm-label="{{ __('missions::confirm.authorize_yes') }}" method="POST" action="{{ route('missions.authorize', $mission) }}">@csrf<button class="btn btn-primary btn-sm"><i class="feather icon-check"></i> {{ __('missions::missions.authorize') }}</button></form>
@@ -66,7 +66,7 @@
                     @endif
                 </x-ui.card>
 
-                <x-ui.card :title="__('missions::missions.sections.map')">
+                <x-ui.card data-guide="map" :title="__('missions::missions.sections.map')">
                     <x-ui.map height="360px" :markers="$markers" />
                     <p class="text-muted f-12 m-t-10 m-b-0">
                         @forelse ($mission->tracks as $track)
@@ -84,7 +84,7 @@
                     @endif
                 </x-ui.card>
 
-                <x-ui.card :title="__('missions::missions.sections.units')" :subtitle="__('missions::missions.units_hint')" flush>
+                <x-ui.card data-guide="units" :title="__('missions::missions.sections.units')" :subtitle="__('missions::missions.units_hint')" flush>
                     <x-ui.table>
                         <x-slot:head>
                             <th>{{ __('missions::missions.fields.observed_at') }}</th>
@@ -152,7 +152,7 @@
                     @endif
                 </x-ui.card>
 
-                <x-ui.card :title="__('missions::missions.sections.briefing')">
+                <x-ui.card data-guide="briefing" :title="__('missions::missions.sections.briefing')">
                     @if ($manage && $editable)
                         <form method="POST" action="{{ route('missions.briefing.save', $mission) }}">
                             @csrf
@@ -201,7 +201,7 @@
             </div>
 
             <div class="col-xl-4">
-                <x-ui.card :title="__('missions::missions.sections.review')" :subtitle="__('missions::missions.review_hint')">
+                <x-ui.card data-guide="review" :title="__('missions::missions.sections.review')" :subtitle="__('missions::missions.review_hint')">
                     <x-slot:actions>
                         @if ($manage && $editable)
                             <form method="POST" action="{{ route('missions.review', $mission) }}">@csrf<button class="btn btn-default btn-sm"><i class="feather icon-refresh-cw"></i> {{ __('missions::missions.recompute') }}</button></form>
@@ -215,7 +215,7 @@
                     <p class="text-muted f-12 m-t-10 m-b-0">{{ $review ? __('missions::missions.calculated_at', ['date' => $review->calculated_at->isoFormat('L LT')]) : __('missions::missions.not_calculated') }}</p>
                 </x-ui.card>
 
-                <x-ui.card :title="__('missions::missions.sections.participants')" flush>
+                <x-ui.card data-guide="participants" :title="__('missions::missions.sections.participants')" flush>
                     <x-ui.table>
                         <x-slot:head>
                             <th>{{ __('missions::missions.fields.agent') }}</th>

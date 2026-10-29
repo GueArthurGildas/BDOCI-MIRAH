@@ -17,7 +17,7 @@
     <div class="page-body">
         <div class="row">
             <div class="col-xl-8">
-                <x-ui.card :title="__('infractions::infractions.sections.case')">
+                <x-ui.card data-guide="case" :title="__('infractions::infractions.sections.case')">
                     @if ($manage && $open)
                         <form method="POST" action="{{ route('infractions.update', $case) }}">
                             @csrf
@@ -36,7 +36,7 @@
                     @endif
                 </x-ui.card>
 
-                <x-ui.card :title="__('infractions::infractions.sections.upheld')" flush>
+                <x-ui.card data-guide="upheld" :title="__('infractions::infractions.sections.upheld')" flush>
                     <x-ui.table>
                         <x-slot:head>
                             <th>{{ __('infractions::infractions.fields.code') }}</th>
@@ -66,7 +66,7 @@
                     @endif
                 </x-ui.card>
 
-                <x-ui.card :title="__('infractions::infractions.sections.evidence')" flush>
+                <x-ui.card data-guide="evidence" :title="__('infractions::infractions.sections.evidence')" flush>
                     <x-ui.table>
                         <x-slot:head>
                             <th>{{ __('infractions::infractions.fields.description') }}</th>
@@ -151,7 +151,7 @@
                     </div>
                 </div>
 
-                <x-ui.card :title="__('infractions::infractions.sections.measures')" :subtitle="__('infractions::infractions.measures_hint')" flush>
+                <x-ui.card data-guide="measures" :title="__('infractions::infractions.sections.measures')" :subtitle="__('infractions::infractions.measures_hint')" flush>
                     <x-ui.table>
                         <x-slot:head>
                             <th>{{ __('infractions::infractions.fields.measure_type') }}</th>
@@ -194,7 +194,7 @@
                     @endif
                 </x-ui.card>
 
-                <x-ui.card :title="__('infractions::infractions.sections.violation_report')">
+                <x-ui.card data-guide="violation_report" :title="__('infractions::infractions.sections.violation_report')">
                     @if ($case->violationReport)
                         <x-ui.detail-list>
                             <x-ui.detail :label="__('infractions::infractions.fields.number')">{{ $case->violationReport->number }}</x-ui.detail>
@@ -219,7 +219,7 @@
                     @endif
                 </x-ui.card>
 
-                <x-ui.card :title="__('infractions::infractions.sections.follow_ups')">
+                <x-ui.card data-guide="follow_ups" :title="__('infractions::infractions.sections.follow_ups')">
                     @forelse ($case->followUps as $followUp)
                         <div class="m-b-20">
                             <h6>{{ __($followUp->type->label()) }}
@@ -295,7 +295,7 @@
             </div>
 
             <div class="col-xl-4">
-                <x-ui.card :title="__('infractions::infractions.sections.status')">
+                <x-ui.card data-guide="status" :title="__('infractions::infractions.sections.status')">
                     <x-ui.detail-list>
                         <x-ui.detail :label="__('infractions::infractions.fields.status')"><x-ui.status-badge :status="$case->status" /></x-ui.detail>
                         <x-ui.detail :label="__('infractions::infractions.fields.qualification')"><x-ui.status-badge :status="$case->qualification" /></x-ui.detail>

@@ -15,7 +15,7 @@
         </div>
 
         @if ($relays->isNotEmpty())
-            <x-ui.card :title="__('watch::watch.board.relays_title')" flush>
+            <x-ui.card data-guide="relays" :title="__('watch::watch.board.relays_title')" flush>
                 <x-ui.table>
                     <x-slot:head>
                         <th>{{ __('watch::watch.fields.vessel') }}</th>
@@ -43,7 +43,7 @@
         @endif
 
         @if ($checkAlerts->isNotEmpty())
-            <x-ui.card :title="__('watch::watch.board.check_alerts_title')" :subtitle="__('watch::watch.board.check_alerts_hint', ['threshold' => config('surveillance.watch.check_threshold')])" flush>
+            <x-ui.card data-guide="checks" :title="__('watch::watch.board.check_alerts_title')" :subtitle="__('watch::watch.board.check_alerts_hint', ['threshold' => config('surveillance.watch.check_threshold')])" flush>
                 <x-ui.table>
                     <x-slot:head>
                         <th>{{ __('watch::watch.fields.vessel') }}</th>
@@ -70,7 +70,7 @@
             </x-ui.card>
         @endif
 
-        <x-ui.card :title="__('watch::watch.board.watched_title')" flush>
+        <x-ui.card data-guide="watched" :title="__('watch::watch.board.watched_title')" flush>
             <x-ui.table>
                 <x-slot:head>
                     <th>{{ __('watch::watch.fields.vessel') }}</th>
@@ -108,7 +108,7 @@
 
         <div class="row">
             <div class="col-xl-6">
-                <x-ui.card :title="__('watch::watch.board.instructions_title')" flush>
+                <x-ui.card data-guide="instructions" :title="__('watch::watch.board.instructions_title')" flush>
                     <x-ui.table>
                         <x-slot:head>
                             <th>{{ __('watch::watch.fields.vessel') }}</th>
@@ -127,7 +127,7 @@
             </div>
 
             <div class="col-xl-6">
-                <x-ui.card :title="__('watch::watch.board.observations_title')" flush>
+                <x-ui.card data-guide="observations" :title="__('watch::watch.board.observations_title')" flush>
                     <x-ui.table>
                         <x-slot:head>
                             <th>{{ __('watch::watch.fields.vessel') }}</th>
@@ -149,7 +149,7 @@
         </div>
 
         @canany([App\Support\Authorization\Permission::WatchCreate->value, App\Support\Authorization\Permission::WatchManage->value])
-            <x-ui.card :title="__('watch::watch.board.add_title')">
+            <x-ui.card data-guide="add" :title="__('watch::watch.board.add_title')">
                 <form method="POST" action="{{ route('watch.board.director-list') }}">
                     @csrf
                     <x-ui.form.select name="vessel_id" :label="__('watch::watch.fields.vessel')" :options="$vessels" required />

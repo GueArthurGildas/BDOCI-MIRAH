@@ -2,7 +2,7 @@
     <x-ui.page-header :title="__('administration::administration.roles.title')" :subtitle="__('administration::administration.roles.subtitle')" />
 
     <div class="page-body">
-        <x-ui.card :title="__('administration::administration.roles.list_title')" flush>
+        <x-ui.card data-guide="list" :title="__('administration::administration.roles.list_title')" flush>
             <x-slot:actions>
                 <a href="{{ route('administration.roles.create') }}" class="btn btn-primary btn-sm">
                     <i class="feather icon-plus"></i> {{ __('administration::administration.roles.new') }}
@@ -49,7 +49,7 @@
             </x-ui.table>
         </x-ui.card>
 
-        <x-ui.card :title="__('administration::administration.roles.matrix_title')" :subtitle="__('administration::administration.roles.matrix_hint')" flush>
+        <x-ui.card data-guide="matrix" :title="__('administration::administration.roles.matrix_title')" :subtitle="__('administration::administration.roles.matrix_hint')" flush>
             <x-ui.table>
                 <x-slot:head>
                     <th>{{ __('administration::administration.roles.permission') }}</th>

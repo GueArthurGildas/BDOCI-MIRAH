@@ -2,7 +2,7 @@
     <x-ui.page-header :title="__('tracking::tracking.map.title')" :subtitle="__('tracking::tracking.map.subtitle')" />
 
     <div class="page-body">
-        <x-ui.card :title="trans_choice('tracking::tracking.map.positions_count', $positionsCount)">
+        <x-ui.card data-guide="map" :title="trans_choice('tracking::tracking.map.positions_count', $positionsCount)">
             <x-slot:actions>
                 <form method="GET" action="{{ route('tracking.map') }}" class="d-flex gap-2">
                     <select name="category" class="form-select form-select-sm" data-auto-submit aria-label="{{ __('tracking::tracking.map.category') }}">

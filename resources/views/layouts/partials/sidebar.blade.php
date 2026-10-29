@@ -18,11 +18,9 @@
         @endforeach
     </ul>
 
-    @if (Route::has('guide'))
-        <div class="gs-guide">
-            <strong>{{ config('app.name') }}</strong>
-            <small>{{ __('ui.guide_in_progress') }}</small>
-            <a href="{{ route('guide') }}" class="btn btn-primary btn-sm">{{ __('ui.user_guide') }}</a>
-        </div>
-    @endif
+    <div class="gs-guide">
+        <strong>{{ config('app.name') }}</strong>
+        <small>{{ __('ui.guide_hint') }}</small>
+        <button type="button" class="btn btn-primary btn-sm" data-gs-guide><i class="feather icon-compass"></i> {{ __('ui.user_guide') }}</button>
+    </div>
 </aside>

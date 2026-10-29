@@ -1,4 +1,4 @@
-<x-ui.card :title="$vessel->name" :subtitle="$vessel->flagName()">
+<x-ui.card data-guide="summary" :title="$vessel->name" :subtitle="$vessel->flagName()">
     @can(App\Support\Authorization\Permission::VesselsManage->value)
         <x-slot:actions>
             <a href="{{ route('vessels.edit', $vessel) }}" class="btn btn-primary btn-sm">

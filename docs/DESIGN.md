@@ -63,3 +63,13 @@ Couleurs de `stat-card` : `warning` (orange, défaut), `success`, `danger`, `inf
 - `.card .card-header + .card-body` retire le padding haut : le thème le rétablit.
 - Adminty met `.btn` et `.label` en capitales initiales (`text-transform: capitalize`) : le thème les remet en casse normale. Les cases à cocher `checkbox-fade` ont une couleur par état, plus spécifique : le thème impose l'orange avec `!important`.
 - Si une modification de style n'apparaît pas, redémarrer le conteneur `node` (`docker restart bdoci-mirah-node-1`) : l'observateur de fichiers de Vite sur le volume monté perd parfois les changements.
+
+## Visite guidée
+
+Le bouton « Guide utilisateur » de la sidebar (et l'icône « ? » de la barre du haut) lance une visite de la page courante : une fenêtre d'introduction puis un projecteur sur chaque élément important, avec une explication courte.
+
+- **Pages et cibles** : `config/guide.php` associe un nom de route à une liste ordonnée `étape => sélecteur CSS`. Une page sans entrée affiche la visite générique (menu, onglets, outils).
+- **Textes** : `lang/{en,fr}/guide.php`. `pages.<route avec _>.intro` est obligatoire ; `pages.<route>.steps.<étape>` donne le titre et le texte d'une étape, sinon `common.<étape>` sert de texte par défaut (barre d'outils, filtres, tableau, exports…).
+- **Cibles dans les vues** : poser `data-guide="clé"` sur une carte (`<x-ui.card data-guide="clé" …>`) plutôt que de compter sur la position ; les sélecteurs de listes (`.gs-table-toolbar`, `.gs-filter-row`, `.card .table`) existent déjà.
+- **Droits** : une étape dont la cible est absente de la page (bouton réservé à un autre rôle, carte vide) est ignorée automatiquement.
+- **Test** : `tests/Feature/GuideTest.php` vérifie que chaque page configurée est une vraie route, a son introduction et ses textes dans les deux langues.

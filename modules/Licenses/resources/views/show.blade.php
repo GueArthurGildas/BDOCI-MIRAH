@@ -6,7 +6,7 @@
     <div class="page-body">
         <div class="row">
             <div class="col-xl-6">
-                <x-ui.card :title="__('licenses::licenses.identity')">
+                <x-ui.card data-guide="identity" :title="__('licenses::licenses.identity')">
                     <x-slot:actions>
                         @if ($manage)
                             <a href="{{ route('licenses.edit', $license) }}" class="btn btn-default btn-sm"><i class="feather icon-edit"></i> {{ __('ui.edit') }}</a>
@@ -25,7 +25,7 @@
                     </x-ui.detail-list>
                 </x-ui.card>
 
-                <x-ui.card :title="__('licenses::licenses.scope')">
+                <x-ui.card data-guide="scope" :title="__('licenses::licenses.scope')">
                     <x-ui.detail-list>
                         <x-ui.detail :label="__('licenses::licenses.fields.zones')">{{ $license->zones->pluck('name')->join(', ') }}</x-ui.detail>
                         <x-ui.detail :label="__('licenses::licenses.fields.gears')">{{ $license->gears->pluck('label')->join(', ') }}</x-ui.detail>
@@ -41,7 +41,7 @@
                     @endif
                 </x-ui.card>
 
-                <x-ui.card :title="__('licenses::licenses.documents.title')" flush>
+                <x-ui.card data-guide="documents" :title="__('licenses::licenses.documents.title')" flush>
                     <x-ui.table>
                         <x-slot:head>
                             <th>{{ __('licenses::licenses.documents.name') }}</th>
@@ -78,7 +78,7 @@
             </div>
 
             <div class="col-xl-6">
-                <x-ui.card :title="__('licenses::licenses.suspension.title')" flush>
+                <x-ui.card data-guide="suspension" :title="__('licenses::licenses.suspension.title')" flush>
                     <x-ui.table>
                         <x-slot:head>
                             <th>{{ __('licenses::licenses.suspension.reason') }}</th>
@@ -128,7 +128,7 @@
                     @endif
                 </x-ui.card>
 
-                <x-ui.card :title="__('licenses::licenses.revocation.title')">
+                <x-ui.card data-guide="revocation" :title="__('licenses::licenses.revocation.title')">
                     @if ($license->revocation)
                         <x-ui.detail-list>
                             <x-ui.detail :label="__('licenses::licenses.revocation.reason')">{{ $license->revocation->reason }}</x-ui.detail>

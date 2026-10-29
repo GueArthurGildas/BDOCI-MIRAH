@@ -7,7 +7,7 @@
             @method('PUT')
 
             @foreach ($groups as $group => $definitions)
-                <x-ui.card :title="__('administration::settings.groups.'.$group.'.title')" :subtitle="__('administration::settings.groups.'.$group.'.description')">
+                <x-ui.card data-guide="group" :title="__('administration::settings.groups.'.$group.'.title')" :subtitle="__('administration::settings.groups.'.$group.'.description')">
                     @foreach ($definitions as $field => $definition)
                         @include('administration::settings.field', ['field' => $field, 'definition' => $definition, 'settings' => $settings])
                     @endforeach

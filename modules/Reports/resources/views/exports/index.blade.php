@@ -3,7 +3,7 @@
 
     <div class="page-body">
         @forelse ($types as $type)
-            <x-ui.card :title="__($type->label())">
+            <x-ui.card data-guide="type" :title="__($type->label())">
                 <form method="GET" action="{{ route('reports.exports.download', $type->value) }}" class="row g-3 align-items-end">
                     @if ($type->value === 'operations')
                         <x-ui.filter-input name="year" type="number" :label="__('reports::reports.exports.fields.year')" />
@@ -34,7 +34,7 @@
             </x-ui.card>
         @endforelse
 
-        <x-ui.card :title="__('reports::reports.exports.log_title')" :subtitle="trans_choice('ui.results_count', $log->total())" flush>
+        <x-ui.card data-guide="log" :title="__('reports::reports.exports.log_title')" :subtitle="trans_choice('ui.results_count', $log->total())" flush>
             <x-ui.table :paginator="$log">
                 <x-slot:head>
                     <th>{{ __('reports::reports.exports.columns.exported_at') }}</th>
