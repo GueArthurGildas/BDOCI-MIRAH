@@ -4,6 +4,9 @@
     <table {{ $attributes->class('table table-hover m-b-0') }}>
         <thead>
             <tr>{{ $head }}</tr>
+            @isset($filters)
+                <tr class="gs-filter-row">{{ $filters }}</tr>
+            @endisset
         </thead>
         <tbody>
             {{ $slot }}

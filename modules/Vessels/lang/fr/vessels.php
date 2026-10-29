@@ -3,6 +3,8 @@
 return [
     'title' => 'Navires',
     'subtitle' => 'Référentiel des navires autorisés et suivis',
+    'export_csv' => 'Export CSV',
+    'export_pdf' => 'Export PDF',
     'list_title' => 'Liste des navires',
     'create_title' => 'Nouveau navire',
     'edit_title' => 'Modifier le navire',

@@ -21,6 +21,57 @@
     }
 }
 
+.gs-table-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 14px 16px;
+}
+
+.gs-table-toolbar-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.gs-toolbar-field {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    color: var(--gs-muted);
+    font-size: .8rem;
+
+    select {
+        width: auto;
+    }
+}
+
+.gs-toolbar-select {
+    width: auto;
+}
+
+.gs-toolbar-search {
+    width: 240px;
+}
+
+.table > thead > tr.gs-filter-row > th {
+    padding: 6px 10px 10px;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+
+    .form-control,
+    .form-select {
+        min-width: 90px;
+        background-color: var(--gs-surface);
+        border-color: transparent;
+    }
+}
+
 .pagination {
     margin-bottom: 0;
 }

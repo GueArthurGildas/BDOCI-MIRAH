@@ -3,6 +3,8 @@
 return [
     'title' => 'Vessels',
     'subtitle' => 'Registry of authorized and monitored vessels',
+    'export_csv' => 'Export CSV',
+    'export_pdf' => 'Export PDF',
     'list_title' => 'Vessel list',
     'create_title' => 'New vessel',
     'edit_title' => 'Edit vessel',

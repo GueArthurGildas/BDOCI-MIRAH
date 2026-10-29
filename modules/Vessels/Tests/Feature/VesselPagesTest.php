@@ -36,6 +36,22 @@ class VesselPagesTest extends TestCase
         $this->get('/vessels?search=akwaba')->assertSee('AKWABA 1')->assertDontSee('VEDETTE CSP 01');
     }
 
+    public function test_the_column_filters_and_the_page_size_narrow_the_list(): void
+    {
+        $this->signInAs(Role::Agent);
+        Vessel::factory()->create(['name' => 'AKWABA 1', 'registration_number' => 'AN-1001']);
+        Vessel::factory()->create(['name' => 'BAOULE 2', 'registration_number' => 'AN-2002']);
+
+        $this->get('/vessels?name=akwa')->assertSee('AKWABA 1')->assertDontSee('BAOULE 2');
+        $this->get('/vessels?registration=2002')->assertSee('BAOULE 2')->assertDontSee('AKWABA 1');
+
+        Vessel::factory()->count(10)->create();
+        $page = $this->get('/vessels?per_page=10')->assertOk()->viewData('vessels');
+        $this->assertSame(10, $page->perPage());
+        $this->assertCount(10, $page->items());
+        $this->get('/vessels?per_page=7')->assertSessionHasErrors('per_page');
+    }
+
     #[Covers('RG08', 'UC25', partial: true)]
     public function test_vessel_profile_gathers_its_history(): void
     {

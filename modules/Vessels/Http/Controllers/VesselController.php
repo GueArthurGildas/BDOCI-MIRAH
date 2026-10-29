@@ -30,6 +30,8 @@ class VesselController extends Controller
 {
     private const PER_PAGE = 20;
 
+    private const PER_PAGE_OPTIONS = [10, 20, 50, 100];
+
     private const TRACK_LENGTH = 12;
 
     public function index(Request $request): View
@@ -39,19 +41,30 @@ class VesselController extends Controller
             'category' => ['nullable', Rule::enum(VesselCategory::class)],
             'status' => ['nullable', Rule::enum(VesselStatus::class)],
             'flag' => ['nullable', 'string', 'size:2'],
+            'name' => ['nullable', 'string', 'max:100'],
+            'registration' => ['nullable', 'string', 'max:100'],
+            'per_page' => ['nullable', 'integer', Rule::in(self::PER_PAGE_OPTIONS)],
         ]);
+        $perPage = $filters['per_page'] ?? self::PER_PAGE;
 
         $vessels = Vessel::query()
             ->with(['currentLicense', 'latestPosition', 'flagCountry'])
             ->search($filters['search'] ?? null)
+            ->when($filters['name'] ?? null, fn ($query, $name) => $query->whereLike('name', "%{$name}%"))
+            ->when($filters['registration'] ?? null, fn ($query, $registration) => $query->whereLike('registration_number', "%{$registration}%"))
             ->when($filters['category'] ?? null, fn ($query, $category) => $query->where('category', $category))
             ->when($filters['status'] ?? null, fn ($query, $status) => $query->where('status', $status))
             ->when($filters['flag'] ?? null, fn ($query, $flag) => $query->whereHas('flagCountry', fn ($countries) => $countries->where('iso2_code', $flag)))
             ->orderBy('name')
-            ->paginate(self::PER_PAGE)
+            ->paginate($perPage)
             ->withQueryString();
 
-        return view('vessels::index', compact('vessels', 'filters'));
+        return view('vessels::index', [
+            'vessels' => $vessels,
+            'filters' => $filters,
+            'perPage' => $perPage,
+            'perPageOptions' => self::PER_PAGE_OPTIONS,
+        ]);
     }
 
     public function show(Request $request, Vessel $vessel): View
