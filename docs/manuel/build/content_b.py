@@ -1,10 +1,6 @@
 from lib import *
 
 
-def roadmap_box(rows):
-    return table([('Disponible aujourd\'hui', 'Available today'), ('Prévu ou à arbitrer', 'Planned or to be decided')], rows, [55, 45])
-
-
 def agent():
     out = h1('Chapitre Agent', 'Agent chapter')
     out += p('<span class="lead">L\'Agent est les yeux et les mains du CSP : il observe, enregistre ce qu\'il voit, consulte les fiches et signale ce qui doit remonter. Il n\'a pas à clôturer, décider ni administrer : c\'est le rôle du Chef d\'équipe et du Directeur.</span>',
@@ -93,11 +89,6 @@ def agent():
         ('Décider d\'une suite, d\'une sanction ou d\'une mesure ; exporter ; consulter les rapports ou la vue flotte.', 'Decide a follow-up, a sanction or a measure; export; view reports or the fleet view.'),
     ])
     out += note('info', 'Si un bouton attendu n\'apparaît pas, c\'est que votre rôle ne le permet pas. Une page interdite affiche « Accès refusé » : demandez au Chef d\'équipe ou à l\'Administrateur.', 'If an expected button does not appear, your role does not allow it. A forbidden page shows “Access denied”: ask the Team lead or the Administrator.')
-    out += h2('Feuille de route de l\'Agent', 'Agent roadmap')
-    out += roadmap_box([
-        [('Tableau du matin, observations avec relais, main courante verrouillable, alertes, créneaux avec trois tests assistés, déclarations ZEE, opérations, signalements, missions, messages.', 'Morning board, observations with relays, lockable logbook, alerts, slots with three assisted tests, EEZ declarations, operations, witness reports, missions, messages.'), ('Test « suspect » de la main courante et clôture automatique en fin de quart (à valider) ; écran des captures d\'écran et anomalies d\'identité.', '“Suspect” test of the logbook and automatic closing at end of shift (to be validated); screen for screenshots and identity anomalies.')],
-        [('Aperçu rapide d\'un navire, confirmations avant les actions importantes.', 'Quick view of a vessel, confirmations before important actions.'), ('Accès réels aux sources (THEMIS, e-inspection, DPEP) : les positions et inspections affichées viennent aujourd\'hui de jeux enregistrés.', 'Real access to the sources (THEMIS, e-inspection, DPEP): the positions and inspections shown today come from recorded datasets.')],
-    ])
     return out
 
 
@@ -187,10 +178,5 @@ def teamlead():
         ('Décider d\'une mesure conservatoire proposée dans un dossier d\'infraction : réservé au Directeur.', 'Decide a precautionary measure proposed in an infraction case: reserved for the Director.'),
         ('Autoriser les missions que le Directeur s\'est réservées.', 'Authorize the missions the Director has reserved.'),
         ('Administrer les comptes, les rôles, les paramètres, les connecteurs : réservé à l\'Administrateur.', 'Administer accounts, roles, settings, connectors: reserved for the Administrator.'),
-    ])
-    out += h2('Feuille de route du Chef d\'équipe', 'Team lead roadmap')
-    out += roadmap_box([
-        [('Clôture avec PDF figé, doublons, licences (suspension, révocation, lot, registre annuel, liste autorisée), dossier d\'infraction complet, missions, signalements, exports et rapports.', 'Closing with frozen PDF, duplicates, licences (suspension, revocation, batch, annual register, authorized list), complete infraction case, missions, witness reports, exports and reports.'), ('Circuit « proposition puis décision » pour les licences ; champs extensibles sur les licences ; rejet d\'une mesure conservatoire proposée.', '“Proposal then decision” circuit for licences; extensible fields on licences; rejection of a proposed precautionary measure.')],
-        [('Alertes de licence à 30, 60 et 90 jours.', 'Licence alerts at 30, 60 and 90 days.'), ('Départ de port avec VMS en panne ; écart entre déclaration ERS et constat e-inspection.', 'Port departure with failing VMS; gap between ERS declaration and e-inspection finding.')],
     ])
     return out

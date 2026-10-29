@@ -16,8 +16,8 @@ WORK = HERE / 'work'
 
 COVER = '''<section class="cover">
 <div class="brand">BDOCI MIRAH</div>
-<h1>Manuel d'utilisation<br>et feuille de route<br><small style="font-size:60%;font-weight:400;color:#f9ab56">User manual and roadmap</small></h1>
-<p class="sub">Surveillance des pêches de Côte d'Ivoire — guide par rôle, programme de formation et feuille de route.<br><em>Fisheries monitoring of Côte d'Ivoire — role-based guide, training programme and roadmap.</em></p>
+<h1>Manuel d'utilisation<br><small style="font-size:60%;font-weight:400;color:#f9ab56">User manual</small></h1>
+<p class="sub">Surveillance des pêches de Côte d'Ivoire — guide par rôle, procédures pas à pas et programme de formation.<br><em>Fisheries monitoring of Côte d'Ivoire — role-based guide, step-by-step procedures and training programme.</em></p>
 <div class="meta">Centre de Surveillance des Pêches (CSP) · MIRAH<br>Version 1.0 · 29 octobre 2026 / 29 October 2026<br>Partie I : Français · Part II: English</div>
 <div class="band"></div>
 </section>'''
@@ -26,7 +26,7 @@ COVER = '''<section class="cover">
 def chapters(lang):
     lib.set_lang(lang)
     body = ''
-    for fn in (content_a.intro, content_a.overview, content_a.interface, content_a.roles, content_b.agent, content_b.teamlead, content_c.director, content_c.admin, content_c.processes, content_c.roadmap, content_c.training, content_c.faq, content_c.glossary, content_c.annex):
+    for fn in (content_a.intro, content_a.overview, content_a.interface, content_a.roles, content_b.agent, content_b.teamlead, content_c.director, content_c.admin, content_c.processes, content_c.training, content_c.faq, content_c.glossary, content_c.annex):
         body += fn()
     return body, list(lib.HEADINGS)
 

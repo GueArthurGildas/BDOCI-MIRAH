@@ -10,7 +10,6 @@ def intro():
         [('Agent, Chef d\'équipe, Directeur', 'Agent, Team lead, Director'), ('Son chapitre de rôle : la journée type, les écrans, les procédures pas à pas, ce qui est permis et ce qui ne l\'est pas.', 'Their role chapter: a typical day, the screens, step-by-step procedures, what is allowed and what is not.')],
         [('Administrateur', 'Administrator'), ('Le chapitre d\'administration : comptes, rôles, paramètres, connecteurs, journal d\'audit.', 'The administration chapter: accounts, roles, settings, connectors, audit log.')],
         [('Formateur', 'Trainer'), ('Le programme de formation par rôle, avec objectifs, exercices et questions de vérification.', 'The training programme by role, with objectives, exercises and check questions.')],
-        [('Direction du projet', 'Project management'), ('La feuille de route : ce qui est livré, ce qui reste à valider, les décisions attendues du CSP.', 'The roadmap: what has been delivered, what remains to be validated, the decisions expected from the CSP.')],
     ], [30, 70])
     out += h2('Comment le lire', 'How to read it')
     out += ul([
@@ -28,7 +27,7 @@ def intro():
         ['director@example.com', ('Directeur', 'Director'), ('Tout le métier, plus les décisions finales et la vue flotte.', 'The whole business side, plus final decisions and the fleet view.')],
         ['admin@example.com', ('Administrateur', 'Administrator'), ('Comptes, droits, paramètres, connecteurs, audit ; aucune décision métier.', 'Accounts, rights, settings, connectors, audit; no business decision.')],
     ], [28, 17, 55])
-    out += note('warn', 'Les données de démonstration sont fictives. Les connecteurs vers les sources réelles (THEMIS, e-inspection, DPEP/MREP, NENO) lisent aujourd\'hui des jeux de données enregistrés ; voir la feuille de route.', 'The demonstration data is fictitious. The connectors to the real sources (THEMIS, e-inspection, DPEP/MREP, NENO) currently read recorded datasets; see the roadmap.')
+    out += note('warn', 'Les données de démonstration sont fictives : elles servent uniquement à s\'exercer.', 'The demonstration data is fictitious: it is only there for practice.')
     return out
 
 

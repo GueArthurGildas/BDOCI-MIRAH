@@ -2,7 +2,6 @@ import json
 import pathlib
 
 from lib import *
-from content_b import roadmap_box
 
 
 def director():
@@ -22,7 +21,7 @@ def director():
     ], [22, 78])
     out += p('Le <strong>score de vigilance</strong> (0 à 100) additionne des composantes lisibles — silence de balise en cours, silences sur 12 mois, licence expirée ou proche de l\'échéance, infractions ouvertes ou sur 12 mois, vérifications répétées, écarts ZEE, messages sans réponse, navire vu mais non inspecté — chacune plafonnée. Niveaux : faible (moins de 25), modéré (25 à 49), élevé (50 et plus). Chaque composante est affichée avec ses occurrences et ses points.',
              'The <strong>vigilance score</strong> (0 to 100) adds up readable components — silence of a beacon in progress, silences over 12 months, licence expired or close to expiry, open infractions or over 12 months, repeated checks, EEZ gaps, unanswered messages, vessel seen but not inspected — each one capped. Levels: low (under 25), moderate (25 to 49), high (50 and above). Each component is shown with its occurrences and points.')
-    out += note('warn', 'Ces règles sont des <strong>hypothèses provisoires</strong> retenues en attendant la validation du CSP (voir la feuille de route, question A1). Les seuils (30 jours, 3 vérifications, 4 heures de silence) se modifient dans <em>Administration › Paramètres</em> sans intervention d\'un développeur.', 'These rules are <strong>provisional assumptions</strong> kept until the CSP validates them (see the roadmap, question A1). The thresholds (30 days, 3 checks, 4 hours of silence) can be changed in <em>Administration › Settings</em> without a developer.')
+    out += note('info', 'Les seuils (30 jours, 3 vérifications, 4 heures de silence) se modifient dans <em>Administration › Paramètres</em> sans intervention d\'un développeur.', 'The thresholds (30 days, 3 checks, 4 hours of silence) can be changed in <em>Administration › Settings</em> without a developer.')
     out += h2('Les décisions propres au Directeur', 'The Director\'s own decisions')
     out += proc(('Décider d\'une mesure conservatoire', 'Decide a precautionary measure'), ('Directeur uniquement', 'Director only'), [
         ('Ouvrez le dossier dans <strong>Contrôles › Infractions</strong> ; la section des mesures liste celles que le Chef d\'équipe a proposées (suspension de licence, retrait…).', 'Open the case in <strong>Controls › Infractions</strong>; the measures section lists those proposed by the Team lead (licence suspension, withdrawal…).'),
@@ -43,11 +42,6 @@ def director():
     out += img('reports', 'Les rapports programmés.', 'Scheduled reports.')
     out += img('archives', 'L\'archivage des opérations anciennes.', 'Archiving of old operations.')
     out += img('ai-agent', 'La supervision de l\'agent IA.', 'Supervision of the AI agent.')
-    out += h2('Feuille de route du Directeur', 'Director roadmap')
-    out += roadmap_box([
-        [('Vue flotte, indicateurs détaillés, statut à feux et score, décisions sur les mesures, rapports, exports, archives, supervision de l\'agent IA.', 'Fleet view, detailed indicators, traffic light and score, decisions on measures, reports, exports, archives, AI agent supervision.'), ('Onglets MREP et main courante dans la vue 360° ; séries d\'indicateurs par période et par zone ; effet automatique d\'une mesure sur la licence (aujourd\'hui volontairement manuel).', 'MREP and logbook tabs in the 360° view; indicator series by period and by zone; automatic effect of a measure on the licence (deliberately manual today).')],
-        [('Règles du statut à feux appliquées en hypothèse.', 'Traffic-light rules applied as an assumption.'), ('Règles à confirmer par le CSP : statut « à vérifier » et définition d\'une infraction « ouverte » (voir feuille de route).', 'Rules to be confirmed by the CSP: “to check” status and definition of an “open” infraction (see roadmap).')],
-    ])
     return out
 
 
@@ -116,11 +110,6 @@ def admin():
         ('Toute décision métier : clôturer, décider, autoriser, suspendre, révoquer, valider.', 'Any business decision: close, decide, authorize, suspend, revoke, validate.'),
         ('Saisir ou consulter les données de surveillance au quotidien (navires, licences, observations…).', 'Enter or view day-to-day surveillance data (vessels, licences, observations…).'),
     ])
-    out += h2('Feuille de route de l\'Administrateur', 'Administrator roadmap')
-    out += roadmap_box([
-        [('Utilisateurs, rôles personnalisés, groupes, droits par zone et période, paramètres, règles d\'alerte, listes, champs extensibles, connecteurs, audit, activation de l\'agent IA.', 'Users, custom roles, groups, rights by zone and period, settings, alert rules, lists, extensible fields, connectors, audit, AI agent activation.'), ('Listes et seuils regroupés par module ; qualité des données ; sauvegardes ; création d\'étiquettes libres sur les navires (décisions du CSP attendues).', 'Lists and thresholds grouped by module; data quality; backups; free labels on vessels (CSP decisions expected).')],
-        [('Un voyant par connecteur, rejets et erreurs.', 'One indicator per connector, rejections and errors.'), ('Accès réels aux sources externes, alerte rouge de connecteur, import contrôlé si la DPEP n\'expose pas tous ses champs.', 'Real access to external sources, red connector alert, controlled import if the DPEP does not expose all its fields.')],
-    ])
     return out
 
 
@@ -157,64 +146,6 @@ def processes():
         (('Chef d\'équipe', 'Team lead'), ('Prépare, démarre, suit, termine.', 'Prepares, starts, follows, completes.')),
         (('Chef d\'équipe', 'Team lead'), ('Débriefe et clôture : le bilan est calculé.', 'Debriefs and closes: the review is calculated.')),
     ])
-    return out
-
-
-def roadmap():
-    out = h1('Feuille de route', 'Roadmap')
-    out += p('Cette feuille de route dit où en est l\'application, ce que le CSP doit encore valider et ce qui suit. Elle reflète l\'état au <strong>29 octobre 2026</strong>.', 'This roadmap says where the application stands, what the CSP still has to validate and what comes next. It reflects the state on <strong>29 October 2026</strong>.')
-    out += h2('Où en est-on : toutes les phases sont livrées en version fonctionnelle', 'Where we stand: all phases delivered as a working version')
-    out += p('Les douze modules de la spécification sont livrés : tables, écrans des flux principaux, données de démonstration et plus de 650 tests automatiques. Chaque phase attend maintenant la <strong>validation du CSP</strong>, phase par phase, dans le même format.', 'The twelve modules of the specification are delivered: tables, screens for the main flows, demonstration data and more than 650 automated tests. Each phase now awaits <strong>CSP validation</strong>, phase by phase, in the same format.')
-    out += table([('Phase', 'Phase'), ('Contenu', 'Content'), ('État', 'State'), ('Reste à traiter (connu)', 'Remaining (known)')], [
-        ['0', ('Décisions et documentation', 'Decisions and documentation'), ('<span class="tag tag-g">Validée</span>', '<span class="tag tag-g">Validated</span>'), '—'],
-        ['1', ('Noyau : actions nommées, journal, droits flexibles', 'Core: named actions, journal, flexible rights'), ('<span class="tag tag-b">Livrée</span>', '<span class="tag tag-b">Delivered</span>'), ('Étiquettes ; hiérarchie de zones', 'Labels; zone hierarchy')],
-        ['2', ('Référentiels et navires', 'Registries and vessels'), ('<span class="tag tag-b">Livrée</span>', '<span class="tag tag-b">Delivered</span>'), ('Recherche dans les référentiels', 'Search in registries')],
-        ['3a', ('Main courante, opérations, surveillance de quart', 'Logbook, operations, shift watch'), ('<span class="tag tag-b">Livrée</span>', '<span class="tag tag-b">Delivered</span>'), ('Clôture automatique de la main courante ; test « suspect »', 'Automatic logbook closing; “suspect” test')],
-        ['3b', ('VMS, AIS, ERS', 'VMS, AIS, ERS'), ('<span class="tag tag-b">Livrée</span>', '<span class="tag tag-b">Delivered</span>'), ('Départ de port avec VMS en panne ; captures d\'écran et anomalies d\'identité', 'Port departure with failing VMS; screenshots and identity anomalies')],
-        ['4a', ('Licences', 'Licences'), ('<span class="tag tag-b">Livrée</span>', '<span class="tag tag-b">Delivered</span>'), ('Champs extensibles sur les licences ; circuit proposition puis décision', 'Extensible fields on licences; proposal then decision circuit')],
-        ['4b', ('Entrées et sorties de la ZEE', 'EEZ entries and exits'), ('<span class="tag tag-b">Livrée</span>', '<span class="tag tag-b">Delivered</span>'), ('Scraping, accusés d\'e-mail, sorties non déclarées', 'Scraping, e-mail receipts, undeclared exits')],
-        ['5', ('Communications et alertes', 'Communications and alerts'), ('<span class="tag tag-b">Livrée</span>', '<span class="tag tag-b">Delivered</span>'), ('Pilote WhatsApp réel', 'Real WhatsApp pilot')],
-        ['6', ('Infractions, missions, signalements', 'Infractions, missions, witness reports'), ('<span class="tag tag-b">Livrée</span>', '<span class="tag tag-b">Delivered</span>'), ('Rejet d\'une mesure proposée ; effet automatique sur la licence', 'Rejection of a proposed measure; automatic effect on the licence')],
-        ['7', ('Connecteurs et miroirs en lecture seule', 'Connectors and read-only mirrors'), ('<span class="tag tag-b">Livrée</span>', '<span class="tag tag-b">Delivered</span>'), ('Accès réels (API, scraping, DPEP) ; alerte connecteur rouge', 'Real access (API, scraping, DPEP); red connector alert')],
-        ['8', ('Vue 360° et indicateurs', '360° view and indicators'), ('<span class="tag tag-b">Livrée</span>', '<span class="tag tag-b">Delivered</span>'), ('Onglets MREP et main courante ; séries par période et zone', 'MREP and logbook tabs; series by period and zone')],
-        ['9', ('Pilotage complet et agent IA', 'Full steering and AI agent'), ('<span class="tag tag-b">Livrée</span>', '<span class="tag tag-b">Delivered</span>'), ('Listes et seuils par module ; qualité des données ; sauvegardes', 'Lists and thresholds per module; data quality; backups')],
-    ], [7, 30, 15, 48])
-    out += note('info', '« Livrée » signifie fonctionnelle et testée, <strong>pas encore validée par le CSP</strong>. Pour avancer sans règle inventée, chaque question restée ouverte a reçu une réponse provisoire (74 hypothèses documentées), isolée pour qu\'une réponse du CSP se traduise par une modification localisée.', '“Delivered” means working and tested, <strong>not yet validated by the CSP</strong>. To move forward without inventing rules, each open question has received a provisional answer (74 documented assumptions), isolated so that an answer from the CSP translates into a localized change.')
-    out += h2('Ce qui a été ajouté ces derniers jours', 'What was added in recent days')
-    out += ul([
-        ('Nouvelle interface calquée sur la référence GESICA : menu en pastilles avec compteurs, tableaux encadrés avec filtres par colonne, onglets orange et gris.', 'New interface modelled on the GESICA reference: pill menu with counters, framed tables with column filters, orange and grey tabs.'),
-        ('Visite guidée de la page, lancée à la demande depuis le bouton Guide utilisateur, sur une trentaine d\'écrans.', 'Guided tour of the page, started on demand from the User guide button, on about thirty screens.'),
-        ('Fenêtres : confirmation avant les actions importantes, aperçu rapide d\'un navire, message de réussite à coche verte.', 'Windows: confirmation before important actions, vessel quick view, green-check success message.'),
-        ('Barre d\'outils des listes : nombre de lignes, recherche, exports CSV et PDF.', 'List toolbar: number of rows, search, CSV and PDF exports.'),
-    ])
-    out += h2('Les décisions attendues du CSP', 'The decisions expected from the CSP')
-    out += h3('Questions déjà éclairées (réponses reçues le 29 octobre 2026, à confirmer)', 'Questions already clarified (answers received on 29 October 2026, to be confirmed)')
-    out += table([('Sujet', 'Topic'), ('Réponse reçue', 'Answer received'), ('Ce qu\'il reste à confirmer', 'What remains to be confirmed')], [
-        [('Navire « à vérifier »', '“To check” vessel'), ('Un navire passe à « à vérifier » si un élément est jugé suspect par les équipes ou si sa balise n\'émet plus ; le nombre de vérifications avant « suspect » est un paramètre (3).', 'A vessel becomes “to check” if an element is judged suspect by the teams or its beacon stops emitting; the number of checks before “suspect” is a parameter (3).'), ('Les règles des autres feux (conforme, à surveiller, suspect, en infraction).', 'The rules of the other lights (compliant, to watch, suspect, infringing).')],
-        [('Infractions « ouvertes »', '“Open” infractions'), ('Toutes les infractions comptent, quel que soit leur type ; les types se complètent en administration ; une infraction est ouverte tant qu\'elle n\'est pas clôturée.', 'All infractions count, whatever their type; types are completed in administration; an infraction is open until it is closed.'), ('Si « clôturée » couvre toute décision finale (sanction, classement, solde) ou seulement l\'état « clos ».', 'Whether “closed” covers any final decision (sanction, dismissal, settlement) or only the “closed” state.')],
-        [('Plusieurs licences', 'Several licences'), ('Une « licence de référence » choisie par un agent ou le Directeur habilité ; à défaut, la licence valide la plus récente ; chaque changement est tracé.', 'A “reference licence” chosen by an authorized agent or the Director; otherwise the most recent valid licence; every change is traced.'), ('Quelle permission et quels rôles peuvent choisir la licence de référence.', 'Which permission and roles can choose the reference licence.')],
-        [('Étiquettes', 'Labels'), ('Une table dédiée : une étiquette sur plusieurs navires, plusieurs étiquettes par navire.', 'A dedicated table: one label on several vessels, several labels per vessel.'), ('Qui peut créer une étiquette, et qui peut la poser.', 'Who can create a label, and who can apply it.')],
-    ], [18, 44, 38])
-    out += h3('Questions qui bloquent des phases', 'Questions that block phases')
-    out += table([('Réf.', 'Ref.'), ('Question', 'Question'), ('Bloque', 'Blocks')], [
-        ['E1', ('Nombre d\'équipes, jours travaillés, heure de clôture de la main courante', 'Number of teams, working days, logbook closing time'), ('Phase 3a', 'Phase 3a')],
-        ['V18', ('Les positions sont-elles disponibles par API pour la « photo » d\'un créneau ?', 'Are positions available through an API for a slot “photo”?'), ('Phase 3b', 'Phase 3b')],
-        ['V20', ('Quelles localités compter hors Abidjan, San Pedro et Sassandra ?', 'Which localities to count besides Abidjan, San Pedro and Sassandra?'), ('Phase 3b', 'Phase 3b')],
-        ['V10, V11', ('Fournisseur d\'e-mail ; consentement et modèles WhatsApp', 'E-mail provider; WhatsApp consent and templates'), ('Phase 5', 'Phase 5')],
-        [('—', '—'), ('Nomenclature officielle des infractions et des suites données', 'Official nomenclature of infractions and follow-ups'), ('Phase 6', 'Phase 6')],
-        ['V21', ('Qui autorise les missions, par type de mission', 'Who authorizes missions, by mission type'), ('Phase 6', 'Phase 6')],
-        ['V9, V12, V17', ('Champs de l\'API NENO ; accord écrit pour THEMIS ; URL directe par navire dans THEMIS', 'NENO API fields; written agreement for THEMIS; direct URL per vessel in THEMIS'), ('Phase 7', 'Phase 7')],
-        [('—', '—'), ('La DPEP expose-t-elle tous les champs par API ? Sinon import contrôlé.', 'Does the DPEP expose all fields through an API? Otherwise controlled import.'), ('Phase 7', 'Phase 7')],
-        ['E3', ('Liste complète des besoins fonctionnels (dont BF06)', 'Complete list of functional needs (including BF06)'), ('Périmètre', 'Scope')],
-    ], [14, 70, 16])
-    out += h2('La suite proposée', 'Proposed next steps')
-    out += table([('Étape', 'Step'), ('Ce qui se passe', 'What happens'), ('Ce dont nous avons besoin du CSP', 'What we need from the CSP')], [
-        ['1', ('Validation phase par phase : démonstration de chaque module avec les comptes de démonstration, puis validation écrite.', 'Phase-by-phase validation: demonstration of each module with the demonstration accounts, then written validation.'), ('Disponibilité d\'un validateur métier ; confirmation que plusieurs phases indépendantes peuvent être validées dans une même période.', 'Availability of a business validator; confirmation that several independent phases can be validated in the same period.')],
-        ['2', ('Intégration des réponses : chaque réponse se traduit par une modification localisée (réglage, règle ou liste).', 'Integrating answers: each answer translates into a localized change (setting, rule or list).'), ('Réponses aux questions ci-dessus, en commençant par le statut à feux.', 'Answers to the questions above, starting with the traffic-light status.')],
-        ['3', ('Connexion des sources réelles : THEMIS, e-inspection, DPEP/MREP, NENO ; fournisseur d\'e-mail ; pilote WhatsApp.', 'Connecting real sources: THEMIS, e-inspection, DPEP/MREP, NENO; e-mail provider; WhatsApp pilot.'), ('Accès, accords écrits, comptes techniques.', 'Access, written agreements, technical accounts.')],
-        ['4', ('Formation des équipes avec le programme du chapitre suivant, puis mise en service progressive.', 'Training of the teams with the programme of the next chapter, then progressive go-live.'), ('Liste des personnes à former et de leur rôle ; poste partagé ou salle de formation.', 'List of people to train and their role; shared workstation or training room.')],
-        ['5', ('Sécurisation avant mise en production : changement des mots de passe de démonstration, sauvegardes, supervision.', 'Hardening before production: changing demonstration passwords, backups, monitoring.'), ('Choix de l\'hébergement et de la politique de sauvegarde.', 'Choice of hosting and backup policy.')],
-    ], [8, 50, 42])
     return out
 
 
@@ -302,7 +233,7 @@ def faq():
         [('Une page affiche « Accès refusé ».', 'A page shows “Access denied”.'), ('Votre rôle n\'a pas le droit correspondant ; demandez-le au Chef d\'équipe ou à l\'Administrateur.', 'Your role does not have the corresponding right; ask the Team lead or the Administrator.')],
         [('Un bouton que je vois dans le manuel n\'apparaît pas.', 'A button I see in the manual does not appear.'), ('Il est réservé à un autre rôle, ou l\'élément n\'est pas dans l\'état attendu (par exemple une mission déjà démarrée).', 'It is reserved for another role, or the item is not in the expected state (for example a mission already started).')],
         [('Le bandeau rouge « Santé du système » est affiché.', 'The red “System health” banner is displayed.'), ('Une source de données demande attention : cliquez « Voir les connecteurs » ; l\'Administrateur traite les rejets ou lance une synchronisation.', 'A data source needs attention: click “See the connectors”; the Administrator handles rejections or runs a synchronisation.')],
-        [('Les positions semblent anciennes.', 'The positions look old.'), ('Vérifier l\'état des balises et le voyant du connecteur VMS ; dans la version actuelle les positions viennent d\'un jeu enregistré.', 'Check the beacon status and the VMS connector indicator; in the current version the positions come from a recorded dataset.')],
+        [('Les positions semblent anciennes.', 'The positions look old.'), ('Vérifier l\'état des balises et le voyant du connecteur VMS ; l\'Administrateur peut relancer la synchronisation.', 'Check the beacon status and the VMS connector indicator; the Administrator can run the synchronisation again.')],
         [('Une liste est vide alors qu\'elle ne devrait pas l\'être.', 'A list is empty when it should not be.'), ('Un filtre est actif : cliquez « Réinitialiser » dans la barre d\'outils.', 'A filter is active: click “Reset” in the toolbar.')],
         [('Je me suis trompé après une clôture.', 'I made a mistake after closing.'), ('Main courante : ligne rectificative. Autres dossiers : demander au Chef d\'équipe ou au Directeur ; toute correction reste tracée.', 'Logbook: rectifying line. Other files: ask the Team lead or the Director; every correction remains traced.')],
         [('Je ne reçois plus de notifications.', 'I no longer receive notifications.'), ('Ouvrez Notifications ; les alertes envoyées dépendent de votre rôle et des paramètres fixés par l\'Administrateur.', 'Open Notifications; the alerts sent depend on your role and the settings set by the Administrator.')],
