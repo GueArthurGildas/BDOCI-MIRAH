@@ -22,14 +22,14 @@ Le thème est posé **par-dessus Adminty** : on ne modifie jamais `resources/scs
 ## Règles de design
 
 - **Couleurs unies, aucun dégradé.** Pour une nouvelle couleur, ajouter une variable dans `_tokens.scss`, jamais un code hex ailleurs.
-- **Deux rayons seulement** : `--gs-radius` (6px) pour les surfaces (cartes, sidebar, bandeau, menus déroulants) et `--gs-radius-sm` (4px) pour les contrôles (boutons, champs, étiquettes, onglets, lignes de menu).
-- **Cercle (`50%`) uniquement** pour les avatars, pastilles d'icône et logos ronds. Pas de forme « pilule ».
+- **Rayons** (`_tokens.scss`) : `--gs-radius` (12px) pour les surfaces (cartes, bandeau, menus déroulants), `--gs-radius-sm` (8px) pour les contrôles (boutons, champs, étiquettes, onglets) et `--gs-radius-pill` pour les éléments en gélule (lignes du menu latéral). Aucune valeur de rayon en dur ailleurs.
+- **Cercle (`50%`)** pour les avatars, pastilles d'icône, pastilles de compteur et logos ronds.
 - Un enfant d'une carte n'a pas son propre rayon : la carte est en `overflow: hidden` et découpe ses coins (par exemple l'en-tête de tableau).
 - Orange = marque et actions, noir = structure (traits, bandeaux, en-têtes de tableau), vert/rouge/bleu = états.
 
 ## Navigation
 
-`App\Support\Navigation\Navigation` fournit les groupes. Chaque groupe est un onglet de la barre orange ; les éléments du groupe actif sont affichés dans la sidebar, qui reste collée sous la barre orange pendant le défilement de la page et défile seule (liste des liens) quand elle dépasse la hauteur de l'écran ; sous 992 px elle devient un menu horizontal. L'élément actif est celui dont la route (ou `<route sans .index>.*`) correspond à la requête. L'icône du bandeau de page est celle de l'élément actif, sauf si `icon` est passé à `<x-ui.page-header>`.
+`App\Support\Navigation\Navigation` fournit les groupes. Chaque groupe est un onglet de la barre orange ; les éléments du groupe actif sont affichés dans la sidebar (une ligne en gélule par élément, l'actif en orange plein ; un compteur optionnel s'ajoute avec l'argument `badge:` de `Navigation::add`, une fonction qui renvoie le nombre d'éléments en attente), qui reste collée sous la barre orange pendant le défilement de la page et défile seule (liste des liens) quand elle dépasse la hauteur de l'écran ; sous 992 px elle devient un menu horizontal. L'élément actif est celui dont la route (ou `<route sans .index>.*`) correspond à la requête. L'icône du bandeau de page est celle de l'élément actif, sauf si `icon` est passé à `<x-ui.page-header>`.
 
 Ajouter une entrée de menu se fait dans la classe `Navigation` (via le fournisseur du module), jamais dans les vues. Les textes passent par `lang/{en,fr}/ui.php` ou `modules/*/lang`.
 

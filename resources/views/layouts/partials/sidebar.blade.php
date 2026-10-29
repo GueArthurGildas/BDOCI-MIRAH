@@ -10,6 +10,9 @@
                 <a href="{{ $item->url() }}">
                     <span class="gs-icon"><i class="feather {{ $item->icon }}"></i></span>
                     <span class="gs-label">{{ __($item->label) }}</span>
+                    @if ($count = $item->badgeCount())
+                        <span class="gs-badge">{{ $count }}</span>
+                    @endif
                 </a>
             </li>
         @endforeach

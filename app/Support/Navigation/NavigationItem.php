@@ -2,6 +2,7 @@
 
 namespace App\Support\Navigation;
 
+use Closure;
 use Illuminate\Contracts\Auth\Access\Authorizable;
 
 final readonly class NavigationItem
@@ -13,7 +14,15 @@ final readonly class NavigationItem
         public NavigationGroup $group,
         public int $order = 100,
         public ?string $permission = null,
+        public ?Closure $badge = null,
     ) {}
+
+    public function badgeCount(): ?int
+    {
+        $count = $this->badge ? ($this->badge)() : null;
+
+        return $count ? $count : null;
+    }
 
     public function url(): string
     {

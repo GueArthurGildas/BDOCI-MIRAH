@@ -2,6 +2,7 @@
 
 namespace App\Support\Navigation;
 
+use Closure;
 use Illuminate\Contracts\Auth\Access\Authorizable;
 use Illuminate\Support\Collection;
 
@@ -17,8 +18,9 @@ final class Navigation
         NavigationGroup $group,
         int $order = 100,
         ?string $permission = null,
+        ?Closure $badge = null,
     ): self {
-        $this->items[] = new NavigationItem($label, $route, $icon, $group, $order, $permission);
+        $this->items[] = new NavigationItem($label, $route, $icon, $group, $order, $permission, $badge);
 
         return $this;
     }

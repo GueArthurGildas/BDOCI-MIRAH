@@ -20,21 +20,19 @@
     width: 272px;
     min-height: calc(100vh - 110px);
     max-height: calc(100vh - 92px);
-    padding: 16px;
-    background: var(--gs-surface-alt);
-    border: 1px solid var(--gs-line);
-    border-radius: var(--gs-radius);
-    box-shadow: var(--gs-shadow);
+    padding: 0 4px 4px 0;
 }
 
 .gs-user {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 8px 12px;
-    background: var(--gs-sunken);
+    padding: 8px 14px;
+    background: var(--gs-surface);
+    border: 1px solid var(--gs-line);
     border-left: 4px solid var(--gs-orange);
-    border-radius: var(--gs-radius-sm);
+    border-radius: var(--gs-radius-pill);
+    box-shadow: var(--gs-shadow);
 
     img {
         height: 40px;
@@ -57,10 +55,10 @@
     display: flex;
     flex: 1 1 auto;
     flex-direction: column;
-    gap: 2px;
+    gap: 8px;
     min-height: 0;
     margin: 0;
-    padding: 0;
+    padding: 4px 4px 4px 0;
     overflow-y: auto;
     overscroll-behavior: contain;
     scrollbar-color: var(--gs-line) transparent;
@@ -72,12 +70,15 @@
         display: flex;
         align-items: center;
         gap: 12px;
-        padding: 10px 12px;
-        border-radius: var(--gs-radius-sm);
+        padding: 10px 14px;
+        background: var(--gs-surface);
+        border: 1px solid var(--gs-line);
+        border-radius: var(--gs-radius-pill);
+        box-shadow: var(--gs-shadow);
         color: var(--gs-ink-soft);
         font: 500 .9rem var(--gs-font-title);
         text-decoration: none;
-        transition: background .15s, color .15s;
+        transition: background .15s, color .15s, border-color .15s;
     }
 
     .gs-icon {
@@ -94,17 +95,18 @@
 
     .gs-badge {
         min-width: 24px;
-        padding: 2px 8px;
-        background: var(--gs-sunken);
-        border-radius: var(--gs-radius-sm);
-        color: var(--gs-ink);
-        font: 600 .72rem var(--gs-font-title);
+        height: 24px;
+        padding: 0 7px;
+        background: var(--gs-orange);
+        border-radius: 50%;
+        color: #fff;
+        font: 600 .72rem/24px var(--gs-font-title);
         text-align: center;
     }
 
-    a:hover,
-    .active a {
+    a:hover {
         background: var(--gs-orange-tint);
+        border-color: var(--gs-orange-light);
         color: var(--gs-orange-dark);
 
         .gs-icon {
@@ -113,21 +115,18 @@
     }
 
     .active a {
+        background: var(--gs-orange);
+        border-color: var(--gs-orange-dark);
+        color: #fff;
         font-weight: 600;
 
-        &::before {
-            content: "";
-            position: absolute;
-            top: 8px;
-            bottom: 8px;
-            left: 0;
-            width: 3px;
-            background: var(--gs-green);
+        .gs-icon {
+            color: #fff;
         }
 
         .gs-badge {
-            background: var(--gs-orange);
-            color: #fff;
+            background: var(--gs-surface);
+            color: var(--gs-orange-dark);
         }
     }
 }
@@ -137,7 +136,7 @@
     padding: 14px 16px;
     background: var(--gs-orange-tint);
     border-left: 4px solid var(--gs-orange);
-    border-radius: var(--gs-radius-sm);
+    border-radius: var(--gs-radius);
 
     strong {
         display: block;
@@ -165,7 +164,7 @@
         width: 100%;
         min-height: 0;
         max-height: none;
-        padding: 12px;
+        padding: 0;
     }
 
     .gs-menu {
