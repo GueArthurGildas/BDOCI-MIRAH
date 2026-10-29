@@ -13,6 +13,7 @@ Statut de toutes les entrées : provisoire, à confirmer par Gildas.
 | Où | `App\Support\Vessels\StatusLight` (règles), `StatusLightFacts` (faits), `config/vigilance.php` (`status_light.*` : 30 jours d'échéance, 30 jours d'écart ZEE, 3 vérifications), `App\Queries\OpenInfractionCases` (définition d'un dossier ouvert) |
 | Pour changer | modifier une valeur de `config/vigilance.php`, ou une règle dans `StatusLight::assess` ; relancer `php artisan vessels:rebuild-state` |
 | Tests | `Tests\Feature\Vigilance\StatusLightTest`, `Modules\Vessels\Tests\Feature\Vessel360Test::test_the_header_shows_the_status_light_and_its_reasons` |
+| Réponse reçue (non validée) | 2026-10-29, collègue : « à vérifier » si un élément est jugé suspect par les équipes ou si la balise n'émet plus ; nombre de vérifications avant « suspect » paramétrable (3) ; toutes les infractions comptent, types administrables ; infraction ouverte tant que non clôturée. À appliquer après confirmation de Gildas (A1, A2, A2b) |
 
 ## H-8-2
 

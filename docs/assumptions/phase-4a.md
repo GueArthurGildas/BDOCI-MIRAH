@@ -13,6 +13,7 @@ Aucune de ces hypothèses n'est une règle validée. Pour retrouver les tests qu
 | Où | `App\Support\Licenses\CurrentLicense` (constantes et méthode `select`), relation `Vessel::currentLicense`, lue par `VesselStateBuilder` et `AuthorizedList` |
 | Pour changer | Modifier `CurrentLicense::ORDER_COLUMN`, `ORDER_AGGREGATE` et `select` |
 | Tests | `AuthorizedListTest::test_a_vessel_with_several_licenses_appears_once_with_the_latest_end_date` |
+| Réponse reçue (non validée) | 2026-10-29, collègue : licence de référence choisie par un agent ou le Directeur autorisé à gérer les licences, à défaut la licence valide la plus récente, chaque changement tracé dans le journal d'audit. À appliquer après confirmation de Gildas (A3, A3b) |
 
 ## H-4a-2 : Suspension : fin prévue et levée (3 mois maximum hors force majeure)
 
