@@ -13,6 +13,7 @@ use App\Queries\OpenInfractionCases;
 use App\Queries\VesselMissions;
 use App\Support\Actions\ActionRunner;
 use App\Support\Authorization\Permission;
+use App\Support\Tables\PerPage;
 use App\Support\Vessels\StatusLight;
 use App\Support\Vessels\VesselIndicators;
 use App\Support\Vessels\VigilanceScore;
@@ -30,8 +31,6 @@ class VesselController extends Controller
 {
     private const PER_PAGE = 20;
 
-    private const PER_PAGE_OPTIONS = [10, 20, 50, 100];
-
     private const TRACK_LENGTH = 12;
 
     public function index(Request $request): View
@@ -43,9 +42,7 @@ class VesselController extends Controller
             'flag' => ['nullable', 'string', 'size:2'],
             'name' => ['nullable', 'string', 'max:100'],
             'registration' => ['nullable', 'string', 'max:100'],
-            'per_page' => ['nullable', 'integer', Rule::in(self::PER_PAGE_OPTIONS)],
         ]);
-        $perPage = $filters['per_page'] ?? self::PER_PAGE;
 
         $vessels = Vessel::query()
             ->with(['currentLicense', 'latestPosition', 'flagCountry'])
@@ -56,14 +53,12 @@ class VesselController extends Controller
             ->when($filters['status'] ?? null, fn ($query, $status) => $query->where('status', $status))
             ->when($filters['flag'] ?? null, fn ($query, $flag) => $query->whereHas('flagCountry', fn ($countries) => $countries->where('iso2_code', $flag)))
             ->orderBy('name')
-            ->paginate($perPage)
+            ->paginate(PerPage::from($request, self::PER_PAGE))
             ->withQueryString();
 
         return view('vessels::index', [
             'vessels' => $vessels,
             'filters' => $filters,
-            'perPage' => $perPage,
-            'perPageOptions' => self::PER_PAGE_OPTIONS,
         ]);
     }
 

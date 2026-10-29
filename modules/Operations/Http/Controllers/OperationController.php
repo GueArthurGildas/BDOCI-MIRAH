@@ -9,6 +9,7 @@ use App\Models\OperationCategory;
 use App\Models\Vessel;
 use App\Support\Actions\ActionRunner;
 use App\Support\Operations\WeatherScales;
+use App\Support\Tables\PerPage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -47,7 +48,7 @@ class OperationController extends Controller
             ->when($filters['status'] ?? null, fn (Builder $query, string $status) => $query->where('status', $status))
             ->when($filters['year'] ?? null, fn (Builder $query, string $year) => $query->where('year', $year))
             ->latest('started_at')
-            ->paginate(self::PER_PAGE)
+            ->paginate(PerPage::from($request, self::PER_PAGE))
             ->withQueryString();
 
         return view('operations::index', [

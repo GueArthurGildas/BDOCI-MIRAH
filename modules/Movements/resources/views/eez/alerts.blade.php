@@ -4,11 +4,10 @@
     <div class="page-body">
         @include('movements::eez._tabs')
 
-        <x-ui.filters :action="route('movements.eez.alerts')">
-            <x-ui.filter-select name="status" :label="__('movements::eez.fields.status')" :options="App\Enums\EntryExitAlertStatus::options()" :value="$filters['status'] ?? null" />
-        </x-ui.filters>
-
         <x-ui.card :title="__('movements::eez.alerts_title')" :subtitle="trans_choice('ui.results_count', $alerts->total())" flush>
+            <x-ui.table-toolbar :action="route('movements.eez.alerts')" :paginator="$alerts">
+            </x-ui.table-toolbar>
+
             <x-ui.table :paginator="$alerts">
                 <x-slot:head>
                     <th>{{ __('movements::eez.fields.alerted_at') }}</th>
@@ -17,6 +16,14 @@
                     <th>{{ __('movements::eez.fields.status') }}</th>
                     <th></th>
                 </x-slot:head>
+
+                <x-slot:filters>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <x-ui.column-filter name="status" form="list-filters" :options="App\Enums\EntryExitAlertStatus::options()" :value="$filters['status'] ?? null" />
+                    <th></th>
+                </x-slot:filters>
 
                 @forelse ($alerts as $alert)
                     <tr>

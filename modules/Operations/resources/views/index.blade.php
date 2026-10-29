@@ -2,13 +2,6 @@
     <x-ui.page-header :title="__('operations::operations.title')" :subtitle="__('operations::operations.subtitle')" />
 
     <div class="page-body">
-        <x-ui.filters :action="route('operations.index')">
-            <x-ui.filter-input name="search" type="search" :label="__('ui.search')" :value="$filters['search'] ?? null" :placeholder="__('operations::operations.search_placeholder')" class="col-md-3" />
-            <x-ui.filter-select name="category" :label="__('operations::operations.fields.category')" :options="$categories" :value="$filters['category'] ?? null" />
-            <x-ui.filter-select name="status" :label="__('operations::operations.fields.status')" :options="App\Enums\OperationStatus::options()" :value="$filters['status'] ?? null" />
-            <x-ui.filter-input name="year" type="number" :label="__('operations::operations.fields.year')" :value="$filters['year'] ?? null" />
-        </x-ui.filters>
-
         <x-ui.card :title="__('operations::operations.list_title')" :subtitle="trans_choice('ui.results_count', $operations->total())" flush>
             @can(App\Support\Authorization\Permission::OperationsCreate->value)
                 <x-slot:actions>
@@ -17,6 +10,11 @@
                     </a>
                 </x-slot:actions>
             @endcan
+
+            <x-ui.table-toolbar :action="route('operations.index')" :paginator="$operations">
+                <x-ui.toolbar-input name="search" type="search" :label="__('ui.search')" :value="$filters['search'] ?? null" :placeholder="__('operations::operations.search_placeholder')" />
+                <x-ui.toolbar-input name="year" type="number" :label="__('operations::operations.fields.year')" :value="$filters['year'] ?? null" />
+            </x-ui.table-toolbar>
 
             <x-ui.table :paginator="$operations">
                 <x-slot:head>
@@ -28,6 +26,16 @@
                     <th>{{ __('operations::operations.fields.status') }}</th>
                     <th></th>
                 </x-slot:head>
+
+                <x-slot:filters>
+                    <th></th>
+                    <th></th>
+                    <x-ui.column-filter name="category" form="list-filters" :options="$categories" :value="$filters['category'] ?? null" />
+                    <th></th>
+                    <th></th>
+                    <x-ui.column-filter name="status" form="list-filters" :options="App\Enums\OperationStatus::options()" :value="$filters['status'] ?? null" />
+                    <th></th>
+                </x-slot:filters>
 
                 @forelse ($operations as $operation)
                     <tr>

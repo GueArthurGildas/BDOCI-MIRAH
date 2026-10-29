@@ -49,7 +49,7 @@ class VesselPagesTest extends TestCase
         $page = $this->get('/vessels?per_page=10')->assertOk()->viewData('vessels');
         $this->assertSame(10, $page->perPage());
         $this->assertCount(10, $page->items());
-        $this->get('/vessels?per_page=7')->assertSessionHasErrors('per_page');
+        $this->assertSame(20, $this->get('/vessels?per_page=7')->assertOk()->viewData('vessels')->perPage());
     }
 
     #[Covers('RG08', 'UC25', partial: true)]

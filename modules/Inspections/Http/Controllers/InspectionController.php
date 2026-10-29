@@ -8,6 +8,7 @@ use App\Enums\InspectionResult;
 use App\Http\Controllers\Controller;
 use App\Models\ExternalInspection;
 use App\Models\ExternalLink;
+use App\Support\Tables\PerPage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -39,7 +40,7 @@ class InspectionController extends Controller
                 ->orWhereLike('external_id', "%{$search}%")
                 ->orWhereHas('vessel', fn (Builder $query) => $query->search($search))))
             ->latest('started_at')
-            ->paginate(self::PER_PAGE)
+            ->paginate(PerPage::from($request, self::PER_PAGE))
             ->withQueryString();
 
         return view('inspections::index', compact('inspections', 'filters'));

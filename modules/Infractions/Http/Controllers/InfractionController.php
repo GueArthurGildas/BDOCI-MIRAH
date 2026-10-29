@@ -14,6 +14,7 @@ use App\Models\WitnessReport;
 use App\Support\Actions\ActionRunner;
 use App\Support\Documents\DocumentStore;
 use App\Support\Infractions\RepeatOffense;
+use App\Support\Tables\PerPage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -48,7 +49,7 @@ class InfractionController extends Controller
                 ->whereLike('reference', "%{$search}%")
                 ->orWhereHas('vessel', fn (Builder $query) => $query->search($search))))
             ->latest('opened_at')
-            ->paginate(self::PER_PAGE)
+            ->paginate(PerPage::from($request, self::PER_PAGE))
             ->withQueryString();
 
         return view('infractions::index', [

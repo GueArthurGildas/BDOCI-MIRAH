@@ -2,14 +2,14 @@
     <x-ui.page-header :title="__('administration::administration.audit.title')" :subtitle="__('administration::administration.audit.subtitle')" />
 
     <div class="page-body">
-        <x-ui.filters :action="route('administration.audit')">
-            <x-ui.filter-select name="user" :label="__('administration::administration.audit.user')" :options="$users" :value="$filters['user'] ?? null" />
-            <x-ui.filter-select name="event" :label="__('administration::administration.audit.event')" :options="$events" :value="$filters['event'] ?? null" />
-            <x-ui.filter-input name="from" type="date" :label="__('administration::administration.audit.from')" :value="$filters['from'] ?? null" />
-            <x-ui.filter-input name="to" type="date" :label="__('administration::administration.audit.to')" :value="$filters['to'] ?? null" />
-        </x-ui.filters>
-
         <x-ui.card :title="__('administration::administration.audit.list_title')" :subtitle="trans_choice('ui.results_count', $activities->total())" flush>
+            <x-ui.table-toolbar :action="route('administration.audit')" :paginator="$activities">
+                <x-ui.toolbar-select name="user" :label="__('administration::administration.audit.user')" :options="$users" :value="$filters['user'] ?? null" />
+                <x-ui.toolbar-select name="event" :label="__('administration::administration.audit.event')" :options="$events" :value="$filters['event'] ?? null" />
+                <x-ui.toolbar-input name="from" type="date" :label="__('administration::administration.audit.from')" :value="$filters['from'] ?? null" />
+                <x-ui.toolbar-input name="to" type="date" :label="__('administration::administration.audit.to')" :value="$filters['to'] ?? null" />
+            </x-ui.table-toolbar>
+
             <x-ui.table :paginator="$activities">
                 <x-slot:head>
                     <th>{{ __('administration::administration.audit.date') }}</th>
@@ -18,6 +18,14 @@
                     <th>{{ __('administration::administration.audit.subject') }}</th>
                     <th>{{ __('administration::administration.audit.details') }}</th>
                 </x-slot:head>
+
+                <x-slot:filters>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </x-slot:filters>
                 @forelse ($activities as $activity)
                     <tr>
                         <td class="text-nowrap">{{ $activity->created_at->isoFormat('L LTS') }}</td>

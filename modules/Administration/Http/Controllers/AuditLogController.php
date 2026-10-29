@@ -4,6 +4,7 @@ namespace Modules\Administration\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Support\Tables\PerPage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -29,7 +30,7 @@ class AuditLogController extends Controller
             ->when($filters['from'] ?? null, fn (Builder $query, string $from) => $query->whereDate('created_at', '>=', $from))
             ->when($filters['to'] ?? null, fn (Builder $query, string $to) => $query->whereDate('created_at', '<=', $to))
             ->latest('id')
-            ->paginate(self::PER_PAGE)
+            ->paginate(PerPage::from($request, self::PER_PAGE))
             ->withQueryString();
 
         return view('administration::audit', [

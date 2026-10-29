@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PermissionGroup;
 use App\Models\Team;
 use App\Models\User;
+use App\Support\Tables\PerPage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -29,7 +30,7 @@ class UserController extends Controller
                 ->whereLike('name', "%{$search}%")
                 ->orWhereLike('email', "%{$search}%")))
             ->orderBy('name')
-            ->paginate(self::PER_PAGE)
+            ->paginate(PerPage::from($request, self::PER_PAGE))
             ->withQueryString();
 
         return view('administration::users.index', compact('users', 'search'));

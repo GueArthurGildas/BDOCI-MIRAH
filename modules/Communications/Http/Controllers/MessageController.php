@@ -9,6 +9,7 @@ use App\Models\MessageTemplate;
 use App\Models\SentMessage;
 use App\Models\Vessel;
 use App\Support\Actions\ActionRunner;
+use App\Support\Tables\PerPage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -39,7 +40,7 @@ class MessageController extends Controller
                 ->whereLike('recipient', "%{$search}%")
                 ->orWhereHas('vessel', fn (Builder $query) => $query->search($search))))
             ->latest('id')
-            ->paginate(self::PER_PAGE)
+            ->paginate(PerPage::from($request, self::PER_PAGE))
             ->withQueryString();
 
         return view('communications::messages.index', [

@@ -12,6 +12,7 @@ use App\Models\Operation;
 use App\Models\Witness;
 use App\Models\WitnessReport;
 use App\Support\Actions\ActionRunner;
+use App\Support\Tables\PerPage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -44,7 +45,7 @@ class WitnessReportController extends Controller
             ->when($filters['status'] ?? null, fn (Builder $query, string $status) => $query->where('status', $status))
             ->when($filters['channel'] ?? null, fn (Builder $query, string $channel) => $query->where('channel', $channel))
             ->latest('received_at')
-            ->paginate(self::PER_PAGE)
+            ->paginate(PerPage::from($request, self::PER_PAGE))
             ->withQueryString();
 
         return view('witnesses::index', compact('reports', 'filters'));

@@ -14,12 +14,6 @@
             @endforeach
         </div>
 
-        <x-ui.filters :action="route('communications.messages.index')">
-            <x-ui.filter-input name="search" type="search" :label="__('ui.search')" :value="$filters['search'] ?? null" :placeholder="__('communications::messages.search_placeholder')" class="col-md-5" />
-            <x-ui.filter-select name="status" :label="__('communications::fields.status')" :options="App\Enums\MessageStatus::options()" :value="$filters['status'] ?? null" />
-            <x-ui.filter-select name="channel" :label="__('communications::fields.channel')" :options="App\Enums\CommunicationChannelCode::options()" :value="$filters['channel'] ?? null" />
-        </x-ui.filters>
-
         <x-ui.card :title="__('communications::messages.list_title')" :subtitle="trans_choice('ui.results_count', $messages->total())" flush>
             @can(App\Support\Authorization\Permission::CommunicationsSend->value)
                 <x-slot:actions>
@@ -28,6 +22,10 @@
                     </a>
                 </x-slot:actions>
             @endcan
+
+            <x-ui.table-toolbar :action="route('communications.messages.index')" :paginator="$messages">
+                <x-ui.toolbar-input name="search" type="search" :label="__('ui.search')" :value="$filters['search'] ?? null" :placeholder="__('communications::messages.search_placeholder')" />
+            </x-ui.table-toolbar>
 
             <x-ui.table :paginator="$messages">
                 <x-slot:head>
@@ -39,6 +37,16 @@
                     <th>{{ __('communications::fields.status') }}</th>
                     <th></th>
                 </x-slot:head>
+
+                <x-slot:filters>
+                    <th></th>
+                    <th></th>
+                    <x-ui.column-filter name="channel" form="list-filters" :options="App\Enums\CommunicationChannelCode::options()" :value="$filters['channel'] ?? null" />
+                    <th></th>
+                    <th></th>
+                    <x-ui.column-filter name="status" form="list-filters" :options="App\Enums\MessageStatus::options()" :value="$filters['status'] ?? null" />
+                    <th></th>
+                </x-slot:filters>
 
                 @forelse ($messages as $message)
                     <tr>

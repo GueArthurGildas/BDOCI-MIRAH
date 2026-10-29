@@ -11,6 +11,7 @@ use App\Models\Species;
 use App\Models\Vessel;
 use App\Models\Zone;
 use App\Support\Actions\ActionRunner;
+use App\Support\Tables\PerPage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -44,7 +45,7 @@ class LicenseController extends Controller
                 ->whereLike('number', "%{$search}%")
                 ->orWhereHas('vessel', fn (Builder $query) => $query->search($search))))
             ->orderByDesc('expires_on')
-            ->paginate(self::PER_PAGE)
+            ->paginate(PerPage::from($request, self::PER_PAGE))
             ->withQueryString();
 
         return view('licenses::index', [

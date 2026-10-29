@@ -4,11 +4,11 @@
     <div class="page-body">
         @include('movements::eez._tabs')
 
-        <x-ui.filters :action="route('movements.eez.missed.index')">
-            <x-ui.filter-select name="resolved" :label="__('movements::eez.resolved_filter')" :options="['0' => __('movements::eez.unresolved'), '1' => __('movements::eez.resolved')]" :value="$filters['resolved'] ?? null" />
-        </x-ui.filters>
-
         <x-ui.card :title="__('movements::eez.missed_title')" :subtitle="trans_choice('ui.results_count', $missed->total())" flush>
+            <x-ui.table-toolbar :action="route('movements.eez.missed.index')" :paginator="$missed">
+                <x-ui.toolbar-select name="resolved" :label="__('movements::eez.resolved_filter')" :options="['0' => __('movements::eez.unresolved'), '1' => __('movements::eez.resolved')]" :value="$filters['resolved'] ?? null" />
+            </x-ui.table-toolbar>
+
             <x-ui.table :paginator="$missed">
                 <x-slot:head>
                     <th>{{ __('movements::eez.fields.detected_at') }}</th>
@@ -17,6 +17,14 @@
                     <th>{{ __('movements::eez.fields.qualification') }}</th>
                     <th></th>
                 </x-slot:head>
+
+                <x-slot:filters>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </x-slot:filters>
 
                 @forelse ($missed as $row)
                     <tr>

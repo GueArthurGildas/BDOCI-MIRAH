@@ -54,7 +54,7 @@
         border-top: 1px solid var(--gs-line);
     }
 
-    &:has(.table-hover) {
+    &:has(.table-responsive) {
         padding: 10px;
         background: var(--gs-frame);
         border: 0;

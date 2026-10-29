@@ -6,6 +6,7 @@ use App\Enums\EntryExitAlertStatus;
 use App\Http\Controllers\Controller;
 use App\Models\EntryExitAlert;
 use App\Support\Actions\ActionRunner;
+use App\Support\Tables\PerPage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -24,7 +25,7 @@ class EntryExitAlertController extends Controller
             ->with(['vessel', 'declaration'])
             ->where('status', $filters['status'] ?? EntryExitAlertStatus::Open->value)
             ->latest('alerted_at')
-            ->paginate(self::PER_PAGE)
+            ->paginate(PerPage::from($request, self::PER_PAGE))
             ->withQueryString();
 
         return view('movements::eez.alerts', ['alerts' => $alerts, 'filters' => $filters]);

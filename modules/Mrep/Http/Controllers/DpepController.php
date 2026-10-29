@@ -7,6 +7,7 @@ use App\Enums\MrepPurpose;
 use App\Http\Controllers\Controller;
 use App\Models\MrepDpep;
 use App\Models\Species;
+use App\Support\Tables\PerPage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -33,7 +34,7 @@ class DpepController extends Controller
                 ->orWhereLike('external_id', "%{$search}%")
                 ->orWhereHas('vessel', fn (Builder $query) => $query->search($search))))
             ->latest('planned_arrival_at')
-            ->paginate(self::PER_PAGE)
+            ->paginate(PerPage::from($request, self::PER_PAGE))
             ->withQueryString();
 
         return view('mrep::dpeps.index', compact('dpeps', 'filters'));

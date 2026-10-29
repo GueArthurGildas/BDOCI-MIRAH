@@ -2,14 +2,6 @@
     <x-ui.page-header :title="__('movements::movements.title')" :subtitle="__('movements::movements.subtitle')" />
 
     <div class="page-body">
-        <x-ui.filters :action="route('movements.index')">
-            <x-ui.filter-input name="search" type="search" :label="__('ui.search')" :value="$filters['search'] ?? null" :placeholder="__('movements::movements.search_placeholder')" class="col-md-3" />
-            <x-ui.filter-select name="direction" :label="__('movements::movements.fields.direction')" :options="App\Enums\MovementDirection::options()" :value="$filters['direction'] ?? null" />
-            <x-ui.filter-select name="port" :label="__('movements::movements.fields.port')" :options="$ports" :value="$filters['port'] ?? null" />
-            <x-ui.filter-input name="from" type="date" :label="__('movements::movements.fields.from')" :value="$filters['from'] ?? null" />
-            <x-ui.filter-input name="to" type="date" :label="__('movements::movements.fields.to')" :value="$filters['to'] ?? null" />
-        </x-ui.filters>
-
         <x-ui.card :title="__('movements::movements.list_title')" :subtitle="trans_choice('ui.results_count', $movements->total())" flush>
             @can(App\Support\Authorization\Permission::MovementsCreate->value)
                 <x-slot:actions>
@@ -18,6 +10,12 @@
                     </a>
                 </x-slot:actions>
             @endcan
+
+            <x-ui.table-toolbar :action="route('movements.index')" :paginator="$movements">
+                <x-ui.toolbar-input name="search" type="search" :label="__('ui.search')" :value="$filters['search'] ?? null" :placeholder="__('movements::movements.search_placeholder')" />
+                <x-ui.toolbar-input name="from" type="date" :label="__('movements::movements.fields.from')" :value="$filters['from'] ?? null" />
+                <x-ui.toolbar-input name="to" type="date" :label="__('movements::movements.fields.to')" :value="$filters['to'] ?? null" />
+            </x-ui.table-toolbar>
 
             <x-ui.table :paginator="$movements">
                 <x-slot:head>
@@ -28,6 +26,15 @@
                     <th>{{ __('movements::movements.fields.reason') }}</th>
                     <th>{{ __('movements::movements.fields.recorded_by') }}</th>
                 </x-slot:head>
+
+                <x-slot:filters>
+                    <th></th>
+                    <x-ui.column-filter name="direction" form="list-filters" :options="App\Enums\MovementDirection::options()" :value="$filters['direction'] ?? null" />
+                    <th></th>
+                    <x-ui.column-filter name="port" form="list-filters" :options="$ports" :value="$filters['port'] ?? null" />
+                    <th></th>
+                    <th></th>
+                </x-slot:filters>
 
                 @forelse ($movements as $movement)
                     <tr>

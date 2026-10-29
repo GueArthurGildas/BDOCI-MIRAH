@@ -5,6 +5,7 @@ namespace Modules\Catches\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Landing;
 use App\Models\Transshipment;
+use App\Support\Tables\PerPage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -23,7 +24,7 @@ class MirrorOperationController extends Controller
             ->when($filters['from'] ?? null, fn (Builder $query, string $from) => $query->whereDate('landed_at', '>=', $from))
             ->when($filters['to'] ?? null, fn (Builder $query, string $to) => $query->whereDate('landed_at', '<=', $to))
             ->latest('landed_at')
-            ->paginate(self::PER_PAGE)
+            ->paginate(PerPage::from($request, self::PER_PAGE))
             ->withQueryString();
 
         return view('catches::landings', compact('landings', 'filters'));
@@ -39,7 +40,7 @@ class MirrorOperationController extends Controller
             ->when($filters['from'] ?? null, fn (Builder $query, string $from) => $query->whereDate('transshipped_at', '>=', $from))
             ->when($filters['to'] ?? null, fn (Builder $query, string $to) => $query->whereDate('transshipped_at', '<=', $to))
             ->latest('transshipped_at')
-            ->paginate(self::PER_PAGE)
+            ->paginate(PerPage::from($request, self::PER_PAGE))
             ->withQueryString();
 
         return view('catches::transshipments', compact('transshipments', 'filters'));

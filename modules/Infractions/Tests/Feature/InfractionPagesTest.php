@@ -36,6 +36,20 @@ class InfractionPagesTest extends TestCase
         $this->get('/infractions?type='.$type->id)->assertOk()->assertSee('DI-OPEN')->assertDontSee('DI-CLOSED');
     }
 
+    public function test_the_list_has_a_toolbar_with_a_page_size_and_column_filters(): void
+    {
+        $this->signInAs(Role::Agent);
+        InfractionCase::factory()->count(12)->create();
+
+        $response = $this->get('/infractions?per_page=10')->assertOk()
+            ->assertSee('id="list-filters"', false)
+            ->assertSee('name="status" form="list-filters"', false)
+            ->assertSee('name="type" form="list-filters"', false);
+
+        $this->assertCount(10, $response->viewData('cases')->items());
+        $this->assertCount(12, $this->get('/infractions?per_page=100')->viewData('cases')->items());
+    }
+
     #[Covers('UC16', 'RG09', partial: true)]
     public function test_the_case_page_shows_the_whole_file(): void
     {

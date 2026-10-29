@@ -33,12 +33,6 @@
             @endforeach
         </div>
 
-        <x-ui.filters :action="route('licenses.index')">
-            <x-ui.filter-input name="search" type="search" :label="__('ui.search')" :value="$filters['search'] ?? null" :placeholder="__('licenses::licenses.search_placeholder')" class="col-md-5" />
-            <x-ui.filter-select name="status" :label="__('licenses::licenses.fields.status')" :options="App\Enums\LicenseStatus::options()" :value="$filters['status'] ?? null" />
-            <x-ui.filter-select name="segment" :label="__('licenses::licenses.fields.segment')" :options="App\Enums\LicenseSegment::options()" :value="$filters['segment'] ?? null" />
-        </x-ui.filters>
-
         <x-ui.card :title="__('licenses::licenses.list_title')" :subtitle="trans_choice('ui.results_count', $licenses->total())" flush>
             <x-slot:actions>
                 @can(App\Support\Authorization\Permission::LicensesManage->value)
@@ -47,6 +41,10 @@
                     </a>
                 @endcan
             </x-slot:actions>
+
+            <x-ui.table-toolbar :action="route('licenses.index')" :paginator="$licenses">
+                <x-ui.toolbar-input name="search" type="search" :label="__('ui.search')" :value="$filters['search'] ?? null" :placeholder="__('licenses::licenses.search_placeholder')" />
+            </x-ui.table-toolbar>
 
             <x-ui.table :paginator="$licenses">
                 <x-slot:head>
@@ -57,6 +55,15 @@
                     <th>{{ __('licenses::licenses.fields.expires_on') }}</th>
                     <th>{{ __('licenses::licenses.fields.status') }}</th>
                 </x-slot:head>
+
+                <x-slot:filters>
+                    <th></th>
+                    <th></th>
+                    <x-ui.column-filter name="segment" form="list-filters" :options="App\Enums\LicenseSegment::options()" :value="$filters['segment'] ?? null" />
+                    <th></th>
+                    <th></th>
+                    <x-ui.column-filter name="status" form="list-filters" :options="App\Enums\LicenseStatus::options()" :value="$filters['status'] ?? null" />
+                </x-slot:filters>
 
                 @forelse ($licenses as $license)
                     <tr>

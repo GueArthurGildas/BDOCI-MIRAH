@@ -1,17 +1,7 @@
-.tab-header.card {
-    margin-bottom: 14px;
-    overflow: visible;
-    background: transparent;
-    border: 0;
-    border-bottom: 3px solid var(--gs-orange);
-    border-radius: 0;
-    box-shadow: none;
-}
-
 .tab-header .md-tabs {
     flex-wrap: nowrap;
     overflow-x: auto;
-    padding: 0;
+    padding: 8px;
     border-bottom: 0;
     scrollbar-width: thin;
 
@@ -25,12 +15,11 @@
     }
 
     .nav-item a.nav-link {
-        margin: 0 6px 0 0;
-        padding: 11px 22px !important;
+        margin: 0 4px 0 0;
+        padding: 10px 18px !important;
         background: var(--gs-sunken);
-        border: 0;
-        border-radius: var(--gs-radius) var(--gs-radius) 0 0;
-        color: var(--gs-muted);
+        border-radius: var(--gs-radius-sm);
+        color: var(--gs-ink-soft);
         font: 600 .9rem var(--gs-font-title);
         white-space: nowrap;
 
@@ -40,7 +29,7 @@
         }
 
         &.active {
-            background: var(--gs-orange);
+            background: var(--gs-orange-dark);
             color: #fff;
         }
     }

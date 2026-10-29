@@ -11,6 +11,7 @@ use App\Models\Team;
 use App\Models\User;
 use App\Models\Vessel;
 use App\Support\Actions\ActionRunner;
+use App\Support\Tables\PerPage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -39,7 +40,7 @@ class NoteController extends Controller
             ->when($box === 'inbox', fn ($query) => $query->addressedTo($user), fn ($query) => $query->where('author_id', $user->id))
             ->when($filters['unread'] ?? false, fn ($query) => $query->where('is_read', false))
             ->latest('id')
-            ->paginate(self::PER_PAGE)
+            ->paginate(PerPage::from($request, self::PER_PAGE))
             ->withQueryString();
 
         return view('communications::notes.index', [

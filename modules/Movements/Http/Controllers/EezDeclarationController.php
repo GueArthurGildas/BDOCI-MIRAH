@@ -12,6 +12,7 @@ use App\Models\ReferenceList;
 use App\Models\Species;
 use App\Models\Vessel;
 use App\Support\Actions\ActionRunner;
+use App\Support\Tables\PerPage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -52,7 +53,7 @@ class EezDeclarationController extends Controller
                 ->orWhereLike('declared_name', "%{$search}%")))
             ->latest('received_at')
             ->latest('id')
-            ->paginate(self::PER_PAGE)
+            ->paginate(PerPage::from($request, self::PER_PAGE))
             ->withQueryString();
 
         return view('movements::eez.index', ['declarations' => $declarations, 'filters' => $filters]);

@@ -12,11 +12,6 @@
             </div>
         </div>
 
-        <x-ui.filters :action="route('communications.notes.index')">
-            <x-ui.filter-select name="box" :label="__('communications::notes.box')" :options="['inbox' => __('communications::notes.inbox'), 'sent' => __('communications::notes.sent')]" :value="$box" />
-            <x-ui.filter-select name="unread" :label="__('communications::notes.unread')" :options="['1' => __('ui.yes')]" :value="$filters['unread'] ?? null" />
-        </x-ui.filters>
-
         <x-ui.card :title="__('communications::notes.list_title')" :subtitle="trans_choice('ui.results_count', $notes->total())" flush>
             @can(App\Support\Authorization\Permission::CommunicationsCreateNote->value)
                 <x-slot:actions>
@@ -25,6 +20,11 @@
                     </a>
                 </x-slot:actions>
             @endcan
+
+            <x-ui.table-toolbar :action="route('communications.notes.index')" :paginator="$notes">
+                <x-ui.toolbar-select name="box" :label="__('communications::notes.box')" :options="['inbox' => __('communications::notes.inbox'), 'sent' => __('communications::notes.sent')]" :value="$box" />
+                <x-ui.toolbar-select name="unread" :label="__('communications::notes.unread')" :options="['1' => __('ui.yes')]" :value="$filters['unread'] ?? null" />
+            </x-ui.table-toolbar>
 
             <x-ui.table :paginator="$notes">
                 <x-slot:head>
@@ -38,6 +38,18 @@
                     <th>{{ __('communications::notes.state') }}</th>
                     <th></th>
                 </x-slot:head>
+
+                <x-slot:filters>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </x-slot:filters>
 
                 @forelse ($notes as $note)
                     <tr>

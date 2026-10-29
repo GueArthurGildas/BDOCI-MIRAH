@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CatchDeclaration;
 use App\Models\Species;
 use App\Models\Zone;
+use App\Support\Tables\PerPage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -43,7 +44,7 @@ class CatchDeclarationController extends Controller
         $species = Species::orderBy('name')->get();
 
         return view('catches::index', [
-            'declarations' => $query->with(['vessel', 'species', 'zone'])->latest('period_start')->paginate(self::PER_PAGE)->withQueryString(),
+            'declarations' => $query->with(['vessel', 'species', 'zone'])->latest('period_start')->paginate(PerPage::from($request, self::PER_PAGE))->withQueryString(),
             'filters' => $filters,
             'species' => $species->pluck('name', 'id'),
             'zones' => Zone::orderBy('name')->pluck('name', 'id'),

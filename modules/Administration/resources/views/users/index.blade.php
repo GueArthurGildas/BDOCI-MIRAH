@@ -2,16 +2,16 @@
     <x-ui.page-header :title="__('administration::administration.users.title')" :subtitle="__('administration::administration.users.subtitle')" />
 
     <div class="page-body">
-        <x-ui.filters :action="route('administration.users.index')">
-            <x-ui.filter-input name="search" type="search" :label="__('ui.search')" :value="$search" :placeholder="__('administration::administration.users.search_placeholder')" class="col-md-5" />
-        </x-ui.filters>
-
         <x-ui.card :title="__('administration::administration.users.list_title')" :subtitle="trans_choice('ui.results_count', $users->total())" flush>
             <x-slot:actions>
                 <a href="{{ route('administration.users.create') }}" class="btn btn-primary btn-sm">
                     <i class="feather icon-plus"></i> {{ __('administration::administration.users.new') }}
                 </a>
             </x-slot:actions>
+
+            <x-ui.table-toolbar :action="route('administration.users.index')" :paginator="$users">
+                <x-ui.toolbar-input name="search" type="search" :label="__('ui.search')" :value="$search" :placeholder="__('administration::administration.users.search_placeholder')" />
+            </x-ui.table-toolbar>
 
             <x-ui.table :paginator="$users">
                 <x-slot:head>
@@ -21,6 +21,14 @@
                     <th>{{ __('administration::administration.users.fields.status') }}</th>
                     <th></th>
                 </x-slot:head>
+
+                <x-slot:filters>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </x-slot:filters>
                 @forelse ($users as $user)
                     <tr>
                         <td>
