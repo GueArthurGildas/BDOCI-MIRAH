@@ -69,7 +69,7 @@ class MessageController extends Controller
     {
         $message = $actions->run(SendMessage::class, $request->user(), $request->validated());
 
-        return to_route('communications.messages.show', $message)->with('status', __("communications::messages.result.{$message->status->value}"));
+        return to_route('communications.messages.show', $message)->with('status', __("communications::messages.result.{$message->status->value}"))->with('popup', $this->recap($message));
     }
 
     public function show(SentMessage $message): View
@@ -81,7 +81,7 @@ class MessageController extends Controller
     {
         $sent = $actions->run(SendPreparedMessage::class, $request->user(), ['message_id' => $message->id]);
 
-        return to_route('communications.messages.show', $message)->with('status', __("communications::messages.result.{$sent->status->value}"));
+        return to_route('communications.messages.show', $message)->with('status', __("communications::messages.result.{$sent->status->value}"))->with('popup', $this->recap($sent));
     }
 
     public function acknowledge(SentMessage $message, Request $request, ActionRunner $actions): RedirectResponse
@@ -92,5 +92,16 @@ class MessageController extends Controller
         ]);
 
         return to_route('communications.messages.show', $message)->with('status', __('communications::messages.acknowledged'));
+    }
+
+    /** @return array<int, array{label: string, value: string}> */
+    private function recap(SentMessage $message): array
+    {
+        $message->loadMissing('channel');
+
+        return [
+            ['label' => __('communications::fields.channel'), 'value' => __($message->channel->code->label())],
+            ['label' => __('communications::fields.recipient'), 'value' => (string) $message->recipient],
+        ];
     }
 }

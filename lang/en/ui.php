@@ -92,6 +92,11 @@ return [
         ],
     ],
 
+    'popup' => [
+        'done' => 'Done',
+        'continue' => 'Continue',
+    ],
+
     'confirm' => [
         'title' => 'Confirmation',
         'proceed' => 'Yes, continue',

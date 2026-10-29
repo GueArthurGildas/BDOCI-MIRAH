@@ -117,6 +117,18 @@ class VesselController extends Controller
         ]);
     }
 
+    public function quick(Vessel $vessel): View
+    {
+        $vessel->load(['currentLicense', 'latestPosition.zone', 'flagCountry', 'identifiers']);
+        $indicators = VesselIndicators::for($vessel);
+
+        return view('vessels::quick', [
+            'vessel' => $vessel,
+            'assessment' => StatusLight::assess($indicators->facts),
+            'score' => VigilanceScore::compute($indicators),
+        ]);
+    }
+
     public function create(): View
     {
         return view('vessels::create', ['vessel' => new Vessel]);

@@ -101,7 +101,7 @@
                                 <td class="text-end">
                                     @can(App\Support\Authorization\Permission::LicensesSuspend->value)
                                         @if ($suspension->isInForce())
-                                            <form method="POST" action="{{ route('licenses.suspensions.lift', $suspension) }}">
+                                            <form data-confirm="{{ __('licenses::confirm.lift') }}" data-confirm-label="{{ __('licenses::confirm.lift_yes') }}" method="POST" action="{{ route('licenses.suspensions.lift', $suspension) }}">
                                                 @csrf
                                                 <button type="submit" class="btn btn-outline-success btn-mini">{{ __('licenses::licenses.suspension.lift') }}</button>
                                             </form>
@@ -115,7 +115,7 @@
                     </x-ui.table>
                     @if ($license->status !== App\Enums\LicenseRecordStatus::Revoked)
                         @can(App\Support\Authorization\Permission::LicensesSuspend->value)
-                            <form method="POST" action="{{ route('licenses.suspensions.store', $license) }}" class="p-3">
+                            <form data-confirm="{{ __('licenses::confirm.suspend') }}" data-confirm-label="{{ __('licenses::confirm.suspend_yes') }}" method="POST" action="{{ route('licenses.suspensions.store', $license) }}" class="p-3">
                                 @csrf
                                 <input type="hidden" name="infraction_case_id" value="{{ request('infraction_case') }}">
                                 <p class="text-muted f-12">{{ __('licenses::licenses.suspension.rule', ['months' => config('surveillance.license_suspension_max_months')]) }}</p>
@@ -138,7 +138,7 @@
                         </x-ui.detail-list>
                     @else
                         @can(App\Support\Authorization\Permission::LicensesRevoke->value)
-                            <form method="POST" action="{{ route('licenses.revocation.store', $license) }}">
+                            <form data-confirm="{{ __('licenses::confirm.revoke') }}" data-confirm-label="{{ __('licenses::confirm.revoke_yes') }}" method="POST" action="{{ route('licenses.revocation.store', $license) }}">
                                 @csrf
                                 <input type="hidden" name="infraction_case_id" value="{{ request('infraction_case') }}">
                                 <x-ui.form.input name="reason" :label="__('licenses::licenses.revocation.reason')" maxlength="255" required />

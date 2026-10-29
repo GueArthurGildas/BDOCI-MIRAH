@@ -127,7 +127,7 @@
                         </x-ui.card>
 
                         <x-ui.card :title="__('operations::operations.close_title')">
-                            <form method="POST" action="{{ route('operations.close', $operation) }}">
+                            <form data-confirm="{{ __('operations::confirm.close') }}" data-confirm-label="{{ __('operations::confirm.close_yes') }}" method="POST" action="{{ route('operations.close', $operation) }}">
                                 @csrf
                                 <x-ui.form.textarea name="result" :label="__('operations::operations.fields.result')" rows="3" required />
                                 <div class="row">

@@ -172,7 +172,7 @@
                                 </td>
                                 <td class="text-end">
                                     @if (! $measure->isDecided() && $decideMeasures)
-                                        <form method="POST" action="{{ route('infractions.measures.decide', $measure) }}">
+                                        <form data-confirm="{{ __('infractions::confirm.measure') }}" data-confirm-label="{{ __('infractions::confirm.measure_yes') }}" method="POST" action="{{ route('infractions.measures.decide', $measure) }}">
                                             @csrf
                                             <button class="btn btn-primary btn-sm"><i class="feather icon-check"></i> {{ __('infractions::infractions.decide_measure') }}</button>
                                         </form>
@@ -207,7 +207,7 @@
                             </x-ui.detail>
                         </x-ui.detail-list>
                     @elseif ($manage && $open)
-                        <form method="POST" action="{{ route('infractions.violation-report.store', $case) }}">
+                        <form data-confirm="{{ __('infractions::confirm.violation_report') }}" data-confirm-label="{{ __('infractions::confirm.violation_report_yes') }}" method="POST" action="{{ route('infractions.violation-report.store', $case) }}">
                             @csrf
                             <x-ui.form.input name="number" :label="__('infractions::infractions.fields.number')" :placeholder="__('infractions::infractions.automatic_number')" />
                             <x-ui.form.input name="notified_at" type="datetime-local" :label="__('infractions::infractions.fields.notified_at')" />
@@ -244,7 +244,7 @@
                                         <div class="m-l-20 f-12">
                                             <i class="feather icon-corner-up-left text-muted"></i> {{ __('infractions::infractions.appeal_filed_on', ['date' => $appeal->filed_on->isoFormat('L')]) }}
                                             @if ($appeal->outcome) — {{ $appeal->outcome }} @elseif ($decide)
-                                                <form method="POST" action="{{ route('infractions.appeals.outcome', $appeal) }}" class="d-inline-flex gap-1 m-l-10">
+                                                <form data-confirm="{{ __('infractions::confirm.appeal_outcome') }}" data-confirm-label="{{ __('infractions::confirm.appeal_outcome_yes') }}" method="POST" action="{{ route('infractions.appeals.outcome', $appeal) }}" class="d-inline-flex gap-1 m-l-10">
                                                     @csrf
                                                     @method('PATCH')
                                                     <input name="outcome" class="form-control form-control-sm" placeholder="{{ __('infractions::infractions.fields.outcome') }}" required>
@@ -272,7 +272,7 @@
                                 </div>
                             @endforeach
                             @if ($decide && $open && $followUp->closed_at === null)
-                                <form method="POST" action="{{ route('infractions.decisions.store', $followUp) }}" class="m-l-20">
+                                <form data-confirm="{{ __('infractions::confirm.decision') }}" data-confirm-label="{{ __('infractions::confirm.decision_yes') }}" method="POST" action="{{ route('infractions.decisions.store', $followUp) }}" class="m-l-20">
                                     @csrf
                                     <x-ui.form.input name="label" :label="__('infractions::infractions.fields.decision')" required />
                                     <x-ui.form.checkbox name="is_penalty" :label="__('infractions::infractions.fields.is_penalty')" />
@@ -306,7 +306,7 @@
                         <x-ui.detail :label="__('infractions::infractions.fields.shipowner')">{{ $case->shipowner?->name }}</x-ui.detail>
                     </x-ui.detail-list>
                     @if ($decide && $open)
-                        <form method="POST" action="{{ route('infractions.close', $case) }}" class="p-t-15">
+                        <form data-confirm="{{ __('infractions::confirm.close') }}" data-confirm-label="{{ __('infractions::confirm.close_yes') }}" method="POST" action="{{ route('infractions.close', $case) }}" class="p-t-15">
                             @csrf
                             <button class="btn btn-success btn-sm"><i class="feather icon-check-circle"></i> {{ __('infractions::infractions.close_case') }}</button>
                         </form>

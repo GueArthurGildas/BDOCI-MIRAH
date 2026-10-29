@@ -30,6 +30,6 @@ class ArchiveController extends Controller
 
         $ids->each(fn (int $id) => $actions->run(ArchiveOperation::class, request()->user(), ['operation_id' => $id]));
 
-        return to_route('reports.archives.index')->with('status', trans_choice('reports::reports.archives.archived', $ids->count(), ['count' => $ids->count()]));
+        return to_route('reports.archives.index')->with('status', trans_choice('reports::reports.archives.archived', $ids->count(), ['count' => $ids->count()]))->with('popup', true);
     }
 }

@@ -105,7 +105,7 @@
 
                     @can(App\Support\Authorization\Permission::LogbookClose->value)
                         <x-ui.card :title="__('logbook::logbook.days.close_title')" :subtitle="__('logbook::logbook.days.close_hint')">
-                            <form method="POST" action="{{ route('logbook.days.close', $day) }}">
+                            <form data-confirm="{{ __('logbook::confirm.close_day') }}" data-confirm-label="{{ __('logbook::confirm.close_day_yes') }}" method="POST" action="{{ route('logbook.days.close', $day) }}">
                                 @csrf
                                 <button type="submit" class="btn btn-success"><i class="feather icon-lock"></i> {{ __('logbook::logbook.days.close') }}</button>
                             </form>

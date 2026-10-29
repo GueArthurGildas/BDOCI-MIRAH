@@ -4,6 +4,9 @@
 
 @if ($url)
     <a href="{{ $url }}" {{ $attributes }}>{{ $vessel->name }}</a>
+    @if (Route::has('vessels.quick'))
+        <a href="{{ route('vessels.quick', $vessel) }}" class="gs-quick-link" data-gs-modal title="{{ __('vessels::vessels.quick.preview') }}"><i class="feather icon-eye"></i></a>
+    @endif
 @else
     <span {{ $attributes }}>{{ $vessel->name }}</span>
 @endif

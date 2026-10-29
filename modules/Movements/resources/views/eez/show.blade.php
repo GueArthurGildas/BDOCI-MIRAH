@@ -11,7 +11,7 @@
                             <button type="submit" class="btn btn-primary btn-sm"><i class="feather icon-check"></i> {{ __('movements::eez.acknowledge') }}</button>
                         </form>
                     @endif
-                    <form method="POST" action="{{ route('movements.eez.close', $declaration) }}">
+                    <form data-confirm="{{ __('movements::confirm.close_declaration') }}" data-confirm-label="{{ __('movements::confirm.close_declaration_yes') }}" method="POST" action="{{ route('movements.eez.close', $declaration) }}">
                         @csrf
                         <button type="submit" class="btn btn-default btn-sm"><i class="feather icon-lock"></i> {{ __('movements::eez.close') }}</button>
                     </form>

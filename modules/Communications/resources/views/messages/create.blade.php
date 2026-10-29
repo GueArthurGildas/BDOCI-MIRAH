@@ -3,7 +3,7 @@
 
     <div class="page-body">
         <x-ui.card :title="__('communications::messages.new')">
-            <form method="POST" action="{{ route('communications.messages.store') }}">
+            <form data-confirm="{{ __('communications::confirm.send_new') }}" data-confirm-label="{{ __('communications::confirm.send_new_yes') }}" method="POST" action="{{ route('communications.messages.store') }}">
                 @csrf
                 @include('communications::partials.choice-buttons', ['name' => 'channel', 'label' => __('communications::fields.channel'), 'options' => App\Enums\CommunicationChannelCode::options(), 'selected' => 'email', 'required' => true])
                 <x-ui.form.select name="message_template_id" :label="__('communications::fields.message_template_id')" :options="$templates" required />

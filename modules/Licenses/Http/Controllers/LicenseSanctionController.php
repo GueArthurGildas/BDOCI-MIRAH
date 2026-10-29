@@ -20,7 +20,7 @@ class LicenseSanctionController extends Controller
     {
         $actions->run(SuspendLicense::class, $request->user(), [...$request->validated(), 'license_id' => $license->id]);
 
-        return to_route('licenses.show', $license)->with('status', __('licenses::licenses.suspension.created'));
+        return to_route('licenses.show', $license)->with('status', __('licenses::licenses.suspension.created'))->with('popup', true);
     }
 
     public function lift(LicenseSuspension $suspension, Request $request, ActionRunner $actions): RedirectResponse
@@ -34,6 +34,6 @@ class LicenseSanctionController extends Controller
     {
         $actions->run(RevokeLicense::class, $request->user(), [...$request->validated(), 'license_id' => $license->id]);
 
-        return to_route('licenses.show', $license)->with('status', __('licenses::licenses.revocation.created'));
+        return to_route('licenses.show', $license)->with('status', __('licenses::licenses.revocation.created'))->with('popup', true);
     }
 }

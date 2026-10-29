@@ -17,15 +17,15 @@
                 <x-ui.card :title="__('missions::missions.sections.mission')">
                     <x-slot:actions>
                         @if ($status === MissionStatus::Scheduled && $canAuthorize && Gate::allows(Permission::MissionsAuthorize->value))
-                            <form method="POST" action="{{ route('missions.authorize', $mission) }}">@csrf<button class="btn btn-primary btn-sm"><i class="feather icon-check"></i> {{ __('missions::missions.authorize') }}</button></form>
+                            <form data-confirm="{{ __('missions::confirm.authorize') }}" data-confirm-label="{{ __('missions::confirm.authorize_yes') }}" method="POST" action="{{ route('missions.authorize', $mission) }}">@csrf<button class="btn btn-primary btn-sm"><i class="feather icon-check"></i> {{ __('missions::missions.authorize') }}</button></form>
                         @endif
                         @if ($manage)
                             @if ($status === MissionStatus::Authorized)
-                                <form method="POST" action="{{ route('missions.start', $mission) }}">@csrf<button class="btn btn-primary btn-sm"><i class="feather icon-play"></i> {{ __('missions::missions.start') }}</button></form>
+                                <form data-confirm="{{ __('missions::confirm.start') }}" data-confirm-label="{{ __('missions::confirm.start_yes') }}" method="POST" action="{{ route('missions.start', $mission) }}">@csrf<button class="btn btn-primary btn-sm"><i class="feather icon-play"></i> {{ __('missions::missions.start') }}</button></form>
                             @elseif ($status === MissionStatus::InProgress)
-                                <form method="POST" action="{{ route('missions.complete', $mission) }}">@csrf<button class="btn btn-success btn-sm"><i class="feather icon-flag"></i> {{ __('missions::missions.complete') }}</button></form>
+                                <form data-confirm="{{ __('missions::confirm.complete') }}" data-confirm-label="{{ __('missions::confirm.complete_yes') }}" method="POST" action="{{ route('missions.complete', $mission) }}">@csrf<button class="btn btn-success btn-sm"><i class="feather icon-flag"></i> {{ __('missions::missions.complete') }}</button></form>
                             @elseif ($status === MissionStatus::Completed)
-                                <form method="POST" action="{{ route('missions.close', $mission) }}">@csrf<button class="btn btn-success btn-sm"><i class="feather icon-lock"></i> {{ __('missions::missions.close') }}</button></form>
+                                <form data-confirm="{{ __('missions::confirm.close') }}" data-confirm-label="{{ __('missions::confirm.close_yes') }}" method="POST" action="{{ route('missions.close', $mission) }}">@csrf<button class="btn btn-success btn-sm"><i class="feather icon-lock"></i> {{ __('missions::missions.close') }}</button></form>
                             @endif
                         @endif
                     </x-slot:actions>

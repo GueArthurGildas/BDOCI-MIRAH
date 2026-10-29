@@ -94,7 +94,7 @@ class OperationController extends Controller
     {
         $actions->run(CloseOperation::class, $request->user(), [...$request->validated(), 'operation_id' => $operation->id]);
 
-        return to_route('operations.show', $operation)->with('status', __('operations::operations.closed'));
+        return to_route('operations.show', $operation)->with('status', __('operations::operations.closed'))->with('popup', true);
     }
 
     public function storeEvent(StoreOperationEventRequest $request, Operation $operation, ActionRunner $actions): RedirectResponse

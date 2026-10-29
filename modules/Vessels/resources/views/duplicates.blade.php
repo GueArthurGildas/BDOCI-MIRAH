@@ -32,9 +32,9 @@
                         <td>
                             <form method="POST" action="{{ route('vessels.duplicates.settle', $source) }}" class="d-flex flex-wrap gap-1">
                                 @csrf
-                                <button name="decision" value="merge" class="btn btn-primary btn-sm">{{ __('enums.duplicate_decision.merge') }}</button>
-                                <button name="decision" value="keep_separate" class="btn btn-default btn-sm">{{ __('enums.duplicate_decision.keep_separate') }}</button>
-                                <button name="decision" value="reject" class="btn btn-outline-danger btn-sm">{{ __('enums.duplicate_decision.reject') }}</button>
+                                <button name="decision" value="merge" data-confirm="{{ __('vessels::confirm.merge') }}" data-confirm-label="{{ __('vessels::confirm.merge_yes') }}" class="btn btn-primary btn-sm">{{ __('enums.duplicate_decision.merge') }}</button>
+                                <button name="decision" value="keep_separate" data-confirm="{{ __('vessels::confirm.keep_separate') }}" data-confirm-label="{{ __('vessels::confirm.keep_separate_yes') }}" class="btn btn-default btn-sm">{{ __('enums.duplicate_decision.keep_separate') }}</button>
+                                <button name="decision" value="reject" data-confirm="{{ __('vessels::confirm.reject') }}" data-confirm-label="{{ __('vessels::confirm.reject_yes') }}" class="btn btn-outline-danger btn-sm">{{ __('enums.duplicate_decision.reject') }}</button>
                             </form>
                         </td>
                     </tr>

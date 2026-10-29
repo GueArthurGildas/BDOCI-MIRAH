@@ -26,6 +26,7 @@ Route::middleware('auth')
     ->controller(VesselController::class)
     ->group(function () {
         Route::get('/', 'index')->can(Permission::VesselsView->value)->name('index');
+        Route::get('{vessel}/quick', 'quick')->can(Permission::VesselsView->value)->name('quick');
         Route::get('create', 'create')->can(Permission::VesselsManage->value)->name('create');
         Route::post('/', 'store')->can(Permission::VesselsManage->value)->name('store');
         Route::get('{vessel}', 'show')->can(Permission::VesselsView->value)->name('show');

@@ -134,7 +134,7 @@
                         <p class="m-b-5">{{ __($decision->decision->label()) }} — {{ $decision->decider->name }} <span class="text-muted f-12">{{ $decision->decided_at->isoFormat('L LT') }}</span></p>
                     @endforeach
                     @if ($manage && ! $decided)
-                        <form method="POST" action="{{ route('witnesses.decision.store', $report) }}">
+                        <form data-confirm="{{ __('witnesses::confirm.decision') }}" data-confirm-label="{{ __('witnesses::confirm.decision_yes') }}" method="POST" action="{{ route('witnesses.decision.store', $report) }}">
                             @csrf
                             <x-ui.form.select name="decision" :label="__('witnesses::witnesses.fields.decision')" :options="$decisions" required />
                             <x-ui.form.actions :cancel="route('witnesses.show', $report)" />

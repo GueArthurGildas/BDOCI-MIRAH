@@ -5,6 +5,11 @@ return [
     'subtitle' => 'Référentiel des navires autorisés et suivis',
     'export_csv' => 'Export CSV',
     'export_pdf' => 'Export PDF',
+    'quick' => [
+        'vigilance' => 'Score de vigilance',
+        'open_profile' => 'Ouvrir la fiche complète',
+        'preview' => 'Aperçu',
+    ],
     'list_title' => 'Liste des navires',
     'create_title' => 'Nouveau navire',
     'edit_title' => 'Modifier le navire',

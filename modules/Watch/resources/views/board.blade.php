@@ -93,7 +93,7 @@
                         </td>
                         <td class="text-end">
                             @can(App\Support\Authorization\Permission::WatchManage->value)
-                                <form method="POST" action="{{ route('watch.board.close', $entry) }}">
+                                <form data-confirm="{{ __('watch::confirm.close_entry') }}" data-confirm-label="{{ __('watch::confirm.close_entry_yes') }}" method="POST" action="{{ route('watch.board.close', $entry) }}">
                                     @csrf
                                     <button type="submit" class="btn btn-outline-success btn-mini">{{ __('watch::watch.board.close') }}</button>
                                 </form>

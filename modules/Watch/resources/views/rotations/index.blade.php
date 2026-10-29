@@ -24,7 +24,7 @@
                                         <span class="label label-success">{{ __('watch::watch.rotations.handover_done') }}</span>
                                     @else
                                         @can(App\Support\Authorization\Permission::WatchCreate->value)
-                                            <form method="POST" action="{{ route('watch.rotations.handover', $rotation) }}">
+                                            <form data-confirm="{{ __('watch::confirm.handover') }}" data-confirm-label="{{ __('watch::confirm.handover_yes') }}" method="POST" action="{{ route('watch.rotations.handover', $rotation) }}">
                                                 @csrf
                                                 <button type="submit" class="btn btn-outline-primary btn-mini">{{ __('watch::watch.rotations.start_handover') }}</button>
                                             </form>

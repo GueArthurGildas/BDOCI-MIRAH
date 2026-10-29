@@ -5,7 +5,7 @@
         <x-ui.card :title="__('reports::reports.archives.pending_title')">
             <p>{{ trans_choice('reports::reports.archives.pending', $eligibleCount, ['count' => $eligibleCount, 'date' => $cutoff->isoFormat('L')]) }}</p>
             @can(App\Support\Authorization\Permission::ReportsArchive->value)
-                <form method="POST" action="{{ route('reports.archives.run') }}">
+                <form data-confirm="{{ __('reports::confirm.archive') }}" data-confirm-label="{{ __('reports::confirm.archive_yes') }}" method="POST" action="{{ route('reports.archives.run') }}">
                     @csrf
                     <button type="submit" class="btn btn-primary btn-sm" @disabled($eligibleCount === 0)>
                         <i class="feather icon-archive"></i> {{ __('reports::reports.archives.run') }}

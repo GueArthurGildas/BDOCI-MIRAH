@@ -41,28 +41,28 @@ class MissionRecordController extends Controller
     {
         $actions->run(AuthorizeMission::class, $request->user(), ['mission_id' => $mission->id]);
 
-        return $this->back($mission, 'authorized');
+        return $this->back($mission, 'authorized')->with('popup', true);
     }
 
     public function start(Mission $mission, Request $request, ActionRunner $actions): RedirectResponse
     {
         $actions->run(StartMission::class, $request->user(), ['mission_id' => $mission->id]);
 
-        return $this->back($mission, 'started');
+        return $this->back($mission, 'started')->with('popup', true);
     }
 
     public function complete(Mission $mission, Request $request, ActionRunner $actions): RedirectResponse
     {
         $actions->run(CompleteMission::class, $request->user(), ['mission_id' => $mission->id]);
 
-        return $this->back($mission, 'completed');
+        return $this->back($mission, 'completed')->with('popup', true);
     }
 
     public function close(Mission $mission, Request $request, ActionRunner $actions): RedirectResponse
     {
         $actions->run(CloseMission::class, $request->user(), ['mission_id' => $mission->id]);
 
-        return $this->back($mission, 'closed');
+        return $this->back($mission, 'closed')->with('popup', true);
     }
 
     public function review(Mission $mission, Request $request, ActionRunner $actions): RedirectResponse

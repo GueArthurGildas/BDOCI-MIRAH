@@ -22,7 +22,7 @@
                                 <td class="text-end">
                                     @can(App\Support\Authorization\Permission::WatchManage->value)
                                         @if ($instruction->ended_on === null)
-                                            <form method="POST" action="{{ route('watch.instructions.end', $instruction) }}">
+                                            <form data-confirm="{{ __('watch::confirm.end_instruction') }}" data-confirm-label="{{ __('watch::confirm.end_instruction_yes') }}" method="POST" action="{{ route('watch.instructions.end', $instruction) }}">
                                                 @csrf
                                                 <button type="submit" class="btn btn-outline-danger btn-mini">{{ __('watch::watch.instructions.end') }}</button>
                                             </form>

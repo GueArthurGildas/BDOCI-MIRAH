@@ -17,27 +17,33 @@ export function initConfirmations() {
 
     document.addEventListener('submit', (event) => {
         const form = event.target;
+        const submitter = event.submitter;
+        const source = submitter?.dataset.confirm ? submitter : form;
 
-        if (!(form instanceof HTMLFormElement) || !form.dataset.confirm) {
+        if (!(form instanceof HTMLFormElement) || !source.dataset.confirm || form.dataset.confirmed) {
             return;
         }
 
         event.preventDefault();
-        pending = form;
+        pending = { form, submitter };
 
-        title.textContent = form.dataset.confirmTitle || defaults.title;
-        message.textContent = form.dataset.confirm;
-        accept.textContent = form.dataset.confirmLabel || defaults.label;
-        renderDetails(details, form.dataset.confirmDetails);
+        title.textContent = source.dataset.confirmTitle || defaults.title;
+        message.textContent = source.dataset.confirm;
+        accept.textContent = source.dataset.confirmLabel || defaults.label;
+        renderDetails(details, source.dataset.confirmDetails);
         modal.show();
     });
 
     accept.addEventListener('click', () => {
-        const form = pending;
+        const request = pending;
 
         pending = null;
         modal.hide();
-        form?.submit();
+
+        if (request) {
+            request.form.dataset.confirmed = '1';
+            request.form.requestSubmit(request.submitter);
+        }
     });
 
     element.addEventListener('hidden.bs.modal', () => {

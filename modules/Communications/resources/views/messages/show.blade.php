@@ -32,7 +32,7 @@
                     @if ($message->status === App\Enums\MessageStatus::Prepared)
                         <x-ui.card :title="__('communications::messages.validate_title')">
                             <p>{{ __('communications::messages.validate_hint') }}</p>
-                            <form method="POST" action="{{ route('communications.messages.send', $message) }}">
+                            <form data-confirm="{{ __('communications::confirm.send') }}" data-confirm-label="{{ __('communications::confirm.send_yes') }}" data-confirm-details="{{ json_encode([['label' => __('communications::fields.channel'), 'value' => __($message->channel->code->label())], ['label' => __('communications::fields.recipient'), 'value' => (string) $message->recipient]], JSON_UNESCAPED_UNICODE) }}" method="POST" action="{{ route('communications.messages.send', $message) }}">
                                 @csrf
                                 <button type="submit" class="btn btn-primary"><i class="feather icon-send"></i> {{ __('communications::messages.send') }}</button>
                             </form>

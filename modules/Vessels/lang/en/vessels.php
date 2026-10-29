@@ -5,6 +5,11 @@ return [
     'subtitle' => 'Registry of authorized and monitored vessels',
     'export_csv' => 'Export CSV',
     'export_pdf' => 'Export PDF',
+    'quick' => [
+        'vigilance' => 'Vigilance score',
+        'open_profile' => 'Open the full profile',
+        'preview' => 'Quick view',
+    ],
     'list_title' => 'Vessel list',
     'create_title' => 'New vessel',
     'edit_title' => 'Edit vessel',

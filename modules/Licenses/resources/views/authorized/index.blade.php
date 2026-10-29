@@ -29,7 +29,7 @@
         <x-ui.card :title="__('licenses::authorized.list_title')" flush>
             <x-slot:actions>
                 @can(App\Support\Authorization\Permission::LicensesPublish->value)
-                    <form method="POST" action="{{ route('licenses.authorized.publish') }}">
+                    <form data-confirm="{{ __('licenses::confirm.publish') }}" data-confirm-label="{{ __('licenses::confirm.publish_yes') }}" method="POST" action="{{ route('licenses.authorized.publish') }}">
                         @csrf
                         <button type="submit" class="btn btn-primary btn-sm"><i class="feather icon-upload"></i> {{ __('licenses::authorized.publish') }}</button>
                     </form>

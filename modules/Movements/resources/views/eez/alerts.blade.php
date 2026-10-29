@@ -37,7 +37,7 @@
                             @endif
                             @can(App\Support\Authorization\Permission::MovementsDeclare->value)
                                 @if ($alert->status === App\Enums\EntryExitAlertStatus::Open)
-                                    <form method="POST" action="{{ route('movements.eez.alerts.close', $alert) }}" class="d-inline">
+                                    <form data-confirm="{{ __('movements::confirm.close_alert') }}" data-confirm-label="{{ __('movements::confirm.close_alert_yes') }}" method="POST" action="{{ route('movements.eez.alerts.close', $alert) }}" class="d-inline">
                                         @csrf
                                         <button type="submit" class="btn btn-default btn-sm">{{ __('movements::eez.close_alert') }}</button>
                                     </form>

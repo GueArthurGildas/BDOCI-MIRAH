@@ -32,7 +32,7 @@
                 <x-ui.detail :label="__('administration::administration.connectors.last_error')">{{ $dataSource->last_error ?? '—' }}</x-ui.detail>
             </x-ui.detail-list>
             @can(App\Support\Authorization\Permission::ConnectorsManage->value)
-                <form method="POST" action="{{ route('administration.connectors.mode', $dataSource) }}" class="d-flex gap-2 m-t-10">
+                <form data-confirm="{{ __('administration::confirm.mode') }}" data-confirm-label="{{ __('administration::confirm.mode_yes') }}" method="POST" action="{{ route('administration.connectors.mode', $dataSource) }}" class="d-flex gap-2 m-t-10">
                     @csrf
                     @method('PATCH')
                     <select name="mode" class="form-select w-auto">
@@ -45,7 +45,7 @@
             @endcan
             @can(App\Support\Authorization\Permission::ConnectorsSync->value)
                 @if ($hasConnector)
-                    <form method="POST" action="{{ route('administration.connectors.sync', $dataSource) }}" enctype="multipart/form-data" class="d-flex gap-2 m-t-10">
+                    <form data-confirm="{{ __('administration::confirm.sync') }}" data-confirm-label="{{ __('administration::confirm.sync_yes') }}" method="POST" action="{{ route('administration.connectors.sync', $dataSource) }}" enctype="multipart/form-data" class="d-flex gap-2 m-t-10">
                         @csrf
                         @if ($dataSource->mode === App\Enums\DataSourceMode::Import)
                             <input type="file" name="file" accept=".json" class="form-control w-auto" aria-label="{{ __('administration::administration.connectors.import_file') }}" required>

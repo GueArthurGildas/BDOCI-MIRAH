@@ -174,6 +174,20 @@ class CaseFileTest extends TestCase
         $this->post(route('infractions.close', $case))->assertSessionHasErrors('case');
     }
 
+    public function test_closing_a_case_asks_for_confirmation_and_ends_with_a_success_popup(): void
+    {
+        $case = InfractionCase::factory()->create();
+        $this->signInAs(Role::Director);
+
+        $this->get(route('infractions.show', $case))
+            ->assertSee('data-confirm="'.e(__('infractions::confirm.close')).'"', false);
+
+        $this->followingRedirects()->post(route('infractions.close', $case))
+            ->assertSee('id="gs-popup"', false)
+            ->assertSee(__('infractions::infractions.messages.closed'))
+            ->assertDontSee('alert-success', false);
+    }
+
     #[Covers('UC17', partial: true)]
     #[Assumes('H-6-6')]
     public function test_decisions_are_never_taken_automatically_and_need_the_decide_permission(): void

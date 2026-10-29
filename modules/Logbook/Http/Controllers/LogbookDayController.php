@@ -49,7 +49,7 @@ class LogbookDayController extends Controller
     {
         $actions->run(CloseLogbookDay::class, request()->user(), ['day_id' => $day->id]);
 
-        return to_route('logbook.days.show', $day)->with('status', __('logbook::logbook.days.closed'));
+        return to_route('logbook.days.show', $day)->with('status', __('logbook::logbook.days.closed'))->with('popup', true);
     }
 
     public function pdf(LogbookDay $day): StreamedResponse

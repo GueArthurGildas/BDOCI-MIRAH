@@ -135,7 +135,7 @@ class CaseFileController extends Controller
     {
         $actions->run(CloseInfractionCase::class, $request->user(), ['infraction_case_id' => $case->id]);
 
-        return $this->back($case, 'closed');
+        return $this->back($case, 'closed')->with('popup', true);
     }
 
     public function download(InfractionCase $case, Document $document): StreamedResponse

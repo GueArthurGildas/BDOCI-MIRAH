@@ -6,13 +6,13 @@
             <x-slot:actions>
                 @if ($import->isOpen())
                     @can(App\Support\Authorization\Permission::LicensesValidate->value)
-                        <form method="POST" action="{{ route('licenses.imports.validate', $import) }}" class="d-inline">
+                        <form data-confirm="{{ __('licenses::confirm.validate_import') }}" data-confirm-label="{{ __('licenses::confirm.validate_import_yes') }}" method="POST" action="{{ route('licenses.imports.validate', $import) }}" class="d-inline">
                             @csrf
                             <button type="submit" class="btn btn-success btn-sm"><i class="feather icon-check-circle"></i> {{ __('licenses::imports.validate_all') }}</button>
                         </form>
                     @endcan
                     @can(App\Support\Authorization\Permission::LicensesImport->value)
-                        <form method="POST" action="{{ route('licenses.imports.cancel', $import) }}" class="d-inline">
+                        <form data-confirm="{{ __('licenses::confirm.cancel_import') }}" data-confirm-label="{{ __('licenses::confirm.cancel_import_yes') }}" method="POST" action="{{ route('licenses.imports.cancel', $import) }}" class="d-inline">
                             @csrf
                             <button type="submit" class="btn btn-outline-danger btn-sm">{{ __('licenses::imports.cancel') }}</button>
                         </form>
