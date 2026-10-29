@@ -163,7 +163,7 @@ resources/
 │   ├── pages/_timeline.scss             # chronologie de la fiche navire
 │   ├── _layout.scss, _components.scss   # ajustements propres à l'application
 │   └── theme/                           # thème GESICA : _tokens, _mixins, _base, _topbar, _shell, _page-header, _cards, _tables, _buttons, _forms, _labels, _tabs, _notifications, _comments (voir docs/DESIGN.md)
-├── fonts/                               # polices d'icônes feather, icofont, themify
+├── fonts/                               # polices d'icônes feather et icofont (woff seul)
 └── images/                              # images du thème
 
 tests/                                   # tests du socle ; chaque module a ses propres tests
