@@ -1,7 +1,7 @@
 @page {
     size: A4;
     margin: 22mm 18mm 22mm 18mm;
-    @top-left { content: "BOID MIRAH"; font: 600 8pt Poppins, sans-serif; color: #7a819b; }
+    @top-left { content: "BDOCI MIRAH"; font: 600 8pt Poppins, sans-serif; color: #7a819b; }
     @top-right { content: string(part); font: 8pt "Open Sans", sans-serif; color: #7a819b; }
     @bottom-center { content: counter(page); font: 8pt "Open Sans", sans-serif; color: #7a819b; }
 }

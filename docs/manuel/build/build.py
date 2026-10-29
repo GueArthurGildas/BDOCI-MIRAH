@@ -15,7 +15,7 @@ CSS = (HERE / 'style.css').read_text()
 WORK = HERE / 'work'
 
 COVER = '''<section class="cover">
-<div class="brand">BOID MIRAH</div>
+<div class="brand">BDOCI MIRAH</div>
 <h1>Manuel d'utilisation<br>et feuille de route<br><small style="font-size:60%;font-weight:400;color:#f9ab56">User manual and roadmap</small></h1>
 <p class="sub">Surveillance des pêches de Côte d'Ivoire — guide par rôle, programme de formation et feuille de route.<br><em>Fisheries monitoring of Côte d'Ivoire — role-based guide, training programme and roadmap.</em></p>
 <div class="meta">Centre de Surveillance des Pêches (CSP) · MIRAH<br>Version 1.0 · 29 octobre 2026 / 29 October 2026<br>Partie I : Français · Part II: English</div>
@@ -56,7 +56,7 @@ def document(pages_fr, pages_en):
     heads_en = [(l, x, f'e{i}') for l, x, i in heads_en]
     body_en = re.sub(r'<h([12]) id="h(\d+)"', r'<h\1 id="eh\2"', body_en)
     parts = [
-        '<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>BOID MIRAH — Manuel / Manual</title>',
+        '<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>BDOCI MIRAH — Manuel / Manual</title>',
         f'<base href="file://{WORK}/"><style>{CSS}</style></head><body>',
         COVER,
         '<section class="part" data-part="Partie I — Français"><h1>Partie I</h1><p>Français</p></section>',
