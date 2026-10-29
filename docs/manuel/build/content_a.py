@@ -3,13 +3,12 @@ from lib import *
 
 def intro():
     out = h1('À propos de ce document', 'About this document')
-    out += p('Ce manuel accompagne la livraison de l\'application <strong>BDOCI MIRAH</strong>, l\'outil de surveillance des pêches du Centre de Surveillance des Pêches (CSP) du Ministère des Ressources Animales et Halieutiques (MIRAH) de Côte d\'Ivoire. Il a deux usages : <strong>référence</strong> pour les équipes qui utilisent l\'application au quotidien, et <strong>support de formation</strong> pour les former.',
-             'This manual accompanies the delivery of the <strong>BDOCI MIRAH</strong> application, the fisheries monitoring tool of the Fisheries Monitoring Centre (CSP) of the Ministry of Animal and Fisheries Resources (MIRAH) of Côte d\'Ivoire. It has two purposes: a <strong>reference</strong> for the teams who use the application every day, and a <strong>training aid</strong> for teaching them.')
+    out += p('Ce manuel accompagne la livraison de l\'application <strong>BDOCI MIRAH</strong>, l\'outil de surveillance des pêches du Centre de Surveillance des Pêches (CSP) du Ministère des Ressources Animales et Halieutiques (MIRAH) de Côte d\'Ivoire. Il a deux usages : <strong>référence</strong> pour les équipes qui utilisent l\'application au quotidien, et <strong>guide de prise en main</strong> pour les nouveaux utilisateurs.',
+             'This manual accompanies the delivery of the <strong>BDOCI MIRAH</strong> application, the fisheries monitoring tool of the Fisheries Monitoring Centre (CSP) of the Ministry of Animal and Fisheries Resources (MIRAH) of Côte d\'Ivoire. It has two purposes: a <strong>reference</strong> for the teams who use the application every day, and a <strong>getting-started guide</strong> for new users.')
     out += h2('À qui s\'adresse-t-il ?', 'Who is it for?')
     out += table([('Lecteur', 'Reader'), ('Ce qu\'il y trouve', 'What they will find')], [
         [('Agent, Chef d\'équipe, Directeur', 'Agent, Team lead, Director'), ('Son chapitre de rôle : la journée type, les écrans, les procédures pas à pas, ce qui est permis et ce qui ne l\'est pas.', 'Their role chapter: a typical day, the screens, step-by-step procedures, what is allowed and what is not.')],
         [('Administrateur', 'Administrator'), ('Le chapitre d\'administration : comptes, rôles, paramètres, connecteurs, journal d\'audit.', 'The administration chapter: accounts, roles, settings, connectors, audit log.')],
-        [('Formateur', 'Trainer'), ('Le programme de formation par rôle, avec objectifs, exercices et questions de vérification.', 'The training programme by role, with objectives, exercises and check questions.')],
     ], [30, 70])
     out += h2('Comment le lire', 'How to read it')
     out += ul([

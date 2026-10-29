@@ -1,6 +1,6 @@
 # Manuel d'utilisation
 
-`BDOCI-MIRAH_Manuel_FR_EN.pdf` : manuel destiné au client et à ses employés, en français puis en anglais (guide par rôle, procédures pas à pas, programme de formation, glossaire, annexes).
+`BDOCI-MIRAH_Manuel_FR_EN.pdf` : manuel destiné au client et à ses employés, en français puis en anglais (guide par rôle, procédures pas à pas, aide-mémoire, glossaire, annexes).
 
 ## Régénérer le PDF
 
