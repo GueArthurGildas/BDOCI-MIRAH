@@ -142,7 +142,7 @@ app/
 
 config/surveillance.php                  # seuils métier, alertes et notifications : valeurs par défaut (les réglages les surchargent)
 database/                                # migrations, factories, seeders (référentiel, données de démo, activité des connecteurs)
-docs/                                    # GUIDE, TECHNICAL, DESIGN, PLAN_REFONTE, ACCEPTATION, décisions, hypothèses, schéma, référence générée
+docs/                                    # GUIDE, TECHNICAL, DESIGN, PLAN_REFONTE, ACCEPTATION, QUESTIONS_GILDAS, GLOSSAIRE, manuel, décisions, hypothèses, schéma, référence générée
 lang/                                    # traductions partagées (ui.php, enums.php) et messages Laravel
 modules/                                 # une fonctionnalité = un module (voir ci-dessous)
 
@@ -150,7 +150,7 @@ resources/
 ├── views/
 │   ├── components/layouts/              # layouts de page : app (barre du haut gs-topbar, menu gs-sidebar et contenu dans gs-shell) et auth
 │   ├── components/ui/                   # composants réutilisables (voir ci-dessous)
-│   ├── layouts/partials/                # morceaux du layout : head, header (barre du haut), sidebar, flash, locale-menu, locale-links, preloader
+│   ├── layouts/partials/                # morceaux du layout : head, header (barre du haut), sidebar, flash, locale-menu, locale-links, preloader, confirm-modal, remote-modal, popup, guide
 │   └── errors/                          # pages d'erreur 403, 404, 419, 429, 500, 503
 ├── js/
 │   ├── app.js                           # point d'entrée JS
@@ -308,8 +308,9 @@ Pour protéger une route : `->can(Permission::VesselsView->value)`. Pour affiche
 | `<x-ui.page-header>` | titre, sous-titre et fil d'Ariane |
 | `<x-ui.card>` | carte Adminty, avec slot `actions` |
 | `<x-ui.stat-card>` | indicateur chiffré coloré |
-| `<x-ui.filters>`, `<x-ui.filter-input>`, `<x-ui.filter-select>` | barre de filtres (GET) |
-| `<x-ui.table>`, `<x-ui.empty-row>` | tableau avec pagination |
+| `<x-ui.filters>`, `<x-ui.filter-input>`, `<x-ui.filter-select>` | carte de filtres (GET), encore utilisée par les pages sans barre d'outils |
+| `<x-ui.table>`, `<x-ui.empty-row>` | tableau avec pagination ; le slot `filters` ajoute la ligne de filtres sous l'en-tête |
+| `<x-ui.table-toolbar>`, `<x-ui.toolbar-input>`, `<x-ui.toolbar-select>`, `<x-ui.column-filter>` | barre d'outils d'un tableau (nombre de lignes, recherche, exports, réinitialisation) et filtres par colonne ; le nombre de lignes se lit avec `App\Support\Tables\PerPage` |
 | `<x-ui.tabs>`, `<x-ui.tab-pane>` | onglets |
 | `<x-ui.detail-list>`, `<x-ui.detail>` | liste libellé / valeur |
 | `<x-ui.status-badge>` | badge d'un enum métier (couleur et libellé traduit) |

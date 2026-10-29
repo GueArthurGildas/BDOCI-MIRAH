@@ -1,6 +1,6 @@
 # 0009 — Seuils par défaut
 
-**Statut** : recommandation acceptée le 2026-10-27 (D9). À appliquer en phases 3b et 4a.
+**Statut** : recommandation acceptée le 2026-10-27 (D9). Appliqué : silence de balise à 4 h et alertes de licence à 30, 60 et 90 jours (`config/surveillance.php`), modifiables dans Administration › Paramètres.
 
 ## Contexte
 

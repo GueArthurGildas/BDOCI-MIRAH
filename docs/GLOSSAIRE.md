@@ -60,24 +60,24 @@ Nom de la spécification (v1, français) → nom technique (v2, anglais) → sit
 |---|---|---|
 | `module_registre` | `module_registry` | créé (phase 1) |
 | `pays` | `countries` | créé (phase 2), avec `iso2_code` |
-| `zone` | `zones` | existe (géométrie JSON vers PostGIS) |
+| `zone` | `zones` | existe ; géométrie JSON conservée, colonne PostGIS `geom` synchronisée (phase 3b) |
 | `equipe` | `teams` | existe |
 | `role` | `roles` | créée (phase 1), avec `parent_id` et `description` |
 | `groupe` | `permission_groups` | créé (phase 1) |
-| `utilisateur` | `users` | existe, à étendre (type, fonction, téléphone) |
+| `utilisateur` | `users` | étendu (phase 1) : fonction, téléphone, numéro WhatsApp |
 | `utilisateur_role` | `role_user` | créée (phase 1) |
 | `utilisateur_groupe` | `permission_group_user` | créé (phase 1) |
-| `utilisateur_equipe` | `team_user` | nouveau |
+| `utilisateur_equipe` | `team_user` | créé (phase 1) |
 | `action_catalogue` | `action_catalog` | créé (phase 1) |
 | `permission` | `permission_grants` | créé (phase 1) |
 | `journal_audit` | `audit_log` | remplace `activity_log` (durci) |
-| `document` | `documents` | nouveau |
-| `document_lien` | `document_links` | nouveau |
+| `document` | `documents` | créé (phase 1) |
+| `document_lien` | `document_links` | créé (phase 1) |
 | `commentaire` | `comments` | a absorbé `data_source_comments` |
-| `liste_reference` | `reference_lists` | nouveau |
-| `liste_valeur` | `reference_list_values` | nouveau |
-| `champ_definition` | `custom_field_definitions` | nouveau |
-| `champ_valeur` | `custom_field_values` | nouveau |
+| `liste_reference` | `reference_lists` | créé (phase 1) |
+| `liste_valeur` | `reference_list_values` | créé (phase 1) |
+| `champ_definition` | `custom_field_definitions` | créé (phase 1) |
+| `champ_valeur` | `custom_field_values` | créé (phase 1) |
 | `parametre_seuil` | `threshold_parameters` | absorbe `settings` |
 
 ### M1 Référentiels et navires

@@ -7,8 +7,8 @@ description: "Follow the refactoring plan against the BOID MIRAH specification: 
 
 ## Read first
 
-- `docs/PLAN_REFONTE.md`: phase table, status, decisions D1 to D9, parallel execution rules. All phases are delivered; Gildas's validation is pending; open questions are in `docs/QUESTIONS_GILDAS.md` and assumptions in `docs/assumptions/`.
-- `docs/decisions/` (ADR 0001-0010): identifier language (English + glossary), PostgreSQL + PostGIS, flexible permissions, four roles (`admin`, `director`, `team_lead`, `agent`; the Admin has no business permission), reset from seeders, branch flow, validation, default thresholds, named actions.
+- `docs/PLAN_REFONTE.md`: phase table, status, decisions D1 to D9, dependency graph between phases, what remains to do. All phases are delivered; Gildas's validation is pending; open questions are in `docs/QUESTIONS_GILDAS.md` and assumptions in `docs/assumptions/`.
+- `docs/decisions/` (ADR 0001-0012): identifier language (English + glossary), PostgreSQL + PostGIS, flexible permissions, four roles (`admin`, `director`, `team_lead`, `agent`; the Admin has no business permission), reset from seeders, branch flow, validation, default thresholds, named actions.
 - Specification (Gildas): `database/docs/` (**untracked, never commit**): the specification markdown, the MCD and the MySQL schema v1. Target schema in `docs/schema/`.
 
 ## Rules
@@ -21,7 +21,7 @@ description: "Follow the refactoring plan against the BOID MIRAH specification: 
 
 ## Documents that move together
 
-A change to the model or a decision touches, as relevant: `docs/schema/schema_v2.sql`, `docs/schema/GLOSSAIRE_COLONNES.md`, `docs/schema/CONVENTIONS.md` (deviation table), `docs/GLOSSAIRE.md` (tests fail if a table is missing), a new ADR (never rewrite an old one: add a new number and mark the old one superseded), `docs/ACCEPTATION.md` (UC/RG traceability), `docs/GUIDE.md` (recipes), and the phase block in `docs/PLAN_REFONTE.md`.
+A change to the model or a decision touches, as relevant: `docs/schema/schema_v2.sql`, `docs/schema/GLOSSAIRE_COLONNES.md`, `docs/schema/CONVENTIONS.md` (deviation table), `docs/GLOSSAIRE.md` (tests fail if a table is missing), a new ADR (never rewrite an old one: add a new number and mark the old one superseded), `docs/ACCEPTATION.md` (UC/RG identifiers; coverage is computed in `docs/reference/acceptance.md`), `docs/GUIDE.md` (recipes), and the phase block in `docs/PLAN_REFONTE.md`.
 
 ## Style
 

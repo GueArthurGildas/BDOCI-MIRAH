@@ -22,6 +22,6 @@ Reference implementation: `modules/Licenses/Actions/RecordLicense.php`, called f
 ## Rules
 
 - The runner opens the transaction, checks `$actor->can(...)`, persists events, refreshes `vessel_current_states` for touched vessels, writes the audit entry. Do not duplicate any of that inside the action.
-- `VesselStateBuilder` only computes facts that are defined (license status, expiry, last position, VMS silence). Do not add business rules that the spec (`database/docs/`) does not define: the status light, "open" infractions and enhanced monitoring are open questions for Gildas (see `docs/QUESTIONS_GILDAS.md`).
+- `VesselStateBuilder` computes facts, and `StatusLight` applies the status-light rules. Do not invent business rules that the spec (`database/docs/`) does not define: when a rule is missing, record it as a provisional assumption in `docs/assumptions/` and list the question in `docs/QUESTIONS_GILDAS.md` (the status light and "open" infractions are such assumptions, H-8-1).
 - Other writes still go through controllers; convert them module by module, only when asked.
 - After adding an action or a permission, run `php artisan docs:generate` (catalogue in `docs/reference/actions.md`). A test that covers a use case or business rule of the specification carries `#[Covers('UC02', partial: true)]` (`Tests\Attributes\Covers`); run `php artisan docs:acceptance` afterwards.

@@ -1,6 +1,6 @@
 # 0004 — Droits flexibles derrière les `Gate`
 
-**Statut** : accepté le 2026-10-27, décision de l'utilisateur (option B de D4). En cours : première partie livrée, groupes, héritage et portée réalisés par l'ADR 0011.
+**Statut** : accepté le 2026-10-27, décision de l'utilisateur (option B de D4). Livré : groupes, héritage et portée ont été réalisés par l'ADR 0011.
 
 ## Contexte
 

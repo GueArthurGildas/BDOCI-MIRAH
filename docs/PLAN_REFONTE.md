@@ -1,6 +1,6 @@
-# Plan de refonte — alignement sur la spécification BOID MIRAH
+# Suivi des phases — alignement sur la spécification BOID MIRAH
 
-Ce plan suit l'alignement de l'application sur la spécification de `database/docs/` (modules M1 à M12, règles RG01–RG10, cas d'usage UC01–UC29, schéma SQL v1). Le détail du « pourquoi » est dans `docs/decisions/` ; les questions métier ouvertes dans `docs/QUESTIONS_GILDAS.md` ; les hypothèses retenues en attendant dans `docs/assumptions/`.
+Ce document était le plan de la refonte de l'application sur la spécification de `database/docs/` (modules M1 à M12, règles RG01–RG10, cas d'usage UC01–UC29, schéma SQL v1). **Toutes les phases sont livrées** : il sert désormais de **suivi** (état, décisions prises, ce qui reste à valider). Le détail du « pourquoi » est dans `docs/decisions/` ; les questions métier ouvertes dans `docs/QUESTIONS_GILDAS.md` ; les hypothèses retenues en attendant dans `docs/assumptions/`. Le nom du fichier est historique.
 
 | Source | Rôle |
 |---|---|
@@ -10,9 +10,11 @@ Ce plan suit l'alignement de l'application sur la spécification de `database/do
 
 ---
 
-## État d'avancement (fin de la nuit du 2026-10-28)
+## État d'avancement (2026-10-29)
 
-Toutes les phases sont livrées en **version fonctionnelle** : tables migrées, modèles, actions, écrans des flux principaux, données de démonstration et tests (637 tests verts). Les questions métier restées ouvertes ont été tranchées par l'option la plus raisonnable et consignées comme **hypothèses provisoires** dans `docs/assumptions/` (74 entrées, `H-<phase>-<n>`), isolées pour qu'une réponse de Gildas soit une modification locale (voir son README). Les phases ont été menées en parallèle (ADR 0012) ; la validation de Gildas reste à obtenir phase par phase.
+Toutes les phases sont livrées en **version fonctionnelle** : tables migrées, modèles, actions, écrans des flux principaux, données de démonstration et tests (plus de 670 tests verts). Les questions métier restées ouvertes ont été tranchées par l'option la plus raisonnable et consignées comme **hypothèses provisoires** dans `docs/assumptions/` (74 entrées, `H-<phase>-<n>`), isolées pour qu'une réponse de Gildas soit une modification locale (voir son README). Les phases ont été menées en parallèle (ADR 0012) ; **la validation de Gildas reste à obtenir phase par phase**.
+
+Depuis le 28 octobre : l'interface suit la référence GESICA (menu en pastilles avec compteurs, tableaux encadrés avec barre d'outils et filtres par colonne, onglets orange et gris, voir `docs/DESIGN.md`), les actions importantes demandent une confirmation, un aperçu rapide d'un navire et un message de réussite complètent les fenêtres, une visite guidée explique chaque page principale, et un manuel d'utilisation en français puis en anglais est livré dans `docs/manuel/`.
 
 | Phase | État | Hypothèses | Lacunes connues (voir le README du module et le fichier d'hypothèses) |
 |---|---|---|---|
@@ -28,6 +30,16 @@ Toutes les phases sont livrées en **version fonctionnelle** : tables migrées, 
 | 7 | livrée | H-7-1 à H-7-8 | accès réels (API, scraping, DPEP), alerte connecteur rouge |
 | 8 | livrée | H-8-1 à H-8-4 | onglets MREP et main courante, séries par période et zone |
 | 9 | livrée | H-9-1 à H-9-4 | listes et seuils par module (UC24), qualité des données, sauvegardes |
+
+---
+
+## Ce qui reste à faire
+
+1. **Validation par Gildas, phase par phase**, dans le format de `docs/assumptions/` (une réponse change un seul endroit).
+2. **Réponses aux questions ouvertes** de `docs/QUESTIONS_GILDAS.md` : quatre réponses partielles ont été reçues le 2026-10-29 (statut « à vérifier », infractions ouvertes, licence de référence, étiquettes), les autres bloquent encore la fin de certaines phases.
+3. **Accès réels aux sources externes** (THEMIS, e-inspection, DPEP/MREP, NENO), fournisseur d'e-mail et pilote WhatsApp : aujourd'hui les connecteurs lisent des jeux de données enregistrés.
+4. **Lacunes connues** par phase (dernière colonne du tableau ci-dessus).
+5. **Avant la mise en production** : remplacer les comptes et mots de passe de démonstration, choisir l'hébergement, les sauvegardes et la supervision.
 
 ---
 
@@ -51,7 +63,7 @@ Chaque décision devient un **ADR** (`docs/decisions/NNNN-titre.md`, format : co
 
 ---
 
-## Phases
+## Phases (livrées)
 
 | Phase | Contenu | Tables | Couvre |
 |---|---|---|---|
@@ -72,9 +84,9 @@ Le détail de ce que chaque phase livre est dans le README de son module (`modul
 
 ---
 
-## Exécution en parallèle (ADR 0012, appliqué)
+## Exécution en parallèle (appliquée, historique)
 
-Cette règle assouplit l'ADR 0008 (une phase à la fois) et reste à confirmer par Gildas.
+Les phases n'ont pas été menées l'une après l'autre : une fois la phase 2 faite, cinq phases n'avaient plus de dépendance de données entre elles (calculée sur les clés étrangères de `docs/schema/schema_v2.sql`). La règle est consignée dans l'ADR [0012](decisions/0012-parallel-phases.md) ; elle assouplit l'ADR 0008 et **reste à confirmer par Gildas**. Les techniques utilisées pour décorréler les phases (clés étrangères tardives, connecteur factice dès la première phase d'un module, questions bloquantes traitées par hypothèse) sont décrites dans cet ADR et dans les README de module.
 
 **Dépendances de données réelles**, calculées sur les clés étrangères de `docs/schema/schema_v2.sql` (nombre de clés d'une phase vers une autre ; le noyau, phase 1, est requis par toutes) :
 
@@ -91,29 +103,7 @@ Cette règle assouplit l'ADR 0008 (une phase à la fois) et reste à confirmer p
 | 8 | toutes | lecture seule |
 | 9 | noyau (2) ; 3a (1) | `operation_archives.operation_id` |
 
-**Techniques pour décorréler**
-
-- **Clés étrangères tardives** : la colonne existe dans la migration de sa phase, sans contrainte ; la phase qui livre la table cible ajoute la contrainte dans une migration de jonction. Les cycles 3a ↔ 3b se résolvent ainsi.
-- **Connecteur factice** dès la première phase d'un module (déjà prévu), pour tester sans accès réel.
-- **Questions bloquantes** (section 6) : une phase démarre sans la réponse et s'arrête avant le point qui en dépend.
-
-**Vagues proposées** (une phase naît quand ses dépendances sont validées) :
-
-| Vague | Phases | Condition |
-|---|---|---|
-| 0 | Fin de la phase 1 | validation de Gildas |
-| 1 | 2 | chemin critique ; en parallèle : questions de la section 6 et `docs/QUESTIONS_GILDAS.md` |
-| 2 | 3a, 3b, 4a puis 4b, 5, miroirs de la 7 | phase 2 validée ; trois flux au plus : A = 3a, B = 3b, C = 4a puis 4b puis 5 ; les miroirs 7 prennent le premier flux libre |
-| 3 | 6 | 3a, 3b, 4a, 5 et `external_inspections` validés |
-| 4 | 7 (connecteurs réels), puis 8, puis 9 | accords externes (V9, V12, V17, DPEP) ; 8 lit tous les modules |
-
-**Règles de travail**
-
-1. Un flux = un arbre de travail Git distinct (`git worktree`) sur une branche dédiée, créée depuis `y-branch` ; la décision D7 est complétée en conséquence. Intégration dans `y-branch` phase par phase, après validation, par fusion rebasée.
-2. Fichiers partagés, sources de conflits : énumération `App\Support\Authorization\Permission` et `Role::permissions()`, traductions `administration.permissions.*`, `docs/GLOSSAIRE.md`, `docs/schema/GLOSSAIRE_COLONNES.md`, `docs/ACCEPTATION.md`, `docs/reference/` (généré), `DatabaseSeeder`, ce plan. Chaque flux ajoute ses lignes en fin de bloc ; après chaque intégration on exécute `php artisan docs:generate` et `docs:acceptance`, jamais de fusion manuelle des fichiers générés.
-3. Migrations : un préfixe d'horodatage par flux (par exemple `2026_11_<flux>...`) pour éviter les collisions d'ordre ; une migration de jonction par paire de phases liées.
-4. Base de données de développement et tests : une base par arbre de travail (voir la compétence `dev-env`).
-5. Chaque phase garde sa définition de « terminé » et sa validation par Gildas ; aucune règle métier n'est inventée pour avancer.
+Les fichiers partagés, sources de conflits (`Permission`, `Role::permissions()`, traductions de permissions, glossaires, matrice d'acceptation, `DatabaseSeeder`), se mettent à jour ainsi : après chaque intégration on exécute `php artisan docs:generate` et `docs:acceptance`, jamais de fusion manuelle des fichiers générés.
 
 ---
 

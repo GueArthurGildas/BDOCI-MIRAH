@@ -8,10 +8,11 @@ Il renvoie à `docs/PLAN_REFONTE.md` pour l'état des phases. Quand une recette 
 |---|---|
 | `docs/TECHNICAL.md` | référence technique : Docker, architecture, modules, droits, traductions |
 | `docs/DESIGN.md` | thème GESICA, règles de design, pièges avec Adminty |
-| `docs/PLAN_REFONTE.md` | trajectoire de refonte par phases et décisions D1 à D9 |
-| `docs/ACCEPTATION.md` | matrice cas d'usage et règles de gestion, avec les tests qui les couvrent |
-| `docs/GLOSSAIRE.md` | vocabulaire métier français et noms techniques anglais (en cours de rédaction) |
-| `docs/decisions/` | décisions d'architecture (ADR), une par fichier (en cours de rédaction) |
+| `docs/PLAN_REFONTE.md` | suivi des phases (toutes livrées), décisions D1 à D9 et ce qui reste à valider |
+| `docs/ACCEPTATION.md` | identifiants des cas d'usage et des règles de gestion, avec leur phase ; la couverture par les tests est dans `docs/reference/acceptance.md` |
+| `docs/GLOSSAIRE.md` | vocabulaire métier français et noms techniques anglais |
+| `docs/decisions/` | décisions d'architecture (ADR), une par fichier |
+| `docs/manuel/` | manuel d'utilisation FR/EN pour le client (PDF) et son générateur |
 
 ---
 
@@ -180,7 +181,7 @@ Les deux langues doivent avoir exactement les mêmes clés. Le test `tests/Unit/
 3. Connectez-vous avec `$this->signInAs(Role::Agent)` : ce helper injecte les rôles et crée l'utilisateur. Pour un utilisateur sans rôle, `User::factory()->create()`.
 4. Créez les données avec les factories (`License::factory()->expiringIn(10)->create()`).
 5. Nommez la méthode `test_<comportement_en_phrase>` et vérifiez la réponse (`->assertOk()`, `->assertForbidden()`, `->assertSee(...)`).
-6. Quand un test couvre un cas d'usage ou une règle de gestion, notez-le dans `docs/ACCEPTATION.md` (voir la convention `#[Covers]` de ce document).
+6. Quand un test couvre un cas d'usage ou une règle de gestion, ajoutez `#[Covers('UCxx')]` (convention décrite dans `docs/ACCEPTATION.md`) puis lancez `php artisan docs:acceptance`.
 
 Modèle à copier : `modules/Licenses/Tests/Feature/LicensePagesTest.php`.
 
@@ -217,7 +218,24 @@ L'`ActionRunner` fait le reste, dans une seule transaction : contrôle de la per
 
 Après avoir ajouté une migration, une permission, une action, une route ou un module, lancez `php artisan docs:generate`. Après avoir écrit un test qui recouvre un cas d'usage (UC) ou une règle (RG), ajoutez `#[Covers('UC02', partial: true)]` à la classe ou à la méthode (`partial: true` tant que le cas n'est pas couvert en entier), puis `php artisan docs:acceptance`. `tests/Feature/Docs/GeneratedDocumentationTest.php` échoue si l'un des deux n'est pas à jour : c'est la même vérification que `--check`.
 
-### 4.11 Travailler avec Claude Code
+Le manuel d'utilisation (`docs/manuel/`) n'est pas généré à chaque commande : quand l'interface ou un parcours change, régénérez ses captures et son PDF (`docs/manuel/README.md`).
+
+### 4.11 Demander une confirmation, annoncer une réussite, ouvrir une fenêtre
+
+Trois fenêtres existent déjà (voir `docs/DESIGN.md`, section Fenêtres) ; rien à écrire en JavaScript.
+
+1. **Confirmation avant une action** : poser `data-confirm="{{ __('<module>::confirm.<cle>') }}"` et `data-confirm-label="{{ __('<module>::confirm.<cle>_yes') }}"` sur le `<form>` (ou sur le bouton, quand un formulaire a plusieurs boutons). Les textes vont dans `modules/<Module>/lang/{en,fr}/confirm.php`. Référence : `modules/Infractions/resources/views/show.blade.php` (clôture d'un dossier).
+2. **Message de réussite** : ajouter `->with('popup', true)` à la redirection (ou un tableau `[['label' => …, 'value' => …]]` pour des tuiles de récapitulatif). Référence : `CaseFileController::close`.
+3. **Aperçu d'une ressource** : un lien `data-gs-modal` charge l'URL dans une fenêtre ; la route renvoie un fragment sans layout. Référence : `VesselController::quick` et `modules/Vessels/resources/views/quick.blade.php`.
+
+### 4.12 Ajouter une page à la visite guidée
+
+1. **Cible** : poser `data-guide="clé"` sur la carte à expliquer (`<x-ui.card data-guide="clé" …>`), ou réutiliser les sélecteurs de liste (`.gs-table-toolbar`, `.gs-filter-row`, `.card .table`).
+2. **Étapes** : déclarer la route et ses étapes (`étape => sélecteur`) dans `config/guide.php`.
+3. **Textes** : l'introduction (`pages.<route avec _>.intro`) et, si besoin, le titre et le texte de chaque étape dans `lang/{en,fr}/guide.php` ; les étapes communes (barre d'outils, filtres, tableau) ont déjà un texte par défaut.
+4. **Test** : `tests/Feature/GuideTest.php` échoue si la route n'existe pas ou s'il manque un texte dans une langue.
+
+### 4.13 Travailler avec Claude Code
 
 Le dépôt contient des *skills* Claude Code dans `.claude/skills/` : ce sont les recettes ci-dessus, sous une forme que l'assistant applique automatiquement quand la demande correspond. Ils sont chargés au démarrage d'une session.
 

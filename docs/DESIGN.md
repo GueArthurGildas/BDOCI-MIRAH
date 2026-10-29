@@ -73,3 +73,12 @@ Le bouton « Guide utilisateur » de la sidebar (et l'icône « ? » de la barre
 - **Cibles dans les vues** : poser `data-guide="clé"` sur une carte (`<x-ui.card data-guide="clé" …>`) plutôt que de compter sur la position ; les sélecteurs de listes (`.gs-table-toolbar`, `.gs-filter-row`, `.card .table`) existent déjà.
 - **Droits** : une étape dont la cible est absente de la page (bouton réservé à un autre rôle, carte vide) est ignorée automatiquement.
 - **Test** : `tests/Feature/GuideTest.php` vérifie que chaque page configurée est une vraie route, a son introduction et ses textes dans les deux langues.
+
+## Fenêtres
+
+Trois fenêtres Bootstrap sont montées une fois dans le layout (`layouts/partials/confirm-modal`, `remote-modal`, `popup`) et pilotées par `resources/js/layout/` ; les styles sont dans `scss/theme/_modals.scss`.
+
+- **Confirmation** : tout `<form>` (ou bouton d'envoi) portant `data-confirm` ouvre une fenêtre avec le message, un lien « Annuler » et un bouton orange (`data-confirm-label`). `data-confirm-title` change le titre ; `data-confirm-details` (JSON `[{label, value}]`) ajoute des tuiles de récapitulatif. Les textes d'un module sont dans `modules/<Module>/lang/{en,fr}/confirm.php`.
+- **Réussite** : une redirection avec `->with('status', …)->with('popup', true)` affiche le message dans une fenêtre à coche verte au lieu du bandeau ; `->with('popup', [['label' => …, 'value' => …]])` ajoute des tuiles.
+- **Aperçu** : un lien `data-gs-modal` charge son URL en AJAX dans la fenêtre ; la route renvoie un fragment HTML sans layout (exemple : l'œil à côté d'un navire, `vessels.quick`).
+
