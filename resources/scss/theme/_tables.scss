@@ -1,9 +1,8 @@
 .table {
     > thead > tr > th {
         padding: 12px 14px;
-        background: var(--gs-black);
+        background: var(--gs-frame);
         border: 0;
-        border-bottom: 3px solid var(--gs-orange);
         color: #fff;
         font: 700 .72rem var(--gs-font-title);
         letter-spacing: .04em;
@@ -32,8 +31,8 @@
 }
 
 .page-item.active .page-link {
-    background: var(--gs-orange);
-    border-color: var(--gs-orange);
+    background: var(--gs-frame);
+    border-color: var(--gs-frame);
     color: #fff;
 }
 

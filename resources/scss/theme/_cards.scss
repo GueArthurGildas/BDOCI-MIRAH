@@ -53,6 +53,43 @@
         background: transparent;
         border-top: 1px solid var(--gs-line);
     }
+
+    &:has(.table-responsive) {
+        padding: 10px;
+        background: var(--gs-frame);
+        border: 0;
+        border-radius: var(--gs-radius-frame);
+
+        .card-header {
+            padding: 8px 12px 14px;
+            background: transparent;
+            border-bottom: 0;
+
+            .card-option i {
+                color: #fff;
+            }
+
+            .btn-primary {
+                @include solid-button(var(--gs-orange), var(--gs-orange-dark));
+
+                i {
+                    color: #fff;
+                }
+            }
+        }
+
+        .card-body,
+        .card-footer {
+            overflow: hidden;
+            background: var(--gs-surface);
+            border-radius: var(--gs-radius);
+        }
+
+        .card-footer {
+            margin-top: 6px;
+            border-top: 0;
+        }
+    }
 }
 
 .gs-stat {
