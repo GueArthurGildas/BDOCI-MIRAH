@@ -52,7 +52,7 @@ class PositionStorageTest extends TestCase
     {
         $this->artisan('tracking:create-position-partitions', ['--months' => 40])->assertSuccessful();
 
-        $this->assertNotNull(DB::selectOne('SELECT to_regclass(?) AS name', ['positions_'.now()->addMonths(40)->format('Y_m')])->name);
+        $this->assertNotNull(DB::selectOne('SELECT to_regclass(?) AS name', ['positions_'.now()->startOfMonth()->addMonths(40)->format('Y_m')])->name);
     }
 
     public function test_the_new_position_columns_are_stored_and_the_index_plan_exists(): void
