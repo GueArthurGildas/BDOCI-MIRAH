@@ -89,6 +89,13 @@ return [
         ],
     ],
 
+    'confirm' => [
+        'title' => 'Confirmation',
+        'proceed' => 'Oui, continuer',
+        'delete' => 'Oui, supprimer',
+        'remove' => 'Oui, retirer',
+    ],
+
     'health' => [
         'title' => 'Santé du système',
         'message' => '{1} :count source de données demande votre attention :|[2,*] :count sources de données demandent votre attention :',

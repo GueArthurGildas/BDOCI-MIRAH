@@ -35,7 +35,7 @@
                         <td class="text-end text-nowrap">
                             <a href="{{ route('administration.roles.edit', $role) }}" class="btn btn-sm btn-outline-primary">{{ __('ui.edit') }}</a>
                             @unless ($isSystem)
-                                <form method="POST" action="{{ route('administration.roles.destroy', $role) }}" class="d-inline" onsubmit="return confirm(@js(__('administration::administration.roles.confirm_delete', ['role' => $role->name])))">
+                                <form method="POST" action="{{ route('administration.roles.destroy', $role) }}" class="d-inline" data-confirm="{{ __('administration::administration.roles.confirm_delete', ['role' => $role->name]) }}" data-confirm-label="{{ __('ui.confirm.delete') }}">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-outline-danger" @disabled($role->users_count > 0) title="{{ $role->users_count > 0 ? __('administration::administration.roles.cannot_delete_in_use') : '' }}">

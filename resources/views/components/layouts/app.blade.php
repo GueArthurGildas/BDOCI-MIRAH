@@ -24,5 +24,7 @@
             {{ $slot }}
         </main>
     </div>
+
+    @include('layouts.partials.confirm-modal')
 </body>
 </html>

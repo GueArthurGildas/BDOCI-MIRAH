@@ -32,7 +32,7 @@
                         <td class="text-end text-nowrap">
                             <a href="{{ route('administration.groups.edit', $group) }}" class="btn btn-sm btn-outline-primary">{{ __('ui.edit') }}</a>
                             @unless ($group->is_system)
-                                <form method="POST" action="{{ route('administration.groups.destroy', $group) }}" class="d-inline" onsubmit="return confirm(@js(__('administration::groups.confirm_delete', ['group' => $group->label])))">
+                                <form method="POST" action="{{ route('administration.groups.destroy', $group) }}" class="d-inline" data-confirm="{{ __('administration::groups.confirm_delete', ['group' => $group->label]) }}" data-confirm-label="{{ __('ui.confirm.delete') }}">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-outline-danger">{{ __('administration::administration.roles.delete') }}</button>

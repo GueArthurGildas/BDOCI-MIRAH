@@ -89,6 +89,13 @@ return [
         ],
     ],
 
+    'confirm' => [
+        'title' => 'Confirmation',
+        'proceed' => 'Yes, continue',
+        'delete' => 'Yes, delete',
+        'remove' => 'Yes, remove',
+    ],
+
     'health' => [
         'title' => 'System health',
         'message' => '{1} :count data source needs attention:|[2,*] :count data sources need attention:',

@@ -1,0 +1,81 @@
+.gs-modal {
+    .modal-content {
+        overflow: hidden;
+        border: 0;
+        border-top: 4px solid var(--gs-orange);
+        border-radius: var(--gs-radius-frame);
+        box-shadow: var(--gs-shadow-raised);
+    }
+
+    .modal-body {
+        padding: 28px 28px 24px;
+        text-align: center;
+    }
+
+    h5 {
+        margin: 12px 0 6px;
+        color: var(--gs-ink);
+        font: 700 1.1rem var(--gs-font-title);
+    }
+
+    p {
+        margin: 0 0 18px;
+        color: var(--gs-muted);
+    }
+}
+
+.gs-modal-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    background: var(--gs-orange-tint);
+    border-radius: 50%;
+    color: var(--gs-orange);
+    font-size: 1.8rem;
+}
+
+.gs-modal-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 18px;
+    text-align: left;
+
+    &:empty {
+        display: none;
+    }
+
+    div {
+        padding: 10px 14px;
+        background: var(--gs-surface-alt);
+        border: 1px solid var(--gs-line);
+        border-radius: var(--gs-radius);
+    }
+
+    small {
+        display: block;
+        color: var(--gs-muted);
+        font: 600 .68rem var(--gs-font-title);
+        letter-spacing: .06em;
+        text-transform: uppercase;
+    }
+
+    strong {
+        color: var(--gs-ink);
+    }
+}
+
+.gs-modal-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+
+    .btn-link {
+        color: var(--gs-ink-soft);
+        font-weight: 600;
+        text-decoration: none;
+    }
+}

@@ -52,6 +52,17 @@ class RoleAdministrationTest extends TestCase
             ->assertSee(__('administration::administration.permissions.vessels.view'));
     }
 
+    public function test_deleting_a_role_asks_for_confirmation_in_the_themed_modal(): void
+    {
+        $this->signInAs(Role::Admin);
+        $this->customRole('Port officer');
+
+        $this->get(route('administration.roles.index'))
+            ->assertSee('id="gs-confirm"', false)
+            ->assertSee('data-confirm="'.e(__('administration::administration.roles.confirm_delete', ['role' => 'Port officer'])).'"', false)
+            ->assertDontSee('onsubmit="return confirm(', false);
+    }
+
     public function test_a_custom_role_can_be_created_and_grants_exactly_its_permissions(): void
     {
         $this->signInAs(Role::Admin);

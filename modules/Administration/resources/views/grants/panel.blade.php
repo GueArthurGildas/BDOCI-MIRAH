@@ -17,7 +17,7 @@
                     <td>{{ $grant->valid_from?->toDateString() ?? '—' }}</td>
                     <td>{{ $grant->valid_to?->toDateString() ?? '—' }}</td>
                     <td class="text-end">
-                        <form method="POST" action="{{ route('administration.grants.destroy', $grant) }}" class="d-inline" onsubmit="return confirm(@js(__('administration::grants.confirm_remove')))">
+                        <form method="POST" action="{{ route('administration.grants.destroy', $grant) }}" class="d-inline" data-confirm="{{ __('administration::grants.confirm_remove') }}" data-confirm-label="{{ __('ui.confirm.remove') }}">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-outline-danger">{{ __('administration::grants.remove') }}</button>
