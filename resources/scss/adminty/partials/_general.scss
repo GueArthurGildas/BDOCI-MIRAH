@@ -54,6 +54,12 @@ p {
     }
 }
 
+.page-body {
+    padding: 15px;
+    border-radius: 12px;
+    background: #fff;
+}
+
 /* Bootstrap 5 flex utilities - replacing deprecated .media-left */
 .flex-shrink-0.me-3 {
     /* Inherits Bootstrap 5 spacing */
