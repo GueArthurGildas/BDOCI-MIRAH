@@ -13,14 +13,18 @@
 .gs-sidebar {
     position: sticky;
     top: 74px;
-    flex: 0 0 272px;
+    flex: 0 0 292px;
     display: flex;
     flex-direction: column;
     gap: 14px;
-    width: 272px;
+    width: 292px;
     min-height: calc(100vh - 110px);
     max-height: calc(100vh - 92px);
-    padding: 0 4px 4px 0;
+    padding: 14px;
+    background: var(--gs-surface-alt);
+    border: 1px solid var(--gs-line);
+    border-radius: var(--gs-radius-frame);
+    box-shadow: var(--gs-shadow-soft);
 }
 
 .gs-user {
@@ -164,7 +168,7 @@
         width: 100%;
         min-height: 0;
         max-height: none;
-        padding: 0;
+        padding: 12px;
     }
 
     .gs-menu {
