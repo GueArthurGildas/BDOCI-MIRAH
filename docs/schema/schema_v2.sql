@@ -81,6 +81,7 @@ CREATE TABLE users (
     password varchar(255),
     is_active boolean NOT NULL DEFAULT true,
     last_login_at timestamp(0),
+    dashboard_widgets jsonb,
     created_at timestamp(0),
     updated_at timestamp(0)
 );

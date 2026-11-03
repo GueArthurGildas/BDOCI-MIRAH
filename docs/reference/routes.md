@@ -85,6 +85,10 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `communications.templates.update` | PUT | `/communications/templates/{template}` | `communications.manage_templates` |
 | `communications.webhooks.delivery` | POST | `/communications/webhooks/delivery` | — |
 | `dashboard` | GET | `/dashboard` | `dashboard.view` |
+| `dashboard.customize` | GET | `/dashboard/customize` | `dashboard.view` |
+| `dashboard.widgets.reset` | DELETE | `/dashboard/widgets` | `dashboard.view` |
+| `dashboard.widgets.show` | GET | `/dashboard/widgets/{widget}` | `dashboard.view` |
+| `dashboard.widgets.update` | PUT | `/dashboard/widgets` | `dashboard.view` |
 | `fleet.index` | GET | `/fleet` | `indicators.view` |
 | `indicators.show` | GET | `/indicators/{indicator}` | `indicators.view` |
 | `infractions.appeals.outcome` | PATCH | `/infractions/appeals/{appeal}` | `infractions.decide` |

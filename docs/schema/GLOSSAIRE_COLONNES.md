@@ -82,6 +82,7 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 | `mot_de_passe` | `password` | varchar(255) |
 | `actif` | `is_active` | boolean |
 | `derniere_connexion` | `last_login_at` | timestamp(0) |
+| `indicateurs_tableau_de_bord` | `dashboard_widgets` | jsonb |
 | `created_at` | `created_at` | timestamp(0) |
 | `updated_at` | `updated_at` | timestamp(0) |
 

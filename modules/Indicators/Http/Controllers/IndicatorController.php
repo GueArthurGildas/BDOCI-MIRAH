@@ -7,11 +7,11 @@ use App\Enums\VesselStatusLight;
 use App\Http\Controllers\Controller;
 use App\Models\Country;
 use App\Models\Zone;
+use App\Support\Indicators\IndicatorCatalog;
+use App\Support\Indicators\IndicatorFilters;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\View\View;
-use Modules\Indicators\Support\IndicatorCatalog;
-use Modules\Indicators\Support\IndicatorFilters;
 
 class IndicatorController extends Controller
 {

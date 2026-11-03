@@ -8,13 +8,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Vessel;
 use App\Models\VesselCurrentState;
 use App\Models\Zone;
+use App\Support\Indicators\IndicatorCatalog;
+use App\Support\Indicators\IndicatorFilters;
 use App\Support\Vessels\VesselIndicators;
 use App\Support\Vessels\VigilanceScore;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
-use Modules\Indicators\Support\IndicatorCatalog;
-use Modules\Indicators\Support\IndicatorFilters;
 
 class FleetController extends Controller
 {

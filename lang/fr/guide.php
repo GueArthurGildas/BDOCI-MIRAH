@@ -25,6 +25,7 @@ return [
             'intro' => 'Votre tableau de bord : l\'état de la surveillance en un coup d\'œil, à chaque ouverture de l\'application.',
             'steps' => [
                 'stats' => ['title' => 'Les indicateurs clés', 'text' => 'Navires actifs, licences qui expirent, observations en suspens et balises en rupture. Les chiffres sont recalculés à chaque ouverture de la page.'],
+                'messages' => ['title' => 'Mes messages', 'text' => 'Les messages qui vous sont adressés, à vous ou à votre équipe, et qui n\'ont pas encore été lus.'],
                 'zones' => ['title' => 'Situation par zone', 'text' => 'Le nombre de navires présents dans chaque zone portuaire à cet instant.'],
                 'infractions' => ['title' => 'Infractions par statut', 'text' => 'La répartition des dossiers d\'infraction : ouverts, en instruction, en décision, clos.'],
                 'sources' => ['title' => 'Fraîcheur des données', 'text' => 'Pour chaque source externe : dernière synchronisation, erreurs et rejets. Un statut dégradé demande l\'attention de l\'Administrateur.'],

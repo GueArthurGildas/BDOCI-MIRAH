@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Indicators\Support;
+namespace App\Support\Indicators;
 
 use App\Enums\LicenseStatus;
 use App\Enums\OperationStatus;

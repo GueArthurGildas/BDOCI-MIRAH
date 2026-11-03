@@ -16,7 +16,7 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
 
-#[Fillable(['name', 'email', 'job_title', 'phone', 'whatsapp_number', 'password', 'team_id', 'is_active'])]
+#[Fillable(['name', 'email', 'job_title', 'phone', 'whatsapp_number', 'password', 'team_id', 'is_active', 'dashboard_widgets'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -36,6 +36,7 @@ class User extends Authenticatable
             'is_active' => 'boolean',
             'type' => UserType::class,
             'last_login_at' => 'datetime',
+            'dashboard_widgets' => 'array',
         ];
     }
 

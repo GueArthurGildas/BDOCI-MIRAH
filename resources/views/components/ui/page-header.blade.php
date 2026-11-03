@@ -1,4 +1,4 @@
-@props(['title', 'subtitle' => null, 'breadcrumbs' => [], 'icon' => null])
+@props(['title', 'subtitle' => null, 'breadcrumbs' => [], 'icon' => null, 'actions' => null])
 @inject('navigation', App\Support\Navigation\Navigation::class)
 @php($icon ??= $navigation->activeItemFor(auth()->user())?->icon ?? 'icon-file-text')
 
@@ -16,6 +16,9 @@
             </div>
         </div>
         <div class="col-lg-4">
+            @if ($actions)
+                <div class="gs-header-actions">{{ $actions }}</div>
+            @endif
             <ul class="breadcrumb-title">
                 <li class="breadcrumb-item">
                     <a href="{{ url('/') }}" title="{{ __('ui.home') }}"><i class="feather icon-home"></i></a>

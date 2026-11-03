@@ -1853,6 +1853,7 @@ erDiagram
         varchar phone
         varchar whatsapp_number
         timestamp last_login_at
+        jsonb dashboard_widgets
     }
     vessel_actors {
         int8 id PK

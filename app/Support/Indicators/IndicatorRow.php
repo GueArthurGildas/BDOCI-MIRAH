@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Indicators\Support;
+namespace App\Support\Indicators;
 
 use App\Models\Vessel;
 use Illuminate\Support\Carbon;

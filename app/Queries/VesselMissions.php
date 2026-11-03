@@ -14,6 +14,12 @@ final class VesselMissions
         return Mission::query()->where('status', MissionStatus::InProgress->value);
     }
 
+    /** @return Collection<string, int> */
+    public static function countByStatus(): Collection
+    {
+        return Mission::query()->toBase()->selectRaw('status, count(*) as total')->groupBy('status')->pluck('total', 'status');
+    }
+
     /** @return Collection<int, Mission> */
     public static function forVessel(int $vesselId): Collection
     {
