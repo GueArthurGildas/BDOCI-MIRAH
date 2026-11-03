@@ -5,6 +5,7 @@ import { initPopup } from './popup';
 import { initRemoteModals } from './remote-modal';
 import { initFullScreenToggle } from './fullscreen';
 import { initGuide } from './guide';
+import { initMenuFolders } from './menu';
 import { initNotifications } from './notifications';
 import { initPhotos } from './photos';
 import { hidePreloader } from './preloader';
@@ -20,6 +21,7 @@ export function initLayout() {
     initGuide();
     initFullScreenToggle();
     initTooltips();
+    initMenuFolders();
     initPhotos();
     initTrees();
     initNotifications();

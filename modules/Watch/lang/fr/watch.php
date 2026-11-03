@@ -3,6 +3,7 @@
 return [
     'board' => [
         'nav' => 'Tableau du matin',
+        'overview_nav' => 'Vue d\'ensemble',
         'title' => 'Tableau du matin',
         'subtitle' => 'Navires à surveiller, consignes permanentes, observations ouvertes et relais à lire',
         'stats' => [

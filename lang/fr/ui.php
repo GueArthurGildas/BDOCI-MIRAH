@@ -35,6 +35,12 @@ return [
     'saved' => 'Modifications enregistrées.',
     'updated_at' => 'Mis à jour à :time',
 
+    'navigation_folders' => [
+        'e_inspection' => 'e-inspection',
+        'morning_board' => 'Tableau du matin',
+        'logbook' => 'Main courante',
+    ],
+
     'navigation_groups' => [
         'overview' => 'Pilotage',
         'surveillance' => 'Surveillance',

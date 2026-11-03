@@ -230,6 +230,7 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `reports.store` | POST | `/reports` | `reports.manage` |
 | `reports.update` | PUT | `/reports/{scheduledReport}` | `reports.manage` |
 | `search` | GET | `/search` | — |
+| `thermis.index` | GET | `/thermis` | `tracking.view` |
 | `tracking.alerts.acknowledge` | POST | `/tracking/alerts/{alert}/acknowledge` | `tracking.view`, `tracking.create` |
 | `tracking.alerts.handle` | POST | `/tracking/alerts/{alert}/handle` | `tracking.view`, `tracking.create` |
 | `tracking.alerts.index` | GET | `/tracking/alerts` | `tracking.view` |

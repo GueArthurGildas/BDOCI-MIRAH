@@ -35,6 +35,12 @@ return [
     'saved' => 'Changes saved.',
     'updated_at' => 'Updated at :time',
 
+    'navigation_folders' => [
+        'e_inspection' => 'e-inspection',
+        'morning_board' => 'Morning board',
+        'logbook' => 'Logbook',
+    ],
+
     'navigation_groups' => [
         'overview' => 'Overview',
         'surveillance' => 'Surveillance',

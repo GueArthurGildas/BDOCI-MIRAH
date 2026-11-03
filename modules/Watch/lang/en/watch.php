@@ -3,6 +3,7 @@
 return [
     'board' => [
         'nav' => 'Morning board',
+        'overview_nav' => 'Overview',
         'title' => 'Morning board',
         'subtitle' => 'Vessels to watch, standing instructions, open observations and relays to read',
         'stats' => [

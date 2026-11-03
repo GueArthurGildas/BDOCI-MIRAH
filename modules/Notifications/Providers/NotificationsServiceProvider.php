@@ -10,6 +10,6 @@ class NotificationsServiceProvider extends ModuleServiceProvider
 {
     protected function navigation(Navigation $navigation): void
     {
-        $navigation->add('notifications::notifications.title', 'notifications.index', 'icon-bell', NavigationGroup::Overview, order: 90);
+        $navigation->add('notifications::notifications.title', 'notifications.index', 'icon-bell', NavigationGroup::Overview, order: 40);
     }
 }

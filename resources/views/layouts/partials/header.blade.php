@@ -1,10 +1,10 @@
 <header class="gs-topbar">
     <ul class="gs-tabs">
-        @foreach ($groups as $groupLabel => $items)
-            @php($firstItem = $items->first())
+        @foreach ($tree as $groupLabel => $nodes)
+            @php($firstNode = $nodes->first())
             <li @class(['gs-tab', 'active' => $groupLabel === $activeGroup])>
-                <a href="{{ $firstItem->url() }}">
-                    <i class="feather {{ $firstItem->icon }}"></i>
+                <a href="{{ $firstNode->firstUrl() }}">
+                    <i class="feather {{ $firstNode->icon() }}"></i>
                     <span>{{ __($groupLabel) }}</span>
                 </a>
             </li>

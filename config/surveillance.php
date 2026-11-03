@@ -36,6 +36,7 @@ return [
     ],
     'vms' => [
         'position_feed' => env('SURVEILLANCE_POSITION_FEED', 'fake'),
+        'themis_url' => env('SURVEILLANCE_THEMIS_URL'),
         'themis_vessel_url' => env('SURVEILLANCE_THEMIS_VESSEL_URL'),
         'counting_localities' => ['Abidjan', 'San Pedro', 'Sassandra'],
         'failure_repair_deadline_days' => [

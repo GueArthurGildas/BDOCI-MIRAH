@@ -15,6 +15,7 @@ final readonly class NavigationItem
         public int $order = 100,
         public ?string $permission = null,
         public ?Closure $badge = null,
+        public ?NavigationFolder $folder = null,
     ) {}
 
     public function badgeCount(): ?int

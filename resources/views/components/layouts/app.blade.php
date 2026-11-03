@@ -2,6 +2,7 @@
 @inject('navigation', App\Support\Navigation\Navigation::class)
 @php
     $groups = $navigation->groupsFor(auth()->user());
+    $tree = $navigation->treeFor(auth()->user());
     $activeItem = $navigation->activeItemFor(auth()->user());
     $activeGroup = $activeItem?->group->label() ?? $groups->keys()->first();
 @endphp
@@ -13,10 +14,10 @@
 <body>
     @include('layouts.partials.preloader')
 
-    @include('layouts.partials.header', ['groups' => $groups, 'activeGroup' => $activeGroup])
+    @include('layouts.partials.header', ['tree' => $tree, 'activeGroup' => $activeGroup])
 
     <div class="gs-shell">
-        @include('layouts.partials.sidebar', ['groups' => $groups, 'activeGroup' => $activeGroup, 'activeItem' => $activeItem])
+        @include('layouts.partials.sidebar', ['tree' => $tree, 'activeGroup' => $activeGroup, 'activeItem' => $activeItem])
 
         <main class="gs-content">
             @include('layouts.partials.health-banner')
