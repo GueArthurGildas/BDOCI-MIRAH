@@ -155,4 +155,56 @@ class VesselPhotosTest extends TestCase
 
         $this->delete(route('vessels.photos.destroy', [$vessel, $photo]))->assertNotFound();
     }
+
+    public function test_the_photo_sits_in_the_header_with_the_global_status_right_below(): void
+    {
+        $this->manager();
+        $vessel = Vessel::factory()->create();
+        $this->upload($vessel);
+
+        $html = $this->get(route('vessels.show', $vessel))->assertOk()->getContent();
+
+        $carousel = strpos($html, 'data-gs-carousel');
+        $status = strpos($html, 'gs-header-status');
+        $details = strpos($html, __('vessels::vessels.fields.imo_number'));
+
+        $this->assertNotFalse($carousel);
+        $this->assertLessThan($status, $carousel);
+        $this->assertLessThan($details, $status);
+        $this->assertSame(0, substr_count($html, 'data-guide="photos"'));
+    }
+
+    public function test_managers_manage_photos_from_a_modal_opened_in_the_header(): void
+    {
+        $this->manager();
+        $vessel = Vessel::factory()->create();
+
+        $this->get(route('vessels.show', $vessel))
+            ->assertSee('data-bs-target="#gs-photo-manage"', false)
+            ->assertSee('id="gs-photo-manage"', false);
+    }
+
+    public function test_viewers_get_the_photo_but_no_management_controls(): void
+    {
+        $this->signInWithPermissions(Permission::VesselsView);
+        $vessel = Vessel::factory()->create();
+
+        $this->get(route('vessels.show', $vessel))
+            ->assertOk()
+            ->assertSee('vessel-placeholder.svg')
+            ->assertDontSee('gs-photo-manage', false);
+    }
+
+    public function test_the_folder_view_keeps_a_photos_pane_to_manage_them(): void
+    {
+        $this->manager();
+        $vessel = Vessel::factory()->create();
+        $this->upload($vessel);
+
+        $this->get(route('vessels.show', [$vessel, 'view' => 'folders', 'pane' => 'photos']))
+            ->assertOk()
+            ->assertViewHas('pane', 'photos')
+            ->assertSee('name="photos[]"', false)
+            ->assertSee('data-guide="photos"', false);
+    }
 }

@@ -312,6 +312,7 @@ return [
         'previous' => 'Photo précédente',
         'next' => 'Photo suivante',
         'add' => 'Ajouter',
+        'manage' => 'Gérer les photos',
         'remove' => 'Retirer cette photo',
         'field' => 'photos',
         'added' => '{1} Photo ajoutée.|[2,*] :count photos ajoutées.',

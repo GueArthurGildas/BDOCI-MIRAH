@@ -1,4 +1,4 @@
-<x-ui.card data-guide="tree" :title="__('vessels::vessels.folders.title')">
+<x-ui.card data-guide="tree" class="gs-tree-card" :title="__('vessels::vessels.folders.title')">
     <x-slot:actions>
         <ul class="list-unstyled card-option">
             <li><a href="#" data-gs-tree="open" data-bs-toggle="tooltip" data-bs-title="{{ __('vessels::vessels.folders.expand') }}"><i class="feather icon-plus-square"></i></a></li>

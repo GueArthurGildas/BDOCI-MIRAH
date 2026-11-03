@@ -424,7 +424,31 @@
 }
 
 .gs-tree-search {
+    position: sticky;
+    top: 0;
+    z-index: 1;
     margin-bottom: 12px;
+    padding-bottom: 8px;
+    background: var(--gs-surface);
+}
+
+@media (min-width: 1200px) {
+    .gs-tree-card {
+        position: sticky;
+        top: 74px;
+        display: flex;
+        flex-direction: column;
+        max-height: calc(100vh - 112px);
+
+        > .card-body {
+            flex: 1 1 auto;
+            min-height: 0;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            scrollbar-color: var(--gs-line) transparent;
+            scrollbar-width: thin;
+        }
+    }
 }
 
 .gs-tree {
@@ -506,4 +530,16 @@
 
 tr:target {
     background: var(--gs-orange-tint);
+}
+
+.gs-header-status {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--gs-line);
+}
+
+.gs-photos-empty .gs-photo {
+    height: 205px;
+    object-fit: contain;
+    cursor: default;
 }

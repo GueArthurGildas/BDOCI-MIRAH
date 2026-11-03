@@ -9,7 +9,7 @@
                     <i class="feather icon-folder"></i> {{ __('vessels::vessels.views.folders') }}
                 </a>
             </div>
-            <a href="{{ route('vessels.sheet', $vessel) }}" class="btn btn-sm btn-outline-primary">
+            <a href="{{ route('vessels.sheet', $vessel) }}" class="btn btn-sm btn-outline-primary m-1">
                 <i class="feather icon-download"></i> {{ __('vessels::vessels.sheet.download') }}
             </a>
         </x-slot:actions>
@@ -30,7 +30,6 @@
         @else
             <div class="row">
                 <div class="col-xl-4">
-                    @include('vessels::show.photos')
                     @include('vessels::show.summary')
                 </div>
                 <div class="col-xl-8">

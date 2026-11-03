@@ -1,15 +1,23 @@
 <x-ui.card data-guide="header" :title="__('vessels::vessels.header.title')">
-    <div class="row align-items-center">
+    <div class="row align-items-start">
         <div class="col-lg-3">
-            <p class="text-muted f-12 m-b-5">{{ __('vessels::vessels.header.status_light') }}</p>
-            <h4 class="m-0"><x-ui.status-badge :status="$assessment->level" /></h4>
-            @if ($assessment->reasons)
-                <ul class="list-unstyled m-t-10 m-b-0 f-12">
-                    @foreach ($assessment->reasons as $reason)
-                        <li>{{ __('vigilance.reasons.'.$reason['key'], $reason['params']) }}</li>
-                    @endforeach
-                </ul>
-            @endif
+            @include('vessels::show._photo-carousel')
+            @can(App\Support\Authorization\Permission::VesselsManage->value)
+                <button type="button" class="btn btn-default btn-sm m-t-10" data-bs-toggle="modal" data-bs-target="#gs-photo-manage">
+                    <i class="feather icon-camera"></i> {{ __('vessels::vessels.photos.manage') }}
+                </button>
+            @endcan
+            <div class="gs-header-status">
+                <p class="text-muted f-12 m-b-5">{{ __('vessels::vessels.header.status_light') }}</p>
+                <h4 class="m-0"><x-ui.status-badge :status="$assessment->level" /></h4>
+                @if ($assessment->reasons)
+                    <ul class="list-unstyled m-t-10 m-b-0 f-12">
+                        @foreach ($assessment->reasons as $reason)
+                            <li>{{ __('vigilance.reasons.'.$reason['key'], $reason['params']) }}</li>
+                        @endforeach
+                    </ul>
+                @endif
+            </div>
         </div>
         <div class="col-lg-6">
             <x-ui.detail-list>
@@ -35,3 +43,5 @@
         </div>
     </div>
 </x-ui.card>
+
+@include('vessels::show._photo-modals')
