@@ -7,14 +7,16 @@ use App\Enums\VesselCategory;
 use App\Enums\ZoneType;
 use App\Http\Controllers\Controller;
 use App\Models\Position;
-use App\Models\TrackingDevice;
 use App\Models\Zone;
+use App\Queries\BeaconStates;
 use App\Queries\ZoneSituation;
 use App\Support\Presentation\VesselLink;
+use App\Support\Tables\PerPage;
+use App\Support\Vms\SilencePresets;
 use App\Support\Vms\SilenceThreshold;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Collection;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
@@ -33,7 +35,7 @@ class TrackingController extends Controller
         'restricted' => '#fe5d70',
     ];
 
-    private const BEACON_STATUS_PRIORITY = ['silent', 'no_data', 'emitting'];
+    private const BEACONS_PER_PAGE = 10;
 
     public function map(Request $request): View
     {
@@ -103,24 +105,33 @@ class TrackingController extends Controller
     {
         $filters = $request->validate([
             'status' => ['nullable', Rule::enum(BeaconStatus::class)],
+            'search' => ['nullable', 'string', 'max:100'],
+            'from' => ['nullable', 'date'],
+            'to' => ['nullable', 'date', 'after_or_equal:from'],
+            'silent_for' => ['nullable', Rule::in(array_keys(SilencePresets::HOURS))],
         ]);
 
-        $devices = TrackingDevice::whereNull('removed_at')
-            ->with('vessel.latestPosition.zone')
-            ->get()
-            ->sortBy(fn (TrackingDevice $device) => [
-                array_search($device->vessel->beaconStatus()->value, self::BEACON_STATUS_PRIORITY),
-                $device->vessel->latestPosition?->recorded_at,
-            ]);
+        $scope = BeaconStates::query()
+            ->when($filters['search'] ?? null, fn (Builder $query, string $term) => $query->where(fn (Builder $query) => $query
+                ->whereLike('tracking_devices.identifier', "%{$term}%")
+                ->orWhereHas('vessel', fn (Builder $vessels) => $vessels->search($term))))
+            ->when($filters['from'] ?? null, fn (Builder $query, string $from) => $query->where('last_position.recorded_at', '>=', Carbon::parse($from)->startOfDay()))
+            ->when($filters['to'] ?? null, fn (Builder $query, string $to) => $query->where('last_position.recorded_at', '<=', Carbon::parse($to)->endOfDay()))
+            ->when($filters['silent_for'] ?? null, fn (Builder $query, string $preset) => BeaconStates::whereSilentFor($query, SilencePresets::hours($preset)));
+
+        $devices = BeaconStates::orderByUrgency(
+            (clone $scope)
+                ->when($filters['status'] ?? null, fn (Builder $query, string $status) => BeaconStates::whereState($query, BeaconStatus::from($status)))
+                ->with('vessel'),
+        )->paginate(PerPage::from($request, self::BEACONS_PER_PAGE))->withQueryString();
 
         return view('tracking::beacons', [
             'filters' => $filters,
-            'countsByStatus' => $devices->countBy(fn (TrackingDevice $device) => $device->vessel->beaconStatus()->value),
-            'devices' => $devices->when(
-                $filters['status'] ?? null,
-                fn (Collection $devices, string $status) => $devices->filter(fn (TrackingDevice $device) => $device->vessel->beaconStatus()->value === $status),
-            ),
+            'countsByStatus' => BeaconStates::countByState($scope),
+            'devices' => $devices,
+            'zoneNames' => Zone::whereIn('id', $devices->pluck('last_zone_id')->filter())->pluck('name', 'id'),
             'thresholdHours' => app(SilenceThreshold::class)->hours(),
+            'presets' => SilencePresets::options(),
         ]);
     }
 

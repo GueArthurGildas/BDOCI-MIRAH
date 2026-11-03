@@ -2,7 +2,6 @@
 
 namespace App\Queries;
 
-use App\Enums\BeaconStatus;
 use App\Models\EmissionCutoff;
 use App\Models\Vessel;
 use App\Models\VmsCutoffAuthorization;
@@ -20,9 +19,8 @@ final class SilentBeacons
         return Vessel::whereIn('id', MonitoredVessels::ids())
             ->when($onlyVesselId, fn ($query, $vesselId) => $query->whereKey($vesselId))
             ->whereNotIn('id', $authorized)
+            ->whereRaw('(select max(positions.recorded_at) from positions where positions.vessel_id = vessels.id) < ?', [BeaconStates::cutoff()])
             ->with('latestPosition')
-            ->get()
-            ->filter(fn (Vessel $vessel) => $vessel->beaconStatus() === BeaconStatus::Silent)
-            ->values();
+            ->get();
     }
 }

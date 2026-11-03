@@ -109,4 +109,19 @@ return [
         'message' => '{1} :count source de données demande votre attention :|[2,*] :count sources de données demandent votre attention :',
         'details' => 'Voir les connecteurs',
     ],
+    'silence_presets' => [
+        '2_days' => '2 jours',
+        '3_days' => '3 jours',
+        '4_days' => '4 jours',
+        '5_days' => '5 jours',
+        '1_week' => '1 semaine',
+        '2_weeks' => '2 semaines',
+        '1_month' => '1 mois',
+    ],
+    'emission_gap' => [
+        'days_hours' => ':days j :hours h',
+        'days' => ':days j',
+        'hours' => ':hours h',
+        'minutes' => ':minutes min',
+    ],
 ];

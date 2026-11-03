@@ -22,6 +22,7 @@ class TrackingDevice extends Model
             'system' => TrackingSystem::class,
             'installed_at' => 'date',
             'removed_at' => 'date',
+            'last_emission_at' => 'datetime',
         ];
     }
 

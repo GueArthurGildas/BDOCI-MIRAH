@@ -247,3 +247,45 @@
         margin: 16px 0 8px;
     }
 }
+
+.gs-beacon-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    margin-right: 6px;
+    border-radius: 50%;
+    font-size: .95rem;
+
+    &.is-success {
+        background: rgba(18, 161, 80, .12);
+        color: var(--gs-green);
+    }
+
+    &.is-danger {
+        background: rgba(224, 36, 63, .12);
+        color: var(--gs-red);
+    }
+
+    &.is-default {
+        background: var(--gs-surface-alt);
+        color: var(--gs-muted);
+    }
+}
+
+.gs-gap {
+    font-weight: 700;
+
+    &.is-danger {
+        color: var(--gs-red);
+    }
+
+    &.is-success {
+        color: var(--gs-green);
+    }
+
+    &.is-default {
+        color: var(--gs-muted);
+    }
+}

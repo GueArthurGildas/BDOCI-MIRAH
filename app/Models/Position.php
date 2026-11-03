@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Carbon;
 
 #[Fillable([
@@ -36,15 +35,18 @@ class Position extends Model
 
     public function scopeLatestPerVessel(Builder $query, Carbon $at): void
     {
-        $latestRecords = self::query()
-            ->selectRaw('vessel_id, max(recorded_at) as latest_recorded_at')
-            ->where('recorded_at', '<=', $at)
-            ->groupBy('vessel_id');
+        $latestPositions = Vessel::query()
+            ->select('latest_position.*')
+            ->joinLateral(
+                self::query()
+                    ->whereColumn('positions.vessel_id', 'vessels.id')
+                    ->where('positions.recorded_at', '<=', $at)
+                    ->orderByDesc('positions.recorded_at')
+                    ->limit(1),
+                'latest_position',
+            );
 
-        $query->joinSub($latestRecords, 'latest_records', fn (JoinClause $join) => $join
-            ->on('positions.vessel_id', '=', 'latest_records.vessel_id')
-            ->on('positions.recorded_at', '=', 'latest_records.latest_recorded_at'))
-            ->select('positions.*');
+        $query->fromSub($latestPositions, 'positions');
     }
 
     public function vessel(): BelongsTo
