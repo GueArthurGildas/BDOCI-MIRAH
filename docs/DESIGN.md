@@ -1,6 +1,10 @@
 # Guide du design BDOCI-MIRAH (thème GESICA)
 
-Le thème est posé **par-dessus Adminty** : on ne modifie jamais `resources/scss/adminty/`. Toutes les surcharges vivent dans `resources/scss/theme/`, importé en dernier dans `app.scss`.
+Le thème est posé **par-dessus le gabarit de base** (`resources/scss/template/`, jamais modifié).
+
+Origine du gabarit : Adminty (gabarit HTML Bootstrap de Codedthemes). C'est la seule mention de ce nom dans le dépôt.
+
+Toutes les surcharges vivent dans `resources/scss/theme/`, importé en dernier dans `app.scss`.
 
 ## Fichiers
 
@@ -56,12 +60,12 @@ Ajouter une entrée de menu se fait dans la classe `Navigation` (via le fourniss
 
 Couleurs de `stat-card` : `warning` (orange, défaut), `success`, `danger`, `info`.
 
-## Pièges connus avec Adminty
+## Pièges connus avec le gabarit de base
 
-- Adminty applique `.user-profile { padding: 20px 0 }` (page profil) : ne jamais mettre cette classe dans la barre du haut, elle ajoute 40px de hauteur.
+- Le gabarit applique `.user-profile { padding: 20px 0 }` (page profil) : ne jamais mettre cette classe dans la barre du haut, elle ajoute 40px de hauteur.
 - `.table > thead > tr > th` et `.md-tabs .nav-item a` (avec `!important` pour le padding) sont plus spécifiques que les sélecteurs simples : les surcharger avec le même sélecteur.
 - `.card .card-header + .card-body` retire le padding haut : le thème le rétablit.
-- Adminty met `.btn` et `.label` en capitales initiales (`text-transform: capitalize`) : le thème les remet en casse normale. Les cases à cocher `checkbox-fade` ont une couleur par état, plus spécifique : le thème impose l'orange avec `!important`.
+- Le gabarit met `.btn` et `.label` en capitales initiales (`text-transform: capitalize`) : le thème les remet en casse normale. Les cases à cocher `checkbox-fade` ont une couleur par état, plus spécifique : le thème impose l'orange avec `!important`.
 - Si une modification de style n'apparaît pas, redémarrer le conteneur `node` (`docker restart bdoci-mirah-node-1`) : l'observateur de fichiers de Vite sur le volume monté perd parfois les changements.
 
 ## Visite guidée

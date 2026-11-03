@@ -156,10 +156,10 @@ resources/
 │   ├── app.js                           # point d'entrée JS
 │   ├── components/                      # carte (Leaflet) et graphiques (Chart.js), chargés à la demande
 │   ├── layout/                          # un fichier par comportement : notifications (balise et toasts), plein écran, actions des cartes, envoi automatique des filtres, infobulles, préchargeur
-│   └── vendor/                          # jQuery, Bootstrap, pcoded (Adminty)
+│   └── vendor/                          # jQuery, Bootstrap, pcoded (gabarit de base)
 ├── scss/
-│   ├── app.scss                         # ordre d'import : Adminty, pages, ajustements, puis le thème
-│   ├── adminty/                         # template Adminty, jamais modifié
+│   ├── app.scss                         # ordre d'import : gabarit de base, pages, ajustements, puis le thème
+│   ├── template/                        # gabarit de base, jamais modifié
 │   ├── pages/_timeline.scss             # chronologie de la fiche navire
 │   ├── _layout.scss, _components.scss   # ajustements propres à l'application
 │   └── theme/                           # thème GESICA : _tokens, _mixins, _base, _topbar, _shell, _page-header, _cards, _tables, _buttons, _forms, _labels, _tabs, _notifications, _comments (voir docs/DESIGN.md)
@@ -306,7 +306,7 @@ Pour protéger une route : `->can(Permission::VesselsView->value)`. Pour affiche
 | Composant | Usage |
 |---|---|
 | `<x-ui.page-header>` | titre, sous-titre et fil d'Ariane |
-| `<x-ui.card>` | carte Adminty, avec slot `actions` |
+| `<x-ui.card>` | carte du gabarit, avec slot `actions` |
 | `<x-ui.stat-card>` | indicateur chiffré coloré |
 | `<x-ui.filters>`, `<x-ui.filter-input>`, `<x-ui.filter-select>` | carte de filtres (GET), encore utilisée par les pages sans barre d'outils |
 | `<x-ui.table>`, `<x-ui.empty-row>` | tableau avec pagination ; le slot `filters` ajoute la ligne de filtres sous l'en-tête |
