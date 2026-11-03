@@ -15,7 +15,7 @@
                         </x-slot:head>
                         @forelse ($rules as $rule)
                             <tr>
-                                    <td>{{ $rule->code }}</td>
+                                    <td>{{ $rule->label() }}</td>
                                     <td>{{ __($rule->type->label()) }}<input type="hidden" name="type" value="{{ $rule->type->value }}" form="rule-{{ $rule->id }}"></td>
                                     <td><input type="number" step="0.5" min="0.5" name="threshold_hours" value="{{ $rule->threshold_hours }}" form="rule-{{ $rule->id }}" class="form-control form-control-sm" aria-label="{{ __('tracking::tracking.rules.threshold_hours') }}"></td>
                                     <td>

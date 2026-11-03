@@ -7,7 +7,7 @@
     $activeGroup = $activeItem?->group->label() ?? $groups->keys()->first();
 @endphp
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-gs-no-results="{{ __('ui.no_results') }}" data-gs-select-placeholder="{{ __('ui.select_placeholder') }}" data-gs-pager-previous="{{ __('ui.pager.previous') }}" data-gs-pager-next="{{ __('ui.pager.next') }}" data-gs-pager-range="{{ __('ui.pager.range') }}">
 <head>
     @include('layouts.partials.head', ['title' => $title])
 </head>

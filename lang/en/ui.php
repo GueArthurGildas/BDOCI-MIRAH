@@ -130,4 +130,24 @@ return [
         'hours' => ':hours h',
         'minutes' => ':minutes min',
     ],
+    'pager' => [
+        'previous' => 'Previous page',
+        'next' => 'Next page',
+        'range' => '{from} to {to} of {total}',
+    ],
+    'notions' => [
+        'title' => 'Alert, communication or notification?',
+        'alert' => [
+            'name' => 'Alert',
+            'text' => 'a report raised automatically by a surveillance rule (beacon silence, restricted zone, speed). It needs handling and stays open until closed.',
+        ],
+        'communication' => [
+            'name' => 'Communication',
+            'text' => 'a message sent to a third party (owner, agent, institution) by e-mail or WhatsApp, or a note exchanged between agents. It keeps a record of the sending and the reply.',
+        ],
+        'notification' => [
+            'name' => 'Notification',
+            'text' => 'a reminder shown in the application (the bell) to tell you that an event concerns you. It is read then goes away; it replaces neither the alert nor the message.',
+        ],
+    ],
 ];

@@ -16,7 +16,7 @@ use Modules\Administration\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
-    private const PER_PAGE = 20;
+    private const PER_PAGE = 10;
 
     public const AUDIT_LOG = 'administration';
 

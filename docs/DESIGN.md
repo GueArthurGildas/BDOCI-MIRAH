@@ -86,3 +86,12 @@ Trois fenêtres Bootstrap sont montées une fois dans le layout (`layouts/partia
 - **Réussite** : une redirection avec `->with('status', …)->with('popup', true)` affiche le message dans une fenêtre à coche verte au lieu du bandeau ; `->with('popup', [['label' => …, 'value' => …]])` ajoute des tuiles.
 - **Aperçu** : un lien `data-gs-modal` charge son URL en AJAX dans la fenêtre ; la route renvoie un fragment HTML sans layout (exemple : l'œil à côté d'un navire, `vessels.quick`).
 
+
+## Listes, filtres et pagination
+
+- **Pagination** : les grands tableaux paginés par le serveur affichent 10 lignes par page par défaut (`PerPage`, choix 10, 20, 50, 100). Les petits tableaux d'une carte, sans pagination serveur, sont paginés par 5 dans le navigateur : le composant `x-ui.table` pose `data-gs-paginate="5"` (désactivable avec `:paginate="false"`, par exemple pour un tableau avec ligne de total).
+- **Listes déroulantes** : toute liste de 8 options ou plus, et tout choix multiple, devient une liste avec recherche (Tom Select, `resources/js/layout/selects.js`). Pour garder une liste native, ajouter `data-native`. Les choix multiples sont de simples `<select multiple>` : ils deviennent des puces avec recherche, sans autre code.
+- **Recherche spontanée** : dans la barre d'outils d'une liste (`x-ui.table-toolbar`) et les filtres de colonne, la saisie filtre après 350 ms et les menus s'appliquent aussitôt, sans bouton « Filtrer » ni rechargement de la page (`live-list.js`). La carte de la liste est remplacée, l'adresse est mise à jour et le curseur reste en place.
+- **Contenu chargé après coup** : un script qui doit agir sur du contenu remplacé (modal, liste filtrée) s'enregistre avec `onContent` (`resources/js/layout/content.js`) ; l'événement `gs:content` est émis après chaque remplacement.
+- **Libellés du navigateur** : les textes utilisés par ces scripts viennent des attributs `data-gs-*` de la balise `<html>` (jamais de texte en dur dans le JavaScript).
+- **Notions voisines** : alerte, communication et notification sont expliquées par l'encart `x-ui.notion-hint` des trois pages concernées.

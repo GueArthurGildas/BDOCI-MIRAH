@@ -27,7 +27,7 @@ use Modules\Movements\Http\Requests\StoreEezDeclarationRequest;
 
 class EezDeclarationController extends Controller
 {
-    private const PER_PAGE = 20;
+    private const PER_PAGE = 10;
 
     public const RECEPTION_CHANNELS_LIST = 'eez_reception_channels';
 

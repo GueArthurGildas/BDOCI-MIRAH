@@ -48,10 +48,10 @@ final class IndicatorCatalog
     /** @return Collection<int, IndicatorRow> */
     public function rows(string $key, IndicatorFilters $filters): Collection
     {
-        $allowed = $this->allowedVessels($filters);
+        $allowed = $filters->needsVessels() ? $this->allowedVessels($filters) : null;
 
         return $this->raw($key)
-            ->filter(fn (IndicatorRow $row) => $allowed->has($row->vessel->id))
+            ->filter(fn (IndicatorRow $row) => $allowed === null || $allowed->has($row->vessel->id))
             ->filter(fn (IndicatorRow $row) => ! $filters->from || ($row->date && $row->date->gte($filters->from)))
             ->filter(fn (IndicatorRow $row) => ! $filters->to || ($row->date && $row->date->lte($filters->to)))
             ->filter(fn (IndicatorRow $row) => ! $filters->zoneId || $allowed[$row->vessel->id]->latestPosition?->zone_id === $filters->zoneId)
@@ -170,7 +170,7 @@ final class IndicatorCatalog
             ->map(fn (VesselCurrentState $state) => new IndicatorRow(
                 $state->vessel,
                 $state->updated_at,
-                collect(StatusLight::assess(StatusLightFacts::gather($state->vessel))->reasons)
+                fn () => collect(StatusLight::assess(StatusLightFacts::gather($state->vessel))->reasons)
                     ->map(fn (array $reason) => __('vigilance.reasons.'.$reason['key'], $reason['params']))
                     ->implode(' ; '),
                 null,

@@ -2,6 +2,8 @@
     <x-ui.page-header :title="__('tracking::tracking.alerts.title')" :subtitle="__('tracking::tracking.alerts.subtitle')" />
 
     <div class="page-body">
+        <x-ui.notion-hint current="alert" />
+
         <div class="row">
             @foreach (App\Enums\AlertStatus::cases() as $status)
                 <div class="col-xl-4 col-md-6">
@@ -27,7 +29,7 @@
                     <tr>
                         <td><x-ui.vessel-link :vessel="$alert->vessel" /></td>
                         <td>{{ __($alert->type->label()) }}</td>
-                        <td>{{ $alert->rule?->code ?? '—' }}</td>
+                        <td>{{ $alert->rule?->label() ?? '—' }}</td>
                         <td>{{ $alert->zone?->name ?? '—' }}</td>
                         <td class="text-nowrap">{{ $alert->triggered_at->isoFormat('L LT') }}</td>
                         <td><x-ui.status-badge :status="$alert->status" /></td>

@@ -8,7 +8,7 @@
                     <x-ui.detail-list>
                         <x-ui.detail :label="__('tracking::tracking.alerts.vessel')"><x-ui.vessel-link :vessel="$alert->vessel" /></x-ui.detail>
                         <x-ui.detail :label="__('tracking::tracking.alerts.type')">{{ __($alert->type->label()) }}</x-ui.detail>
-                        <x-ui.detail :label="__('tracking::tracking.alerts.rule')">{{ $alert->rule?->code }}</x-ui.detail>
+                        <x-ui.detail :label="__('tracking::tracking.alerts.rule')">{{ $alert->rule?->label() }}</x-ui.detail>
                         <x-ui.detail :label="__('tracking::tracking.alerts.zone')">{{ $alert->zone?->name }}</x-ui.detail>
                         <x-ui.detail :label="__('tracking::tracking.alerts.triggered_at')">{{ $alert->triggered_at->isoFormat('L LT') }}</x-ui.detail>
                         <x-ui.detail :label="__('tracking::tracking.alerts.status')"><x-ui.status-badge :status="$alert->status" /></x-ui.detail>

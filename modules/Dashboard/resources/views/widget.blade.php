@@ -24,7 +24,7 @@
 
     @if ($data->figures)
         <h6>{{ __('dashboard::dashboard.details.figures') }}</h6>
-        <x-ui.table>
+        <x-ui.table :paginate="false">
             <x-slot:head>
                 <th>{{ __('dashboard::dashboard.details.category') }}</th>
                 <th class="text-end">{{ __('dashboard::dashboard.details.count') }}</th>
@@ -55,7 +55,7 @@
             @foreach ($sample as $row)
                 <tr>
                     <td><x-ui.vessel-link :vessel="$row->vessel" /></td>
-                    <td class="text-wrap">{{ $row->detail }}</td>
+                    <td class="text-wrap">{{ $row->detail() }}</td>
                 </tr>
             @endforeach
         </x-ui.table>

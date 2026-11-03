@@ -31,7 +31,7 @@ use Modules\Missions\Support\MissionReviewCalculator;
 
 class MissionController extends Controller
 {
-    private const PER_PAGE = 20;
+    private const PER_PAGE = 10;
 
     private const TRACK_MARKER_LIMIT = 60;
 

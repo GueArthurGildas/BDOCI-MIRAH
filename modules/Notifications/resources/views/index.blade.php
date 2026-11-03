@@ -1,6 +1,10 @@
 <x-layouts.app :title="__('notifications::notifications.title')">
     <x-ui.page-header :title="__('notifications::notifications.title')" :subtitle="__('notifications::notifications.subtitle')"/>
 
+    <div class="page-body">
+        <x-ui.notion-hint current="notification" />
+    </div>
+
     <x-ui.card :title="__('notifications::notifications.list_title')" :subtitle="trans_choice('notifications::notifications.unread_count', $unreadCount)" :flush="true">
         <x-slot:actions>
             @if ($unreadCount > 0)

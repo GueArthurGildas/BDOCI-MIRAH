@@ -16,7 +16,7 @@ use Modules\Vms\Actions\RecordErsDeclaration;
 
 class ErsController extends Controller
 {
-    private const PER_PAGE = 20;
+    private const PER_PAGE = 10;
 
     public function index(): View
     {

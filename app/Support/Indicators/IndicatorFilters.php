@@ -43,6 +43,11 @@ final readonly class IndicatorFilters
         );
     }
 
+    public function needsVessels(): bool
+    {
+        return $this->search !== null || $this->flag !== null || $this->segment !== null || $this->status !== null || $this->zoneId !== null;
+    }
+
     /** @return array<string, string|int> */
     public function toQuery(): array
     {

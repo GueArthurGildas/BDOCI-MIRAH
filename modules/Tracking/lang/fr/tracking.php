@@ -120,6 +120,11 @@ return [
         'create_observation' => 'Créer une observation',
     ],
     'rules' => [
+        'codes' => [
+            'silence_vms' => 'Silence des balises VMS',
+            'restricted_zone' => 'Entrée en zone interdite',
+            'speed_limit' => 'Limite de vitesse',
+        ],
         'title' => 'Règles d\'alerte',
         'subtitle' => 'Seuil de silence et autres règles d\'alerte, modifiables par l\'administrateur',
         'list_title' => 'Règles',

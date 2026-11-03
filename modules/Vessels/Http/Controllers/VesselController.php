@@ -37,7 +37,7 @@ use Modules\Vessels\Support\VesselTimeline;
 
 class VesselController extends Controller
 {
-    private const PER_PAGE = 20;
+    private const PER_PAGE = 10;
 
     private const TRACK_LENGTH = 12;
 

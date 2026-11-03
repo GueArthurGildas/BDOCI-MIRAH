@@ -708,4 +708,51 @@ return [
             'exit' => 'Le navire est sorti du port.',
         ],
     ],
+    'eez_check_result' => [
+        'ok' => 'Conforme',
+        'ko' => 'Non conforme',
+        'na' => 'Sans objet',
+    ],
+    'eez_check_type' => [
+        'vms' => 'Balise VMS',
+        'ais' => 'Signal AIS',
+        'license' => 'Licence',
+        'designated_port' => 'Port désigné',
+        'dpep_72h' => 'DPEP à 72 heures',
+        'access' => 'Accès au port',
+        'inn_lists' => 'Listes de pêche INN',
+        'consistency' => 'Cohérence des déclarations',
+    ],
+    'eez_declaration_status' => [
+        'received' => 'Reçue',
+        'verified' => 'Vérifiée',
+        'acknowledged' => 'Accusée de réception',
+        'variance' => 'Écart constaté',
+        'closed' => 'Close',
+    ],
+    'eez_declaration_type' => [
+        'entry' => 'Entrée en ZEE',
+        'exit' => 'Sortie de ZEE',
+    ],
+    'eez_entry_origin' => [
+        'manual' => 'Saisie manuelle',
+        'scraping' => 'Collecte automatique',
+    ],
+    'eez_reason' => [
+        'eez_transit' => 'Transit en ZEE',
+        'eez_fishing' => 'Pêche en ZEE',
+        'ivorian_port_transit' => 'Transit vers un port ivoirien',
+        'high_seas_fishing' => 'Pêche en haute mer',
+        'foreign_eez_fishing' => 'Pêche en ZEE étrangère',
+    ],
+    'entry_exit_alert_status' => [
+        'open' => 'Ouverte',
+        'closed' => 'Close',
+    ],
+    'entry_exit_explanation' => [
+        'catch_document' => 'Document de capture',
+        'transshipment' => 'Transbordement',
+        'landing' => 'Débarquement',
+        'unexplained' => 'Inexpliqué',
+    ],
 ];

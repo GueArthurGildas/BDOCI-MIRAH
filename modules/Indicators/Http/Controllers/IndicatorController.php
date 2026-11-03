@@ -15,7 +15,7 @@ use Illuminate\View\View;
 
 class IndicatorController extends Controller
 {
-    private const PER_PAGE = 25;
+    private const PER_PAGE = 10;
 
     public function __invoke(Request $request, string $indicator, IndicatorCatalog $catalog): View
     {

@@ -120,6 +120,11 @@ return [
         'create_observation' => 'Create an observation',
     ],
     'rules' => [
+        'codes' => [
+            'silence_vms' => 'VMS beacon silence',
+            'restricted_zone' => 'Restricted zone entry',
+            'speed_limit' => 'Speed limit',
+        ],
         'title' => 'Alert rules',
         'subtitle' => 'Silence threshold and other alert rules, editable by the administrator',
         'list_title' => 'Rules',

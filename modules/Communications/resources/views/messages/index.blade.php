@@ -2,6 +2,8 @@
     <x-ui.page-header :title="__('communications::communications.title')" :subtitle="__('communications::communications.subtitle')" />
 
     <div class="page-body">
+        <x-ui.notion-hint current="communication" />
+
         @include('communications::partials.tabs', ['active' => 'messages'])
 
         <div class="row">

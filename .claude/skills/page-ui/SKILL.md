@@ -17,6 +17,7 @@ The page-header icon defaults to the active navigation item's icon. Components i
 
 ## Rules
 
+- **Lists**: big server-paginated tables show 10 rows by default (`PerPage`); small card tables are paginated by 5 in the browser by `x-ui.table` (`:paginate="false"` to opt out). Selects with 8 options or more and every multiple select become searchable on their own (`data-native` to keep a native one). Filters in `x-ui.table-toolbar` and column filters apply while typing, without reloading the page; scripts acting on replaced content register with `onContent` (see `docs/DESIGN.md`).
 - **Texts**: `__('ui.x')` for shared strings (`lang/{en,fr}/ui.php`), `__('module::file.key')` for module strings; add both languages. Enum labels through `HasTranslatedLabel`. Event and alert texts are stored as keys and translated at display time.
 - **Code**: English identifiers, no comments.
 - Authorization in views: `@can(App\Support\Authorization\Permission::X->value)`.

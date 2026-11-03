@@ -13,7 +13,7 @@
                 @forelse ($targetings as $targeting)
                     <tr>
                         <td>{{ $targeting->year }}</td>
-                        <td>{{ $targeting->target }}</td>
+                        <td>{{ Lang::has('mrep::mrep.targetings.targets.'.$targeting->target) ? __('mrep::mrep.targetings.targets.'.$targeting->target) : $targeting->target }}</td>
                         <td class="text-end">{{ $targeting->objective_pct }} %</td>
                         <td class="text-end">{{ $targeting->achieved_pct !== null ? $targeting->achieved_pct.' %' : '—' }}</td>
                     </tr>

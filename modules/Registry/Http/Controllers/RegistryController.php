@@ -13,7 +13,7 @@ use Modules\Registry\Support\ResourceCatalog;
 
 class RegistryController extends Controller
 {
-    private const PER_PAGE = 25;
+    private const PER_PAGE = 10;
 
     public function index(): View
     {

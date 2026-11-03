@@ -155,7 +155,7 @@ resources/
 ├── js/
 │   ├── app.js                           # point d'entrée JS
 │   ├── components/                      # carte (Leaflet) et graphiques (Chart.js), chargés à la demande
-│   ├── layout/                          # un fichier par comportement : notifications (balise et toasts), plein écran, actions des cartes, envoi automatique des filtres, infobulles, préchargeur
+│   ├── layout/                          # un fichier par comportement : notifications (balise et toasts), plein écran, actions des cartes, filtrage spontané des listes (`auto-submit`, `live-list`), listes avec recherche (`selects`), pagination des petits tableaux, menus en dossiers, photos, arbre des dossiers, infobulles, préchargeur
 │   └── vendor/                          # jQuery, Bootstrap, pcoded (gabarit de base)
 ├── scss/
 │   ├── app.scss                         # ordre d'import : gabarit de base, pages, ajustements, puis le thème

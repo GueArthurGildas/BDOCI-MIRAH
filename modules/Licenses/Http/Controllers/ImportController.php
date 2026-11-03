@@ -31,7 +31,7 @@ class ImportController extends Controller
                 'lines',
                 'lines as rejected_count' => fn ($query) => $query->where('status', 'rejected'),
                 'lines as valid_count' => fn ($query) => $query->where('status', 'valid'),
-            ])->latest('id')->paginate(15),
+            ])->latest('id')->paginate(10),
             'withoutLicense' => Vessel::query()->where('category', 'fishing')->whereDoesntHave('licenses')->orderBy('name')->get()
                 ->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => "{$vessel->name} ({$vessel->registration_number})"])->all(),
             'columns' => CsvReader::COLUMNS,

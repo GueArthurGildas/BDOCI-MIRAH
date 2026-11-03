@@ -708,4 +708,51 @@ return [
             'exit' => 'The vessel left the port.',
         ],
     ],
+    'eez_check_result' => [
+        'ok' => 'Compliant',
+        'ko' => 'Non-compliant',
+        'na' => 'Not applicable',
+    ],
+    'eez_check_type' => [
+        'vms' => 'VMS beacon',
+        'ais' => 'AIS signal',
+        'license' => 'License',
+        'designated_port' => 'Designated port',
+        'dpep_72h' => '72-hour port notice',
+        'access' => 'Port access',
+        'inn_lists' => 'IUU fishing lists',
+        'consistency' => 'Declaration consistency',
+    ],
+    'eez_declaration_status' => [
+        'received' => 'Received',
+        'verified' => 'Verified',
+        'acknowledged' => 'Acknowledged',
+        'variance' => 'Variance found',
+        'closed' => 'Closed',
+    ],
+    'eez_declaration_type' => [
+        'entry' => 'EEZ entry',
+        'exit' => 'EEZ exit',
+    ],
+    'eez_entry_origin' => [
+        'manual' => 'Manual entry',
+        'scraping' => 'Automatic collection',
+    ],
+    'eez_reason' => [
+        'eez_transit' => 'EEZ transit',
+        'eez_fishing' => 'Fishing in the EEZ',
+        'ivorian_port_transit' => 'Transit to an Ivorian port',
+        'high_seas_fishing' => 'High seas fishing',
+        'foreign_eez_fishing' => 'Fishing in a foreign EEZ',
+    ],
+    'entry_exit_alert_status' => [
+        'open' => 'Open',
+        'closed' => 'Closed',
+    ],
+    'entry_exit_explanation' => [
+        'catch_document' => 'Catch document',
+        'transshipment' => 'Transshipment',
+        'landing' => 'Landing',
+        'unexplained' => 'Unexplained',
+    ],
 ];
