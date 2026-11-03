@@ -301,6 +301,7 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 | `certificat_immatriculation` | `registration_certificate` | varchar(80) |
 | `identifiant_fao` | `fao_identifier` | varchar(40) |
 | `licence_non_renseignee` | `license_not_provided` | boolean |
+| `photo_principale_id` | `primary_photo_id` | bigint |
 | `created_at` | `created_at` | timestamp(0) |
 | `updated_at` | `updated_at` | timestamp(0) |
 | (ajout) | `fleet_segment` | varchar(40) |

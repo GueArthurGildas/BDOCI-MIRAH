@@ -9,7 +9,7 @@
         @forelse ($vessel->movements as $movement)
             <tr>
                 <td>{{ $movement->occurred_at->isoFormat('L LT') }}</td>
-                <td><x-ui.status-badge :status="$movement->direction" /></td>
+                <td><x-ui.direction-badge :direction="$movement->direction" /></td>
                 <td>{{ $movement->port->name }}</td>
                 <td>{{ $movement->reason }}</td>
             </tr>

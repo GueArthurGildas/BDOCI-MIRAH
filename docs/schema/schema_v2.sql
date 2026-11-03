@@ -296,6 +296,7 @@ CREATE TABLE vessels (
     registration_certificate varchar(80),
     fao_identifier varchar(40) UNIQUE,
     license_not_provided boolean NOT NULL DEFAULT true,
+    primary_photo_id bigint,
     created_at timestamp(0),
     updated_at timestamp(0),
     deleted_at timestamp(0)
@@ -2233,6 +2234,7 @@ ALTER TABLE export_log ADD CONSTRAINT export_log_user_id_foreign FOREIGN KEY (us
 ALTER TABLE operation_archives ADD CONSTRAINT operation_archives_operation_id_foreign FOREIGN KEY (operation_id) REFERENCES operations (id);
 ALTER TABLE teams ADD CONSTRAINT teams_lead_user_id_foreign FOREIGN KEY (lead_user_id) REFERENCES users (id);
 ALTER TABLE vessels ADD CONSTRAINT vessels_vessel_type_id_foreign FOREIGN KEY (vessel_type_id) REFERENCES vessel_types (id);
+ALTER TABLE vessels ADD CONSTRAINT vessels_primary_photo_id_foreign FOREIGN KEY (primary_photo_id) REFERENCES documents (id) ON DELETE SET NULL;
 ALTER TABLE alerts ADD CONSTRAINT alerts_logbook_entry_id_foreign FOREIGN KEY (logbook_entry_id) REFERENCES logbook_entries (id);
 ALTER TABLE alerts ADD CONSTRAINT alerts_operation_id_foreign FOREIGN KEY (operation_id) REFERENCES operations (id);
 ALTER TABLE vms_failures ADD CONSTRAINT vms_failures_operation_id_foreign FOREIGN KEY (operation_id) REFERENCES operations (id);
@@ -2371,6 +2373,7 @@ COMMENT ON COLUMN vessels.hold_capacity_m3 IS 'capacite_cales_m3';
 COMMENT ON COLUMN vessels.registration_certificate IS 'certificat_immatriculation';
 COMMENT ON COLUMN vessels.fao_identifier IS 'identifiant_fao';
 COMMENT ON COLUMN vessels.license_not_provided IS 'licence_non_renseignee';
+COMMENT ON COLUMN vessels.primary_photo_id IS 'photo_principale_id';
 COMMENT ON TABLE vessel_identifiers IS 'navire_identifiant';
 COMMENT ON COLUMN vessel_identifiers.vessel_id IS 'navire_id';
 COMMENT ON COLUMN vessel_identifiers.value IS 'valeur';

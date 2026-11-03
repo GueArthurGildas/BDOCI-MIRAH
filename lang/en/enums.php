@@ -633,4 +633,79 @@ return [
         'vms_extract' => 'VMS extract',
         'press' => 'Press',
     ],
+
+    'descriptions' => [
+        'vessel_status' => [
+            'active' => 'The vessel is in service and can be inspected and tracked.',
+            'suspended' => 'The vessel is temporarily banned from operating.',
+            'inactive' => 'The vessel is no longer in operation.',
+        ],
+        'vessel_category' => [
+            'fishing' => 'Fishing or fishing support vessel.',
+            'patrol' => 'Administration surveillance vessel.',
+        ],
+        'vessel_status_light' => [
+            'compliant' => 'No adverse fact is recorded for this vessel.',
+            'to_watch' => 'A fact deserves attention: silent beacon, expiring license or ongoing observation.',
+            'suspect' => 'An element is considered suspect by the teams: the vessel must be checked.',
+            'in_violation' => 'An ongoing infraction is recorded against this vessel.',
+        ],
+        'beacon_status' => [
+            'emitting' => 'The beacon emitted within the expected delay.',
+            'silent' => 'The beacon has not emitted for longer than the silence threshold.',
+            'no_data' => 'No position has ever been received for this vessel.',
+        ],
+        'license_status' => [
+            'valid' => 'The license is valid.',
+            'expiring' => 'The license expires within the warning period.',
+            'expired' => 'The license expiry date has passed.',
+            'suspended' => 'The license is suspended: fishing is banned during the suspension.',
+            'revoked' => 'The license has been permanently withdrawn.',
+        ],
+        'current_license_status' => [
+            'not_provided' => 'No license is recorded for this vessel.',
+            'active' => 'The vessel holds a valid license.',
+            'suspended' => 'The vessel license is suspended.',
+            'expired' => 'The vessel license has expired.',
+            'revoked' => 'The vessel license has been withdrawn.',
+        ],
+        'alert_status' => [
+            'open' => 'The alert has not been handled yet.',
+            'acknowledged' => 'The alert has been seen and is being handled.',
+            'closed' => 'The alert is handled or its cause has disappeared.',
+        ],
+        'infraction_case_status' => [
+            'open' => 'The case has just been opened.',
+            'instruction' => 'The case is under investigation: evidence and hearings.',
+            'decision' => 'The case is awaiting or subject to a decision.',
+            'closed' => 'The case is closed.',
+        ],
+        'observation_level' => [
+            'info' => 'Information for the record.',
+            'warning' => 'Point of attention to follow.',
+            'critical' => 'Serious situation requiring quick action.',
+        ],
+        'observation_status' => [
+            'open' => 'The observation is open and has no follow-up yet.',
+            'in_progress' => 'The observation is being handled.',
+            'closed' => 'The observation is closed.',
+        ],
+        'operation_status' => [
+            'open' => 'The operation is open.',
+            'in_progress' => 'The operation is in progress.',
+            'closed' => 'The operation is over.',
+            'archived' => 'The operation is archived and can no longer be changed.',
+        ],
+        'mission_status' => [
+            'scheduled' => 'The mission is scheduled.',
+            'authorized' => 'The mission is authorized and can start.',
+            'in_progress' => 'The mission is in progress.',
+            'completed' => 'The mission is over, the report remains to be written.',
+            'closed' => 'The mission is closed.',
+        ],
+        'movement_direction' => [
+            'entry' => 'The vessel entered the port.',
+            'exit' => 'The vessel left the port.',
+        ],
+    ],
 ];

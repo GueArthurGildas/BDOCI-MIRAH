@@ -248,7 +248,7 @@
     }
 }
 
-.gs-beacon-icon {
+.gs-state-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -266,6 +266,11 @@
     &.is-danger {
         background: rgba(224, 36, 63, .12);
         color: var(--gs-red);
+    }
+
+    &.is-info {
+        background: rgba(31, 143, 224, .12);
+        color: var(--gs-blue);
     }
 
     &.is-default {
@@ -288,4 +293,217 @@
     &.is-default {
         color: var(--gs-muted);
     }
+}
+
+.gs-vessel-cell {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.gs-vessel-thumb {
+    flex: none;
+    width: 34px;
+    height: 34px;
+    object-fit: cover;
+    background: var(--gs-surface-alt);
+    border-radius: var(--gs-radius-sm);
+}
+
+.gs-photos {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--gs-radius);
+
+    .carousel-item {
+        background: var(--gs-surface-alt);
+    }
+}
+
+.gs-photo {
+    display: block;
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    cursor: zoom-in;
+}
+
+.gs-photo-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: rgba(29, 32, 48, .6);
+    border-radius: 50%;
+    color: #fff;
+}
+
+.gs-photos-empty {
+    text-align: center;
+
+    img {
+        width: 100%;
+        height: 160px;
+        margin-bottom: 8px;
+        object-fit: contain;
+        border-radius: var(--gs-radius);
+    }
+}
+
+.gs-photo-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+        position: relative;
+    }
+
+    img {
+        width: 56px;
+        height: 56px;
+        object-fit: cover;
+        border-radius: var(--gs-radius-sm);
+    }
+}
+
+.gs-photo-remove {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    background: var(--gs-red);
+    border: 0;
+    border-radius: 50%;
+    color: #fff;
+    font-size: .7rem;
+}
+
+.gs-photo-upload {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+
+    input[type="file"] {
+        flex: 1 1 160px;
+        min-width: 0;
+    }
+}
+
+.gs-photo-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+    padding: 8px;
+    background-color: #fff;
+    border-radius: 50%;
+}
+
+.gs-photo-large {
+    display: block;
+    max-width: 100%;
+    max-height: 80vh;
+    margin: 0 auto;
+}
+
+.gs-photo-caption {
+    padding: 10px;
+    color: var(--gs-muted);
+    font-size: .85rem;
+}
+
+.gs-tree-search {
+    margin-bottom: 12px;
+}
+
+.gs-tree {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: .88rem;
+
+    ul {
+        margin: 2px 0 2px 14px;
+        padding: 0 0 0 10px;
+        border-left: 1px dashed var(--gs-line);
+        list-style: none;
+    }
+
+    summary {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 6px;
+        border-radius: var(--gs-radius-sm);
+        color: var(--gs-ink);
+        cursor: pointer;
+
+        &:hover,
+        &.is-active {
+            background: var(--gs-orange-tint);
+        }
+
+        a {
+            flex: 1;
+            color: inherit;
+        }
+    }
+
+    a {
+        color: var(--gs-ink-soft);
+
+        &:hover {
+            color: var(--gs-orange);
+        }
+    }
+
+    .feather {
+        color: var(--gs-orange);
+    }
+}
+
+.gs-tree-leaf {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 6px;
+    border-radius: var(--gs-radius-sm);
+
+    &:hover,
+    &.is-active {
+        background: var(--gs-orange-tint);
+    }
+
+    &.is-active {
+        font-weight: 600;
+    }
+
+    span:first-of-type {
+        flex: 1;
+    }
+}
+
+.gs-tree-count {
+    margin-left: auto;
+    padding: 0 7px;
+    background: var(--gs-surface-alt);
+    border: 1px solid var(--gs-line);
+    border-radius: var(--gs-radius-sm);
+    color: var(--gs-muted);
+    font-size: .72rem;
+}
+
+tr:target {
+    background: var(--gs-orange-tint);
 }

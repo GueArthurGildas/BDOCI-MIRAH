@@ -125,6 +125,7 @@ Ces écarts par rapport au schéma v2 initial ont été décidés en écrivant l
 |---|---|---|
 | `vessel_events` | `summary` (texte de 500 caractères) devient `summary_key` + `summary_params` (jsonb) | le résumé est traduit à l'affichage dans la langue de chaque lecteur (règle : aucun texte affiché en dur) |
 | `users` | ajout de `dashboard_widgets` (jsonb, nullable) | liste ordonnée des indicateurs choisis par l'utilisateur pour son tableau de bord ; `null` = sélection par défaut |
+| `vessels` | ajout de `primary_photo_id` (clé étrangère vers `documents`, nullable) | copie de la photo principale du navire, pour afficher une miniature dans les listes sans requête supplémentaire ; les photos sont des documents liés au navire par `document_links` |
 | `activity_log` | sert de journal d'audit, rendu inaltérable par des triggers, en attendant la table `audit_log` | le paquet d'historisation écrit déjà dans cette table ; l'identité de l'agent IA et l'adresse IP sont dans `properties` |
 | `users` | `password` devient nullable ; `type` est contraint à `human`, `ai_agent`, `system` | les comptes de type agent IA et système n'ont pas de mot de passe |
 | `action_catalog` | pas de colonne `label` | le libellé d'une action est traduit à partir de son code (`permissions.<module>.<action>`) |

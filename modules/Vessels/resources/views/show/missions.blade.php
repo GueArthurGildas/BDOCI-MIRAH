@@ -8,7 +8,7 @@
             <th>{{ __('vessels::vessels.columns.status') }}</th>
         </x-slot:head>
         @forelse ($vessel->missions as $mission)
-            <tr>
+            <tr id="item-missions-{{ $mission->id }}">
                 <td>
                     @can(App\Support\Authorization\Permission::MissionsView->value)
                         <a href="{{ route('missions.show', $mission) }}">{{ $mission->code }}</a>

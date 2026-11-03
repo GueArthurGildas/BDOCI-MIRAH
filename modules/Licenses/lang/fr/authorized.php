@@ -21,4 +21,9 @@ return [
         'title' => 'Liste des navires autorisés, version :version',
         'published_at' => 'Publiée le :date, :count navires',
     ],
+    'how_title' => 'Comment cette liste est calculée (règle RG01)',
+    'how_rule' => 'Un navire est autorisé lorsqu\'il détient une licence au statut « active » dont la date d\'expiration n\'est pas dépassée.',
+    'how_one_per_vessel' => 'Un navire n\'apparaît qu\'une fois : si plusieurs licences répondent à la règle, celle qui expire le plus tard est retenue.',
+    'how_excluded' => 'Les licences suspendues, révoquées, expirées ou pas encore actives ne comptent pas : le navire quitte la liste dès le changement de statut ou le lendemain de l\'expiration.',
+    'how_publication' => 'La liste courante est recalculée à chaque ouverture ; la version publiée est une copie figée, à republier quand l\'indicateur « Fraîcheur » le demande.',
 ];

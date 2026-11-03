@@ -7,7 +7,7 @@
             <th>{{ __('vessels::vessels.columns.status') }}</th>
         </x-slot:head>
         @forelse ($vessel->infractionCases as $case)
-            <tr>
+            <tr id="item-infractions-{{ $case->id }}">
                 <td>
                     @can(App\Support\Authorization\Permission::InfractionsView->value)
                         <a href="{{ route('infractions.show', $case) }}">{{ $case->reference }}</a>

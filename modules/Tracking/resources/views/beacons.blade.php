@@ -35,7 +35,7 @@
                     @php($state = App\Enums\BeaconStatus::from($device->beacon_state))
                     <tr>
                         <td class="text-nowrap">
-                            <span class="gs-beacon-icon is-{{ $state->color() }}" data-bs-toggle="tooltip" data-bs-title="{{ __('tracking::tracking.beacons.meaning.'.$state->value) }}"><i class="feather {{ $state->icon() }}"></i></span>
+                            <span class="gs-state-icon is-{{ $state->color() }}" data-bs-toggle="tooltip" data-bs-title="{{ __('tracking::tracking.beacons.meaning.'.$state->value) }}"><i class="feather {{ $state->icon() }}"></i></span>
                             <x-ui.status-badge :status="$state" />
                         </td>
                         <td><x-ui.vessel-link :vessel="$device->vessel" /></td>

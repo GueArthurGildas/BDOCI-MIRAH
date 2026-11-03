@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Navire">
+  <rect width="96" height="96" fill="#eef0f7"/>
+  <path d="M18 58h60l-8 16H28z" fill="#9aa3b8"/>
+  <path d="M30 58V44h26v14zM36 44V34h14v10z" fill="#b7bed0"/>
+  <path d="M58 58V40l10 18z" fill="#b7bed0"/>
+  <path d="M10 80c6 0 6-3 12-3s6 3 12 3 6-3 12-3 6 3 12 3 6-3 12-3 6 3 12 3" fill="none" stroke="#9aa3b8" stroke-width="3" stroke-linecap="round"/>
+</svg>

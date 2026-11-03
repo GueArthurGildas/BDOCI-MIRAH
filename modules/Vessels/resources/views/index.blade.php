@@ -56,8 +56,13 @@
                 @forelse ($vessels as $vessel)
                     <tr>
                         <td>
-                            <a href="{{ route('vessels.show', $vessel) }}" class="f-w-600">{{ $vessel->name }}</a>
-                            <div class="text-muted f-12">{{ __($vessel->category->label()) }}</div>
+                            <span class="gs-vessel-cell">
+                                <img src="{{ $vessel->photoUrl() }}" class="gs-vessel-thumb" alt="" loading="lazy">
+                                <span>
+                                    <a href="{{ route('vessels.show', $vessel) }}" class="f-w-600">{{ $vessel->name }}</a>
+                                    <span class="d-block text-muted f-12">{{ __($vessel->category->label()) }}</span>
+                                </span>
+                            </span>
                         </td>
                         <td>{{ $vessel->registration_number }}</td>
                         <td>{{ $vessel->flagName() }}</td>

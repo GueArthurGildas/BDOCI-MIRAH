@@ -15,4 +15,6 @@ return [
     'listed' => 'Navire :name inscrit sur la liste :list.',
     'infraction_recorded' => 'Infraction :reference constatée.',
     'mission_assigned' => 'Navire engagé dans la mission :reference.',
+    'photo_added' => 'Photo ajoutée au navire :name.',
+    'photo_removed' => 'Photo retirée du navire :name.',
 ];

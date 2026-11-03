@@ -255,7 +255,11 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `vessels.index` | GET | `/vessels` | `vessels.view` |
 | `vessels.ingest.create` | GET | `/vessels/ingest` | `vessels.manage` |
 | `vessels.ingest.store` | POST | `/vessels/ingest` | `vessels.manage` |
+| `vessels.photos.destroy` | DELETE | `/vessels/{vessel}/photos/{document}` | `vessels.manage` |
+| `vessels.photos.show` | GET | `/vessels/{vessel}/photos/{document}` | `vessels.view` |
+| `vessels.photos.store` | POST | `/vessels/{vessel}/photos` | `vessels.manage` |
 | `vessels.quick` | GET | `/vessels/{vessel}/quick` | `vessels.view` |
+| `vessels.sheet` | GET | `/vessels/{vessel}/sheet` | `vessels.view` |
 | `vessels.show` | GET | `/vessels/{vessel}` | `vessels.view` |
 | `vessels.store` | POST | `/vessels` | `vessels.manage` |
 | `vessels.update` | PUT | `/vessels/{vessel}` | `vessels.manage` |

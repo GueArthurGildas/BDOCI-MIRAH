@@ -8,7 +8,7 @@
             <th>{{ __('vessels::vessels.columns.status') }}</th>
         </x-slot:head>
         @forelse ($vessel->licenses as $license)
-            <tr>
+            <tr id="item-licenses-{{ $license->id }}">
                 <td><a href="{{ route('licenses.show', $license) }}">{{ $license->number }}</a></td>
                 <td>{{ $license->segment ? __($license->segment->label()) : '—' }}</td>
                 <td>{{ $license->issued_on?->isoFormat('L') ?? '—' }}</td>

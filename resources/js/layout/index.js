@@ -6,8 +6,10 @@ import { initRemoteModals } from './remote-modal';
 import { initFullScreenToggle } from './fullscreen';
 import { initGuide } from './guide';
 import { initNotifications } from './notifications';
+import { initPhotos } from './photos';
 import { hidePreloader } from './preloader';
 import { initTooltips } from './tooltips';
+import { initTrees } from './tree';
 
 export function initLayout() {
     initCardActions();
@@ -18,6 +20,8 @@ export function initLayout() {
     initGuide();
     initFullScreenToggle();
     initTooltips();
+    initPhotos();
+    initTrees();
     initNotifications();
     hidePreloader();
 }

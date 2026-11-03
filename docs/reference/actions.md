@@ -186,9 +186,11 @@ Actions exécutées par l'`ActionRunner` (transaction, droit, événement, état
 | `tracking.save_alert_rule` | `settings.manage` | `Modules\Tracking\Actions\SaveAlertRule` |
 | `vessels.add_actor` | `vessels.manage` | `Modules\Vessels\Actions\AddVesselActor` |
 | `vessels.add_identifier` | `vessels.manage` | `Modules\Vessels\Actions\AddVesselIdentifier` |
+| `vessels.add_photo` | `vessels.manage` | `Modules\Vessels\Actions\AddVesselPhoto` |
 | `vessels.ingest_source` | `vessels.manage` | `Modules\Vessels\Actions\IngestVesselSource` |
 | `vessels.list_on_external_list` | `vessels.manage` | `Modules\Vessels\Actions\ListVesselOnExternalList` |
 | `vessels.register` | `vessels.manage` | `Modules\Vessels\Actions\RegisterVessel` |
+| `vessels.remove_photo` | `vessels.manage` | `Modules\Vessels\Actions\RemoveVesselPhoto` |
 | `vessels.settle_duplicate` | `vessels.match` | `Modules\Vessels\Actions\SettleVesselDuplicate` |
 | `vessels.update` | `vessels.manage` | `Modules\Vessels\Actions\UpdateVessel` |
 | `vms.assign_beacon` | `vms.create` | `Modules\Vms\Actions\AssignBeacon` |

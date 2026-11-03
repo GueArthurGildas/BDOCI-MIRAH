@@ -53,6 +53,17 @@ Classées par ordre de besoin. Chaque phase est livrée avec l'hypothèse de la 
 | C11 | — | La DPEP expose-t-elle tous les champs par API ? Sinon import contrôlé (F-018) | 7 | Hypothèse H-7-1 (charges utiles enregistrées) | |
 | C12 | E3 | Liste complète des besoins fonctionnels (dont BF06) | périmètre | Aucune hypothèse : question de périmètre | |
 
+## C2. Retours de recette du 31/10 au 01/11/2026 : réponses techniques
+
+Réponses aux questions du cahier des demandes d'évolution (`docs/new/`). Elles décrivent le comportement actuel ; aucune règle n'a été changée.
+
+| Question du cahier | Réponse |
+|---|---|
+| Pourquoi « thonier » est-il sélectionnable dans l'enregistrement d'un navire ? | « Thonier » (`is_tuna_vessel`) est un attribut de la spécification (colonne `thonier`), distinct du type de navire (`type`, qui décrit l'engin : senneur, palangrier…). Un senneur ou un palangrier peut cibler le thon ou non ; la règle de zone « segment thonier » (`SegmentMapper`) s'appuie sur cet attribut. Le libellé du formulaire précise désormais « cible les thonidés, quel que soit l'engin ». **À confirmer** : faut-il le déduire du type de navire plutôt que de le saisir ? |
+| Comment est calculée la partie « Navires autorisés » ? | Un navire est autorisé s'il détient une licence au statut « active » dont l'expiration n'est pas dépassée ; s'il en a plusieurs, la plus tardive est retenue. Suspendues, révoquées, expirées : exclues. La page l'explique maintenant dans une carte « Comment cette liste est calculée ». |
+| Comment l'onglet « État balise » est-il alimenté, et comment connaît-on les balises en rupture ? | Voir `modules/Tracking/README.md`, section « État des balises », et la carte « Comment lire cette page ». |
+| Compléter l'enregistrement d'un navire depuis la base e-inspection (et le pavillon), avec recherche dans les listes | **Pas encore fait** : la recherche dans les listes déroulantes relève du lot « ergonomie transverse » ; l'import des champs depuis e-inspection attend le format des données de référence e-inspection (liste des champs et des valeurs). |
+
 ## D. Méthode : exécution de plusieurs phases en parallèle
 
 La méthode d'origine (ADR [0008](decisions/0008-phase-validation.md)) interdisait de démarrer une phase avant la validation de la précédente. Pour livrer une application complète sans attendre les réponses ouvertes, l'ADR [0012](decisions/0012-parallel-phases.md) a été **appliqué le 2026-10-28** : une phase démarre dès que les phases dont elle dépend sont livrées, **chaque phase restant validée par Gildas individuellement et dans le même format**. Les phases sont donc toutes livrées ; il reste à faire confirmer la règle et à obtenir les validations.

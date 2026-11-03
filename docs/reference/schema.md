@@ -1985,6 +1985,7 @@ erDiagram
         varchar registration_certificate
         varchar fao_identifier
         bool license_not_provided
+        int8 primary_photo_id FK
     }
     violation_reports {
         int8 id PK
@@ -2142,6 +2143,7 @@ erDiagram
     documents ||--o{ logbook_days : "pdf_document_id"
     documents ||--o{ patrol_tracks : "document_id"
     documents ||--o{ screen_captures : "document_id"
+    documents ||--o{ vessels : "primary_photo_id"
     documents ||--o{ violation_reports : "document_id"
     documents ||--o{ working_order_attestations : "document_id"
     eez_declarations ||--o{ eez_declaration_catches : "eez_declaration_id"

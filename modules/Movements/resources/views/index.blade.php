@@ -39,7 +39,7 @@
                 @forelse ($movements as $movement)
                     <tr>
                         <td class="text-nowrap">{{ $movement->occurred_at->isoFormat('L LT') }}</td>
-                        <td><x-ui.status-badge :status="$movement->direction" /></td>
+                        <td><x-ui.direction-badge :direction="$movement->direction" /></td>
                         <td><x-ui.vessel-link :vessel="$movement->vessel" /></td>
                         <td>{{ $movement->port->name }}</td>
                         <td>{{ $movement->reason }}</td>
