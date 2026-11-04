@@ -47,3 +47,15 @@ Statut de toutes les entrées : provisoire, à confirmer par Gildas.
 | Alternatives | seuil fixe plus élevé ; seuil sur une période glissante |
 | Où | `App\Queries\NeverInspectedVessels` (vue SQL `v_seen_never_inspected`), `Modules\Inspections\Http\Controllers\NeverInspectedController::DEFAULT_THRESHOLD` |
 | Tests | `Modules\Inspections\Tests\Feature\NeverInspectedTest` |
+
+## H-6-5
+
+| Champ | Contenu |
+|---|---|
+| Identifiant | H-6-5 |
+| Question | « Déclarations : afficher toutes les informations présentées (voir image). Permettre l'extraction de la liste sur une période, ou de tous les éléments d'un navire » (cahier, §10) : de quelles déclarations s'agit-il, et que montre l'image ? |
+| Option retenue | les déclarations ZEE et ERS (les deux seules déclarations de l'application). L'image n'étant pas dans `docs/new/`, « toutes les informations » est pris au sens de tous les champs d'une déclaration : la liste ZEE affiche en plus le franchissement, la destination et le canal de réception, la fiche ERS a une fiche d'en-tête (navire, date, source, nombre de lignes, espèces, poids vif total). L'extraction (CSV ou PDF) se fait par navire, par période, ou les deux, depuis les listes, la fiche du navire et la page Exports ; chaque export est journalisé |
+| Alternatives | afficher d'autres déclarations (déclarations de panne, de coupure d'émission) ; reproduire une maquette précise |
+| Où | `Modules\Reports\Support\ExportType::EezDeclarations` et `ErsDeclarations`, `ExportDatasets`, permissions `reports.export_eez_declarations` et `reports.export_ers_declarations` |
+| Pour changer | modifier les colonnes dans `ExportDatasets` ; accorder les permissions aux rôles voulus (page Rôles) |
+| Tests | `Modules\Reports\Tests\Feature\DeclarationExportsTest`, `Modules\Movements\Tests\Feature\DeclarationListsTest` |

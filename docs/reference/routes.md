@@ -125,6 +125,7 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `licenses.edit` | GET | `/licenses/{license}/edit` | `licenses.manage` |
 | `licenses.imports.batch` | POST | `/licenses/imports/batch` | `licenses.import` |
 | `licenses.imports.cancel` | POST | `/licenses/imports/{import}/cancel` | `licenses.import` |
+| `licenses.imports.example` | GET | `/licenses/imports/example` | `licenses.view` |
 | `licenses.imports.file` | POST | `/licenses/imports/file` | `licenses.import` |
 | `licenses.imports.index` | GET | `/licenses/imports` | `licenses.view` |
 | `licenses.imports.lines.update` | PUT | `/licenses/imports/lines/{line}` | `licenses.import` |

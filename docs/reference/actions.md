@@ -52,6 +52,8 @@
 | `registry.manage` | `registry` | `update` | Gérer les référentiels |
 | `registry.view` | `registry` | `view` | Consulter les référentiels |
 | `reports.archive` | `reports` | `update` | Archiver les anciennes opérations |
+| `reports.export_eez_declarations` | `reports` | `update` | Exporter les déclarations ZEE |
+| `reports.export_ers_declarations` | `reports` | `update` | Exporter les déclarations ERS |
 | `reports.export_logbook` | `reports` | `update` | Exporter les lignes de main courante |
 | `reports.export_operations` | `reports` | `update` | Exporter les opérations |
 | `reports.export_vessels` | `reports` | `update` | Exporter les navires |
@@ -173,6 +175,8 @@ Actions exécutées par l'`ActionRunner` (transaction, droit, événement, état
 | `registry.update_record` | `registry.manage` | `Modules\Registry\Actions\UpdateRegistryRecord` |
 | `registry.update_source_priorities` | `registry.manage` | `Modules\Registry\Actions\UpdateSourcePriorities` |
 | `reports.archive_operation` | `reports.archive` | `Modules\Reports\Actions\ArchiveOperation` |
+| `reports.export_eez_declarations` | `reports.export_eez_declarations` | `Modules\Reports\Actions\ExportEezDeclarations` |
+| `reports.export_ers_declarations` | `reports.export_ers_declarations` | `Modules\Reports\Actions\ExportErsDeclarations` |
 | `reports.export_logbook` | `reports.export_logbook` | `Modules\Reports\Actions\ExportLogbook` |
 | `reports.export_operations` | `reports.export_operations` | `Modules\Reports\Actions\ExportOperations` |
 | `reports.export_vessels` | `reports.export_vessels` | `Modules\Reports\Actions\ExportVessels` |

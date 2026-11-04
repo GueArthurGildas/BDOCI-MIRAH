@@ -331,4 +331,5 @@ return [
     'catches' => [
         'search_in_e_inspection' => 'Rechercher dans e-inspection',
     ],
+    'eez_export' => 'Exporter toutes les déclarations du navire',
 ];

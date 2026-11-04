@@ -9,6 +9,8 @@ use App\Models\Presentation;
 use App\Models\Species;
 use App\Models\Vessel;
 use App\Support\Actions\ActionRunner;
+use App\Support\Tables\PerPage;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -18,10 +20,24 @@ class ErsController extends Controller
 {
     private const PER_PAGE = 10;
 
-    public function index(): View
+    public function index(Request $request): View
     {
+        $filters = $request->validate([
+            'vessel' => ['nullable', 'integer', 'exists:vessels,id'],
+            'from' => ['nullable', 'date'],
+            'to' => ['nullable', 'date', 'after_or_equal:from'],
+        ]);
+
         return view('vms::ers.index', [
-            'declarations' => ErsDeclaration::with('vessel')->withCount('lines')->withSum('lines', 'live_weight_kg')->latest('declared_at')->paginate(self::PER_PAGE),
+            'filters' => $filters,
+            'vessels' => Vessel::orderBy('name')->get(['id', 'name', 'registration_number'])->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => "{$vessel->name} ({$vessel->registration_number})"])->all(),
+            'declarations' => ErsDeclaration::with('vessel')->withCount('lines')->withSum('lines', 'live_weight_kg')
+                ->when($filters['vessel'] ?? null, fn (Builder $query, string $vessel) => $query->where('vessel_id', $vessel))
+                ->when($filters['from'] ?? null, fn (Builder $query, string $from) => $query->whereDate('declared_at', '>=', $from))
+                ->when($filters['to'] ?? null, fn (Builder $query, string $to) => $query->whereDate('declared_at', '<=', $to))
+                ->latest('declared_at')
+                ->paginate(PerPage::from($request, self::PER_PAGE))
+                ->withQueryString(),
         ]);
     }
 

@@ -10,6 +10,7 @@ use App\Support\Actions\ActionRunner;
 use App\Support\Documents\DocumentStore;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\View\View;
 use Modules\Licenses\Actions\CancelLicenseImport;
 use Modules\Licenses\Actions\ImportLicenseFile;
@@ -21,6 +22,7 @@ use Modules\Licenses\Http\Requests\ImportFileRequest;
 use Modules\Licenses\Http\Requests\ImportLineRequest;
 use Modules\Licenses\Http\Requests\StartBatchRequest;
 use Modules\Licenses\Support\CsvReader;
+use Modules\Licenses\Support\ImportExample;
 
 class ImportController extends Controller
 {
@@ -35,6 +37,15 @@ class ImportController extends Controller
             'withoutLicense' => Vessel::query()->where('category', 'fishing')->whereDoesntHave('licenses')->orderBy('name')->get()
                 ->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => "{$vessel->name} ({$vessel->registration_number})"])->all(),
             'columns' => CsvReader::COLUMNS,
+            'exampleFields' => app(ImportExample::class)->fields(),
+        ]);
+    }
+
+    public function example(ImportExample $example): Response
+    {
+        return response($example->csv(), 200, [
+            'Content-Type' => 'text/csv; charset=UTF-8',
+            'Content-Disposition' => 'attachment; filename="'.ImportExample::FILENAME.'"',
         ]);
     }
 

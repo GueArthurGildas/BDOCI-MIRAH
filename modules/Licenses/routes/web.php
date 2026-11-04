@@ -32,6 +32,7 @@ Route::middleware('auth')->prefix('licenses')->name('licenses.')->group(function
         Route::get('register', [RegisterController::class, 'index'])->name('register.index');
         Route::get('register/{year}/download', [RegisterController::class, 'download'])->whereNumber('year')->name('register.download');
         Route::get('imports', [ImportController::class, 'index'])->name('imports.index');
+        Route::get('imports/example', [ImportController::class, 'example'])->name('imports.example');
         Route::get('imports/{import}', [ImportController::class, 'show'])->whereNumber('import')->name('imports.show');
         Route::get('{license}', [LicenseController::class, 'show'])->whereNumber('license')->name('show');
     });

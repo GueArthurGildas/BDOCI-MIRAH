@@ -11,3 +11,7 @@ Licences de pêche déjà délivrées hors application : enregistrement, zones, 
 - L'expiration se calcule à partir de la date, jamais stockée.
 - Hypothèses : H-4a-1 à H-4a-8 (`docs/assumptions/phase-4a.md`).
 - Clés étrangères : `license_suspensions.infraction_case_id` et `license_revocations.infraction_case_id` pointent vers `infraction_cases` (contrainte ajoutée en phase 6 ; le formulaire accepte `?infraction_case=` depuis un dossier d'infraction) ; `vms_failure_id` reste tardive (phase 3b).
+
+## Fichier d'exemple pour l'import
+
+`licenses.imports.example` télécharge un CSV prérempli avec des navires, zones, engins et espèces réels de la base (`Support/ImportExample`) : des lignes `#` expliquent chaque colonne, puis l'en-tête et trois lignes d'exemple. Le lecteur (`Support/CsvReader`) ignore les lignes commençant par `#`, donc le fichier se réimporte tel quel. La page d'import affiche le guide des champs (obligatoire ou facultatif, format, exemple).

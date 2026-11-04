@@ -55,6 +55,9 @@ return [
         'destination_not_designated' => 'La destination n\'est pas un port désigné',
         'not_port_transit' => 'Pas un transit vers un port ivoirien',
     ],
+    'export_csv' => 'Export CSV',
+    'export_pdf' => 'Export PDF',
+    'export_hint' => 'Exporter la liste filtrée (navire et période)',
     'fields' => [
         'received_at' => 'Reçue le',
         'vessel' => 'Navire',

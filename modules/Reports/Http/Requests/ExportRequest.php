@@ -25,12 +25,13 @@ class ExportRequest extends FormRequest
             'record_status' => ['nullable', Rule::enum(RecordStatus::class)],
             'from' => ['nullable', 'date'],
             'to' => ['nullable', 'date', 'after_or_equal:from'],
+            'vessel' => ['nullable', 'integer', 'exists:vessels,id'],
         ];
     }
 
     public function attributes(): array
     {
-        return collect(['format', 'year', 'status', 'search', 'record_status', 'from', 'to'])
+        return collect(['format', 'year', 'status', 'search', 'record_status', 'from', 'to', 'vessel'])
             ->mapWithKeys(fn (string $field) => [$field => __("reports::reports.exports.fields.{$field}")])
             ->all();
     }

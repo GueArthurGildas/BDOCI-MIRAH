@@ -39,11 +39,13 @@ class EezDeclarationController extends Controller
             'status' => ['nullable', Rule::enum(EezDeclarationStatus::class)],
             'from' => ['nullable', 'date'],
             'to' => ['nullable', 'date', 'after_or_equal:from'],
+            'vessel' => ['nullable', 'integer', 'exists:vessels,id'],
         ]);
 
         $declarations = EezDeclaration::query()
             ->with(['vessel', 'receptionChannel', 'enteredBy'])
             ->withSum('catches', 'weight_kg')
+            ->when($filters['vessel'] ?? null, fn (Builder $query, string $vessel) => $query->where('vessel_id', $vessel))
             ->when($filters['type'] ?? null, fn (Builder $query, string $type) => $query->where('type', $type))
             ->when($filters['status'] ?? null, fn (Builder $query, string $status) => $query->where('status', $status))
             ->when($filters['from'] ?? null, fn (Builder $query, string $from) => $query->whereDate('received_at', '>=', $from))
@@ -56,7 +58,11 @@ class EezDeclarationController extends Controller
             ->paginate(PerPage::from($request, self::PER_PAGE))
             ->withQueryString();
 
-        return view('movements::eez.index', ['declarations' => $declarations, 'filters' => $filters]);
+        return view('movements::eez.index', [
+            'declarations' => $declarations,
+            'filters' => $filters,
+            'vessels' => Vessel::orderBy('name')->get(['id', 'name', 'registration_number'])->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => "{$vessel->name} ({$vessel->registration_number})"])->all(),
+        ]);
     }
 
     public function create(): View

@@ -10,12 +10,15 @@ class CsvReader
 
     private const LIST_SEPARATOR = '|';
 
+    private const COMMENT_PREFIX = '#';
+
     /** @return array<int, array{vessel_id: ?int, data: array<string, mixed>}> */
     public function read(string $content): array
     {
         $lines = preg_split('/\r\n|\n|\r/', trim(preg_replace('/^\xEF\xBB\xBF/', '', $content)));
+        $lines = $lines === false ? [] : array_values(array_filter($lines, fn (string $line) => ! str_starts_with(ltrim($line), self::COMMENT_PREFIX)));
 
-        if ($lines === false || count($lines) < 2) {
+        if (count($lines) < 2) {
             return [];
         }
 

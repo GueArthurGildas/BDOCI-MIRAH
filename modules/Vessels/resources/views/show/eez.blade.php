@@ -1,4 +1,9 @@
 <x-ui.card :title="__('vessels::vessels.tabs.eez')" flush>
+    @if (Route::has('reports.exports.download') && auth()->user()->can(App\Support\Authorization\Permission::ReportsExportEezDeclarations->value))
+        <x-slot:actions>
+            <a href="{{ route('reports.exports.download', ['type' => 'eez_declarations', 'format' => 'csv', 'vessel' => $vessel->id]) }}" class="btn btn-dark btn-sm"><i class="feather icon-file-text"></i> {{ __('vessels::vessels.eez_export') }}</a>
+        </x-slot:actions>
+    @endif
     <x-ui.table>
         <x-slot:head>
             <th>{{ __('vessels::vessels.columns.date') }}</th>
