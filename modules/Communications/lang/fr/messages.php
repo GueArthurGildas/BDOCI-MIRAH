@@ -28,4 +28,5 @@ return [
     'send' => 'Envoyer',
     'acknowledge_title' => 'Accusé',
     'acknowledge' => 'Enregistrer l\'accusé',
+    'download_attachment' => 'Télécharger',
 ];

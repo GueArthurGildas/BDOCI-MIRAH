@@ -59,3 +59,15 @@ Statut de toutes les entrées : provisoire, à confirmer par Gildas.
 | Où | `Modules\Reports\Support\ExportType::EezDeclarations` et `ErsDeclarations`, `ExportDatasets`, permissions `reports.export_eez_declarations` et `reports.export_ers_declarations` |
 | Pour changer | modifier les colonnes dans `ExportDatasets` ; accorder les permissions aux rôles voulus (page Rôles) |
 | Tests | `Modules\Reports\Tests\Feature\DeclarationExportsTest`, `Modules\Movements\Tests\Feature\DeclarationListsTest` |
+
+## H-6-6
+
+| Champ | Contenu |
+|---|---|
+| Identifiant | H-6-6 |
+| Question | « Annuaire de contacts AMREP pour les notifications dans le cadre de l'AMREP. Prévoir des messages prédéfinis, personnalisables, avec ajout de documents générés par la plateforme (mains courantes, observations, navires, etc.) » (cahier, §10) : qui sont les contacts, quels messages, quels documents ? |
+| Option retenue | AMREP est lu comme l'Accord relatif aux mesures du ressort de l'État du port (MREP dans le reste de l'application). L'annuaire réutilise les contacts des référentiels (organisation, catégorie, pays, e-mail, téléphone). Les messages prédéfinis sont trois modèles, en français et en anglais (notification d'entrée au port, inspection, refus d'accès), créés par `AmrepMessageTemplatesSeeder` et gérés comme tous les modèles ; le texte est librement modifiable avant l'envoi. Les documents joignables sont la fiche technique du navire (PDF), la main courante d'une journée (Word) et une observation (PDF), générés à l'envoi. Les e-mails les portent en pièces jointes, pas les messages WhatsApp. Chaque contact reçoit son propre message, tracé dans la liste des messages |
+| Alternatives | catégories de contacts imposées par l'accord (État du pavillon, État côtier, ORGP) plutôt que texte libre ; autres documents (infraction, inspection) ; validation avant envoi plutôt qu'envoi immédiat |
+| Où | `Modules\Communications\Http\Controllers\DirectoryController`, `Actions\NotifyContacts`, `App\Support\Documents\GeneratedDocuments`, `database/seeders/AmrepMessageTemplatesSeeder.php` |
+| Pour changer | modifier les modèles dans la page Modèles ; ajouter un document dans `GeneratedDocuments` |
+| Tests | `Modules\Communications\Tests\Feature\ContactDirectoryTest` |

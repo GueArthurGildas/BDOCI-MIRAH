@@ -133,6 +133,7 @@ app/
 ├── Providers/AppServiceProvider.php     # services globaux (navigation, langues, réglages)
 └── Support/
     ├── Alerts/AlertTriage.php           # classement des alertes : urgences, utiles à mes tâches, autres
+    ├── Documents/GeneratedDocuments.php # documents produits par la plateforme (fiche navire PDF, main courante Word, observation PDF), joignables aux messages
     ├── Authorization/                   # permissions et rôles (Permission, Role)
     ├── Localization/                    # langues et pays
     ├── Modules/ModuleServiceProvider.php    # chargement d'un module : routes, vues, traductions, menu, commandes, planification

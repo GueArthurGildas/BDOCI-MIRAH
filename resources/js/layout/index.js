@@ -1,5 +1,6 @@
 import { initAutoSubmit } from './auto-submit';
 import { initCardActions } from './card-actions';
+import { initCheckAll } from './check-all';
 import { initConfirmations } from './confirm';
 import { initPopup } from './popup';
 import { initRemoteModals } from './remote-modal';
@@ -21,6 +22,7 @@ export function initLayout() {
     initSelects();
     initTablePagination();
     initAutoSubmit();
+    initCheckAll();
     initLiveLists();
     initHoverPreview();
     initConfirmations();

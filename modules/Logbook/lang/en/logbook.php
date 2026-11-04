@@ -97,6 +97,8 @@ return [
         'how' => 'How',
         'what' => 'What',
         'rectifying_line' => 'Rectifying line',
+        'observation_title' => 'Observation no. :id',
+        'generated' => 'Document generated on :date.',
     ],
     'views' => [
         'label' => 'Display mode',

@@ -9,10 +9,10 @@ use App\Support\Actions\Action;
 use App\Support\Actions\ActionContext;
 use App\Support\Authorization\Permission;
 use App\Support\Documents\DocumentStore;
+use App\Support\Logbook\LogbookCounters;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\App;
 use Illuminate\Validation\ValidationException;
-use Modules\Logbook\Support\LogbookCounters;
 
 class CloseLogbookDay extends Action
 {

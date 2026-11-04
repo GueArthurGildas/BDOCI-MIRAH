@@ -97,6 +97,8 @@ return [
         'how' => 'Comment',
         'what' => 'Quoi',
         'rectifying_line' => 'Ligne rectificative',
+        'observation_title' => 'Observation n° :id',
+        'generated' => 'Document généré le :date.',
     ],
     'views' => [
         'label' => 'Mode d\'affichage',

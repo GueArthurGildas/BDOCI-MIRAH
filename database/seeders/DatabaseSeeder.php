@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
-        $this->call([RolesAndPermissionsSeeder::class, ReferenceDataSeeder::class]);
+        $this->call([RolesAndPermissionsSeeder::class, ReferenceDataSeeder::class, AmrepMessageTemplatesSeeder::class]);
 
         foreach (self::DEMO_USERS as $email => [$role, $name]) {
             User::factory()->create(['email' => $email, 'name' => $name])->assignRole($role->value);

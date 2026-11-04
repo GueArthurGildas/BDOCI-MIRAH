@@ -5,6 +5,7 @@ return [
     'subtitle' => 'Messages sent, acknowledgments and automatic dispatch',
     'tabs' => [
         'messages' => 'Messages',
+        'directory' => 'Directory',
         'notes' => 'Notes',
         'templates' => 'Templates',
         'rules' => 'Dispatch rules',

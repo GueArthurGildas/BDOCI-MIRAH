@@ -18,15 +18,13 @@ use App\Support\Documents\DocumentStore;
 use App\Support\Tables\PerPage;
 use App\Support\Vessels\StatusLight;
 use App\Support\Vessels\VesselIndicators;
+use App\Support\Vessels\VesselSheet;
 use App\Support\Vessels\VigilanceScore;
 use App\Support\Vms\ThemisLink;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Modules\Vessels\Actions\RegisterVessel;
@@ -137,21 +135,12 @@ class VesselController extends Controller
         ]);
     }
 
-    public function sheet(Vessel $vessel): Response
+    public function sheet(Vessel $vessel, VesselSheet $sheet): Response
     {
-        $vessel->load(['currentLicense', 'latestPosition.zone', 'flagCountry', 'homePort', 'identifiers', 'actors.legalEntity', 'actors.person', 'trackingDevices', 'currentState']);
-        $indicators = VesselIndicators::for($vessel);
-        $photo = $vessel->primary_photo_id ? Document::find($vessel->primary_photo_id) : null;
-
-        return Pdf::loadView('vessels::sheet', [
-            'vessel' => $vessel,
-            'assessment' => StatusLight::assess($indicators->facts),
-            'photo' => $photo && Storage::disk(DocumentStore::DISK)->exists($photo->path)
-                ? 'data:'.$photo->mime_type.';base64,'.base64_encode(Storage::disk(DocumentStore::DISK)->get($photo->path))
-                : null,
-            'generatedAt' => now(),
-            'generatedBy' => auth()->user(),
-        ])->download('fiche-'.Str::slug($vessel->registration_number ?: $vessel->name).'.pdf');
+        return response($sheet->render($vessel), 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="'.$sheet->filename($vessel).'"',
+        ]);
     }
 
     public function quick(Vessel $vessel): View

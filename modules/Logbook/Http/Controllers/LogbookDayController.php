@@ -11,6 +11,8 @@ use App\Support\Actions\ActionRunner;
 use App\Support\Documents\DocumentStore;
 use App\Support\Logbook\LogbookCalendar;
 use App\Support\Logbook\LogbookChannels;
+use App\Support\Logbook\LogbookCounters;
+use App\Support\Logbook\LogbookDayWord;
 use App\Support\Tables\PerPage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
@@ -20,9 +22,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Modules\Logbook\Actions\CloseLogbookDay;
-use Modules\Logbook\Support\LogbookCounters;
 use Modules\Logbook\Support\LogbookDayFolders;
-use Modules\Logbook\Support\LogbookDayWord;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class LogbookDayController extends Controller

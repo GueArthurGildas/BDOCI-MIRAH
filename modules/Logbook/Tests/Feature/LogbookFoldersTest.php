@@ -11,9 +11,9 @@ use App\Models\Vessel;
 use App\Support\Authorization\Permission;
 use App\Support\Authorization\Role;
 use App\Support\Logbook\LogbookChannels;
+use App\Support\Logbook\LogbookDayWord;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\Logbook\Support\LogbookDayFolders;
-use Modules\Logbook\Support\LogbookDayWord;
 use Tests\TestCase;
 use ZipArchive;
 

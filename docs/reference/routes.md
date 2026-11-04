@@ -62,7 +62,11 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `communications.channels.consents.store` | POST | `/communications/channels/consents` | `communications.send` |
 | `communications.channels.index` | GET | `/communications/channels` | `communications.view` |
 | `communications.channels.update` | PUT | `/communications/channels/{channel}` | `communications.manage_dispatch` |
+| `communications.directory.compose` | GET | `/communications/directory/compose` | `communications.send` |
+| `communications.directory.index` | GET | `/communications/directory` | `communications.view` |
+| `communications.directory.send` | POST | `/communications/directory/send` | `communications.send` |
 | `communications.messages.acknowledge` | POST | `/communications/messages/{message}/acknowledge` | `communications.send` |
+| `communications.messages.attachment` | GET | `/communications/messages/{message}/attachments/{document}` | `communications.view` |
 | `communications.messages.create` | GET | `/communications/messages/create` | `communications.send` |
 | `communications.messages.index` | GET | `/communications/messages` | `communications.view` |
 | `communications.messages.send` | POST | `/communications/messages/{message}/send` | `communications.send` |

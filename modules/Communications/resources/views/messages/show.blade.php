@@ -28,6 +28,23 @@
             </div>
 
             <div class="col-xl-5">
+                @if ($attachments->isNotEmpty())
+                    <x-ui.card :title="__('communications::directory.attachments')" flush>
+                        <x-ui.table :paginate="false">
+                            <x-slot:head>
+                                <th>{{ __('communications::directory.attachment_name') }}</th>
+                                <th></th>
+                            </x-slot:head>
+                            @foreach ($attachments as $document)
+                                <tr>
+                                    <td class="text-wrap">{{ $document->name }}</td>
+                                    <td class="text-end"><a href="{{ route('communications.messages.attachment', [$message, $document]) }}" class="btn btn-default btn-mini"><i class="feather icon-download"></i> {{ __('communications::messages.download_attachment') }}</a></td>
+                                </tr>
+                            @endforeach
+                        </x-ui.table>
+                    </x-ui.card>
+                @endif
+
                 @can(App\Support\Authorization\Permission::CommunicationsSend->value)
                     @if ($message->status === App\Enums\MessageStatus::Prepared)
                         <x-ui.card :title="__('communications::messages.validate_title')">

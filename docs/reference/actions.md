@@ -92,6 +92,7 @@ Actions exécutées par l'`ActionRunner` (transaction, droit, événement, état
 | `communications.create_note` | `communications.create_note` | `Modules\Communications\Actions\CreateNote` |
 | `communications.dispatch_rule` | `communications.manage_dispatch` | `Modules\Communications\Actions\DispatchRuleMessages` |
 | `communications.mark_note_read` | `communications.view` | `Modules\Communications\Actions\MarkNoteRead` |
+| `communications.notify_contacts` | `communications.send` | `Modules\Communications\Actions\NotifyContacts` |
 | `communications.record_delivery_report` | `communications.manage_dispatch` | `Modules\Communications\Actions\RecordDeliveryReport` |
 | `communications.record_whatsapp_consent` | `communications.send` | `Modules\Communications\Actions\RecordWhatsAppConsent` |
 | `communications.request_ai_note` | `communications.trigger_ai_agent` | `Modules\Communications\Actions\RequestAiNote` |
