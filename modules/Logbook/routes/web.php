@@ -14,6 +14,7 @@ Route::middleware('auth')
         Route::get('days/today', [LogbookDayController::class, 'today'])->can(Permission::LogbookView->value)->name('days.today');
         Route::get('days/{day}', [LogbookDayController::class, 'show'])->can(Permission::LogbookView->value)->name('days.show');
         Route::get('days/{day}/pdf', [LogbookDayController::class, 'pdf'])->can(Permission::LogbookView->value)->name('days.pdf');
+        Route::get('days/{day}/word', [LogbookDayController::class, 'word'])->can(Permission::LogbookView->value)->name('days.word');
         Route::post('days/{day}/close', [LogbookDayController::class, 'close'])->can(Permission::LogbookClose->value)->name('days.close');
         Route::post('entries', [LogbookEntryController::class, 'store'])->can(Permission::LogbookCreate->value)->name('entries.store');
         Route::get('entries/{entry}/rectify', [LogbookEntryController::class, 'rectifyForm'])->can(Permission::LogbookCreate->value)->name('entries.rectify');

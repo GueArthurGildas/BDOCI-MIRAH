@@ -2,7 +2,11 @@
     $isOpen = $day->status === App\Enums\LogbookDayStatus::Open;
 @endphp
 <x-layouts.app :title="__('logbook::logbook.days.title')">
-    <x-ui.page-header :title="$day->day->isoFormat('dddd LL')" :subtitle="__('logbook::logbook.days.shift_range', ['from' => $day->shift_start_at->format('H:i'), 'to' => $day->shift_end_at->format('H:i')])" :breadcrumbs="[__('logbook::logbook.days.title') => route('logbook.days.index')]" />
+    <x-ui.page-header :title="$day->day->isoFormat('dddd LL')" :subtitle="__('logbook::logbook.days.shift_range', ['from' => $day->shift_start_at->format('H:i'), 'to' => $day->shift_end_at->format('H:i')])" :breadcrumbs="[__('logbook::logbook.days.title') => route('logbook.days.index')]">
+        <x-slot:actions>
+            <a href="{{ route('logbook.days.word', $day) }}" class="btn btn-sm btn-outline-primary"><i class="feather icon-file-text"></i> {{ __('logbook::logbook.days.word') }}</a>
+        </x-slot:actions>
+    </x-ui.page-header>
 
     <div class="page-body">
         <div class="row">
@@ -74,6 +78,8 @@
                         @endforelse
                     </x-ui.table>
                 </x-ui.card>
+
+                @include('logbook::partials.timeline', ['entries' => $day->entries->sortBy('occurred_at')->values()])
             </div>
 
             <div class="col-xl-4">

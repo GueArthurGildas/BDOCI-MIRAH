@@ -151,6 +151,7 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `logbook.days.pdf` | GET | `/logbook/days/{day}/pdf` | `logbook.view` |
 | `logbook.days.show` | GET | `/logbook/days/{day}` | `logbook.view` |
 | `logbook.days.today` | GET | `/logbook/days/today` | `logbook.view` |
+| `logbook.days.word` | GET | `/logbook/days/{day}/word` | `logbook.view` |
 | `logbook.entries.rectify` | GET | `/logbook/entries/{entry}/rectify` | `logbook.create` |
 | `logbook.entries.rectify.store` | POST | `/logbook/entries/{entry}/rectify` | `logbook.create` |
 | `logbook.entries.store` | POST | `/logbook/entries` | `logbook.create` |

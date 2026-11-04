@@ -187,3 +187,13 @@ thead .ts-wrapper {
 .gs-avatar {
     object-fit: cover;
 }
+
+.gs-timeline-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    margin: 0 0 18px;
+    padding: 0;
+    list-style: none;
+    font-size: .82rem;
+}
