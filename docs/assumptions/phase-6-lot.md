@@ -25,3 +25,25 @@ Statut de toutes les entrées : provisoire, à confirmer par Gildas.
 | Où | `Modules\Profile\Support\PersonalSpace` |
 | Pour changer | modifier la requête correspondante dans `PersonalSpace::for` |
 | Tests | `Modules\Profile\Tests\Feature\ProfileTest` |
+
+## H-6-3
+
+| Champ | Contenu |
+|---|---|
+| Identifiant | H-6-3 |
+| Question | « Captures (quantités par espèce) : être plus précis par navire et par période. Si possible, ouvrir dans e-inspection une recherche pointant sur le navire et ses captures » (cahier, §8) : que veut dire « ouvrir dans e-inspection une recherche » ? |
+| Option retenue | la rubrique e-inspection de l'application (menu Pilotage) : la page Captures se filtre par navire et par période (30 jours, 3 mois, 12 mois, ou dates libres), et la fiche du navire a un bouton « Rechercher dans e-inspection » qui ouvre cette page déjà filtrée sur le navire. Aucun lien vers le site e-inspection lui-même : le lien externe configuré (`external_links`) vise une inspection précise, pas une recherche de navire |
+| Alternatives | lien externe vers la recherche d'e-inspection (il faudrait connaître le format de son adresse) |
+| Où | `Modules\Catches\Http\Controllers\CatchDeclarationController`, `modules/Vessels/resources/views/show/catches.blade.php` |
+| Tests | `Modules\Catches\Tests\Feature\CatchBreakdownTest` |
+
+## H-6-4
+
+| Champ | Contenu |
+|---|---|
+| Identifiant | H-6-4 |
+| Question | « Navires souvent vus mais jamais contrôlés » (cahier, §8) : à partir de combien d'observations un navire est-il « souvent » vu ? |
+| Option retenue | un navire est listé s'il a été vu ou approché au moins 2 fois pendant des missions et qu'aucune de ses observations n'a abouti à un contrôle à bord ; le seuil se règle sur la page (1, 2, 3, 5 ou 10) |
+| Alternatives | seuil fixe plus élevé ; seuil sur une période glissante |
+| Où | `App\Queries\NeverInspectedVessels` (vue SQL `v_seen_never_inspected`), `Modules\Inspections\Http\Controllers\NeverInspectedController::DEFAULT_THRESHOLD` |
+| Tests | `Modules\Inspections\Tests\Feature\NeverInspectedTest` |

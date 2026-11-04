@@ -328,4 +328,7 @@ return [
         'expires_on' => 'Expiry date',
         'generated' => 'Sheet generated on :date by :user.',
     ],
+    'catches' => [
+        'search_in_e_inspection' => 'Search in e-inspection',
+    ],
 ];

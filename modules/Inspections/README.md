@@ -7,3 +7,7 @@ Miroir en lecture seule des inspections de l'application e-inspection (module M1
 - Synchronisation : connecteur `e-inspection` (`App\Support\Connectors\Sources\EInspectionConnector`) via l'action `SynchroniseConnector` du module Administration ; chaque nouvelle inspection d'un navire connu publie l'événement `inspection.received`.
 - Table historique `inspections` conservée tant que la phase 6 n'a pas repris `infractions.inspection_id`.
 - Hypothèses : H-7-4, H-7-5, H-7-8.
+
+## Navires vus mais jamais contrôlés
+
+`inspections.never-inspected` : navires vus ou approchés pendant des missions sans aucun contrôle à bord (vue SQL `v_seen_never_inspected`, requête partagée `App\Queries\NeverInspectedVessels`), avec seuil d'observations réglable (2 par défaut, H-6-4), recherche et période de dernière observation. Une carte de la page des missions renvoie vers cette liste.

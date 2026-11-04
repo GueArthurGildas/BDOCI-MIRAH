@@ -2,13 +2,85 @@
     <x-ui.page-header :title="__('catches::catches.title')" :subtitle="__('catches::catches.subtitle')" />
 
     <div class="page-body">
-        <x-ui.card :title="__('catches::catches.chart_title')" :subtitle="__('catches::catches.total', ['quantity' => __('catches::catches.kilograms', ['value' => Number::format($totalQuantity)])])">
-            <x-ui.chart :config="$chart" height="260" />
-        </x-ui.card>
+        @if ($selectedVessel)
+            <x-ui.card :title="$selectedVessel->name" :subtitle="__('catches::catches.vessel_summary', ['quantity' => __('catches::catches.kilograms', ['value' => Number::format($totalQuantity)]), 'species' => $bySpecies->count()])">
+                <x-slot:actions>
+                    <a href="{{ route('vessels.show', $selectedVessel) }}" class="btn btn-primary btn-sm">{{ __('catches::catches.open_vessel') }}</a>
+                    <a href="{{ route('catches.index', request()->except('page', 'vessel')) }}" class="btn btn-default btn-sm">{{ __('catches::catches.all_vessels') }}</a>
+                </x-slot:actions>
+                <x-ui.vessel-link :vessel="$selectedVessel" />
+            </x-ui.card>
+        @endif
+
+        <div class="row">
+            <div class="col-xl-6">
+                <x-ui.card :title="__('catches::catches.chart_title')" :subtitle="__('catches::catches.total', ['quantity' => __('catches::catches.kilograms', ['value' => Number::format($totalQuantity)])])">
+                    <x-ui.chart :config="$chart" height="260" />
+                </x-ui.card>
+            </div>
+            <div class="col-xl-6">
+                <x-ui.card :title="__('catches::catches.by_period_title')" :subtitle="__('catches::catches.by_period_hint')">
+                    <x-ui.chart :config="$periodChart" height="260" />
+                </x-ui.card>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-6">
+                <x-ui.card :title="__('catches::catches.by_species_title')" flush>
+                    <x-ui.table>
+                        <x-slot:head>
+                            <th>{{ __('catches::catches.fields.species') }}</th>
+                            <th class="text-end">{{ __('catches::catches.fields.quantity') }}</th>
+                            <th class="text-end">{{ __('catches::catches.share') }}</th>
+                            <th class="text-end">{{ __('catches::catches.vessels_count') }}</th>
+                        </x-slot:head>
+                        @forelse ($bySpecies as $row)
+                            <tr>
+                                <td>{{ $row['species']?->name }} <span class="text-muted f-12">({{ $row['species']?->fao_code }})</span></td>
+                                <td class="text-end">{{ __('catches::catches.kilograms', ['value' => Number::format($row['total_kg'])]) }}</td>
+                                <td class="text-end">{{ Number::percentage($row['share'], precision: 1) }}</td>
+                                <td class="text-end">{{ $row['vessels_count'] }}</td>
+                            </tr>
+                        @empty
+                            <x-ui.empty-row colspan="4" />
+                        @endforelse
+                    </x-ui.table>
+                </x-ui.card>
+            </div>
+            <div class="col-xl-6">
+                @unless ($selectedVessel)
+                    <x-ui.card :title="__('catches::catches.by_vessel_title')" :subtitle="__('catches::catches.by_vessel_hint')" flush>
+                        <x-ui.table>
+                            <x-slot:head>
+                                <th>{{ __('catches::catches.fields.vessel') }}</th>
+                                <th class="text-end">{{ __('catches::catches.fields.quantity') }}</th>
+                                <th class="text-end">{{ __('catches::catches.species_count') }}</th>
+                            </x-slot:head>
+                            @forelse ($byVessel as $row)
+                                <tr>
+                                    <td><x-ui.vessel-link :vessel="$row['vessel']" /></td>
+                                    <td class="text-end">{{ __('catches::catches.kilograms', ['value' => Number::format($row['total_kg'])]) }}</td>
+                                    <td class="text-end">
+                                        {{ $row['species_count'] }}
+                                        <a href="{{ route('catches.index', [...request()->except('page'), 'vessel' => $row['vessel']->id]) }}" class="gs-quick-link" title="{{ __('catches::catches.only_this_vessel') }}"><i class="feather icon-filter"></i></a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <x-ui.empty-row colspan="3" />
+                            @endforelse
+                        </x-ui.table>
+                    </x-ui.card>
+                @endunless
+                @include('catches::partials.feeding-catches')
+            </div>
+        </div>
 
         <x-ui.card :title="__('catches::catches.list_title')" :subtitle="trans_choice('ui.results_count', $declarations->total())" flush>
             <x-ui.table-toolbar :action="route('catches.index')" :paginator="$declarations">
                 <x-ui.toolbar-input name="search" type="search" :label="__('ui.search')" :value="$filters['search'] ?? null" :placeholder="__('catches::catches.search_placeholder')" />
+                <x-ui.toolbar-select name="vessel" :label="__('catches::catches.fields.vessel')" :options="$vessels" :value="$filters['vessel'] ?? null" />
+                <x-ui.toolbar-select name="last" :label="__('catches::catches.quick_period')" :options="$periods" :value="$filters['last'] ?? null" />
                 <x-ui.toolbar-input name="from" type="date" :label="__('catches::catches.fields.from')" :value="$filters['from'] ?? null" />
                 <x-ui.toolbar-input name="to" type="date" :label="__('catches::catches.fields.to')" :value="$filters['to'] ?? null" />
             </x-ui.table-toolbar>

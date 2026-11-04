@@ -5,6 +5,7 @@ return [
     'subtitle' => 'Programmation, autorisation, moyens, trace GPS, unités rencontrées et bilan calculé',
     'list_title' => 'Liste des missions',
     'never_inspected' => 'Navires souvent vus mais jamais contrôlés',
+    'see_all_never_inspected' => 'Voir toute la liste',
     'never_inspected_hint' => 'Vus ou approchés pendant des missions sans aucun contrôle à bord',
     'schedule' => 'Programmer une mission',
     'schedule_subtitle' => 'La mission sera autorisée selon le type (le Directeur par défaut)',

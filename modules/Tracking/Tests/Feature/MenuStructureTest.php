@@ -34,7 +34,7 @@ class MenuStructureTest extends TestCase
     {
         $this->assertSame([
             'dashboard',
-            ['e_inspection' => ['catches.landings', 'infractions.index', 'catches.index', 'catches.transshipments', 'inspections.index']],
+            ['e_inspection' => ['catches.landings', 'infractions.index', 'catches.index', 'catches.transshipments', 'inspections.index', 'inspections.never-inspected']],
             'thermis.index',
             'fleet.index',
             'notifications.index',

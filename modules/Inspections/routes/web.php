@@ -3,6 +3,7 @@
 use App\Support\Authorization\Permission;
 use Illuminate\Support\Facades\Route;
 use Modules\Inspections\Http\Controllers\InspectionController;
+use Modules\Inspections\Http\Controllers\NeverInspectedController;
 
 Route::middleware(['auth', 'can:'.Permission::InspectionsView->value])
     ->prefix('inspections')
@@ -10,5 +11,6 @@ Route::middleware(['auth', 'can:'.Permission::InspectionsView->value])
     ->controller(InspectionController::class)
     ->group(function () {
         Route::get('/', 'index')->name('index');
+        Route::get('never-inspected', NeverInspectedController::class)->name('never-inspected');
         Route::get('{inspection}', 'show')->name('show');
     });

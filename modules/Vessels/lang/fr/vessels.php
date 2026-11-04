@@ -328,4 +328,7 @@ return [
         'expires_on' => 'Date d\'expiration',
         'generated' => 'Fiche générée le :date par :user.',
     ],
+    'catches' => [
+        'search_in_e_inspection' => 'Rechercher dans e-inspection',
+    ],
 ];

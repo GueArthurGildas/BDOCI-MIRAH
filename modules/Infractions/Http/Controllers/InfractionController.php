@@ -24,10 +24,13 @@ use Modules\Infractions\Actions\OpenInfractionCase;
 use Modules\Infractions\Actions\UpdateInfractionCase;
 use Modules\Infractions\Http\Requests\OpenCaseRequest;
 use Modules\Infractions\Http\Requests\UpdateCaseRequest;
+use Modules\Infractions\Support\CaseFolders;
 
 class InfractionController extends Controller
 {
     private const PER_PAGE = 10;
+
+    private const FOLDER_CASES_LIMIT = 300;
 
     public function index(Request $request): View
     {
@@ -37,9 +40,12 @@ class InfractionController extends Controller
             'type' => ['nullable', 'exists:infraction_types,id'],
             'from' => ['nullable', 'date'],
             'to' => ['nullable', 'date', 'after_or_equal:from'],
+            'view' => ['nullable', Rule::in(['list', 'folders'])],
+            'case' => ['nullable', 'integer', 'exists:infraction_cases,id'],
+            'folder' => ['nullable', Rule::in(CaseFolders::FOLDERS)],
         ]);
 
-        $cases = InfractionCase::query()
+        $query = InfractionCase::query()
             ->with(['vessel', 'upheld.type'])
             ->when($filters['status'] ?? null, fn (Builder $query, string $status) => $query->where('status', $status))
             ->when($filters['type'] ?? null, fn (Builder $query, string $type) => $query->whereHas('upheld', fn (Builder $query) => $query->where('infraction_type_id', $type)))
@@ -48,14 +54,27 @@ class InfractionController extends Controller
             ->when($filters['search'] ?? null, fn (Builder $query, string $search) => $query->where(fn (Builder $query) => $query
                 ->whereLike('reference', "%{$search}%")
                 ->orWhereHas('vessel', fn (Builder $query) => $query->search($search))))
-            ->latest('opened_at')
-            ->paginate(PerPage::from($request, self::PER_PAGE))
-            ->withQueryString();
+            ->latest('opened_at');
 
-        return view('infractions::index', [
-            'cases' => $cases,
+        $data = [
             'filters' => $filters,
+            'view' => $filters['view'] ?? 'list',
             'types' => InfractionType::orderBy('code')->pluck('label', 'id'),
+        ];
+
+        if ($data['view'] === 'list') {
+            return view('infractions::index', $data + ['cases' => $query->paginate(PerPage::from($request, self::PER_PAGE))->withQueryString()]);
+        }
+
+        $cases = $query->limit(self::FOLDER_CASES_LIMIT)->get();
+        $selected = $cases->firstWhere('id', $filters['case'] ?? null) ?? $cases->first();
+
+        return view('infractions::index', $data + [
+            'cases' => $cases,
+            'tree' => collect(InfractionCaseStatus::cases())->mapWithKeys(fn (InfractionCaseStatus $status) => [$status->value => $cases->where('status', $status)->values()]),
+            'selected' => $selected,
+            'folder' => $filters['folder'] ?? 'summary',
+            'content' => $selected ? CaseFolders::for($selected) : null,
         ]);
     }
 

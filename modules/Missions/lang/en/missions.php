@@ -5,6 +5,7 @@ return [
     'subtitle' => 'Scheduling, authorization, assets, GPS track, encountered units and computed review',
     'list_title' => 'Mission list',
     'never_inspected' => 'Vessels often seen but never inspected',
+    'see_all_never_inspected' => 'See the whole list',
     'never_inspected_hint' => 'Sighted or approached during missions without any inspection on board',
     'schedule' => 'Schedule a mission',
     'schedule_subtitle' => 'The mission will be authorized according to its type (the Director by default)',

@@ -3,10 +3,12 @@
 namespace Modules\Catches\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\DataSource;
 use App\Models\Landing;
 use App\Models\Transshipment;
 use App\Support\Tables\PerPage;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -27,7 +29,7 @@ class MirrorOperationController extends Controller
             ->paginate(PerPage::from($request, self::PER_PAGE))
             ->withQueryString();
 
-        return view('catches::landings', compact('landings', 'filters'));
+        return view('catches::landings', ['landings' => $landings, 'filters' => $filters] + $this->feeding(Landing::class));
     }
 
     public function transshipments(Request $request): View
@@ -43,7 +45,19 @@ class MirrorOperationController extends Controller
             ->paginate(PerPage::from($request, self::PER_PAGE))
             ->withQueryString();
 
-        return view('catches::transshipments', compact('transshipments', 'filters'));
+        return view('catches::transshipments', ['transshipments' => $transshipments, 'filters' => $filters] + $this->feeding(Transshipment::class));
+    }
+
+    /**
+     * @param  class-string<Model>  $model
+     * @return array<string, mixed>
+     */
+    private function feeding(string $model): array
+    {
+        return [
+            'dataSource' => DataSource::where('code', 'e-inspection')->first(),
+            'originCounts' => $model::query()->selectRaw('origin, count(*) as total')->groupBy('origin')->pluck('total', 'origin'),
+        ];
     }
 
     /** @return array<string, mixed> */

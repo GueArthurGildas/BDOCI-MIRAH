@@ -42,5 +42,7 @@
                 @endforelse
             </x-ui.table>
         </x-ui.card>
+
+        @include('catches::partials.feeding-mirror')
     </div>
 </x-layouts.app>

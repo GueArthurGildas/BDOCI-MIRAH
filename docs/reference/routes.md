@@ -114,6 +114,7 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `infractions.upheld.store` | POST | `/infractions/{case}/upheld` | `infractions.manage` |
 | `infractions.violation-report.store` | POST | `/infractions/{case}/violation-report` | `infractions.manage` |
 | `inspections.index` | GET | `/inspections` | `inspections.view` |
+| `inspections.never-inspected` | GET | `/inspections/never-inspected` | `inspections.view` |
 | `inspections.show` | GET | `/inspections/{inspection}` | `inspections.view` |
 | `licenses.authorized.download` | GET | `/licenses/authorized/{publication}/download` | `licenses.view` |
 | `licenses.authorized.index` | GET | `/licenses/authorized` | `licenses.view` |

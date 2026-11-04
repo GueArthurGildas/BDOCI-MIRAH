@@ -13,5 +13,6 @@ class InspectionsServiceProvider extends ModuleServiceProvider
     protected function navigation(Navigation $navigation): void
     {
         $navigation->add('inspections::inspections.title', 'inspections.index', 'icon-check-square', NavigationGroup::Overview, order: 5, permission: Permission::InspectionsView->value, folder: NavigationFolder::EInspection);
+        $navigation->add('inspections::never.nav', 'inspections.never-inspected', 'icon-eye-off', NavigationGroup::Overview, order: 6, permission: Permission::InspectionsView->value, folder: NavigationFolder::EInspection);
     }
 }

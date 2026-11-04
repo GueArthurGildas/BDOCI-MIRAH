@@ -10,3 +10,7 @@ Dossier d'infraction complet : constat, infractions retenues (nomenclature), pre
 - Partagé : `App\Support\Infractions\CaseParties` (capitaine et armateur actuels du navire), `RepeatOffense` (récidive lue dans la vue `v_repeat_offenses`).
 - Effet sur la licence : la suspension et la révocation de licence se décident dans le module Licences (`infraction_case_id` accepté, contraintes ajoutées en phase 6) ; la fiche du dossier y renvoie.
 - Hypothèses : H-6-1, H-6-3, H-6-5, H-6-6, H-6-7, H-6-9 (`docs/assumptions/phase-6.md`).
+
+## Vue en dossiers
+
+`?view=folders` : arbre statut, dossier, rubriques (infractions retenues, pièces et preuves, scellés, mesures conservatoires, saisies, suites contentieuses, acteurs), construit par `Support/CaseFolders`. Le volet de droite montre la synthèse du dossier (statut, qualification, navire, faits) ou les lignes de la rubrique choisie, avec un lien vers le dossier complet.
