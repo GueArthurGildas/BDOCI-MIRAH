@@ -211,6 +211,10 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `operations.show` | GET | `/operations/{operation}` | `operations.view` |
 | `operations.store` | POST | `/operations` | `operations.create` |
 | `operations.update` | PATCH | `/operations/{operation}` | `operations.manage` |
+| `profile.avatar` | GET | `/profile/avatar/{user}` | — |
+| `profile.avatar.destroy` | DELETE | `/profile/avatar` | — |
+| `profile.avatar.update` | POST | `/profile/avatar` | — |
+| `profile.show` | GET | `/profile` | — |
 | `registry.create` | GET | `/registry/{resource}/create` | `registry.manage` |
 | `registry.edit` | GET | `/registry/{resource}/{id}/edit` | `registry.manage` |
 | `registry.index` | GET | `/registry` | `registry.view` |
@@ -234,6 +238,7 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `tracking.alerts.acknowledge` | POST | `/tracking/alerts/{alert}/acknowledge` | `tracking.view`, `tracking.create` |
 | `tracking.alerts.handle` | POST | `/tracking/alerts/{alert}/handle` | `tracking.view`, `tracking.create` |
 | `tracking.alerts.index` | GET | `/tracking/alerts` | `tracking.view` |
+| `tracking.alerts.preview` | GET | `/tracking/alerts/preview` | `tracking.view` |
 | `tracking.alerts.show` | GET | `/tracking/alerts/{alert}` | `tracking.view` |
 | `tracking.beacons` | GET | `/tracking/beacons` | `tracking.view` |
 | `tracking.map` | GET | `/tracking/map` | `tracking.view` |

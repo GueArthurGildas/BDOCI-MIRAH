@@ -43,6 +43,11 @@ final readonly class NavigationNode
         return $this->item === $active || $this->children->contains(fn (NavigationNode $child) => $child->contains($active));
     }
 
+    public function previewUrl(): ?string
+    {
+        return $this->isFolder() ? null : $this->item->previewUrl();
+    }
+
     public function badgeCount(): ?int
     {
         return $this->isFolder() ? null : $this->item->badgeCount();

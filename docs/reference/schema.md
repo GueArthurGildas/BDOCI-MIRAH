@@ -1854,6 +1854,8 @@ erDiagram
         varchar whatsapp_number
         timestamp last_login_at
         jsonb dashboard_widgets
+        varchar first_name
+        int8 avatar_document_id FK
     }
     vessel_actors {
         int8 id PK
@@ -2143,6 +2145,7 @@ erDiagram
     documents ||--o{ logbook_days : "pdf_document_id"
     documents ||--o{ patrol_tracks : "document_id"
     documents ||--o{ screen_captures : "document_id"
+    documents ||--o{ users : "avatar_document_id"
     documents ||--o{ vessels : "primary_photo_id"
     documents ||--o{ violation_reports : "document_id"
     documents ||--o{ working_order_attestations : "document_id"

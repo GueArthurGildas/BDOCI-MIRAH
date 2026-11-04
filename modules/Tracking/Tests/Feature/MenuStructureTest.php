@@ -39,6 +39,7 @@ class MenuStructureTest extends TestCase
             'fleet.index',
             'notifications.index',
             'communications.messages.index',
+            'profile.show',
         ], $this->tree('overview'));
     }
 
@@ -105,7 +106,7 @@ class MenuStructureTest extends TestCase
         $this->signInAs(Role::Director);
 
         foreach (['tracking.alerts.index', 'logbook.index', 'watch.instructions.index'] as $route) {
-            $this->assertSame(1, substr_count($this->get(route($route))->getContent(), '<li class="active">'), $route);
+            $this->assertSame(1, preg_match_all('/<li class="active"[^>]*>/', $this->get(route($route))->getContent()), $route);
         }
     }
 

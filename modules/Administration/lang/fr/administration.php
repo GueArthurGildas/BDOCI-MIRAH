@@ -17,6 +17,7 @@ return [
         'search_placeholder' => 'Nom ou e-mail…',
         'fields' => [
             'name' => 'Nom',
+            'first_name' => 'Prénom',
             'email' => 'E-mail',
             'groups' => 'Groupes de permissions',
             'job_title' => 'Fonction',

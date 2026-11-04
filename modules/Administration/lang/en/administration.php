@@ -16,7 +16,8 @@ return [
         'cannot_deactivate_self' => 'You cannot deactivate your own account.',
         'search_placeholder' => 'Name or email…',
         'fields' => [
-            'name' => 'Name',
+            'name' => 'Last name',
+            'first_name' => 'First name',
             'email' => 'Email',
             'groups' => 'Permission groups',
             'job_title' => 'Job title',

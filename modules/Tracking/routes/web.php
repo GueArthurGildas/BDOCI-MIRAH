@@ -19,6 +19,7 @@ Route::middleware(['auth', 'can:'.Permission::TrackingView->value])
         });
 
         Route::get('alerts', [AlertController::class, 'index'])->name('alerts.index');
+        Route::get('alerts/preview', [AlertController::class, 'preview'])->name('alerts.preview');
         Route::get('alerts/{alert}', [AlertController::class, 'show'])->name('alerts.show');
         Route::post('alerts/{alert}/acknowledge', [AlertController::class, 'acknowledge'])->can(Permission::TrackingCreate->value)->name('alerts.acknowledge');
         Route::post('alerts/{alert}/handle', [AlertController::class, 'handle'])->can(Permission::TrackingCreate->value)->name('alerts.handle');

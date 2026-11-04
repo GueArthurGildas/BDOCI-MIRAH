@@ -71,9 +71,13 @@ class NoteController extends Controller
 
     public function store(StoreNoteRequest $request, ActionRunner $actions): RedirectResponse
     {
-        $actions->run(CreateNote::class, $request->user(), $request->payload());
+        $payloads = $request->payloads();
 
-        return to_route('communications.notes.index', ['box' => 'sent'])->with('status', __('communications::notes.created'));
+        foreach ($payloads as $payload) {
+            $actions->run(CreateNote::class, $request->user(), $payload);
+        }
+
+        return to_route('communications.notes.index', ['box' => 'sent'])->with('status', trans_choice('communications::notes.created', count($payloads), ['count' => count($payloads)]));
     }
 
     public function read(InternalNote $note, Request $request, ActionRunner $actions): RedirectResponse

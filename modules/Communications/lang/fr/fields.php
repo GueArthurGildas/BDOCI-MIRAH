@@ -5,6 +5,7 @@ return [
     'channel' => 'Canal',
     'sent_at' => 'Envoyé le',
     'vessel_id' => 'Navire',
+    'recipients' => 'Destinataires',
     'recipient' => 'Destinataire',
     'triggered_by' => 'Déclenché par',
     'message_template_id' => 'Modèle',

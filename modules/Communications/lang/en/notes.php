@@ -18,7 +18,7 @@ return [
     'mark_read' => 'Mark as read',
     'recipient_users' => 'Agents',
     'recipient_teams' => 'Teams',
-    'created' => 'The note has been left.',
+    'created' => '{1} The note has been left.|[2,*] The note has been sent to :count recipients.',
     'marked_read' => 'The note is marked as read.',
     'ai_executed' => 'The AI agent has created the note.',
     'ai_refused' => 'The AI agent could not create the note: the action is disabled or refused.',
@@ -29,4 +29,6 @@ return [
         'subject' => 'Note: :type',
         'body' => ':author left a note (:type) about :vessel. :text',
     ],
+    'recipients_placeholder' => 'Choose one or more recipients',
+    'recipients_hint' => 'Users (including the Director) and teams: each recipient receives their own note.',
 ];

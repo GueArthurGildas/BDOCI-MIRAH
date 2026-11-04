@@ -65,6 +65,10 @@ return [
         'how_alerts' => 'Silence alerts are recalculated every fifteen minutes; this page always reads the latest positions when opened.',
     ],
     'alerts' => [
+        'category' => 'Category',
+        'all_categories' => 'All categories',
+        'see_all' => 'See all alerts',
+        'preview_empty' => 'No current alert',
         'title' => 'Alerts',
         'subtitle' => 'Silences, geofencing and speed alerts raised by the alert rules',
         'list_title' => 'Alerts',

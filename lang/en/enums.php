@@ -635,6 +635,11 @@ return [
     ],
 
     'descriptions' => [
+        'alert_category' => [
+            'urgent' => 'Open restricted-zone alerts, or alerts on a suspect vessel or one in violation.',
+            'useful' => 'Current alerts on a vessel you follow: on watch, in one of your operations, or that you acknowledged.',
+            'other' => 'The other alerts.',
+        ],
         'vessel_status' => [
             'active' => 'The vessel is in service and can be inspected and tracked.',
             'suspended' => 'The vessel is temporarily banned from operating.',
@@ -754,5 +759,10 @@ return [
         'transshipment' => 'Transshipment',
         'landing' => 'Landing',
         'unexplained' => 'Unexplained',
+    ],
+    'alert_category' => [
+        'urgent' => 'Urgent',
+        'useful' => 'Useful for my tasks',
+        'other' => 'Other alerts',
     ],
 ];

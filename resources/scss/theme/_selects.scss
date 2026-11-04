@@ -102,3 +102,88 @@ thead .ts-wrapper {
     border: 1px solid var(--gs-line);
     border-radius: var(--gs-radius);
 }
+
+.gs-preview-panel {
+    position: fixed;
+    z-index: 1090;
+    width: 320px;
+    max-height: 70vh;
+    overflow-y: auto;
+    padding: 12px;
+    background: var(--gs-surface);
+    border: 1px solid var(--gs-line);
+    border-radius: var(--gs-radius);
+    box-shadow: var(--gs-shadow-raised);
+}
+
+.gs-preview-group + .gs-preview-group {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--gs-line);
+}
+
+.gs-preview-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+    font-size: .85rem;
+}
+
+.gs-preview-item {
+    display: block;
+    padding: 5px 8px;
+    border-radius: var(--gs-radius-sm);
+    color: var(--gs-ink);
+
+    &:hover {
+        background: var(--gs-orange-tint);
+        text-decoration: none;
+    }
+}
+
+.gs-preview-vessel {
+    display: block;
+    font-weight: 600;
+    font-size: .85rem;
+}
+
+.gs-preview-meta {
+    display: block;
+    color: var(--gs-muted);
+    font-size: .75rem;
+}
+
+.gs-preview-empty {
+    margin: 0;
+    padding: 2px 8px;
+    color: var(--gs-muted);
+    font-size: .78rem;
+}
+
+.gs-preview-all {
+    display: block;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid var(--gs-line);
+    font-weight: 600;
+    font-size: .85rem;
+    text-align: center;
+}
+
+.gs-profile-photo {
+    margin-bottom: 16px;
+    text-align: center;
+
+    img {
+        width: 140px;
+        height: 140px;
+        object-fit: cover;
+        border: 3px solid var(--gs-orange-tint);
+        border-radius: 50%;
+    }
+}
+
+.gs-avatar {
+    object-fit: cover;
+}

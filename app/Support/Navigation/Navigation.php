@@ -20,8 +20,9 @@ final class Navigation
         ?string $permission = null,
         ?Closure $badge = null,
         ?NavigationFolder $folder = null,
+        ?string $preview = null,
     ): self {
-        $this->items[] = new NavigationItem($label, $route, $icon, $folder?->group() ?? $group, $order, $permission, $badge, $folder);
+        $this->items[] = new NavigationItem($label, $route, $icon, $folder?->group() ?? $group, $order, $permission, $badge, $folder, $preview);
 
         return $this;
     }

@@ -65,6 +65,10 @@ return [
         'how_alerts' => 'Les alertes de silence sont recalculées toutes les quinze minutes ; cette page, elle, lit toujours les dernières positions à l\'ouverture.',
     ],
     'alerts' => [
+        'category' => 'Catégorie',
+        'all_categories' => 'Toutes les catégories',
+        'see_all' => 'Voir toutes les alertes',
+        'preview_empty' => 'Aucune alerte en cours',
         'title' => 'Alertes',
         'subtitle' => 'Silences, géorepérage et vitesse levés par les règles d\'alerte',
         'list_title' => 'Alertes',

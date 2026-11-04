@@ -12,7 +12,7 @@
         </ul>
     </li>
 @else
-    <li @class(['active' => $node->item === $activeItem])>
+    <li @class(['active' => $node->item === $activeItem]){!! $node->previewUrl() ? ' data-gs-preview="'.e($node->previewUrl()).'"' : '' !!}>
         <a href="{{ $node->item->url() }}">
             <span class="gs-icon"><i class="feather {{ $node->icon() }}"></i></span>
             <span class="gs-label">{{ __($node->label()) }}</span>

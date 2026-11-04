@@ -132,9 +132,11 @@ app/
 ├── Queries/                             # requêtes métier réutilisées par plusieurs modules (SilentBeacons, ZoneSituation)
 ├── Providers/AppServiceProvider.php     # services globaux (navigation, langues, réglages)
 └── Support/
+    ├── Alerts/AlertTriage.php           # classement des alertes : urgences, utiles à mes tâches, autres
     ├── Authorization/                   # permissions et rôles (Permission, Role)
     ├── Localization/                    # langues et pays
     ├── Modules/ModuleServiceProvider.php    # chargement d'un module : routes, vues, traductions, menu, commandes, planification
+    ├── Indicators/                          # catalogue d'indicateurs partagé par le tableau de bord et la vue flotte
     ├── Navigation/                          # registre du menu (groupes, permissions, élément actif)
     ├── Notifications/                       # Alert (notification traduite), AlertLevel, Notifier (envoi par permission, anti-répétition)
     ├── Presentation/                        # badges, couleurs du thème, liens vers la fiche navire

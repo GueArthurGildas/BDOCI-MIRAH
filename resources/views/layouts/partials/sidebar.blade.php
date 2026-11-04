@@ -1,7 +1,7 @@
 <aside class="gs-sidebar">
     <div class="gs-user">
         <img src="{{ Vite::asset('resources/images/mirah-bgless.png') }}" alt="{{ config('app.name') }}">
-        <span title="{{ auth()->user()->name }}">{{ auth()->user()->name }}</span>
+        <span title="{{ auth()->user()->fullName() }}">{{ auth()->user()->fullName() }}</span>
     </div>
 
     <ul class="gs-menu">

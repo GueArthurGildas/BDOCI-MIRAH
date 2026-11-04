@@ -5,6 +5,7 @@ import { initPopup } from './popup';
 import { initRemoteModals } from './remote-modal';
 import { initFullScreenToggle } from './fullscreen';
 import { initGuide } from './guide';
+import { initHoverPreview } from './hover-preview';
 import { initLiveLists } from './live-list';
 import { initMenuFolders } from './menu';
 import { initNotifications } from './notifications';
@@ -21,6 +22,7 @@ export function initLayout() {
     initTablePagination();
     initAutoSubmit();
     initLiveLists();
+    initHoverPreview();
     initConfirmations();
     initRemoteModals();
     initPopup();

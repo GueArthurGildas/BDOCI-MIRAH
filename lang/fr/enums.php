@@ -635,6 +635,11 @@ return [
     ],
 
     'descriptions' => [
+        'alert_category' => [
+            'urgent' => 'Alertes ouvertes de zone interdite, ou sur un navire suspect ou en infraction.',
+            'useful' => 'Alertes en cours sur un navire que vous suivez : sous veille, dans une de vos opérations, ou que vous avez prise en compte.',
+            'other' => 'Les autres alertes.',
+        ],
         'vessel_status' => [
             'active' => 'Le navire est en service et peut être contrôlé et suivi.',
             'suspended' => 'Le navire est temporairement interdit d\'activité.',
@@ -754,5 +759,10 @@ return [
         'transshipment' => 'Transbordement',
         'landing' => 'Débarquement',
         'unexplained' => 'Inexpliqué',
+    ],
+    'alert_category' => [
+        'urgent' => 'Urgences',
+        'useful' => 'Utiles à mes tâches',
+        'other' => 'Autres alertes',
     ],
 ];
