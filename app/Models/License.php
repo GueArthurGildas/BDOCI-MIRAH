@@ -7,6 +7,7 @@ use App\Enums\LicenseRecordStatus;
 use App\Enums\LicenseSegment;
 use App\Enums\LicenseStatus;
 use App\Models\Concerns\Audited;
+use App\Support\Licenses\ExpiryDelay;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -88,6 +89,12 @@ class License extends Model
             $this->expires_on->lte(self::expiryWarningDate()) => LicenseStatus::Expiring,
             default => LicenseStatus::Valid,
         });
+    }
+
+    /** @return array{days: int, expired: bool, label: string} */
+    public function expiryDelay(): array
+    {
+        return ExpiryDelay::describe($this->expires_on);
     }
 
     public function daysUntilExpiry(): int

@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
+use Modules\Tracking\Support\ThermisPanel;
 
 class TrackingController extends Controller
 {
@@ -36,6 +37,8 @@ class TrackingController extends Controller
     ];
 
     private const BEACONS_PER_PAGE = 10;
+
+    private const ZONE_PERIODS = ['24h' => 24, '7d' => 168, '30d' => 720];
 
     public function map(Request $request): View
     {
@@ -62,15 +65,24 @@ class TrackingController extends Controller
                 'color' => self::MARKER_COLORS[$this->markerKind($position)],
             ])->all(),
             'zones' => $this->zonesForMap(),
+            'panel' => ThermisPanel::for($request),
+            'thermisTabActive' => $request->query('tab') === 'thermis' || $request->has('vessels'),
         ]);
     }
 
     public function zones(Request $request): View
     {
-        $filters = $request->validate(['at' => ['nullable', 'date']]);
+        $filters = $request->validate([
+            'at' => ['nullable', 'date'],
+            'from' => ['nullable', 'date'],
+            'to' => ['nullable', 'date', 'after_or_equal:from'],
+            'last' => ['nullable', Rule::in(array_keys(self::ZONE_PERIODS))],
+        ]);
         $at = Carbon::parse($filters['at'] ?? now());
+        $from = isset($filters['last']) ? now()->subHours(self::ZONE_PERIODS[$filters['last']]) : (isset($filters['from']) ? Carbon::parse($filters['from']) : null);
+        $to = isset($filters['last']) ? now() : (isset($filters['to']) ? Carbon::parse($filters['to']) : ($from ? now() : null));
 
-        $vesselCountByZone = ZoneSituation::vesselCountByZoneAt($at);
+        $vesselCountByZone = $from && $to ? ZoneSituation::vesselCountByZoneBetween($from, $to) : ZoneSituation::vesselCountByZoneAt($at);
 
         $zones = Zone::where('is_active', true)->orderBy('type')->orderBy('name')->get();
         $portAreas = $zones
@@ -79,6 +91,10 @@ class TrackingController extends Controller
 
         return view('tracking::zones', [
             'at' => $at,
+            'from' => $from,
+            'to' => $to,
+            'periods' => collect(self::ZONE_PERIODS)->mapWithKeys(fn (int $hours, string $key) => [$key => __('tracking::tracking.zones.periods.'.$key)])->all(),
+            'filters' => $filters,
             'zones' => $zones,
             'vesselCountByZone' => $vesselCountByZone,
             'freshnessHours' => ZoneSituation::POSITION_FRESHNESS_HOURS,

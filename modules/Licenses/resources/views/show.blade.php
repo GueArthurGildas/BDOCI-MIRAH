@@ -18,6 +18,7 @@
                         <x-ui.detail :label="__('licenses::licenses.fields.segment')">{{ $license->segment ? __($license->segment->label()) : null }}</x-ui.detail>
                         <x-ui.detail :label="__('licenses::licenses.fields.issued_on')">{{ $license->issued_on?->isoFormat('L') }}</x-ui.detail>
                         <x-ui.detail :label="__('licenses::licenses.fields.expires_on')">{{ $license->expires_on->isoFormat('L') }}</x-ui.detail>
+                        <x-ui.detail :label="__('licenses::licenses.expiry.label')"><strong @class(['text-danger' => $license->expiryDelay()['expired']])>{{ $license->expiryDelay()['label'] }}</strong></x-ui.detail>
                         <x-ui.detail :label="__('licenses::licenses.fields.days_left')">{{ $license->daysUntilExpiry() >= 0 ? $license->daysUntilExpiry() : null }}</x-ui.detail>
                         <x-ui.detail :label="__('licenses::licenses.fields.status')"><x-ui.status-badge :status="$license->standing" /></x-ui.detail>
                         <x-ui.detail :label="__('licenses::licenses.fields.origin')">{{ __($license->origin->label()) }}</x-ui.detail>

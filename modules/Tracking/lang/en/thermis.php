@@ -14,6 +14,7 @@ return [
     'open_vessel' => 'View in Thermis',
     'no_link' => 'No usable identifier for this vessel',
     'not_configured' => 'Thermis is not connected to the application yet: the administrator must set the Thermis address in the configuration (SURVEILLANCE_THEMIS_URL and SURVEILLANCE_THEMIS_VESSEL_URL).',
+    'frame_hint' => 'If Thermis does not display here, open it in another tab with the buttons above.',
     'why_title' => 'Why Thermis?',
     'why' => 'Thermis remains the reference for reading satellite information: the application links to it rather than reproducing it.',
 ];

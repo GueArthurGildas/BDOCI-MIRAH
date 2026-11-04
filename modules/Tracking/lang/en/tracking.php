@@ -2,6 +2,7 @@
 
 return [
     'map' => [
+        'tab_local' => 'Application map',
         'title' => 'Situation map',
         'category' => 'Vessel category',
         'subtitle' => 'Last known position of each vessel and surveillance zones',
@@ -16,6 +17,16 @@ return [
         'title' => 'Situation by zone',
         'subtitle' => 'Number of vessels present in each zone at a given time',
         'situation_at' => 'Situation at :time',
+        'situation_between' => 'Vessels seen from :from to :to',
+        'period_hint' => 'Distinct vessels that sent at least one position in the zone during the period',
+        'quick_period' => 'Quick period',
+        'from' => 'From',
+        'to' => 'To',
+        'periods' => [
+            '24h' => 'Last 24 hours',
+            '7d' => 'Last 7 days',
+            '30d' => 'Last 30 days',
+        ],
         'at' => 'Date and time',
         'chart_title' => 'Vessels in port areas',
         'table_title' => 'All zones',

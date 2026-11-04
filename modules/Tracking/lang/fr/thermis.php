@@ -14,6 +14,7 @@ return [
     'open_vessel' => 'Voir dans Thermis',
     'no_link' => 'Aucun identifiant exploitable pour ce navire',
     'not_configured' => 'Thermis n\'est pas encore relié à l\'application : l\'administrateur doit renseigner l\'adresse de Thermis dans la configuration (SURVEILLANCE_THEMIS_URL et SURVEILLANCE_THEMIS_VESSEL_URL).',
+    'frame_hint' => 'Si Thermis ne s\'affiche pas ici, ouvrez-le dans un autre onglet avec les boutons ci-dessus.',
     'why_title' => 'Pourquoi Thermis ?',
     'why' => 'Thermis reste la référence pour lire les informations géosatellitaires : l\'application y renvoie plutôt que de les reproduire.',
 ];

@@ -2,6 +2,7 @@
 
 return [
     'map' => [
+        'tab_local' => 'Carte de l\'application',
         'title' => 'Carte de situation',
         'category' => 'Catégorie de navire',
         'subtitle' => 'Dernière position connue de chaque navire et zones de surveillance',
@@ -16,6 +17,16 @@ return [
         'title' => 'Situation par zone',
         'subtitle' => 'Nombre de navires présents dans chaque zone à un instant donné',
         'situation_at' => 'Situation à :time',
+        'situation_between' => 'Navires passés du :from au :to',
+        'period_hint' => 'Navires distincts ayant émis au moins une position dans la zone pendant la période',
+        'quick_period' => 'Période rapide',
+        'from' => 'Du',
+        'to' => 'Au',
+        'periods' => [
+            '24h' => 'Dernières 24 heures',
+            '7d' => '7 derniers jours',
+            '30d' => '30 derniers jours',
+        ],
         'at' => 'Date et heure',
         'chart_title' => 'Navires en zones portuaires',
         'table_title' => 'Toutes les zones',

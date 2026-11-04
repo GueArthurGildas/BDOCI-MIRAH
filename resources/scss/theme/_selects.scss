@@ -95,3 +95,10 @@ thead .ts-wrapper {
         font-weight: 700;
     }
 }
+
+.gs-thermis-frame iframe {
+    width: 100%;
+    height: 620px;
+    border: 1px solid var(--gs-line);
+    border-radius: var(--gs-radius);
+}
