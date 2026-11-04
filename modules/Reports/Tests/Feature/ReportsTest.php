@@ -184,7 +184,7 @@ class ReportsTest extends TestCase
 
     public function test_the_export_log_is_append_only(): void
     {
-        $log = ExportLog::factory()->create();
+        $log = ExportLog::factory()->create(['row_count' => 5]);
 
         $this->expectException(QueryException::class);
         $log->update(['row_count' => 0]);
