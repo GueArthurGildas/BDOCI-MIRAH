@@ -4,6 +4,7 @@ namespace App\Support\Navigation;
 
 use Closure;
 use Illuminate\Contracts\Auth\Access\Authorizable;
+use Illuminate\Support\Facades\Route;
 
 final readonly class NavigationItem
 {
@@ -15,6 +16,8 @@ final readonly class NavigationItem
         public int $order = 100,
         public ?string $permission = null,
         public ?Closure $badge = null,
+        public ?NavigationFolder $folder = null,
+        public ?string $previewRoute = null,
     ) {}
 
     public function badgeCount(): ?int
@@ -22,6 +25,11 @@ final readonly class NavigationItem
         $count = $this->badge ? ($this->badge)() : null;
 
         return $count ? $count : null;
+    }
+
+    public function previewUrl(): ?string
+    {
+        return $this->previewRoute && Route::has($this->previewRoute) ? route($this->previewRoute) : null;
     }
 
     public function url(): string

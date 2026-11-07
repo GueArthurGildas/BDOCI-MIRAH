@@ -25,6 +25,7 @@ return [
             'intro' => 'Your dashboard: the state of surveillance at a glance, each time you open the application.',
             'steps' => [
                 'stats' => ['title' => 'The key indicators', 'text' => 'Active vessels, expiring licences, pending observations and failing beacons. The figures are recalculated each time the page opens.'],
+                'messages' => ['title' => 'My messages', 'text' => 'The messages addressed to you or your team that have not been read yet.'],
                 'zones' => ['title' => 'Situation by zone', 'text' => 'The number of vessels present in each port zone right now.'],
                 'infractions' => ['title' => 'Infractions by status', 'text' => 'The distribution of infraction cases: open, under investigation, awaiting decision, closed.'],
                 'sources' => ['title' => 'Data freshness', 'text' => 'For each external source: last synchronisation, errors and rejections. A degraded status needs the Administrator\'s attention.'],

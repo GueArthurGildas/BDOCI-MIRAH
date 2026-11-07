@@ -1,10 +1,10 @@
 <header class="gs-topbar">
     <ul class="gs-tabs">
-        @foreach ($groups as $groupLabel => $items)
-            @php($firstItem = $items->first())
+        @foreach ($tree as $groupLabel => $nodes)
+            @php($firstNode = $nodes->first())
             <li @class(['gs-tab', 'active' => $groupLabel === $activeGroup])>
-                <a href="{{ $firstItem->url() }}">
-                    <i class="feather {{ $firstItem->icon }}"></i>
+                <a href="{{ $firstNode->firstUrl() }}">
+                    <i class="feather {{ $firstNode->icon() }}"></i>
                     <span>{{ __($groupLabel) }}</span>
                 </a>
             </li>
@@ -42,10 +42,15 @@
         <li class="header-notification">
             <div class="dropdown-primary dropdown">
                 <div class="dropdown-toggle" data-bs-toggle="dropdown">
-                    <img src="{{ Vite::asset('resources/images/avatar-blank.jpg') }}" class="img-radius" alt="{{ auth()->user()->name }}">
-                    <span class="gs-user-name">{{ auth()->user()->name }}</span>
+                    <img src="{{ auth()->user()->avatarUrl() ?? Vite::asset('resources/images/avatar-blank.jpg') }}" class="img-radius gs-avatar" alt="{{ auth()->user()->fullName() }}">
+                    <span class="gs-user-name">{{ auth()->user()->fullName() }}</span>
                 </div>
                 <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                    @if (Route::has('profile.show'))
+                        <li>
+                            <a href="{{ route('profile.show') }}"><i class="feather icon-user"></i> {{ __('profile::profile.link') }}</a>
+                        </li>
+                    @endif
                     <li>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf

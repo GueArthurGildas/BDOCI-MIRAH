@@ -18,6 +18,10 @@ return [
         'subtitle' => 'Vessels refused by the GIES, read from the MREP application',
     ],
     'targetings' => [
+        'targets' => [
+            'transshipment' => 'Transshipments',
+            'foreign_fishing' => 'Foreign vessel fishing',
+        ],
         'nav' => 'MREP targeting',
         'title' => 'MREP targeting',
         'subtitle' => 'Annual inspection objectives and achievement, read from the MREP application',

@@ -38,3 +38,10 @@ Messages préconçus, règles d'envoi automatique, notes internes par boutons, c
 ## Hypothèses
 
 H-5-1 à H-5-9 : voir `docs/assumptions/phase-5.md`.
+
+## Annuaire de contacts (AMREP)
+
+- **Annuaire** (`communications.directory.index`) : contacts des référentiels (organisation, catégorie, pays, e-mail, téléphone), filtrables, avec sélection multiple ; menu Contrôles « Annuaire AMREP » et onglet Annuaire.
+- **Notifier** (`communications.directory.compose` et `send`, permission `communications.send`) : choix d'un message prédéfini et d'un navire, texte entièrement modifiable, canal e-mail ou WhatsApp, documents à joindre générés par la plateforme (`App\Support\Documents\GeneratedDocuments` : fiche technique du navire, main courante d'une journée, observation). L'action `NotifyContacts` génère les documents une fois, crée un message par contact (ignorant ceux sans adresse ou sans consentement WhatsApp, signalés à l'écran), les envoie et les lie aux messages (`document_links`) ; `EmailDriver` les joint aux e-mails.
+- **Messages prédéfinis** : `AmrepMessageTemplatesSeeder` (3 modèles en français, 3 en anglais), idempotent ; sur une base existante, `php artisan db:seed --class=AmrepMessageTemplatesSeeder`.
+- **Hypothèse** : H-6-6 (`docs/assumptions/phase-6-lot.md`).

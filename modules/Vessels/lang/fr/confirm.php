@@ -7,4 +7,6 @@ return [
     'keep_separate_yes' => 'Oui, garder distinctes',
     'reject' => 'Rejeter cette fiche entrante ?',
     'reject_yes' => 'Oui, rejeter',
+    'remove_photo' => 'Retirer cette photo de la fiche du navire ?',
+    'remove_photo_yes' => 'Retirer la photo',
 ];

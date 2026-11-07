@@ -19,7 +19,7 @@ use Modules\Tracking\Http\Requests\ConfirmSlotPositionRequest;
 
 class SlotController extends Controller
 {
-    private const PER_PAGE = 15;
+    private const PER_PAGE = 10;
 
     public function index(): View
     {

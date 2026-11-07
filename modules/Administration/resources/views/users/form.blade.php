@@ -1,4 +1,5 @@
 <x-ui.form.input name="name" :label="__('administration::administration.users.fields.name')" :value="$user->name" required />
+<x-ui.form.input name="first_name" :label="__('administration::administration.users.fields.first_name')" :value="$user->first_name" maxlength="120" />
 <x-ui.form.input name="email" type="email" :label="__('administration::administration.users.fields.email')" :value="$user->email" required />
 <x-ui.form.input name="job_title" :label="__('administration::administration.users.fields.job_title')" :value="$user->job_title" maxlength="120" />
 <x-ui.form.input name="phone" type="tel" :label="__('administration::administration.users.fields.phone')" :value="$user->phone" maxlength="40" />

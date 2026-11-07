@@ -22,8 +22,13 @@
                             @endforeach
                         </td>
                         <td>
-                            <a href="{{ route('vessels.show', $source->candidate) }}" class="f-w-600">{{ $source->candidate->name }}</a>
-                            <div class="text-muted f-12">{{ $source->candidate->flagName() }}</div>
+                            <span class="gs-vessel-cell">
+                                <img src="{{ $source->candidate->photoUrl() }}" class="gs-vessel-thumb" alt="" loading="lazy">
+                                <span>
+                                    <a href="{{ route('vessels.show', $source->candidate) }}" class="f-w-600">{{ $source->candidate->name }}</a>
+                                    <span class="d-block text-muted f-12">{{ $source->candidate->flagName() }}</span>
+                                </span>
+                            </span>
                             @foreach ($source->candidate->activeIdentifiers as $identifier)
                                 <div class="f-12">{{ __($identifier->type->label()) }} : {{ $identifier->value }}</div>
                             @endforeach

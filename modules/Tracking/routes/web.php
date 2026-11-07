@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\Tracking\Http\Controllers\AlertController;
 use Modules\Tracking\Http\Controllers\AlertRuleController;
 use Modules\Tracking\Http\Controllers\SlotController;
+use Modules\Tracking\Http\Controllers\ThermisController;
 use Modules\Tracking\Http\Controllers\TrackingController;
 
 Route::middleware(['auth', 'can:'.Permission::TrackingView->value])
@@ -18,6 +19,7 @@ Route::middleware(['auth', 'can:'.Permission::TrackingView->value])
         });
 
         Route::get('alerts', [AlertController::class, 'index'])->name('alerts.index');
+        Route::get('alerts/preview', [AlertController::class, 'preview'])->name('alerts.preview');
         Route::get('alerts/{alert}', [AlertController::class, 'show'])->name('alerts.show');
         Route::post('alerts/{alert}/acknowledge', [AlertController::class, 'acknowledge'])->can(Permission::TrackingCreate->value)->name('alerts.acknowledge');
         Route::post('alerts/{alert}/handle', [AlertController::class, 'handle'])->can(Permission::TrackingCreate->value)->name('alerts.handle');
@@ -37,3 +39,7 @@ Route::middleware(['auth', 'can:'.Permission::SettingsManage->value])
         Route::post('rules', [AlertRuleController::class, 'store'])->name('rules.store');
         Route::put('rules/{rule}', [AlertRuleController::class, 'update'])->name('rules.update');
     });
+
+Route::get('thermis', ThermisController::class)
+    ->middleware(['auth', 'can:'.Permission::TrackingView->value])
+    ->name('thermis.index');

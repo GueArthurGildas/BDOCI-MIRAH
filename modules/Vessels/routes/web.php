@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\Vessels\Http\Controllers\VesselController;
 use Modules\Vessels\Http\Controllers\VesselDuplicateController;
 use Modules\Vessels\Http\Controllers\VesselIngestController;
+use Modules\Vessels\Http\Controllers\VesselPhotoController;
 use Modules\Vessels\Http\Controllers\VesselRegistryController;
 
 Route::middleware('auth')
@@ -18,6 +19,8 @@ Route::middleware('auth')
         Route::post('{vessel}/identifiers', [VesselRegistryController::class, 'storeIdentifier'])->can(Permission::VesselsManage->value)->name('identifiers.store');
         Route::post('{vessel}/actors', [VesselRegistryController::class, 'storeActor'])->can(Permission::VesselsManage->value)->name('actors.store');
         Route::post('{vessel}/external-lists', [VesselRegistryController::class, 'storeList'])->can(Permission::VesselsManage->value)->name('external-lists.store');
+        Route::post('{vessel}/photos', [VesselPhotoController::class, 'store'])->can(Permission::VesselsManage->value)->name('photos.store');
+        Route::delete('{vessel}/photos/{document}', [VesselPhotoController::class, 'destroy'])->can(Permission::VesselsManage->value)->whereNumber('document')->name('photos.destroy');
     });
 
 Route::middleware('auth')
@@ -27,6 +30,8 @@ Route::middleware('auth')
     ->group(function () {
         Route::get('/', 'index')->can(Permission::VesselsView->value)->name('index');
         Route::get('{vessel}/quick', 'quick')->can(Permission::VesselsView->value)->name('quick');
+        Route::get('{vessel}/sheet', 'sheet')->can(Permission::VesselsView->value)->name('sheet');
+        Route::get('{vessel}/photos/{document}', [VesselPhotoController::class, 'show'])->can(Permission::VesselsView->value)->whereNumber('document')->name('photos.show');
         Route::get('create', 'create')->can(Permission::VesselsManage->value)->name('create');
         Route::post('/', 'store')->can(Permission::VesselsManage->value)->name('store');
         Route::get('{vessel}', 'show')->can(Permission::VesselsView->value)->name('show');

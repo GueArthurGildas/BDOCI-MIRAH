@@ -30,9 +30,11 @@ class EezPagesTest extends TestCase
         EezDeclaration::factory()->create(['vessel_id' => Vessel::factory()->create(['name' => 'ENTRY VESSEL', 'flag' => 'ES'])->id]);
         EezDeclaration::factory()->exit()->create(['vessel_id' => Vessel::factory()->create(['name' => 'EXIT VESSEL', 'flag' => 'ES'])->id, 'status' => EezDeclarationStatus::Closed]);
 
-        $this->get(route('movements.eez.index', ['type' => 'entry']))->assertOk()->assertSee('ENTRY VESSEL')->assertDontSee('EXIT VESSEL');
-        $this->get(route('movements.eez.index', ['status' => 'closed']))->assertOk()->assertSee('EXIT VESSEL')->assertDontSee('ENTRY VESSEL');
-        $this->get(route('movements.eez.index', ['search' => 'ENTRY']))->assertOk()->assertSee('ENTRY VESSEL')->assertDontSee('EXIT VESSEL');
+        $names = fn (array $filters) => $this->get(route('movements.eez.index', $filters))->assertOk()->viewData('declarations')->getCollection()->map(fn ($declaration) => $declaration->vessel->name)->all();
+
+        $this->assertSame(['ENTRY VESSEL'], $names(['type' => 'entry']));
+        $this->assertSame(['EXIT VESSEL'], $names(['status' => 'closed']));
+        $this->assertSame(['ENTRY VESSEL'], $names(['search' => 'ENTRY']));
     }
 
     public function test_the_detail_page_shows_checks_and_pairing(): void

@@ -1,6 +1,12 @@
 <?php
 
 return [
+    'expiry' => [
+        'label' => 'Deadline',
+        'in' => 'Expires in :interval',
+        'since' => 'Expired :interval ago',
+        'today' => 'Expires today',
+    ],
     'title' => 'Licenses',
     'subtitle' => 'Fishing licenses, validity, suspensions and revocations',
     'new' => 'New license',

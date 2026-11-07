@@ -5,6 +5,7 @@ return [
     'channel' => 'Channel',
     'sent_at' => 'Sent at',
     'vessel_id' => 'Vessel',
+    'recipients' => 'Recipients',
     'recipient' => 'Recipient',
     'triggered_by' => 'Triggered by',
     'message_template_id' => 'Template',

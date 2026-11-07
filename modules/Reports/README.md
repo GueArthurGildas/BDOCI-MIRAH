@@ -12,7 +12,7 @@ Rapports programmés, exports journalisés par droit, archivage à 5 ans en lect
 |---|---|
 | `reports.save_scheduled_report` | `reports.manage` |
 | `reports.generate` | `reports.generate` |
-| `reports.export_operations`, `export_vessels`, `export_logbook` | `reports.export_operations`, `reports.export_vessels`, `reports.export_logbook` |
+| `reports.export_operations`, `export_vessels`, `export_logbook`, `export_eez_declarations`, `export_ers_declarations` | `reports.export_operations`, `reports.export_vessels`, `reports.export_logbook`, `reports.export_eez_declarations`, `reports.export_ers_declarations` |
 | `reports.archive_operation` | `reports.archive` |
 
 Autres permissions : `reports.view` (écrans), `reports.view_health` (bandeau : Directeur, Chef d'équipe, Admin).
@@ -28,3 +28,7 @@ Autres permissions : `reports.view` (écrans), `reports.view_health` (bandeau : 
 ## Hypothèses
 
 H-9-1 à H-9-4 : voir `docs/assumptions/phase-9.md`.
+
+## Extraction des déclarations
+
+Les types `eez_declarations` et `ers_declarations` exportent les déclarations ZEE (tous les champs) et ERS (une ligne par ligne de capture), par navire, par période ou les deux, en CSV ou PDF. Les boutons sont sur les listes de déclarations et sur la fiche du navire ; chaque export est journalisé avec ses filtres. Sur une base existante, les deux permissions sont à accorder aux rôles depuis la page Rôles (hypothèse H-6-5).

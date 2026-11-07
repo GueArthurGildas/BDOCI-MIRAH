@@ -14,8 +14,8 @@ class LicensesServiceProvider extends ModuleServiceProvider
     protected function navigation(Navigation $navigation): void
     {
         $navigation
-            ->add('licenses::licenses.title', 'licenses.index', 'icon-file-text', NavigationGroup::Registry, order: 20, permission: Permission::LicensesView->value)
-            ->add('licenses::authorized.title', 'licenses.authorized.index', 'icon-check-circle', NavigationGroup::Registry, order: 21, permission: Permission::LicensesView->value)
+            ->add('licenses::licenses.title', 'licenses.index', 'icon-file-text', NavigationGroup::Surveillance, order: 40, permission: Permission::LicensesView->value)
+            ->add('licenses::authorized.title', 'licenses.authorized.index', 'icon-check-circle', NavigationGroup::Surveillance, order: 41, permission: Permission::LicensesView->value)
             ->add('licenses::imports.title', 'licenses.imports.index', 'icon-upload', NavigationGroup::Registry, order: 22, permission: Permission::LicensesView->value)
             ->add('licenses::register.title', 'licenses.register.index', 'icon-book', NavigationGroup::Registry, order: 23, permission: Permission::LicensesView->value);
     }

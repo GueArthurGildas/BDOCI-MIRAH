@@ -6,6 +6,13 @@
 
         <x-ui.card :title="__('movements::eez.list_title')" :subtitle="trans_choice('ui.results_count', $declarations->total())" flush>
             <x-slot:actions>
+                @can(App\Support\Authorization\Permission::ReportsExportEezDeclarations->value)
+                    @foreach (['csv' => 'icon-file-text', 'pdf' => 'icon-file'] as $format => $icon)
+                        <a href="{{ route('reports.exports.download', ['type' => 'eez_declarations', 'format' => $format, 'vessel' => $filters['vessel'] ?? null, 'from' => $filters['from'] ?? null, 'to' => $filters['to'] ?? null]) }}" class="btn btn-dark btn-sm" title="{{ __('movements::eez.export_hint') }}">
+                            <i class="feather {{ $icon }}"></i> {{ __('movements::eez.export_'.$format) }}
+                        </a>
+                    @endforeach
+                @endcan
                 <a href="{{ route('movements.index') }}" class="btn btn-default btn-sm">
                     <i class="feather icon-anchor"></i> {{ __('movements::eez.to_port_movements') }}
                 </a>
@@ -18,6 +25,7 @@
 
             <x-ui.table-toolbar :action="route('movements.eez.index')" :paginator="$declarations">
                 <x-ui.toolbar-input name="search" type="search" :label="__('ui.search')" :value="$filters['search'] ?? null" :placeholder="__('movements::eez.search_placeholder')" />
+                <x-ui.toolbar-select name="vessel" :label="__('movements::eez.fields.vessel')" :options="$vessels" :value="$filters['vessel'] ?? null" />
                 <x-ui.toolbar-input name="from" type="date" :label="__('movements::eez.fields.from')" :value="$filters['from'] ?? null" />
                 <x-ui.toolbar-input name="to" type="date" :label="__('movements::eez.fields.to')" :value="$filters['to'] ?? null" />
             </x-ui.table-toolbar>
@@ -28,6 +36,9 @@
                     <th>{{ __('movements::eez.fields.type') }}</th>
                     <th>{{ __('movements::eez.fields.vessel') }}</th>
                     <th>{{ __('movements::eez.fields.reason') }}</th>
+                    <th>{{ __('movements::eez.fields.crossed_at') }}</th>
+                    <th>{{ __('movements::eez.fields.destination') }}</th>
+                    <th>{{ __('movements::eez.fields.reception_channel') }}</th>
                     <th class="text-end">{{ __('movements::eez.fields.total_kg') }}</th>
                     <th>{{ __('movements::eez.fields.entry_origin') }}</th>
                     <th>{{ __('movements::eez.fields.status') }}</th>
@@ -37,6 +48,9 @@
                 <x-slot:filters>
                     <th></th>
                     <x-ui.column-filter name="type" form="list-filters" :options="App\Enums\EezDeclarationType::options()" :value="$filters['type'] ?? null" />
+                    <th></th>
+                    <th></th>
+                    <th></th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -58,13 +72,16 @@
                             @endif
                         </td>
                         <td>{{ $declaration->reason ? __($declaration->reason->label()) : '—' }}</td>
+                        <td class="text-nowrap">{{ $declaration->crossed_at?->isoFormat('L LT') ?? '—' }}</td>
+                        <td>{{ $declaration->destination ?: '—' }}</td>
+                        <td>{{ $declaration->receptionChannel?->label ?? '—' }}</td>
                         <td class="text-end">{{ number_format((float) $declaration->catches_sum_weight_kg, 0, ',', ' ') }}</td>
                         <td>{{ __($declaration->entry_origin->label()) }}</td>
                         <td><x-ui.status-badge :status="$declaration->status" /></td>
                         <td class="text-end"><a href="{{ route('movements.eez.show', $declaration) }}" class="btn btn-default btn-sm"><i class="feather icon-eye"></i></a></td>
                     </tr>
                 @empty
-                    <x-ui.empty-row colspan="8" />
+                    <x-ui.empty-row colspan="11" />
                 @endforelse
             </x-ui.table>
         </x-ui.card>

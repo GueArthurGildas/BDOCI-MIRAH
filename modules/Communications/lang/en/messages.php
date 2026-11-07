@@ -28,4 +28,5 @@ return [
     'send' => 'Send',
     'acknowledge_title' => 'Acknowledgment',
     'acknowledge' => 'Record the acknowledgment',
+    'download_attachment' => 'Download',
 ];

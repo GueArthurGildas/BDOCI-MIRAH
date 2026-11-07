@@ -12,7 +12,7 @@ use Spatie\Activitylog\Models\Activity;
 
 class AuditLogController extends Controller
 {
-    private const PER_PAGE = 30;
+    private const PER_PAGE = 10;
 
     public function __invoke(Request $request): View
     {

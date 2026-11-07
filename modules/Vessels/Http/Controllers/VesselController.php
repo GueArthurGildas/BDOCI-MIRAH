@@ -5,6 +5,7 @@ namespace Modules\Vessels\Http\Controllers;
 use App\Enums\VesselCategory;
 use App\Enums\VesselStatus;
 use App\Http\Controllers\Controller;
+use App\Models\Document;
 use App\Models\ExternalList;
 use App\Models\LegalEntity;
 use App\Models\Person;
@@ -13,23 +14,28 @@ use App\Queries\OpenInfractionCases;
 use App\Queries\VesselMissions;
 use App\Support\Actions\ActionRunner;
 use App\Support\Authorization\Permission;
+use App\Support\Documents\DocumentStore;
 use App\Support\Tables\PerPage;
 use App\Support\Vessels\StatusLight;
 use App\Support\Vessels\VesselIndicators;
+use App\Support\Vessels\VesselSheet;
 use App\Support\Vessels\VigilanceScore;
 use App\Support\Vms\ThemisLink;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Collection;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Modules\Vessels\Actions\RegisterVessel;
 use Modules\Vessels\Actions\UpdateVessel;
 use Modules\Vessels\Http\Requests\VesselRequest;
+use Modules\Vessels\Support\VesselFolderTree;
 use Modules\Vessels\Support\VesselTimeline;
 
 class VesselController extends Controller
 {
-    private const PER_PAGE = 20;
+    private const PER_PAGE = 10;
 
     private const TRACK_LENGTH = 12;
 
@@ -64,7 +70,12 @@ class VesselController extends Controller
 
     public function show(Request $request, Vessel $vessel): View
     {
-        $timelineModule = $request->validate(['module' => ['nullable', 'string', 'max:30'], 'tab' => ['nullable', 'string', 'max:30']]);
+        $timelineModule = $request->validate([
+            'module' => ['nullable', 'string', 'max:30'],
+            'tab' => ['nullable', 'string', 'max:30'],
+            'view' => ['nullable', Rule::in(['tabs', 'folders'])],
+            'pane' => ['nullable', 'string', 'max:30'],
+        ]);
 
         $vessel->load([
             'licenses',
@@ -98,10 +109,17 @@ class VesselController extends Controller
         $vessel->setRelation('missions', VesselMissions::forVessel($vessel->id));
 
         $indicators = VesselIndicators::for($vessel);
+        $tabs = $this->tabs();
+        $photos = $this->photos($vessel);
+        $pane = $timelineModule['pane'] ?? VesselFolderTree::DEFAULT_PANE;
 
         return view('vessels::show', [
             'vessel' => $vessel,
-            'tabs' => $this->tabs(),
+            'photos' => $photos,
+            'view' => $timelineModule['view'] ?? 'tabs',
+            'pane' => in_array($pane, VesselFolderTree::availableLeaves($tabs), true) ? $pane : VesselFolderTree::DEFAULT_PANE,
+            'tree' => VesselFolderTree::build($vessel, $tabs, $photos),
+            'tabs' => $tabs,
             'activeTab' => $timelineModule['tab'] ?? null,
             'assessment' => StatusLight::assess($indicators->facts),
             'indicators' => $indicators,
@@ -114,6 +132,14 @@ class VesselController extends Controller
             'legalEntities' => LegalEntity::orderBy('name')->pluck('name', 'id'),
             'people' => Person::orderBy('name')->get()->pluck('full_name', 'id'),
             'externalLists' => ExternalList::orderBy('label')->pluck('label', 'id'),
+        ]);
+    }
+
+    public function sheet(Vessel $vessel, VesselSheet $sheet): Response
+    {
+        return response($sheet->render($vessel), 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="'.$sheet->filename($vessel).'"',
         ]);
     }
 
@@ -151,6 +177,12 @@ class VesselController extends Controller
         $actions->run(UpdateVessel::class, $request->user(), ['vessel_id' => $vessel->id, 'attributes' => $request->validated()]);
 
         return to_route('vessels.show', $vessel)->with('status', __('vessels::vessels.updated'));
+    }
+
+    /** @return Collection<int, Document> */
+    private function photos(Vessel $vessel): Collection
+    {
+        return app(DocumentStore::class)->for($vessel)->filter(fn (Document $document) => str_starts_with((string) $document->mime_type, 'image/'))->values();
     }
 
     /** @return array<int, string> */

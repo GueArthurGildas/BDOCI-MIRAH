@@ -16,8 +16,8 @@ class MovementsServiceProvider extends ModuleServiceProvider
         $permission = Permission::MovementsView->value;
 
         $navigation
-            ->add('movements::eez.title', 'movements.eez.index', 'icon-navigation', NavigationGroup::Surveillance, order: 50, permission: $permission)
-            ->add('movements::movements.title', 'movements.index', 'icon-anchor', NavigationGroup::Surveillance, order: 55, permission: $permission);
+            ->add('movements::eez.title', 'movements.eez.index', 'icon-navigation', NavigationGroup::Surveillance, order: 64, permission: $permission)
+            ->add('movements::movements.title', 'movements.index', 'icon-anchor', NavigationGroup::Surveillance, order: 65, permission: $permission);
     }
 
     protected function schedule(Schedule $schedule): void

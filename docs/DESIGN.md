@@ -1,6 +1,10 @@
 # Guide du design BDOCI-MIRAH (thème GESICA)
 
-Le thème est posé **par-dessus Adminty** : on ne modifie jamais `resources/scss/adminty/`. Toutes les surcharges vivent dans `resources/scss/theme/`, importé en dernier dans `app.scss`.
+Le thème est posé **par-dessus le gabarit de base** (`resources/scss/template/`, jamais modifié).
+
+Origine du gabarit : Adminty (gabarit HTML Bootstrap de Codedthemes). C'est la seule mention de ce nom dans le dépôt.
+
+Toutes les surcharges vivent dans `resources/scss/theme/`, importé en dernier dans `app.scss`.
 
 ## Fichiers
 
@@ -56,12 +60,12 @@ Ajouter une entrée de menu se fait dans la classe `Navigation` (via le fourniss
 
 Couleurs de `stat-card` : `warning` (orange, défaut), `success`, `danger`, `info`.
 
-## Pièges connus avec Adminty
+## Pièges connus avec le gabarit de base
 
-- Adminty applique `.user-profile { padding: 20px 0 }` (page profil) : ne jamais mettre cette classe dans la barre du haut, elle ajoute 40px de hauteur.
+- Le gabarit applique `.user-profile { padding: 20px 0 }` (page profil) : ne jamais mettre cette classe dans la barre du haut, elle ajoute 40px de hauteur.
 - `.table > thead > tr > th` et `.md-tabs .nav-item a` (avec `!important` pour le padding) sont plus spécifiques que les sélecteurs simples : les surcharger avec le même sélecteur.
 - `.card .card-header + .card-body` retire le padding haut : le thème le rétablit.
-- Adminty met `.btn` et `.label` en capitales initiales (`text-transform: capitalize`) : le thème les remet en casse normale. Les cases à cocher `checkbox-fade` ont une couleur par état, plus spécifique : le thème impose l'orange avec `!important`.
+- Le gabarit met `.btn` et `.label` en capitales initiales (`text-transform: capitalize`) : le thème les remet en casse normale. Les cases à cocher `checkbox-fade` ont une couleur par état, plus spécifique : le thème impose l'orange avec `!important`.
 - Si une modification de style n'apparaît pas, redémarrer le conteneur `node` (`docker restart bdoci-mirah-node-1`) : l'observateur de fichiers de Vite sur le volume monté perd parfois les changements.
 
 ## Visite guidée
@@ -82,3 +86,12 @@ Trois fenêtres Bootstrap sont montées une fois dans le layout (`layouts/partia
 - **Réussite** : une redirection avec `->with('status', …)->with('popup', true)` affiche le message dans une fenêtre à coche verte au lieu du bandeau ; `->with('popup', [['label' => …, 'value' => …]])` ajoute des tuiles.
 - **Aperçu** : un lien `data-gs-modal` charge son URL en AJAX dans la fenêtre ; la route renvoie un fragment HTML sans layout (exemple : l'œil à côté d'un navire, `vessels.quick`).
 
+
+## Listes, filtres et pagination
+
+- **Pagination** : les grands tableaux paginés par le serveur affichent 10 lignes par page par défaut (`PerPage`, choix 10, 20, 50, 100). Les petits tableaux d'une carte, sans pagination serveur, sont paginés par 5 dans le navigateur : le composant `x-ui.table` pose `data-gs-paginate="5"` (désactivable avec `:paginate="false"`, par exemple pour un tableau avec ligne de total).
+- **Listes déroulantes** : toute liste de 8 options ou plus, et tout choix multiple, devient une liste avec recherche (Tom Select, `resources/js/layout/selects.js`). Pour garder une liste native, ajouter `data-native`. Les choix multiples sont de simples `<select multiple>` : ils deviennent des puces avec recherche, sans autre code.
+- **Recherche spontanée** : dans la barre d'outils d'une liste (`x-ui.table-toolbar`) et les filtres de colonne, la saisie filtre après 350 ms et les menus s'appliquent aussitôt, sans bouton « Filtrer » ni rechargement de la page (`live-list.js`). La carte de la liste est remplacée, l'adresse est mise à jour et le curseur reste en place.
+- **Contenu chargé après coup** : un script qui doit agir sur du contenu remplacé (modal, liste filtrée) s'enregistre avec `onContent` (`resources/js/layout/content.js`) ; l'événement `gs:content` est émis après chaque remplacement.
+- **Libellés du navigateur** : les textes utilisés par ces scripts viennent des attributs `data-gs-*` de la balise `<html>` (jamais de texte en dur dans le JavaScript).
+- **Notions voisines** : alerte, communication et notification sont expliquées par l'encart `x-ui.notion-hint` des trois pages concernées.

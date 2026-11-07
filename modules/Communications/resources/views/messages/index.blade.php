@@ -2,6 +2,8 @@
     <x-ui.page-header :title="__('communications::communications.title')" :subtitle="__('communications::communications.subtitle')" />
 
     <div class="page-body">
+        <x-ui.notion-hint current="communication" />
+
         @include('communications::partials.tabs', ['active' => 'messages'])
 
         <div class="row">
@@ -33,6 +35,7 @@
                     <th>{{ __('communications::fields.vessel_id') }}</th>
                     <th>{{ __('communications::fields.channel') }}</th>
                     <th>{{ __('communications::fields.recipient') }}</th>
+                    <th>{{ __('communications::fields.body') }}</th>
                     <th>{{ __('communications::fields.triggered_by') }}</th>
                     <th>{{ __('communications::fields.status') }}</th>
                     <th></th>
@@ -42,6 +45,7 @@
                     <th></th>
                     <th></th>
                     <x-ui.column-filter name="channel" form="list-filters" :options="App\Enums\CommunicationChannelCode::options()" :value="$filters['channel'] ?? null" />
+                    <th></th>
                     <th></th>
                     <th></th>
                     <x-ui.column-filter name="status" form="list-filters" :options="App\Enums\MessageStatus::options()" :value="$filters['status'] ?? null" />
@@ -58,12 +62,18 @@
                         </td>
                         <td>{{ __($message->channel->code->label()) }}</td>
                         <td>{{ $message->recipient }}</td>
+                        <td class="text-wrap text-pre-line">
+                            @if ($message->subject)
+                                <strong class="d-block">{{ $message->subject }}</strong>
+                            @endif
+                            {{ Str::limit($message->body, 140) }}
+                        </td>
                         <td>{{ __($message->triggered_by->label()) }}</td>
                         <td><x-ui.status-badge :status="$message->status" /></td>
                         <td class="text-end"><a href="{{ route('communications.messages.show', $message) }}" class="btn btn-default btn-sm">{{ __('ui.view') }}</a></td>
                     </tr>
                 @empty
-                    <x-ui.empty-row colspan="7" />
+                    <x-ui.empty-row colspan="8" />
                 @endforelse
             </x-ui.table>
         </x-ui.card>

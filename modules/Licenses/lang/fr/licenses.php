@@ -1,6 +1,12 @@
 <?php
 
 return [
+    'expiry' => [
+        'label' => 'Échéance',
+        'in' => 'Expire dans :interval',
+        'since' => 'Expirée depuis :interval',
+        'today' => 'Expire aujourd\'hui',
+    ],
     'title' => 'Licences',
     'subtitle' => 'Licences de pêche, validité, suspensions et révocations',
     'new' => 'Nouvelle licence',

@@ -4,11 +4,24 @@
     <div class="page-body">
         <x-ui.card :title="__('vms::vms.ers.list_title')" flush>
             <x-slot:actions>
+                @can(App\Support\Authorization\Permission::ReportsExportErsDeclarations->value)
+                    @foreach (['csv' => 'icon-file-text', 'pdf' => 'icon-file'] as $format => $icon)
+                        <a href="{{ route('reports.exports.download', ['type' => 'ers_declarations', 'format' => $format, 'vessel' => $filters['vessel'] ?? null, 'from' => $filters['from'] ?? null, 'to' => $filters['to'] ?? null]) }}" class="btn btn-dark btn-mini" title="{{ __('vms::vms.ers.export_hint') }}">
+                            <i class="feather {{ $icon }}"></i> {{ __('vms::vms.ers.export_'.$format) }}
+                        </a>
+                    @endforeach
+                @endcan
                 @can(App\Support\Authorization\Permission::VmsCreate->value)
                     <a href="{{ route('vms.ers.create') }}" class="btn btn-primary btn-mini"><i class="feather icon-plus"></i> {{ __('vms::vms.ers.new') }}</a>
                 @endcan
             </x-slot:actions>
-            <x-ui.table>
+            <x-ui.table-toolbar :action="route('vms.ers.index')" :paginator="$declarations">
+                <x-ui.toolbar-select name="vessel" :label="__('vms::vms.fields.vessel')" :options="$vessels" :value="$filters['vessel'] ?? null" />
+                <x-ui.toolbar-input name="from" type="date" :label="__('vms::vms.ers.from')" :value="$filters['from'] ?? null" />
+                <x-ui.toolbar-input name="to" type="date" :label="__('vms::vms.ers.to')" :value="$filters['to'] ?? null" />
+            </x-ui.table-toolbar>
+
+            <x-ui.table :paginator="$declarations">
                 <x-slot:head>
                     <th>{{ __('vms::vms.fields.vessel') }}</th>
                     <th>{{ __('vms::vms.ers.declared_at') }}</th>
@@ -31,6 +44,5 @@
                 @endforelse
             </x-ui.table>
         </x-ui.card>
-        {{ $declarations->links() }}
     </div>
 </x-layouts.app>

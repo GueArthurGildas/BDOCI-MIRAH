@@ -6,6 +6,7 @@ class RequestAiNoteRequest extends StoreNoteRequest
 {
     protected function prepareForValidation(): void
     {
+        parent::prepareForValidation();
         $this->merge(['instruction' => $this->input('instruction', $this->input('free_text'))]);
     }
 

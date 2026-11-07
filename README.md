@@ -1,6 +1,6 @@
 # BDOCI-MIRAH
 
-Système d'information du Centre de Surveillance des Pêches (CSP) : référentiel des navires, suivi des positions, main courante, contrôles et pilotage — Laravel 13, thème Adminty.
+Système d'information du Centre de Surveillance des Pêches (CSP) : référentiel des navires, suivi des positions, main courante, contrôles et pilotage — Laravel 13, thème GESICA (voir `docs/DESIGN.md`).
 
 ## Prérequis
 

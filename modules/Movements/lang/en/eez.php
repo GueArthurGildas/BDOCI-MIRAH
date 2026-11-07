@@ -55,6 +55,9 @@ return [
         'destination_not_designated' => 'The destination is not a designated port',
         'not_port_transit' => 'Not a transit to an Ivorian port',
     ],
+    'export_csv' => 'CSV export',
+    'export_pdf' => 'PDF export',
+    'export_hint' => 'Export the filtered list (vessel and period)',
     'fields' => [
         'received_at' => 'Received on',
         'vessel' => 'Vessel',

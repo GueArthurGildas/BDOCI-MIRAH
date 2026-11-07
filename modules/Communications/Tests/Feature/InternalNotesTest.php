@@ -122,8 +122,8 @@ class InternalNotesTest extends TestCase
 
         $this->post(route('communications.notes.store'), $this->payload(['type' => 'gossip']))->assertSessionHasErrors('type');
         $this->post(route('communications.notes.store'), $this->payload(['urgency' => 'extreme']))->assertSessionHasErrors('urgency');
-        $this->post(route('communications.notes.store'), $this->payload(['recipient' => 'user:99999']))->assertSessionHasErrors('recipient');
-        $this->post(route('communications.notes.store'), $this->payload(['recipient' => 'everybody']))->assertSessionHasErrors('recipient');
+        $this->post(route('communications.notes.store'), $this->payload(['recipient' => 'user:99999']))->assertSessionHasErrors('recipients');
+        $this->post(route('communications.notes.store'), $this->payload(['recipient' => 'everybody']))->assertSessionHasErrors('recipients.0');
         $this->post(route('communications.notes.store'), $this->payload(['due_date' => today()->subDay()->toDateString()]))->assertSessionHasErrors('due_date');
         $this->post(route('communications.notes.store'), $this->payload(['relay' => 'sms']))->assertSessionHasErrors('relay');
         $this->post(route('communications.notes.store'), $this->payload(['vessel_id' => 99999]))->assertSessionHasErrors('vessel_id');
@@ -177,5 +177,34 @@ class InternalNotesTest extends TestCase
 
         $this->get(route('communications.notes.create', ['vessel' => $vessel->id]))->assertOk()
             ->assertSee('value="'.$vessel->id.'" selected', false);
+    }
+
+    public function test_a_note_can_be_sent_to_several_users_and_teams_at_once(): void
+    {
+        $this->signInAs(Role::Agent);
+        $first = User::factory()->create();
+        $director = User::factory()->create();
+        $team = Team::factory()->create();
+
+        $this->post(route('communications.notes.store'), $this->payload(['recipient' => null, 'recipients' => ["user:{$first->id}", "user:{$director->id}", "team:{$team->id}"]]))
+            ->assertRedirect(route('communications.notes.index', ['box' => 'sent']))
+            ->assertSessionHas('status');
+
+        $this->assertSame(3, InternalNote::count());
+        $this->assertSame(2, InternalNote::whereNotNull('recipient_user_id')->count());
+        $this->assertSame(1, InternalNote::where('recipient_team_id', $team->id)->count());
+        $this->assertSame(1, InternalNote::where('recipient_user_id', $director->id)->count());
+    }
+
+    public function test_recipients_are_required_distinct_and_must_exist(): void
+    {
+        $this->signInAs(Role::Agent);
+        $colleague = User::factory()->create();
+
+        $this->post(route('communications.notes.store'), $this->payload(['recipient' => null, 'recipients' => []]))->assertSessionHasErrors('recipients');
+        $this->post(route('communications.notes.store'), $this->payload(['recipient' => null, 'recipients' => ["user:{$colleague->id}", "user:{$colleague->id}"]]))->assertSessionHasErrors('recipients.1');
+        $this->post(route('communications.notes.store'), $this->payload(['recipient' => null, 'recipients' => ['user:999999']]))->assertSessionHasErrors('recipients');
+
+        $this->assertSame(0, InternalNote::count());
     }
 }

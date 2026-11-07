@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Logbook\Support;
+namespace App\Support\Logbook;
 
 use App\Models\LogbookDay;
 use App\Models\LogbookEntry;

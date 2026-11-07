@@ -12,7 +12,7 @@ use Modules\Reports\Support\ArchivableOperations;
 
 class ArchiveController extends Controller
 {
-    private const PER_PAGE = 20;
+    private const PER_PAGE = 10;
 
     public function index(ArchivableOperations $archivable): View
     {

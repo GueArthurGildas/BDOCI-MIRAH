@@ -66,6 +66,8 @@ enum Permission: string
     case ReportsExportOperations = 'reports.export_operations';
     case ReportsExportVessels = 'reports.export_vessels';
     case ReportsExportLogbook = 'reports.export_logbook';
+    case ReportsExportEezDeclarations = 'reports.export_eez_declarations';
+    case ReportsExportErsDeclarations = 'reports.export_ers_declarations';
     case ReportsArchive = 'reports.archive';
     case ReportsViewHealth = 'reports.view_health';
     case ConnectorsSync = 'connectors.sync';

@@ -11,6 +11,6 @@ class IndicatorsServiceProvider extends ModuleServiceProvider
 {
     protected function navigation(Navigation $navigation): void
     {
-        $navigation->add('indicators::indicators.fleet.title', 'fleet.index', 'icon-globe', NavigationGroup::Overview, order: 1, permission: Permission::IndicatorsView->value);
+        $navigation->add('indicators::indicators.fleet.title', 'fleet.index', 'icon-globe', NavigationGroup::Overview, order: 30, permission: Permission::IndicatorsView->value);
     }
 }

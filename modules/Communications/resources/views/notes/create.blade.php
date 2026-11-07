@@ -10,20 +10,23 @@
                 @include('communications::partials.choice-buttons', ['name' => 'urgency', 'label' => __('communications::fields.urgency'), 'options' => $urgencies, 'selected' => 'normal', 'required' => true])
 
                 <div class="mb-3 row">
-                    <label for="recipient" class="form-label col-sm-3 col-form-label">{{ __('communications::fields.recipient') }}</label>
+                    <label for="recipients" class="form-label col-sm-3 col-form-label">{{ __('communications::fields.recipients') }}</label>
                     <div class="col-sm-9">
-                        <select id="recipient" name="recipient" @class(['form-select', 'is-invalid' => $errors->has('recipient')]) required>
-                            <option value="">{{ __('ui.select_placeholder') }}</option>
+                        <select id="recipients" name="recipients[]" multiple @class(['form-select', 'is-invalid' => $errors->has('recipients') || $errors->has('recipients.*')]) required data-placeholder="{{ __('communications::notes.recipients_placeholder') }}">
                             @foreach ($recipients as $group => $options)
                                 <optgroup label="{{ $group }}">
                                     @foreach ($options as $value => $label)
-                                        <option value="{{ $value }}" @selected(old('recipient') === $value)>{{ $label }}</option>
+                                        <option value="{{ $value }}" @selected(in_array($value, old('recipients', []), true))>{{ $label }}</option>
                                     @endforeach
                                 </optgroup>
                             @endforeach
                         </select>
-                        @error('recipient')
-                            <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="form-text">{{ __('communications::notes.recipients_hint') }}</div>
+                        @error('recipients')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+                        @error('recipients.*')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>

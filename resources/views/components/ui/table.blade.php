@@ -1,7 +1,7 @@
-@props(['paginator' => null])
+@props(['paginator' => null, 'paginate' => 5])
 
 <div class="table-responsive">
-    <table {{ $attributes->class('table table-hover m-b-0') }}>
+    <table {{ $attributes->class('table table-hover m-b-0') }} @if (! $paginator && $paginate) data-gs-paginate="{{ $paginate }}" @endif>
         <thead>
             <tr>{{ $head }}</tr>
             @isset($filters)

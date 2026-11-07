@@ -1,7 +1,20 @@
+@php
+    $keep = request()->except('page', 'case', 'folder');
+@endphp
 <x-layouts.app :title="__('infractions::infractions.title')">
-    <x-ui.page-header :title="__('infractions::infractions.title')" :subtitle="__('infractions::infractions.subtitle')" />
+    <x-ui.page-header :title="__('infractions::infractions.title')" :subtitle="__('infractions::infractions.subtitle')">
+        <x-slot:actions>
+            <div class="btn-group btn-group-sm" role="group" aria-label="{{ __('infractions::infractions.views.label') }}">
+                <a href="{{ route('infractions.index', [...$keep, 'view' => 'list']) }}" @class(['btn', 'btn-primary' => $view === 'list', 'btn-default' => $view !== 'list'])><i class="feather icon-list"></i> {{ __('infractions::infractions.views.list') }}</a>
+                <a href="{{ route('infractions.index', [...$keep, 'view' => 'folders']) }}" @class(['btn', 'btn-primary' => $view === 'folders', 'btn-default' => $view !== 'folders'])><i class="feather icon-folder"></i> {{ __('infractions::infractions.views.folders') }}</a>
+            </div>
+        </x-slot:actions>
+    </x-ui.page-header>
 
     <div class="page-body">
+        @if ($view === 'folders')
+            @include('infractions::folders')
+        @else
         <x-ui.card :title="__('infractions::infractions.list_title')" :subtitle="trans_choice('ui.results_count', $cases->total())" flush>
             <x-slot:actions>
                 @can(App\Support\Authorization\Permission::InfractionsCreate->value)
@@ -49,5 +62,6 @@
                 @endforelse
             </x-ui.table>
         </x-ui.card>
+        @endif
     </div>
 </x-layouts.app>

@@ -30,12 +30,32 @@
                         @endforelse
                     </x-ui.table>
                 </x-ui.card>
+                <x-ui.card :title="__('licenses::imports.example.title')" :subtitle="__('licenses::imports.example.subtitle')" flush>
+                    <x-ui.table :paginate="false">
+                        <x-slot:head>
+                            <th>{{ __('licenses::imports.example.column') }}</th>
+                            <th>{{ __('licenses::imports.example.requirement') }}</th>
+                            <th>{{ __('licenses::imports.example.format') }}</th>
+                            <th>{{ __('licenses::imports.example.sample') }}</th>
+                        </x-slot:head>
+                        @foreach ($exampleFields as $field)
+                            <tr>
+                                <td><code>{{ $field['field'] }}</code></td>
+                                <td>@if ($field['required'])<span class="label label-danger">{{ __('licenses::imports.example.required') }}</span>@else<span class="label label-default">{{ __('licenses::imports.example.optional') }}</span>@endif</td>
+                                <td class="text-wrap f-12">{{ $field['format'] }}</td>
+                                <td class="text-wrap f-12">{{ $field['example'] ?: '—' }}</td>
+                            </tr>
+                        @endforeach
+                    </x-ui.table>
+                </x-ui.card>
             </div>
 
             <div class="col-xl-4">
+
                 @can(App\Support\Authorization\Permission::LicensesImport->value)
                     <x-ui.card :title="__('licenses::imports.upload_title')">
                         <p class="text-muted f-12">{{ __('licenses::imports.format_help', ['columns' => implode('; ', $columns)]) }}</p>
+                        <a href="{{ route('licenses.imports.example') }}" class="btn btn-outline-primary btn-sm m-b-15"><i class="feather icon-download"></i> {{ __('licenses::imports.example.download') }}</a>
                         <form method="POST" action="{{ route('licenses.imports.file') }}" enctype="multipart/form-data">
                             @csrf
                             <x-ui.form.input name="file" type="file" :label="__('licenses::imports.file')" accept=".csv,.txt" required />

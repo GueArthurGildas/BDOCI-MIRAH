@@ -10,6 +10,7 @@ use App\Models\ExternalInspection;
 use App\Models\SentMessage;
 use App\Models\Vessel;
 use App\Queries\OpenInfractionCases;
+use Illuminate\Support\Collection;
 
 final readonly class VesselIndicators
 {
@@ -26,10 +27,10 @@ final readonly class VesselIndicators
         public bool $positionKnown,
     ) {}
 
-    public static function for(Vessel $vessel): self
+    public static function for(Vessel $vessel, ?Collection $silentVesselIds = null): self
     {
         $since = now()->subMonths((int) config('vigilance.score.window_months'));
-        $facts = StatusLightFacts::gather($vessel);
+        $facts = StatusLightFacts::gather($vessel, $silentVesselIds);
 
         return new self(
             facts: $facts,

@@ -36,6 +36,14 @@ return [
             'label' => 'Gestion des envois automatiques',
             'description' => 'Règle la fréquence et l\'activation des envois automatiques.',
         ],
+        'ai_agent_notes' => [
+            'label' => 'Notes de l\'agent IA',
+            'description' => 'Reçoit et traite les notes produites par l\'agent IA.',
+        ],
+        'scheduled_reports' => [
+            'label' => 'Rapports programmés',
+            'description' => 'Reçoit les rapports générés automatiquement.',
+        ],
         'trigger_ai_agent' => [
             'label' => 'Déclencher l\'agent IA',
             'description' => 'Peut déclencher l\'agent IA.',

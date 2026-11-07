@@ -5,24 +5,28 @@ namespace Modules\Communications\Http\Controllers;
 use App\Enums\CommunicationChannelCode;
 use App\Enums\MessageStatus;
 use App\Http\Controllers\Controller;
+use App\Models\Document;
 use App\Models\MessageTemplate;
 use App\Models\SentMessage;
 use App\Models\Vessel;
 use App\Support\Actions\ActionRunner;
+use App\Support\Documents\DocumentStore;
 use App\Support\Tables\PerPage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Modules\Communications\Actions\AcknowledgeMessage;
 use Modules\Communications\Actions\SendMessage;
 use Modules\Communications\Actions\SendPreparedMessage;
 use Modules\Communications\Http\Requests\SendMessageRequest;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MessageController extends Controller
 {
-    private const PER_PAGE = 20;
+    private const PER_PAGE = 10;
 
     public function index(Request $request): View
     {
@@ -74,7 +78,17 @@ class MessageController extends Controller
 
     public function show(SentMessage $message): View
     {
-        return view('communications::messages.show', ['message' => $message->load(['vessel', 'channel', 'template', 'rule', 'sender'])]);
+        return view('communications::messages.show', [
+            'message' => $message->load(['vessel', 'channel', 'template', 'rule', 'sender']),
+            'attachments' => app(DocumentStore::class)->for($message),
+        ]);
+    }
+
+    public function attachment(SentMessage $message, Document $document): StreamedResponse
+    {
+        abort_unless(app(DocumentStore::class)->for($message)->contains('id', $document->id), 404);
+
+        return Storage::disk(DocumentStore::DISK)->download($document->path, $document->name);
     }
 
     public function send(SentMessage $message, Request $request, ActionRunner $actions): RedirectResponse

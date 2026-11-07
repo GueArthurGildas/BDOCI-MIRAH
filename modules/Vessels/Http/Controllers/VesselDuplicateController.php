@@ -20,7 +20,7 @@ class VesselDuplicateController extends Controller
         $sources = VesselSource::with(['vessel.flagCountry', 'vessel.activeIdentifiers', 'candidate.flagCountry', 'candidate.activeIdentifiers'])
             ->where('matching_status', MatchingStatus::PossibleDuplicate->value)
             ->oldest()
-            ->paginate(20);
+            ->paginate(10);
 
         return view('vessels::duplicates', compact('sources'));
     }

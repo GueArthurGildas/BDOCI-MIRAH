@@ -8,7 +8,7 @@ use Illuminate\View\View;
 
 class AiAgentController extends Controller
 {
-    private const PER_PAGE = 20;
+    private const PER_PAGE = 10;
 
     public function index(): View
     {

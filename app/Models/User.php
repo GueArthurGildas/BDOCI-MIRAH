@@ -13,10 +13,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Route;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
 
-#[Fillable(['name', 'email', 'job_title', 'phone', 'whatsapp_number', 'password', 'team_id', 'is_active'])]
+#[Fillable(['name', 'first_name', 'email', 'job_title', 'phone', 'whatsapp_number', 'password', 'team_id', 'is_active', 'dashboard_widgets', 'avatar_document_id'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -36,15 +37,26 @@ class User extends Authenticatable
             'is_active' => 'boolean',
             'type' => UserType::class,
             'last_login_at' => 'datetime',
+            'dashboard_widgets' => 'array',
         ];
     }
 
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['name', 'email', 'job_title', 'phone', 'whatsapp_number', 'team_id', 'is_active'])
+            ->logOnly(['name', 'first_name', 'email', 'job_title', 'phone', 'whatsapp_number', 'team_id', 'is_active'])
             ->logOnlyDirty()
             ->dontLogEmptyChanges();
+    }
+
+    public function fullName(): string
+    {
+        return trim(($this->first_name ? $this->first_name.' ' : '').$this->name);
+    }
+
+    public function avatarUrl(): ?string
+    {
+        return $this->avatar_document_id && Route::has('profile.avatar') ? route('profile.avatar', $this) : null;
     }
 
     public function permissionGroups(): BelongsToMany

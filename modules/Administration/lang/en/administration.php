@@ -16,7 +16,8 @@ return [
         'cannot_deactivate_self' => 'You cannot deactivate your own account.',
         'search_placeholder' => 'Name or email…',
         'fields' => [
-            'name' => 'Name',
+            'name' => 'Last name',
+            'first_name' => 'First name',
             'email' => 'Email',
             'groups' => 'Permission groups',
             'job_title' => 'Job title',
@@ -188,6 +189,8 @@ return [
             'export_operations' => 'Export operations',
             'export_vessels' => 'Export vessels',
             'export_logbook' => 'Export logbook entries',
+            'export_eez_declarations' => 'Export EEZ declarations',
+            'export_ers_declarations' => 'Export ERS declarations',
             'archive' => 'Archive old operations',
             'view_health' => 'See the system health banner',
         ],

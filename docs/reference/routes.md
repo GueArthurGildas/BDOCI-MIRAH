@@ -62,7 +62,11 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `communications.channels.consents.store` | POST | `/communications/channels/consents` | `communications.send` |
 | `communications.channels.index` | GET | `/communications/channels` | `communications.view` |
 | `communications.channels.update` | PUT | `/communications/channels/{channel}` | `communications.manage_dispatch` |
+| `communications.directory.compose` | GET | `/communications/directory/compose` | `communications.send` |
+| `communications.directory.index` | GET | `/communications/directory` | `communications.view` |
+| `communications.directory.send` | POST | `/communications/directory/send` | `communications.send` |
 | `communications.messages.acknowledge` | POST | `/communications/messages/{message}/acknowledge` | `communications.send` |
+| `communications.messages.attachment` | GET | `/communications/messages/{message}/attachments/{document}` | `communications.view` |
 | `communications.messages.create` | GET | `/communications/messages/create` | `communications.send` |
 | `communications.messages.index` | GET | `/communications/messages` | `communications.view` |
 | `communications.messages.send` | POST | `/communications/messages/{message}/send` | `communications.send` |
@@ -85,6 +89,10 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `communications.templates.update` | PUT | `/communications/templates/{template}` | `communications.manage_templates` |
 | `communications.webhooks.delivery` | POST | `/communications/webhooks/delivery` | — |
 | `dashboard` | GET | `/dashboard` | `dashboard.view` |
+| `dashboard.customize` | GET | `/dashboard/customize` | `dashboard.view` |
+| `dashboard.widgets.reset` | DELETE | `/dashboard/widgets` | `dashboard.view` |
+| `dashboard.widgets.show` | GET | `/dashboard/widgets/{widget}` | `dashboard.view` |
+| `dashboard.widgets.update` | PUT | `/dashboard/widgets` | `dashboard.view` |
 | `fleet.index` | GET | `/fleet` | `indicators.view` |
 | `indicators.show` | GET | `/indicators/{indicator}` | `indicators.view` |
 | `infractions.appeals.outcome` | PATCH | `/infractions/appeals/{appeal}` | `infractions.decide` |
@@ -110,6 +118,7 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `infractions.upheld.store` | POST | `/infractions/{case}/upheld` | `infractions.manage` |
 | `infractions.violation-report.store` | POST | `/infractions/{case}/violation-report` | `infractions.manage` |
 | `inspections.index` | GET | `/inspections` | `inspections.view` |
+| `inspections.never-inspected` | GET | `/inspections/never-inspected` | `inspections.view` |
 | `inspections.show` | GET | `/inspections/{inspection}` | `inspections.view` |
 | `licenses.authorized.download` | GET | `/licenses/authorized/{publication}/download` | `licenses.view` |
 | `licenses.authorized.index` | GET | `/licenses/authorized` | `licenses.view` |
@@ -120,6 +129,7 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `licenses.edit` | GET | `/licenses/{license}/edit` | `licenses.manage` |
 | `licenses.imports.batch` | POST | `/licenses/imports/batch` | `licenses.import` |
 | `licenses.imports.cancel` | POST | `/licenses/imports/{import}/cancel` | `licenses.import` |
+| `licenses.imports.example` | GET | `/licenses/imports/example` | `licenses.view` |
 | `licenses.imports.file` | POST | `/licenses/imports/file` | `licenses.import` |
 | `licenses.imports.index` | GET | `/licenses/imports` | `licenses.view` |
 | `licenses.imports.lines.update` | PUT | `/licenses/imports/lines/{line}` | `licenses.import` |
@@ -147,6 +157,7 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `logbook.days.pdf` | GET | `/logbook/days/{day}/pdf` | `logbook.view` |
 | `logbook.days.show` | GET | `/logbook/days/{day}` | `logbook.view` |
 | `logbook.days.today` | GET | `/logbook/days/today` | `logbook.view` |
+| `logbook.days.word` | GET | `/logbook/days/{day}/word` | `logbook.view` |
 | `logbook.entries.rectify` | GET | `/logbook/entries/{entry}/rectify` | `logbook.create` |
 | `logbook.entries.rectify.store` | POST | `/logbook/entries/{entry}/rectify` | `logbook.create` |
 | `logbook.entries.store` | POST | `/logbook/entries` | `logbook.create` |
@@ -207,6 +218,10 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `operations.show` | GET | `/operations/{operation}` | `operations.view` |
 | `operations.store` | POST | `/operations` | `operations.create` |
 | `operations.update` | PATCH | `/operations/{operation}` | `operations.manage` |
+| `profile.avatar` | GET | `/profile/avatar/{user}` | — |
+| `profile.avatar.destroy` | DELETE | `/profile/avatar` | — |
+| `profile.avatar.update` | POST | `/profile/avatar` | — |
+| `profile.show` | GET | `/profile` | — |
 | `registry.create` | GET | `/registry/{resource}/create` | `registry.manage` |
 | `registry.edit` | GET | `/registry/{resource}/{id}/edit` | `registry.manage` |
 | `registry.index` | GET | `/registry` | `registry.view` |
@@ -226,9 +241,11 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `reports.store` | POST | `/reports` | `reports.manage` |
 | `reports.update` | PUT | `/reports/{scheduledReport}` | `reports.manage` |
 | `search` | GET | `/search` | — |
+| `thermis.index` | GET | `/thermis` | `tracking.view` |
 | `tracking.alerts.acknowledge` | POST | `/tracking/alerts/{alert}/acknowledge` | `tracking.view`, `tracking.create` |
 | `tracking.alerts.handle` | POST | `/tracking/alerts/{alert}/handle` | `tracking.view`, `tracking.create` |
 | `tracking.alerts.index` | GET | `/tracking/alerts` | `tracking.view` |
+| `tracking.alerts.preview` | GET | `/tracking/alerts/preview` | `tracking.view` |
 | `tracking.alerts.show` | GET | `/tracking/alerts/{alert}` | `tracking.view` |
 | `tracking.beacons` | GET | `/tracking/beacons` | `tracking.view` |
 | `tracking.map` | GET | `/tracking/map` | `tracking.view` |
@@ -251,7 +268,11 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `vessels.index` | GET | `/vessels` | `vessels.view` |
 | `vessels.ingest.create` | GET | `/vessels/ingest` | `vessels.manage` |
 | `vessels.ingest.store` | POST | `/vessels/ingest` | `vessels.manage` |
+| `vessels.photos.destroy` | DELETE | `/vessels/{vessel}/photos/{document}` | `vessels.manage` |
+| `vessels.photos.show` | GET | `/vessels/{vessel}/photos/{document}` | `vessels.view` |
+| `vessels.photos.store` | POST | `/vessels/{vessel}/photos` | `vessels.manage` |
 | `vessels.quick` | GET | `/vessels/{vessel}/quick` | `vessels.view` |
+| `vessels.sheet` | GET | `/vessels/{vessel}/sheet` | `vessels.view` |
 | `vessels.show` | GET | `/vessels/{vessel}` | `vessels.view` |
 | `vessels.store` | POST | `/vessels` | `vessels.manage` |
 | `vessels.update` | PUT | `/vessels/{vessel}` | `vessels.manage` |

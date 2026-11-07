@@ -13,6 +13,7 @@ use App\Models\VmsFailure;
 use App\Models\WatchEntry;
 use App\Queries\OpenInfractionCases;
 use App\Queries\SilentBeacons;
+use Illuminate\Support\Collection;
 
 final readonly class StatusLightFacts
 {
@@ -27,7 +28,7 @@ final readonly class StatusLightFacts
         public int $unexplainedVariances,
     ) {}
 
-    public static function gather(Vessel $vessel): self
+    public static function gather(Vessel $vessel, ?Collection $silentVesselIds = null): self
     {
         $license = $vessel->currentLicense;
         $failureOngoing = VmsFailure::where('vessel_id', $vessel->id)->whereNull('ended_at')->exists();
@@ -35,7 +36,7 @@ final readonly class StatusLightFacts
         return new self(
             licenseStatus: CurrentLicenseStatus::fromLicense($license),
             licenseDaysLeft: $license?->daysUntilExpiry(),
-            silent: ! $failureOngoing && SilentBeacons::vessels($vessel->id)->isNotEmpty(),
+            silent: ! $failureOngoing && ($silentVesselIds?->contains($vessel->id) ?? SilentBeacons::vessels($vessel->id)->isNotEmpty()),
             failureOngoing: $failureOngoing,
             enhancedMonitoring: WatchEntry::where('vessel_id', $vessel->id)
                 ->where('status', WatchStatus::Open->value)

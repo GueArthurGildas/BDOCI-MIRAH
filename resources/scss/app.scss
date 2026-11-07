@@ -5,11 +5,12 @@
 @import "@fontsource/poppins/600.css";
 @import "@fontsource/poppins/700.css";
 @import "bootstrap/dist/css/bootstrap.min.css";
+@import "tom-select/dist/css/tom-select.bootstrap5.css";
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 @import "../fonts/icofont/css/icofont.css";
 @import "../fonts/feather/css/feather.css";
 @import "leaflet/dist/leaflet.css";
-@import "adminty";
+@import "template";
 @import "pages/timeline";
 @import "layout";
 @import "components";
@@ -23,6 +24,7 @@
 @import "theme/tables";
 @import "theme/buttons";
 @import "theme/forms";
+@import "theme/selects";
 @import "theme/labels";
 @import "theme/tabs";
 @import "theme/notifications";

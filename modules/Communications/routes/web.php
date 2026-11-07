@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\Communications\Http\Controllers\AiAgentController;
 use Modules\Communications\Http\Controllers\ChannelController;
 use Modules\Communications\Http\Controllers\DeliveryReportController;
+use Modules\Communications\Http\Controllers\DirectoryController;
 use Modules\Communications\Http\Controllers\MessageController;
 use Modules\Communications\Http\Controllers\NoteController;
 use Modules\Communications\Http\Controllers\RuleController;
@@ -17,8 +18,15 @@ Route::middleware('auth')->prefix('communications')->name('communications.')->gr
         Route::get('create', 'create')->can(Permission::CommunicationsSend->value)->name('create');
         Route::post('/', 'store')->can(Permission::CommunicationsSend->value)->name('store');
         Route::get('{message}', 'show')->can(Permission::CommunicationsView->value)->name('show');
+        Route::get('{message}/attachments/{document}', 'attachment')->can(Permission::CommunicationsView->value)->whereNumber('document')->name('attachment');
         Route::post('{message}/send', 'send')->can(Permission::CommunicationsSend->value)->name('send');
         Route::post('{message}/acknowledge', 'acknowledge')->can(Permission::CommunicationsSend->value)->name('acknowledge');
+    });
+
+    Route::controller(DirectoryController::class)->prefix('directory')->name('directory.')->group(function () {
+        Route::get('/', 'index')->can(Permission::CommunicationsView->value)->name('index');
+        Route::get('compose', 'compose')->can(Permission::CommunicationsSend->value)->name('compose');
+        Route::post('send', 'send')->can(Permission::CommunicationsSend->value)->name('send');
     });
 
     Route::controller(NoteController::class)->prefix('notes')->name('notes.')->group(function () {

@@ -24,7 +24,7 @@ use Modules\Licenses\Support\ExpiryTiers;
 
 class LicenseController extends Controller
 {
-    private const PER_PAGE = 20;
+    private const PER_PAGE = 10;
 
     public function index(Request $request): View
     {

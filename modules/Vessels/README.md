@@ -16,3 +16,10 @@ Fiche navire, identifiants multiples, historique des noms et pavillons, acteurs 
 - **Règles** : `App\Support\Vessels\StatusLight` (H-8-1) et `VigilanceScore` (H-8-2), seuils dans `config/vigilance.php`.
 - **Lectures des infractions et missions** : uniquement par `App\Queries\OpenInfractionCases` et `VesselMissions`.
 
+## Fiche navire : photos, dossiers, fiche PDF
+
+- **Photos** : documents (`documents`) liés au navire par `document_links`, stockés sur le disque privé et servis par `vessels.photos.show` (contrôle du lien et du type image). Actions `AddVesselPhoto` et `RemoveVesselPhoto` (`vessels.manage`). `vessels.primary_photo_id` copie la photo principale pour afficher la miniature dans les listes sans requête ; sans photo, l'image commune `public/images/vessel-placeholder.svg` est utilisée (`Vessel::photoUrl()`).
+- **Carrousel** : dans l'en-tête de la fiche, à gauche des informations, avec le statut global juste en dessous ; photos agrandissables au clic (`resources/js/layout/photos.js`). L'ajout et le retrait passent par un modal (bouton « Gérer les photos ») et par le volet « Photos » de la vue en dossiers.
+- **Vue en dossiers** : `?view=folders&pane=<volet>`, arbre à gauche construit par `Support/VesselFolderTree` (dossiers, sous-dossiers, éléments), volet à droite réutilisant les partiels des onglets ; les volets suivent les mêmes permissions que les onglets.
+- **Fiche technique** : `vessels.sheet` génère un PDF (identification, caractéristiques, licence, balise et dernière émission, photo principale).
+- **Statuts** : au survol, chaque badge explique sa signification (`enums.descriptions.*`).

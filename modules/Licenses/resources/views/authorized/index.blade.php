@@ -77,5 +77,14 @@
                 @endforelse
             </x-ui.table>
         </x-ui.card>
+
+        <x-ui.card :title="__('licenses::authorized.how_title')">
+            <ul class="mb-0">
+                <li>{{ __('licenses::authorized.how_rule') }}</li>
+                <li>{{ __('licenses::authorized.how_one_per_vessel') }}</li>
+                <li>{{ __('licenses::authorized.how_excluded') }}</li>
+                <li>{{ __('licenses::authorized.how_publication') }}</li>
+            </ul>
+        </x-ui.card>
     </div>
 </x-layouts.app>

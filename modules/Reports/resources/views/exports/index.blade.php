@@ -11,6 +11,10 @@
                     @elseif ($type->value === 'vessels')
                         <x-ui.filter-input name="search" type="search" :label="__('reports::reports.exports.fields.search')" />
                         <x-ui.filter-select name="record_status" :label="__('reports::reports.exports.fields.record_status')" :options="$recordStatuses" />
+                    @elseif (in_array($type->value, ['eez_declarations', 'ers_declarations'], true))
+                        <x-ui.filter-select name="vessel" :label="__('reports::reports.exports.fields.vessel')" :options="$vessels" />
+                        <x-ui.filter-input name="from" type="date" :label="__('reports::reports.exports.fields.from')" />
+                        <x-ui.filter-input name="to" type="date" :label="__('reports::reports.exports.fields.to')" />
                     @else
                         <x-ui.filter-input name="from" type="date" :label="__('reports::reports.exports.fields.from')" />
                         <x-ui.filter-input name="to" type="date" :label="__('reports::reports.exports.fields.to')" />
@@ -53,7 +57,7 @@
                         <td>{{ __($entry->format->label()) }}</td>
                         <td>
                             @forelse ($entry->filters ?? [] as $key => $value)
-                                <div>{{ __('reports::reports.exports.fields.'.$key) }} : {{ $value }}</div>
+                                <div>{{ __('reports::reports.exports.fields.'.$key) }} : {{ $key === 'vessel' ? ($vessels[$value] ?? $value) : $value }}</div>
                             @empty
                                 <span class="text-muted">{{ __('reports::reports.exports.no_filter') }}</span>
                             @endforelse

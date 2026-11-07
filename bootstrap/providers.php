@@ -15,6 +15,7 @@ use Modules\Missions\Providers\MissionsServiceProvider;
 use Modules\Movements\Providers\MovementsServiceProvider;
 use Modules\Mrep\Providers\MrepServiceProvider;
 use Modules\Notifications\Providers\NotificationsServiceProvider;
+use Modules\Profile\Providers\ProfileServiceProvider;
 use Modules\Operations\Providers\OperationsServiceProvider;
 use Modules\Registry\Providers\RegistryServiceProvider;
 use Modules\Reports\Providers\ReportsServiceProvider;
@@ -40,6 +41,7 @@ return [
     MovementsServiceProvider::class,
     MrepServiceProvider::class,
     NotificationsServiceProvider::class,
+    ProfileServiceProvider::class,
     RegistryServiceProvider::class,
     ReportsServiceProvider::class,
     OperationsServiceProvider::class,

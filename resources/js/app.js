@@ -1,6 +1,6 @@
 import './vendor/jquery';
-import './vendor/adminty/jquery4-compat';
-import './vendor/adminty/pcoded';
+import './vendor/template/jquery4-compat';
+import './vendor/template/pcoded';
 import { initComponents } from './components';
 import { initLayout } from './layout';
 

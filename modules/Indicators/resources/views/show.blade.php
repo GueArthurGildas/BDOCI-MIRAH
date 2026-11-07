@@ -36,7 +36,7 @@
                             @endif
                         </td>
                         <td>{{ $row->date?->isoFormat('L LT') ?? '—' }}</td>
-                        <td>{{ $row->detail ?? '—' }}</td>
+                        <td>{{ $row->detail() ?? '—' }}</td>
                         <td>{{ $row->followUp ?? '—' }}</td>
                         <td>{{ $row->module ? __('indicators::indicators.modules.'.$row->module) : '—' }}</td>
                     </tr>

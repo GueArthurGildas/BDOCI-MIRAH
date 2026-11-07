@@ -41,6 +41,11 @@
         </x-ui.card>
 
         <x-ui.card :title="__('missions::missions.never_inspected')" :subtitle="__('missions::missions.never_inspected_hint')" flush>
+            @if (Route::has('inspections.never-inspected') && auth()->user()->can(App\Support\Authorization\Permission::InspectionsView->value))
+                <x-slot:actions>
+                    <a href="{{ route('inspections.never-inspected') }}" class="btn btn-default btn-sm">{{ __('missions::missions.see_all_never_inspected') }}</a>
+                </x-slot:actions>
+            @endif
             <x-ui.table>
                 <x-slot:head>
                     <th>{{ __('missions::missions.fields.vessel_id') }}</th>

@@ -71,7 +71,11 @@
                         <td><x-ui.vessel-link :vessel="$license->vessel" /></td>
                         <td>{{ $license->segment ? __($license->segment->label()) : '—' }}</td>
                         <td>{{ $license->issued_on?->isoFormat('L') ?? '—' }}</td>
-                        <td>{{ $license->expires_on->isoFormat('L') }}</td>
+                        <td>
+                            {{ $license->expires_on->isoFormat('L') }}
+                            @php($delay = $license->expiryDelay())
+                            <span @class(['d-block', 'f-12', 'f-w-600', 'text-danger' => $delay['expired'], 'text-muted' => ! $delay['expired']])>{{ $delay['label'] }}</span>
+                        </td>
                         <td><x-ui.status-badge :status="$license->standing" /></td>
                     </tr>
                 @empty

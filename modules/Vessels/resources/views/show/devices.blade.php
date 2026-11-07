@@ -7,7 +7,7 @@
             <th>{{ __('vessels::vessels.columns.removed_at') }}</th>
         </x-slot:head>
         @forelse ($vessel->trackingDevices as $device)
-            <tr @class(['text-muted' => ! $device->isInstalled()])>
+            <tr id="item-devices-{{ $device->id }}" @class(['text-muted' => ! $device->isInstalled()])>
                 <td><x-ui.status-badge :status="$device->system" /></td>
                 <td>{{ $device->identifier }}</td>
                 <td>{{ $device->installed_at->isoFormat('L') }}</td>

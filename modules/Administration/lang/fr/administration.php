@@ -17,6 +17,7 @@ return [
         'search_placeholder' => 'Nom ou e-mail…',
         'fields' => [
             'name' => 'Nom',
+            'first_name' => 'Prénom',
             'email' => 'E-mail',
             'groups' => 'Groupes de permissions',
             'job_title' => 'Fonction',
@@ -188,6 +189,8 @@ return [
             'export_operations' => 'Exporter les opérations',
             'export_vessels' => 'Exporter les navires',
             'export_logbook' => 'Exporter les lignes de main courante',
+            'export_eez_declarations' => 'Exporter les déclarations ZEE',
+            'export_ers_declarations' => 'Exporter les déclarations ERS',
             'archive' => 'Archiver les anciennes opérations',
             'view_health' => 'Voir le bandeau de santé du système',
         ],

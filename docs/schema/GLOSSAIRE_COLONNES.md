@@ -75,6 +75,7 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 | `id` | `id` | bigint |
 | `type` | `type` | varchar(40) |
 | `nom` | `name` | varchar(120) |
+| `prenom` | `first_name` | varchar(120) |
 | `fonction` | `job_title` | varchar(120) |
 | `email` | `email` | varchar(190) |
 | `telephone` | `phone` | varchar(40) |
@@ -82,6 +83,8 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 | `mot_de_passe` | `password` | varchar(255) |
 | `actif` | `is_active` | boolean |
 | `derniere_connexion` | `last_login_at` | timestamp(0) |
+| `indicateurs_tableau_de_bord` | `dashboard_widgets` | jsonb |
+| `photo_profil_id` | `avatar_document_id` | bigint |
 | `created_at` | `created_at` | timestamp(0) |
 | `updated_at` | `updated_at` | timestamp(0) |
 
@@ -300,6 +303,7 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 | `certificat_immatriculation` | `registration_certificate` | varchar(80) |
 | `identifiant_fao` | `fao_identifier` | varchar(40) |
 | `licence_non_renseignee` | `license_not_provided` | boolean |
+| `photo_principale_id` | `primary_photo_id` | bigint |
 | `created_at` | `created_at` | timestamp(0) |
 | `updated_at` | `updated_at` | timestamp(0) |
 | (ajout) | `fleet_segment` | varchar(40) |

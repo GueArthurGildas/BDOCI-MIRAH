@@ -7,7 +7,7 @@ Il renvoie à `docs/PLAN_REFONTE.md` pour l'état des phases. Quand une recette 
 | Document lié | Rôle |
 |---|---|
 | `docs/TECHNICAL.md` | référence technique : Docker, architecture, modules, droits, traductions |
-| `docs/DESIGN.md` | thème GESICA, règles de design, pièges avec Adminty |
+| `docs/DESIGN.md` | thème GESICA, règles de design, pièges avec le gabarit de base |
 | `docs/PLAN_REFONTE.md` | suivi des phases (toutes livrées), décisions D1 à D9 et ce qui reste à valider |
 | `docs/ACCEPTATION.md` | identifiants des cas d'usage et des règles de gestion, avec leur phase ; la couverture par les tests est dans `docs/reference/acceptance.md` |
 | `docs/GLOSSAIRE.md` | vocabulaire métier français et noms techniques anglais |

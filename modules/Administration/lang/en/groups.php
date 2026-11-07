@@ -36,6 +36,14 @@ return [
             'label' => 'Automatic dispatch management',
             'description' => 'Sets the frequency and activation of automatic messages.',
         ],
+        'ai_agent_notes' => [
+            'label' => 'AI agent notes',
+            'description' => 'Receives and handles the notes produced by the AI agent.',
+        ],
+        'scheduled_reports' => [
+            'label' => 'Scheduled reports',
+            'description' => 'Receives the automatically generated reports.',
+        ],
         'trigger_ai_agent' => [
             'label' => 'Trigger the AI agent',
             'description' => 'May trigger the AI agent.',

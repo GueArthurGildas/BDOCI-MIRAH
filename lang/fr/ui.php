@@ -35,6 +35,12 @@ return [
     'saved' => 'Modifications enregistrées.',
     'updated_at' => 'Mis à jour à :time',
 
+    'navigation_folders' => [
+        'e_inspection' => 'e-inspection',
+        'morning_board' => 'Tableau du matin',
+        'logbook' => 'Main courante',
+    ],
+
     'navigation_groups' => [
         'overview' => 'Pilotage',
         'surveillance' => 'Surveillance',
@@ -108,5 +114,40 @@ return [
         'title' => 'Santé du système',
         'message' => '{1} :count source de données demande votre attention :|[2,*] :count sources de données demandent votre attention :',
         'details' => 'Voir les connecteurs',
+    ],
+    'silence_presets' => [
+        '2_days' => '2 jours',
+        '3_days' => '3 jours',
+        '4_days' => '4 jours',
+        '5_days' => '5 jours',
+        '1_week' => '1 semaine',
+        '2_weeks' => '2 semaines',
+        '1_month' => '1 mois',
+    ],
+    'emission_gap' => [
+        'days_hours' => ':days j :hours h',
+        'days' => ':days j',
+        'hours' => ':hours h',
+        'minutes' => ':minutes min',
+    ],
+    'pager' => [
+        'previous' => 'Page précédente',
+        'next' => 'Page suivante',
+        'range' => '{from} à {to} sur {total}',
+    ],
+    'notions' => [
+        'title' => 'Alerte, communication ou notification ?',
+        'alert' => [
+            'name' => 'Alerte',
+            'text' => 'un signalement levé automatiquement par une règle de surveillance (silence d\'une balise, zone interdite, vitesse). Il demande un traitement et reste ouvert jusqu\'à sa clôture.',
+        ],
+        'communication' => [
+            'name' => 'Communication',
+            'text' => 'un message envoyé à un tiers (armateur, agent, institution) par e-mail ou WhatsApp, ou une note échangée entre agents. Elle garde une trace de l\'envoi et de la réponse.',
+        ],
+        'notification' => [
+            'name' => 'Notification',
+            'text' => 'un rappel affiché dans l\'application (la cloche) pour vous prévenir qu\'un événement vous concerne. Elle se lit puis disparaît ; elle ne remplace ni l\'alerte ni le message.',
+        ],
     ],
 ];

@@ -633,4 +633,136 @@ return [
         'vms_extract' => 'Extraction VMS',
         'press' => 'Presse',
     ],
+
+    'descriptions' => [
+        'alert_category' => [
+            'urgent' => 'Alertes ouvertes de zone interdite, ou sur un navire suspect ou en infraction.',
+            'useful' => 'Alertes en cours sur un navire que vous suivez : sous veille, dans une de vos opérations, ou que vous avez prise en compte.',
+            'other' => 'Les autres alertes.',
+        ],
+        'vessel_status' => [
+            'active' => 'Le navire est en service et peut être contrôlé et suivi.',
+            'suspended' => 'Le navire est temporairement interdit d\'activité.',
+            'inactive' => 'Le navire n\'est plus en activité.',
+        ],
+        'vessel_category' => [
+            'fishing' => 'Navire de pêche ou d\'appui à la pêche.',
+            'patrol' => 'Navire de surveillance de l\'administration.',
+        ],
+        'vessel_status_light' => [
+            'compliant' => 'Aucun fait défavorable n\'est relevé pour ce navire.',
+            'to_watch' => 'Un fait mérite une attention : balise silencieuse, licence qui expire ou observation en cours.',
+            'suspect' => 'Un élément est jugé suspect par les équipes : le navire doit être vérifié.',
+            'in_violation' => 'Une infraction en cours est enregistrée contre ce navire.',
+        ],
+        'beacon_status' => [
+            'emitting' => 'La balise a émis dans le délai attendu.',
+            'silent' => 'La balise n\'a pas émis depuis plus longtemps que le seuil de rupture.',
+            'no_data' => 'Aucune position n\'a jamais été reçue pour ce navire.',
+        ],
+        'license_status' => [
+            'valid' => 'La licence est en cours de validité.',
+            'expiring' => 'La licence arrive à échéance dans le délai d\'alerte.',
+            'expired' => 'La date d\'expiration de la licence est dépassée.',
+            'suspended' => 'La licence est suspendue : la pêche est interdite pendant la suspension.',
+            'revoked' => 'La licence a été retirée définitivement.',
+        ],
+        'current_license_status' => [
+            'not_provided' => 'Aucune licence n\'est renseignée pour ce navire.',
+            'active' => 'Le navire dispose d\'une licence valide.',
+            'suspended' => 'La licence du navire est suspendue.',
+            'expired' => 'La licence du navire a expiré.',
+            'revoked' => 'La licence du navire a été retirée.',
+        ],
+        'alert_status' => [
+            'open' => 'L\'alerte n\'a pas encore été prise en charge.',
+            'acknowledged' => 'L\'alerte a été vue et est en cours de traitement.',
+            'closed' => 'L\'alerte est traitée ou la cause a disparu.',
+        ],
+        'infraction_case_status' => [
+            'open' => 'Le dossier vient d\'être ouvert.',
+            'instruction' => 'Le dossier est en cours d\'instruction : preuves et auditions.',
+            'decision' => 'Le dossier attend ou fait l\'objet d\'une décision.',
+            'closed' => 'Le dossier est clos.',
+        ],
+        'observation_level' => [
+            'info' => 'Information à titre de renseignement.',
+            'warning' => 'Point d\'attention à suivre.',
+            'critical' => 'Situation grave qui demande une action rapide.',
+        ],
+        'observation_status' => [
+            'open' => 'L\'observation est ouverte et n\'a pas encore de suite.',
+            'in_progress' => 'L\'observation est en cours de traitement.',
+            'closed' => 'L\'observation est close.',
+        ],
+        'operation_status' => [
+            'open' => 'L\'opération est ouverte.',
+            'in_progress' => 'L\'opération est en cours.',
+            'closed' => 'L\'opération est terminée.',
+            'archived' => 'L\'opération est archivée et n\'est plus modifiable.',
+        ],
+        'mission_status' => [
+            'scheduled' => 'La mission est planifiée.',
+            'authorized' => 'La mission est autorisée et peut démarrer.',
+            'in_progress' => 'La mission est en cours.',
+            'completed' => 'La mission est terminée, le compte rendu reste à faire.',
+            'closed' => 'La mission est close.',
+        ],
+        'movement_direction' => [
+            'entry' => 'Le navire est entré dans le port.',
+            'exit' => 'Le navire est sorti du port.',
+        ],
+    ],
+    'eez_check_result' => [
+        'ok' => 'Conforme',
+        'ko' => 'Non conforme',
+        'na' => 'Sans objet',
+    ],
+    'eez_check_type' => [
+        'vms' => 'Balise VMS',
+        'ais' => 'Signal AIS',
+        'license' => 'Licence',
+        'designated_port' => 'Port désigné',
+        'dpep_72h' => 'DPEP à 72 heures',
+        'access' => 'Accès au port',
+        'inn_lists' => 'Listes de pêche INN',
+        'consistency' => 'Cohérence des déclarations',
+    ],
+    'eez_declaration_status' => [
+        'received' => 'Reçue',
+        'verified' => 'Vérifiée',
+        'acknowledged' => 'Accusée de réception',
+        'variance' => 'Écart constaté',
+        'closed' => 'Close',
+    ],
+    'eez_declaration_type' => [
+        'entry' => 'Entrée en ZEE',
+        'exit' => 'Sortie de ZEE',
+    ],
+    'eez_entry_origin' => [
+        'manual' => 'Saisie manuelle',
+        'scraping' => 'Collecte automatique',
+    ],
+    'eez_reason' => [
+        'eez_transit' => 'Transit en ZEE',
+        'eez_fishing' => 'Pêche en ZEE',
+        'ivorian_port_transit' => 'Transit vers un port ivoirien',
+        'high_seas_fishing' => 'Pêche en haute mer',
+        'foreign_eez_fishing' => 'Pêche en ZEE étrangère',
+    ],
+    'entry_exit_alert_status' => [
+        'open' => 'Ouverte',
+        'closed' => 'Close',
+    ],
+    'entry_exit_explanation' => [
+        'catch_document' => 'Document de capture',
+        'transshipment' => 'Transbordement',
+        'landing' => 'Débarquement',
+        'unexplained' => 'Inexpliqué',
+    ],
+    'alert_category' => [
+        'urgent' => 'Urgences',
+        'useful' => 'Utiles à mes tâches',
+        'other' => 'Autres alertes',
+    ],
 ];

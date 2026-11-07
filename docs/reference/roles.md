@@ -52,6 +52,8 @@ Permissions accordées par défaut à chaque rôle système (l'héritage `Direct
 | `registry.manage` | — | oui | oui | — |
 | `registry.view` | — | oui | oui | oui |
 | `reports.archive` | — | oui | oui | — |
+| `reports.export_eez_declarations` | — | oui | oui | — |
+| `reports.export_ers_declarations` | — | oui | oui | — |
 | `reports.export_logbook` | — | oui | oui | — |
 | `reports.export_operations` | — | oui | oui | — |
 | `reports.export_vessels` | — | oui | oui | — |

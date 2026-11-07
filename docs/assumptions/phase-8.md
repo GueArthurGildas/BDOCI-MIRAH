@@ -35,7 +35,7 @@ Statut de toutes les entrées : provisoire, à confirmer par Gildas.
 | Question | quels indicateurs la vue flotte du Directeur affiche, et ce que « actif en ZEE » signifie |
 | Option retenue | neuf indicateurs : navires actifs dont la dernière position est en zone économique exclusive, balises silencieuses, licences qui expirent (délai d'alerte), infractions en cours, opérations ouvertes ou en cours, missions en cours, et les navires par statut à feux. Chaque nombre est la longueur de la liste qu'il ouvre ; les filtres (période, zone, pavillon, segment, statut à feux, recherche) s'appliquent aux nombres comme aux listes. La période filtre la date propre à l'indicateur (dernière position, échéance, constat, début) |
 | Alternatives | navires « en ZEE » d'après les déclarations d'entrée ; indicateurs par équipe ou par agent |
-| Où | `Modules\Indicators\Support\IndicatorCatalog` |
+| Où | `App\Support\Indicators\IndicatorCatalog` |
 | Pour changer | modifier la méthode de l'indicateur dans `IndicatorCatalog` |
 | Tests | `Modules\Indicators\Tests\Feature\FleetViewTest`, `IndicatorDetailTest` |
 

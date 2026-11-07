@@ -23,6 +23,7 @@
                 <th>{{ __('licenses::licenses.fields.segment') }}</th>
                 <th>{{ __('licenses::licenses.fields.issued_on') }}</th>
                 <th>{{ __('licenses::licenses.fields.expires_on') }}</th>
+                <th>{{ __('licenses::licenses.expiry.label') }}</th>
                 <th>{{ __('licenses::licenses.fields.status') }}</th>
             </tr>
         </thead>
@@ -34,6 +35,7 @@
                     <td>{{ $license->segment ? __($license->segment->label()) : '' }}</td>
                     <td>{{ $license->issued_on?->format('d/m/Y') }}</td>
                     <td>{{ $license->expires_on->format('d/m/Y') }}</td>
+                    <td>{{ $license->expiryDelay()['label'] }}</td>
                     <td>{{ __($license->standing->label()) }}</td>
                 </tr>
             @endforeach

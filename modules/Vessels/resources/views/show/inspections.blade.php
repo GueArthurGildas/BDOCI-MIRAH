@@ -8,7 +8,7 @@
             <th>{{ __('vessels::vessels.columns.result') }}</th>
         </x-slot:head>
         @forelse ($vessel->externalInspections as $inspection)
-            <tr>
+            <tr id="item-inspections-{{ $inspection->id }}">
                 <td><a href="{{ route('inspections.show', $inspection) }}">{{ $inspection->reference ?? $inspection->external_id }}</a></td>
                 <td>{{ $inspection->started_at?->isoFormat('L') ?? '—' }}</td>
                 <td>{{ $inspection->control_type ?? '—' }}</td>

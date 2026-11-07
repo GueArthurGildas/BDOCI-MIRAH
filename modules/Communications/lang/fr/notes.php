@@ -18,7 +18,7 @@ return [
     'mark_read' => 'Marquer comme lue',
     'recipient_users' => 'Agents',
     'recipient_teams' => 'Équipes',
-    'created' => 'La note a été laissée.',
+    'created' => '{1} La note a été laissée.|[2,*] La note a été envoyée à :count destinataires.',
     'marked_read' => 'La note est marquée comme lue.',
     'ai_executed' => 'L\'agent IA a créé la note.',
     'ai_refused' => 'L\'agent IA n\'a pas pu créer la note : l\'action est désactivée ou refusée.',
@@ -29,4 +29,6 @@ return [
         'subject' => 'Note : :type',
         'body' => ':author a laissé une note (:type) concernant :vessel. :text',
     ],
+    'recipients_placeholder' => 'Choisir un ou plusieurs destinataires',
+    'recipients_hint' => 'Utilisateurs (y compris le Directeur) et équipes : chaque destinataire reçoit sa note.',
 ];

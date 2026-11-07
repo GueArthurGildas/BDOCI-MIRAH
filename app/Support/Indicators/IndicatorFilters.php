@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Indicators\Support;
+namespace App\Support\Indicators;
 
 use App\Enums\FleetSegment;
 use App\Enums\VesselStatusLight;
@@ -41,6 +41,11 @@ final readonly class IndicatorFilters
             status: $data['status'] ?? null,
             search: $data['search'] ?? null,
         );
+    }
+
+    public function needsVessels(): bool
+    {
+        return $this->search !== null || $this->flag !== null || $this->segment !== null || $this->status !== null || $this->zoneId !== null;
     }
 
     /** @return array<string, string|int> */

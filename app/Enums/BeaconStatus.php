@@ -13,6 +13,15 @@ enum BeaconStatus: string implements HasBadge
     case Silent = 'silent';
     case NoData = 'no_data';
 
+    public function icon(): string
+    {
+        return match ($this) {
+            self::Emitting => 'icon-radio',
+            self::Silent => 'icon-wifi-off',
+            self::NoData => 'icon-help-circle',
+        };
+    }
+
     public function color(): string
     {
         return match ($this) {

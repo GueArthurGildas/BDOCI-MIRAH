@@ -28,7 +28,7 @@ use Modules\Operations\Http\Requests\UpdateOperationRequest;
 
 class OperationController extends Controller
 {
-    private const PER_PAGE = 20;
+    private const PER_PAGE = 10;
 
     public function index(Request $request): View
     {

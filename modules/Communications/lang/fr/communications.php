@@ -5,6 +5,7 @@ return [
     'subtitle' => 'Messages envoyés, accusés et envois automatiques',
     'tabs' => [
         'messages' => 'Messages',
+        'directory' => 'Annuaire',
         'notes' => 'Notes',
         'templates' => 'Modèles',
         'rules' => 'Règles d\'envoi',

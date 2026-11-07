@@ -1,4 +1,9 @@
 <x-ui.card :title="__('vessels::vessels.tabs.catches')" flush>
+    @if (Route::has('catches.index') && auth()->user()->can(App\Support\Authorization\Permission::CatchesView->value))
+        <x-slot:actions>
+            <a href="{{ route('catches.index', ['vessel' => $vessel->id]) }}" class="btn btn-default btn-sm"><i class="feather icon-search"></i> {{ __('vessels::vessels.catches.search_in_e_inspection') }}</a>
+        </x-slot:actions>
+    @endif
     <x-ui.table>
         <x-slot:head>
             <th>{{ __('vessels::vessels.columns.period') }}</th>

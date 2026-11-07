@@ -18,6 +18,10 @@ return [
         'subtitle' => 'Navires refusés par le GIES, lus depuis l\'application MREP',
     ],
     'targetings' => [
+        'targets' => [
+            'transshipment' => 'Transbordements',
+            'foreign_fishing' => 'Pêche de navires étrangers',
+        ],
         'nav' => 'Ciblage MREP',
         'title' => 'Ciblage MREP',
         'subtitle' => 'Objectifs annuels d\'inspection et réalisation, lus depuis l\'application MREP',

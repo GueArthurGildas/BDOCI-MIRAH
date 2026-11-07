@@ -35,6 +35,12 @@ return [
     'saved' => 'Changes saved.',
     'updated_at' => 'Updated at :time',
 
+    'navigation_folders' => [
+        'e_inspection' => 'e-inspection',
+        'morning_board' => 'Morning board',
+        'logbook' => 'Logbook',
+    ],
+
     'navigation_groups' => [
         'overview' => 'Overview',
         'surveillance' => 'Surveillance',
@@ -108,5 +114,40 @@ return [
         'title' => 'System health',
         'message' => '{1} :count data source needs attention:|[2,*] :count data sources need attention:',
         'details' => 'See the connectors',
+    ],
+    'silence_presets' => [
+        '2_days' => '2 days',
+        '3_days' => '3 days',
+        '4_days' => '4 days',
+        '5_days' => '5 days',
+        '1_week' => '1 week',
+        '2_weeks' => '2 weeks',
+        '1_month' => '1 month',
+    ],
+    'emission_gap' => [
+        'days_hours' => ':days d :hours h',
+        'days' => ':days d',
+        'hours' => ':hours h',
+        'minutes' => ':minutes min',
+    ],
+    'pager' => [
+        'previous' => 'Previous page',
+        'next' => 'Next page',
+        'range' => '{from} to {to} of {total}',
+    ],
+    'notions' => [
+        'title' => 'Alert, communication or notification?',
+        'alert' => [
+            'name' => 'Alert',
+            'text' => 'a report raised automatically by a surveillance rule (beacon silence, restricted zone, speed). It needs handling and stays open until closed.',
+        ],
+        'communication' => [
+            'name' => 'Communication',
+            'text' => 'a message sent to a third party (owner, agent, institution) by e-mail or WhatsApp, or a note exchanged between agents. It keeps a record of the sending and the reply.',
+        ],
+        'notification' => [
+            'name' => 'Notification',
+            'text' => 'a reminder shown in the application (the bell) to tell you that an event concerns you. It is read then goes away; it replaces neither the alert nor the message.',
+        ],
     ],
 ];

@@ -12,6 +12,14 @@ enum MovementDirection: string implements HasBadge
     case Entry = 'entry';
     case Exit = 'exit';
 
+    public function icon(): string
+    {
+        return match ($this) {
+            self::Entry => 'icon-arrow-down-left',
+            self::Exit => 'icon-arrow-up-right',
+        };
+    }
+
     public function color(): string
     {
         return match ($this) {

@@ -29,6 +29,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Route;
 
 #[Fillable([
     'name', 'registration_number', 'imo_number', 'call_sign', 'flag', 'type',
@@ -223,6 +224,13 @@ class Vessel extends Model
     public function positions(): HasMany
     {
         return $this->hasMany(Position::class);
+    }
+
+    public function photoUrl(): string
+    {
+        return $this->primary_photo_id && Route::has('vessels.photos.show')
+            ? route('vessels.photos.show', [$this, $this->primary_photo_id])
+            : asset('images/vessel-placeholder.svg');
     }
 
     public function latestPosition(): HasOne

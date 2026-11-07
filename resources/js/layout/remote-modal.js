@@ -1,4 +1,5 @@
 import { Modal } from 'bootstrap';
+import { announceContent } from './content';
 
 export function initRemoteModals() {
     const element = document.getElementById('gs-remote');
@@ -29,6 +30,7 @@ export function initRemoteModals() {
             }
 
             body.innerHTML = await response.text();
+            announceContent(body);
         } catch {
             modal.hide();
             window.location.href = trigger.href;

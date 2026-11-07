@@ -15,4 +15,6 @@ return [
     'listed' => 'Vessel :name added to list :list.',
     'infraction_recorded' => 'Infraction :reference recorded.',
     'mission_assigned' => 'Vessel engaged in mission :reference.',
+    'photo_added' => 'Photo added to vessel :name.',
+    'photo_removed' => 'Photo removed from vessel :name.',
 ];

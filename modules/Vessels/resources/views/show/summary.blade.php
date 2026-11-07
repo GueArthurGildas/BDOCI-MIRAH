@@ -19,6 +19,14 @@
             @endif
         </x-ui.detail>
         <x-ui.detail :label="__('vessels::vessels.fields.beacon')"><x-ui.status-badge :status="$vessel->beaconStatus()" /></x-ui.detail>
+        <x-ui.detail :label="__('vessels::vessels.fields.last_emission')">
+            @if ($vessel->latestPosition)
+                {{ $vessel->latestPosition->recorded_at->isoFormat('L LT') }}
+                <strong class="gs-gap is-{{ $vessel->beaconStatus()->color() }} d-block">{{ App\Support\Vms\EmissionGap::format($vessel->latestPosition->recorded_at) }}</strong>
+            @else
+                {{ __('vessels::vessels.summary.never_emitted') }}
+            @endif
+        </x-ui.detail>
         <x-ui.detail :label="__('vessels::vessels.fields.type')">{{ __($vessel->type->label()) }}</x-ui.detail>
         <x-ui.detail :label="__('vessels::vessels.fields.owner')">{{ $vessel->owner }}</x-ui.detail>
     </x-ui.detail-list>

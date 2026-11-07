@@ -19,6 +19,7 @@ class UserRequest extends FormRequest
 
         return [
             'name' => ['required', 'string', 'max:255'],
+            'first_name' => ['nullable', 'string', 'max:120'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user)],
             'job_title' => ['nullable', 'string', 'max:120'],
             'phone' => ['nullable', 'string', 'max:40'],
@@ -39,7 +40,7 @@ class UserRequest extends FormRequest
 
     public function attributes(): array
     {
-        return collect(['name', 'email', 'job_title', 'phone', 'whatsapp_number', 'role', 'is_active', 'password'])
+        return collect(['name', 'first_name', 'email', 'job_title', 'phone', 'whatsapp_number', 'role', 'is_active', 'password'])
             ->mapWithKeys(fn (string $field) => [$field => __("administration::administration.users.fields.{$field}")])
             ->put('team_id', __('administration::administration.users.fields.team'))
             ->all();
