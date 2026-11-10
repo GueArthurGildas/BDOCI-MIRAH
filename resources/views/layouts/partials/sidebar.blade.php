@@ -14,7 +14,7 @@
         <strong>{{ config('app.name') }}</strong>
         <small>{{ __('ui.guide_hint') }}</small>
 
-        --test arthur ici depuis windows----
+        --test gildas ici depuis windows----
         <button type="button" class="btn btn-primary btn-sm" data-gs-guide><i class="feather icon-compass"></i> {{ __('ui.user_guide') }}</button>
     </div>
 </aside>
