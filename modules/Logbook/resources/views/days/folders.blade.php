@@ -88,7 +88,7 @@
         </div>
 
         <div class="col-xl-9">
-            <x-ui.card :title="$selected->day->isoFormat('dddd LL')" :subtitle="__('logbook::logbook.days.shift_range', ['from' => $selected->shift_start_at->format('H:i'), 'to' => $selected->shift_end_at->format('H:i')])">
+            <x-ui.card :title="$selected->day->isoFormat('dddd LL')" :subtitle="__('logbook::logbook.days.shift_range', ['from' => $selected->shift_start_at->format('d/m H:i'), 'to' => $selected->shift_end_at->format('d/m H:i')])">
                 <x-slot:actions>
                     <a href="{{ route('logbook.days.show', $selected) }}" class="btn btn-primary btn-sm">{{ __('logbook::logbook.folders.open_day') }}</a>
                     <a href="{{ route('logbook.days.word', $selected) }}" class="btn btn-default btn-sm"><i class="feather icon-file-text"></i> {{ __('logbook::logbook.days.word') }}</a>

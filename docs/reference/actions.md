@@ -35,6 +35,7 @@
 | `licenses.view` | `licenses` | `view` | Consulter les licences |
 | `logbook.close` | `logbook` | `update` | Clôturer la main courante du jour |
 | `logbook.create` | `logbook` | `create` | Saisir des observations |
+| `logbook.handover` | `logbook` | `update` | Faire la relève de quart |
 | `logbook.manage` | `logbook` | `update` | Suivre les observations |
 | `logbook.view` | `logbook` | `view` | Consulter la main courante |
 | `missions.authorize` | `missions` | `update` | Autoriser des missions |
@@ -140,6 +141,7 @@ Actions exécutées par l'`ActionRunner` (transaction, droit, événement, état
 | `logbook.add_entry` | `logbook.create` | `Modules\Logbook\Actions\AddLogbookEntry` |
 | `logbook.close_day` | `logbook.close` | `Modules\Logbook\Actions\CloseLogbookDay` |
 | `logbook.open` | `logbook.create` | `Modules\Logbook\Actions\OpenObservation` |
+| `logbook.record_handover` | `logbook.handover` | `Modules\Logbook\Actions\RecordShiftHandover` |
 | `logbook.rectify_entry` | `logbook.create` | `Modules\Logbook\Actions\RectifyLogbookEntry` |
 | `logbook.set_entry_handling` | `logbook.manage` | `Modules\Logbook\Actions\SetLogbookEntryHandling` |
 | `logbook.update` | `logbook.manage` | `Modules\Logbook\Actions\UpdateObservation` |

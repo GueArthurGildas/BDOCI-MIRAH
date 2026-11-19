@@ -778,6 +778,7 @@ erDiagram
         jsonb counters
         int8 closed_by FK
         timestamp closed_at
+        text instructions
     }
     logbook_days {
         int8 id PK
@@ -1723,6 +1724,14 @@ erDiagram
         timestamp started_at
         timestamp created_at
         timestamp updated_at
+        int8 logbook_day_id FK
+        timestamp handed_over_at
+        int8 handed_over_by FK
+        int8 taken_over_by FK
+        int8 supervised_by FK
+        jsonb operation_counters
+        jsonb open_operations
+        text instructions
     }
     slot_positions {
         int8 id PK
@@ -2196,6 +2205,7 @@ erDiagram
     litigation_follow_ups ||--o{ decisions : "follow_up_id"
     logbook_days ||--o{ logbook_closings : "logbook_day_id"
     logbook_days ||--o{ logbook_entries : "logbook_day_id"
+    logbook_days ||--o{ shift_handovers : "logbook_day_id"
     logbook_entries ||--o{ alerts : "logbook_entry_id"
     logbook_entries ||--o{ internal_notes : "logbook_entry_id"
     logbook_entries ||--o{ logbook_entries : "corrects_entry_id"
@@ -2337,6 +2347,9 @@ erDiagram
     users ||--o{ scheduled_reports : "recipient_id"
     users ||--o{ sent_messages : "user_id"
     users ||--o{ settings : "updated_by"
+    users ||--o{ shift_handovers : "handed_over_by"
+    users ||--o{ shift_handovers : "supervised_by"
+    users ||--o{ shift_handovers : "taken_over_by"
     users ||--o{ slot_positions : "confirmed_by"
     users ||--o{ surveillance_observations : "created_by"
     users ||--o{ sweeps : "operator_user_id"

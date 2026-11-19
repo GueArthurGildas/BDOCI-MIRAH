@@ -86,7 +86,8 @@ return [
             'steps' => [
                 'entries' => ['title' => 'The shift lines', 'text' => 'Each fact received is a line: when, how, what. After closing, the lines are locked.'],
                 'new_entry' => ['title' => 'Add a line', 'text' => 'Enter the time, the means, what happened, and attach the vessels concerned.'],
-                'close_day' => ['title' => 'Close the day', 'text' => 'Reserved for the Team lead: generates an unalterable PDF and locks the lines (confirmation asked).'],
+                'handovers' => ['title' => 'Shift handovers', 'text' => 'At 08:00 and 18:00 the outgoing operator records the handover: incoming operator, CSP manager, instructions; counters and open operations are captured automatically.'],
+                'close_day' => ['title' => 'Close the day', 'text' => 'At the morning handover, once the day\'s 24 hours are over, the outgoing operator closes it: unalterable PDF and locked lines (confirmation asked).'],
                 'pdf' => ['title' => 'PDF copy', 'text' => 'The day\'s frozen PDF, whose integrity can be checked.'],
             ],
         ],

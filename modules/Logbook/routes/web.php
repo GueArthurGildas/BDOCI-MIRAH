@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\Logbook\Http\Controllers\LogbookDayController;
 use Modules\Logbook\Http\Controllers\LogbookEntryController;
 use Modules\Logbook\Http\Controllers\ObservationController;
+use Modules\Logbook\Http\Controllers\ShiftHandoverController;
 
 Route::middleware('auth')
     ->prefix('logbook')
@@ -16,6 +17,8 @@ Route::middleware('auth')
         Route::get('days/{day}/pdf', [LogbookDayController::class, 'pdf'])->can(Permission::LogbookView->value)->name('days.pdf');
         Route::get('days/{day}/word', [LogbookDayController::class, 'word'])->can(Permission::LogbookView->value)->name('days.word');
         Route::post('days/{day}/close', [LogbookDayController::class, 'close'])->can(Permission::LogbookClose->value)->name('days.close');
+        Route::get('handovers/create', [ShiftHandoverController::class, 'create'])->can(Permission::LogbookHandover->value)->name('handovers.create');
+        Route::post('handovers', [ShiftHandoverController::class, 'store'])->can(Permission::LogbookHandover->value)->name('handovers.store');
         Route::post('entries', [LogbookEntryController::class, 'store'])->can(Permission::LogbookCreate->value)->name('entries.store');
         Route::get('entries/{entry}/rectify', [LogbookEntryController::class, 'rectifyForm'])->can(Permission::LogbookCreate->value)->name('entries.rectify');
         Route::post('entries/{entry}/rectify', [LogbookEntryController::class, 'rectify'])->can(Permission::LogbookCreate->value)->name('entries.rectify.store');

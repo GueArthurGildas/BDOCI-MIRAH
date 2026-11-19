@@ -116,6 +116,7 @@ return [
             'create' => 'Saisir des observations',
             'manage' => 'Suivre les observations',
             'close' => 'Clôturer la main courante du jour',
+            'handover' => 'Faire la relève de quart',
         ],
         'movements' => [
             'view' => 'Consulter les mouvements',

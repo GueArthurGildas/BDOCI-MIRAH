@@ -12,7 +12,7 @@ class LogbookDayFactory extends Factory
         return [
             'day' => fn () => today()->subDays(fake()->unique()->numberBetween(1, 3000))->toDateString(),
             'shift_start_at' => fn (array $attributes) => now()->parse($attributes['day'])->setTime(8, 0),
-            'shift_end_at' => fn (array $attributes) => now()->parse($attributes['day'])->setTime(18, 0),
+            'shift_end_at' => fn (array $attributes) => now()->parse($attributes['day'])->addDay()->setTime(8, 0),
             'status' => LogbookDayStatus::Open,
         ];
     }

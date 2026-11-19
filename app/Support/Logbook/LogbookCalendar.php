@@ -16,17 +16,23 @@ final class LogbookCalendar
     public function dayFor(Carbon $moment): LogbookDay
     {
         $startHour = (int) config('surveillance.watch.shift_start_hour');
-        $endHour = (int) config('surveillance.watch.shift_end_hour');
         $date = $moment->copy()->subHours($startHour)->startOfDay();
+        $start = $date->copy()->setTime($startHour, 0);
 
         return LogbookDay::firstOrCreate(
             ['day' => $date->toDateString()],
             [
-                'shift_start_at' => $date->copy()->setTime($startHour, 0),
-                'shift_end_at' => $date->copy()->setTime($endHour, 0),
+                'shift_start_at' => $start,
+                'shift_end_at' => $start->copy()->addDay(),
                 'status' => LogbookDayStatus::Open,
             ],
         );
+    }
+
+    /** @return array<int, int> */
+    public function handoverHours(): array
+    {
+        return [(int) config('surveillance.watch.shift_start_hour'), (int) config('surveillance.watch.shift_end_hour')];
     }
 
     public function isWorkingDay(Carbon $date): bool

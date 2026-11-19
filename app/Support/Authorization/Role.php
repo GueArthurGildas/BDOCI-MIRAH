@@ -97,6 +97,8 @@ enum Role: string
                 Permission::LogbookView,
                 Permission::LogbookCreate,
                 Permission::LogbookManage,
+                Permission::LogbookClose,
+                Permission::LogbookHandover,
                 Permission::MovementsView,
                 Permission::MovementsCreate,
                 Permission::InspectionsView,

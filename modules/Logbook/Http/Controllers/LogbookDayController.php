@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Modules\Logbook\Actions\CloseLogbookDay;
+use Modules\Logbook\Http\Requests\CloseLogbookDayRequest;
 use Modules\Logbook\Support\LogbookDayFolders;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -94,10 +95,16 @@ class LogbookDayController extends Controller
 
     public function show(LogbookDay $day, LogbookChannels $channels, DocumentStore $documents): View
     {
-        $day->load(['entries.channel', 'entries.vessels', 'entries.operation', 'entries.author', 'entries.corrects', 'entries.corrections', 'closing.closer', 'pdfDocument']);
+        $day->load(['entries.channel', 'entries.vessels', 'entries.operation', 'entries.author', 'entries.corrects', 'entries.corrections', 'closing.closer', 'pdfDocument', 'handovers.outgoing', 'handovers.incoming', 'handovers.supervisor']);
 
         return view('logbook::days.show', [
             'day' => $day,
+            'pendingClosures' => LogbookDay::query()
+                ->where('status', LogbookDayStatus::Open)
+                ->where('shift_end_at', '<=', now())
+                ->whereKeyNot($day->id)
+                ->orderBy('day')
+                ->get(),
             'channels' => $channels->options(),
             'vessels' => Vessel::orderBy('name')->get()->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => "{$vessel->name} ({$vessel->registration_number})"]),
             'operations' => Operation::query()->latest('started_at')->limit(100)->pluck('code', 'id'),
@@ -105,9 +112,9 @@ class LogbookDayController extends Controller
         ]);
     }
 
-    public function close(LogbookDay $day, ActionRunner $actions): RedirectResponse
+    public function close(LogbookDay $day, CloseLogbookDayRequest $request, ActionRunner $actions): RedirectResponse
     {
-        $actions->run(CloseLogbookDay::class, request()->user(), ['day_id' => $day->id]);
+        $actions->run(CloseLogbookDay::class, $request->user(), ['day_id' => $day->id, ...$request->validated()]);
 
         return to_route('logbook.days.show', $day)->with('status', __('logbook::logbook.days.closed'))->with('popup', true);
     }

@@ -33,8 +33,9 @@ Permissions accordées par défaut à chaque rôle système (l'héritage `Direct
 | `licenses.suspend` | — | oui | oui | — |
 | `licenses.validate` | — | oui | oui | — |
 | `licenses.view` | — | oui | oui | oui |
-| `logbook.close` | — | oui | oui | — |
+| `logbook.close` | — | oui | oui | oui |
 | `logbook.create` | — | oui | oui | oui |
+| `logbook.handover` | — | oui | oui | oui |
 | `logbook.manage` | — | oui | oui | oui |
 | `logbook.view` | — | oui | oui | oui |
 | `missions.authorize` | — | oui | oui | — |

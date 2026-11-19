@@ -162,6 +162,8 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `logbook.entries.rectify.store` | POST | `/logbook/entries/{entry}/rectify` | `logbook.create` |
 | `logbook.entries.store` | POST | `/logbook/entries` | `logbook.create` |
 | `logbook.entries.update` | PATCH | `/logbook/entries/{entry}` | `logbook.manage` |
+| `logbook.handovers.create` | GET | `/logbook/handovers/create` | `logbook.handover` |
+| `logbook.handovers.store` | POST | `/logbook/handovers` | `logbook.handover` |
 | `logbook.index` | GET | `/logbook` | `logbook.view` |
 | `logbook.show` | GET | `/logbook/{observation}` | `logbook.view` |
 | `logbook.store` | POST | `/logbook` | `logbook.create` |

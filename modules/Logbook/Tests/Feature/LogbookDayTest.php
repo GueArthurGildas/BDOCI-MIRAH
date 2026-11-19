@@ -4,10 +4,13 @@ namespace Modules\Logbook\Tests\Feature;
 
 use App\Enums\LogbookDayStatus;
 use App\Enums\LogbookHandlingStatus;
+use App\Enums\OperationCategoryCode;
 use App\Enums\WatchOrigin;
 use App\Enums\WatchStatus;
 use App\Models\LogbookDay;
 use App\Models\LogbookEntry;
+use App\Models\Operation;
+use App\Models\OperationCategory;
 use App\Models\Vessel;
 use App\Models\VesselEvent;
 use App\Models\WatchEntry;
@@ -19,6 +22,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Testing\TestResponse;
 use Spatie\Activitylog\Models\Activity;
 use Tests\Attributes\Assumes;
 use Tests\Attributes\Covers;
@@ -43,6 +47,13 @@ class LogbookDayTest extends TestCase
             'direction' => 'received',
             'content' => 'Appel de l\'agent maritime : arrivée retardée du chalutier.',
         ], $overrides);
+    }
+
+    private function closeAtMorningHandover(LogbookDay $day, array $data = []): TestResponse
+    {
+        $this->travelTo($day->shift_end_at->copy()->addMinutes(12));
+
+        return $this->post(route('logbook.days.close', $day), $data);
     }
 
     public function test_guests_are_redirected_and_administrators_are_forbidden(): void
@@ -110,7 +121,6 @@ class LogbookDayTest extends TestCase
     }
 
     #[Covers('UC12', partial: true)]
-    #[Assumes('H-3a-1')]
     public function test_a_line_belongs_to_the_day_whose_shift_started_before_it(): void
     {
         $this->signInAs(Role::Agent);
@@ -123,12 +133,11 @@ class LogbookDayTest extends TestCase
             [now()->subDays(2)->toDateString(), now()->toDateString()],
             LogbookDay::orderBy('day')->get()->map(fn (LogbookDay $day) => $day->day->toDateString())->all(),
         );
-        $this->assertSame('08:00', LogbookDay::orderByDesc('day')->first()->shift_start_at->format('H:i'));
-        $this->assertSame('18:00', LogbookDay::orderByDesc('day')->first()->shift_end_at->format('H:i'));
+        $this->assertSame(now()->format('Y-m-d').' 08:00', LogbookDay::orderByDesc('day')->first()->shift_start_at->format('Y-m-d H:i'));
+        $this->assertSame(now()->addDay()->format('Y-m-d').' 08:00', LogbookDay::orderByDesc('day')->first()->shift_end_at->format('Y-m-d H:i'));
     }
 
     #[Covers('UC12', partial: true)]
-    #[Assumes('H-3a-1')]
     public function test_the_shift_hours_come_from_the_settings(): void
     {
         config(['surveillance.watch.shift_start_hour' => 6, 'surveillance.watch.shift_end_hour' => 16]);
@@ -136,7 +145,7 @@ class LogbookDayTest extends TestCase
         $day = app(LogbookCalendar::class)->dayFor(now()->setTime(6, 30));
 
         $this->assertSame('06:00', $day->shift_start_at->format('H:i'));
-        $this->assertSame('16:00', $day->shift_end_at->format('H:i'));
+        $this->assertSame(now()->addDay()->format('Y-m-d').' 06:00', $day->shift_end_at->format('Y-m-d H:i'));
         $this->assertSame(now()->toDateString(), $day->day->toDateString());
     }
 
@@ -149,7 +158,7 @@ class LogbookDayTest extends TestCase
         $this->post(route('logbook.entries.store'), $this->payload(['direction' => 'sent', 'content' => 'Réponse à l\'agent maritime.']));
         $day = LogbookDay::sole();
 
-        $this->post(route('logbook.days.close', $day))->assertRedirect(route('logbook.days.show', $day));
+        $this->closeAtMorningHandover($day)->assertRedirect(route('logbook.days.show', $day));
 
         $day->refresh();
         $this->assertSame(LogbookDayStatus::Locked, $day->status);
@@ -171,16 +180,45 @@ class LogbookDayTest extends TestCase
     }
 
     #[Covers('UC12', partial: true)]
-    public function test_agents_cannot_close_the_day(): void
+    public function test_the_day_cannot_be_closed_before_its_24_hour_period_ends(): void
     {
         $this->signInAs(Role::Agent);
         $this->post(route('logbook.entries.store'), $this->payload());
         $day = LogbookDay::sole();
 
-        $this->post(route('logbook.days.close', $day))->assertForbidden();
+        $this->travelTo($day->shift_start_at->copy()->setTime(18, 0));
+        $this->post(route('logbook.days.close', $day))->assertSessionHasErrors('day');
+        $this->post(route('logbook.entries.store'), $this->payload(['content' => 'Appel reçu dans la nuit.']))->assertSessionHasNoErrors();
 
         $this->assertSame(LogbookDayStatus::Open, $day->fresh()->status);
         $this->assertNull($day->fresh()->pdf_document_id);
+        $this->assertSame(2, $day->entries()->count());
+    }
+
+    #[Covers('UC12', 'RG10', partial: true)]
+    public function test_any_agent_closes_the_day_at_the_morning_handover_with_the_closing_block(): void
+    {
+        $agent = $this->signInAs(Role::Agent);
+        $this->post(route('logbook.entries.store'), $this->payload());
+        $day = LogbookDay::sole();
+        $vms = OperationCategory::factory()->create(['code' => OperationCategoryCode::Vms]);
+        Operation::factory()->for($vms, 'category')->create(['code' => 'OPS-007-VMS-2026-ATLANTIS', 'number' => 7, 'started_at' => $day->shift_start_at->copy()->addHours(2)]);
+        Operation::factory()->for($vms, 'category')->create(['status' => 'closed', 'started_at' => $day->shift_start_at->copy()->subDays(3), 'ended_at' => $day->shift_start_at->copy()->addHours(5)]);
+        DB::table('operation_counters')->insert(['category_id' => $vms->id, 'year' => $day->shift_start_at->year, 'last_number' => 7]);
+
+        $this->closeAtMorningHandover($day, ['instructions' => 'Maintenance THEMIS cette nuit de 02:00 à 03:00.'])->assertSessionHasNoErrors();
+
+        $closing = $day->fresh()->closing;
+        $this->assertSame(LogbookDayStatus::Locked, $day->fresh()->status);
+        $this->assertSame($agent->id, $closing->closed_by);
+        $this->assertSame('Maintenance THEMIS cette nuit de 02:00 à 03:00.', $closing->instructions);
+        $this->assertSame(7, $closing->counters['operation_counters']['vms']);
+        $this->assertSame(['OPS-007-VMS-2026-ATLANTIS'], $closing->counters['open_operations']['vms']);
+        $this->assertSame(1, $closing->counters['operations_opened']['vms']);
+        $this->assertSame(1, $closing->counters['operations_closed']['vms']);
+        $this->assertSame(0, $closing->counters['operations_opened']['inn']);
+
+        $this->get(route('logbook.days.show', $day))->assertOk()->assertSee('Maintenance THEMIS cette nuit de 02:00 à 03:00.')->assertSee('ATLANTIS', false);
     }
 
     #[Covers('UC12', partial: true)]
@@ -189,10 +227,10 @@ class LogbookDayTest extends TestCase
         $this->signInAs(Role::TeamLead);
         $this->post(route('logbook.entries.store'), $this->payload());
         $day = LogbookDay::sole();
-        $this->post(route('logbook.days.close', $day));
+        $this->closeAtMorningHandover($day);
 
         $this->post(route('logbook.days.close', $day))->assertSessionHasErrors('day');
-        $this->post(route('logbook.entries.store'), $this->payload())->assertSessionHasErrors('occurred_at');
+        $this->post(route('logbook.entries.store'), $this->payload(['occurred_at' => $day->shift_start_at->copy()->addHours(3)->toDateTimeString()]))->assertSessionHasErrors('occurred_at');
 
         $this->assertSame(1, LogbookEntry::count());
     }
@@ -203,7 +241,7 @@ class LogbookDayTest extends TestCase
         $this->signInAs(Role::TeamLead);
         $this->post(route('logbook.entries.store'), $this->payload());
         $entry = LogbookEntry::sole();
-        $this->post(route('logbook.days.close', $entry->day));
+        $this->closeAtMorningHandover($entry->day);
 
         $this->expectException(QueryException::class);
         $this->expectExceptionMessage('logbook day is locked');

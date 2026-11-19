@@ -4,14 +4,17 @@ namespace App\Support\Logbook;
 
 use App\Models\LogbookDay;
 use App\Models\LogbookEntry;
-use App\Models\Operation;
 
 final class LogbookCounters
 {
+    public function __construct(private readonly OperationSnapshot $operations) {}
+
     /** @return array<string, mixed> */
     public function for(LogbookDay $day): array
     {
         $entries = LogbookEntry::query()->where('logbook_day_id', $day->id)->with('channel')->get();
+        $from = $day->shift_start_at;
+        $to = $day->shift_start_at->copy()->addDay();
 
         return [
             'entries_total' => $entries->count(),
@@ -21,12 +24,10 @@ final class LogbookCounters
             'corrections' => $entries->whereNotNull('corrects_entry_id')->count(),
             'by_handling_status' => $entries->countBy(fn (LogbookEntry $entry) => $entry->handling_status->value)->all(),
             'by_channel' => $entries->countBy(fn (LogbookEntry $entry) => $entry->channel->code)->all(),
-            'operations_by_category' => Operation::query()
-                ->whereBetween('started_at', [$day->shift_start_at, $day->shift_start_at->copy()->addDay()])
-                ->with('category')
-                ->get()
-                ->countBy(fn (Operation $operation) => $operation->category->code->value)
-                ->all(),
+            'operation_counters' => $this->operations->lastNumbers($from->year),
+            'open_operations' => $this->operations->openOperations(),
+            'operations_opened' => $this->operations->openedBetween($from, $to),
+            'operations_closed' => $this->operations->closedBetween($from, $to),
         ];
     }
 }

@@ -36,7 +36,7 @@
                     @forelse ($days as $day)
                         <tr>
                             <td class="text-nowrap">{{ $day->day->isoFormat('dddd L') }}</td>
-                            <td class="text-nowrap">{{ $day->shift_start_at->format('H:i') }} - {{ $day->shift_end_at->format('H:i') }}</td>
+                            <td class="text-nowrap">{{ $day->shift_start_at->format('d/m H:i') }} → {{ $day->shift_end_at->format('d/m H:i') }}</td>
                             <td>{{ $day->entries_count }}</td>
                             <td><x-ui.status-badge :status="$day->status" /></td>
                             <td class="text-end text-nowrap">

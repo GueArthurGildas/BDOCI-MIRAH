@@ -32,6 +32,16 @@ class LogbookDay extends Model
         return $this->hasMany(LogbookEntry::class, 'logbook_day_id')->orderBy('occurred_at')->orderBy('id');
     }
 
+    public function handovers(): HasMany
+    {
+        return $this->hasMany(ShiftHandover::class, 'logbook_day_id')->orderBy('handed_over_at')->orderBy('id');
+    }
+
+    public function hasEnded(): bool
+    {
+        return $this->shift_end_at->lte(now());
+    }
+
     public function closing(): HasOne
     {
         return $this->hasOne(LogbookClosing::class, 'logbook_day_id');

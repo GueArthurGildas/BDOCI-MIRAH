@@ -37,7 +37,7 @@ final class LogbookDayWord
         $section = $word->addSection(['orientation' => 'landscape', 'marginLeft' => 700, 'marginRight' => 700, 'marginTop' => 700, 'marginBottom' => 700]);
 
         $section->addText(__('logbook::logbook.pdf.title', ['day' => $day->day->format('d/m/Y')]), ['bold' => true, 'size' => 16]);
-        $section->addText(__('logbook::logbook.days.shift_range', ['from' => $day->shift_start_at->format('H:i'), 'to' => $day->shift_end_at->format('H:i')]));
+        $section->addText(__('logbook::logbook.days.shift_range', ['from' => $day->shift_start_at->format('d/m H:i'), 'to' => $day->shift_end_at->format('d/m H:i')]));
         $section->addText(__('logbook::logbook.days.fields.status').' : '.__($day->status->label()));
         $section->addTextBreak();
 

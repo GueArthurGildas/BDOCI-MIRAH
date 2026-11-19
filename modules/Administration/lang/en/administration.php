@@ -116,6 +116,7 @@ return [
             'create' => 'Record observations',
             'manage' => 'Follow up observations',
             'close' => 'Close the daily logbook',
+            'handover' => 'Record the shift handover',
         ],
         'movements' => [
             'view' => 'View movements',

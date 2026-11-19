@@ -16,7 +16,7 @@
 </head>
 <body>
     <h1>{{ __('logbook::logbook.pdf.title', ['day' => $day->day->format('d/m/Y')]) }}</h1>
-    <p>{{ __('logbook::logbook.days.shift_range', ['from' => $day->shift_start_at->format('H:i'), 'to' => $day->shift_end_at->format('H:i')]) }}</p>
+    <p>{{ __('logbook::logbook.days.shift_range', ['from' => $day->shift_start_at->format('d/m H:i'), 'to' => $day->shift_end_at->format('d/m H:i')]) }}</p>
 
     <table>
         <thead>

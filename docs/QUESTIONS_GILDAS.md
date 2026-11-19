@@ -40,7 +40,7 @@ Classées par ordre de besoin. Chaque phase est livrée avec l'hypothèse de la 
 
 | # | Réf. spec | Question | Bloque | Aujourd'hui | Réponse |
 |---|---|---|---|---|---|
-| C1 | E1 | Nombre d'équipes, jours travaillés, heure de clôture de la main courante | 3a | Hypothèse H-3a-1 (quart de 08 h à 18 h UTC, 3 équipes en rotation, tous les jours) | |
+| C1 | E1 | Nombre d'équipes, jours travaillés, heure de clôture de la main courante | 3a | Hypothèse H-3a-1 (quart de 08 h à 18 h UTC, 3 équipes en rotation, tous les jours) | **Répondu le 19/11/2026 (manuel PROCOP_CSP/01)** : journée de 24 h de 08 h à 08 h, relèves à 08 h et 18 h, clôture à la relève du matin par l'opérateur quittant (tout agent). Nombre d'équipes et jours travaillés : toujours ouverts. |
 | C2 | V18 | Les positions sont-elles disponibles par API pour construire la « photo » d'un créneau de contrôle ? | 3b | Hypothèse H-3b-1 (positions de notre propre table, interface `PositionFeed`) | |
 | C3 | V20 | Quelles localités compter hors Abidjan, San Pedro et Sassandra (comptage par zone) ? | 3b | Hypothèse H-3b-2 (liste de référence modifiable par l'Admin) | |
 | C4 | V10 | Fournisseur d'e-mail (SMTP, service tiers) | 5 | Hypothèse H-5-1 (mailer Laravel, fournisseur paramétrable) | |

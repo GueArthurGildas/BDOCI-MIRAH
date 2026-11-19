@@ -1205,6 +1205,7 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 |---|---|---|
 | `main_courante_id` | `logbook_day_id` | bigint |
 | `compteurs` | `counters` | jsonb |
+| — (informations complémentaires et consignes) | `instructions` | text |
 | `cloturee_par` | `closed_by` | bigint |
 | `cloturee_le` | `closed_at` | timestamp(0) |
 
@@ -1247,7 +1248,15 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 |---|---|---|
 | `id` | `id` | bigint |
 | `rotation_id` | `rotation_id` | bigint |
+| — | `logbook_day_id` | bigint |
 | `prise_le` | `started_at` | timestamp(0) |
+| — (date et heure du cartouche) | `handed_over_at` | timestamp(0) |
+| — (opérateur quittant) | `handed_over_by` | bigint |
+| — (opérateur prenant) | `taken_over_by` | bigint |
+| — (responsable du CSP) | `supervised_by` | bigint |
+| — (compteurs d'opération) | `operation_counters` | jsonb |
+| — (opérations ouvertes) | `open_operations` | jsonb |
+| — (informations complémentaires et consignes) | `instructions` | text |
 
 ### `surveillance_observations` (spécification : `observation_surveillance`)
 

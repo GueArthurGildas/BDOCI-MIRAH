@@ -86,7 +86,8 @@ return [
             'steps' => [
                 'entries' => ['title' => 'Les lignes du quart', 'text' => 'Chaque fait reçu est une ligne : quand, comment, quoi. Après la clôture, les lignes sont verrouillées.'],
                 'new_entry' => ['title' => 'Ajouter une ligne', 'text' => 'Saisissez le moment, le moyen, ce qui s\'est passé, et rattachez les navires concernés.'],
-                'close_day' => ['title' => 'Clôturer la journée', 'text' => 'Réservé au Chef d\'équipe : génère un PDF non modifiable et verrouille les lignes (confirmation demandée).'],
+                'handovers' => ['title' => 'Relèves de quart', 'text' => 'À 08 h et 18 h, l\'opérateur quittant fait la relève : opérateur prenant, responsable du CSP, consignes ; les compteurs et les opérations ouvertes sont relevés automatiquement.'],
+                'close_day' => ['title' => 'Clôturer la journée', 'text' => 'À la relève du matin, après les 24 heures de la journée, l\'opérateur quittant la clôture : PDF non modifiable et lignes verrouillées (confirmation demandée).'],
                 'pdf' => ['title' => 'Copie PDF', 'text' => 'Le PDF figé de la journée, dont l\'intégrité se contrôle.'],
             ],
         ],

@@ -2,15 +2,39 @@
     $isOpen = $day->status === App\Enums\LogbookDayStatus::Open;
 @endphp
 <x-layouts.app :title="__('logbook::logbook.days.title')">
-    <x-ui.page-header :title="$day->day->isoFormat('dddd LL')" :subtitle="__('logbook::logbook.days.shift_range', ['from' => $day->shift_start_at->format('H:i'), 'to' => $day->shift_end_at->format('H:i')])" :breadcrumbs="[__('logbook::logbook.days.title') => route('logbook.days.index')]">
+    <x-ui.page-header :title="$day->day->isoFormat('dddd LL')" :subtitle="__('logbook::logbook.days.shift_range', ['from' => $day->shift_start_at->format('d/m H:i'), 'to' => $day->shift_end_at->format('d/m H:i')])" :breadcrumbs="[__('logbook::logbook.days.title') => route('logbook.days.index')]">
         <x-slot:actions>
+            @if ($isOpen && ! $day->hasEnded())
+                @can(App\Support\Authorization\Permission::LogbookHandover->value)
+                    <a href="{{ route('logbook.handovers.create') }}" class="btn btn-sm btn-primary"><i class="feather icon-repeat"></i> {{ __('logbook::logbook.handovers.new') }}</a>
+                @endcan
+            @endif
             <a href="{{ route('logbook.days.word', $day) }}" class="btn btn-sm btn-outline-primary"><i class="feather icon-file-text"></i> {{ __('logbook::logbook.days.word') }}</a>
         </x-slot:actions>
     </x-ui.page-header>
 
     <div class="page-body">
+        @if ($pendingClosures->isNotEmpty())
+            <div class="alert alert-warning" role="alert">
+                <strong>{{ __('logbook::logbook.days.pending_closures') }}</strong>
+                <ul class="mb-0">
+                    @foreach ($pendingClosures as $pending)
+                        <li><a href="{{ route('logbook.days.show', $pending) }}">{{ __('logbook::logbook.days.pending_closure_item', ['day' => $pending->day->isoFormat('LL')]) }}</a></li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <div class="row">
             <div class="col-xl-8">
+                <x-ui.card data-guide="handovers" :title="__('logbook::logbook.handovers.list_title')">
+                    @forelse ($day->handovers as $handover)
+                        <div @class(['m-t-15' => ! $loop->first])>@include('logbook::partials.handover', ['handover' => $handover])</div>
+                    @empty
+                        <p class="text-muted mb-0">{{ __('logbook::logbook.handovers.none') }}</p>
+                    @endforelse
+                </x-ui.card>
+
                 <x-ui.card data-guide="entries" :title="__('logbook::logbook.entries.title')" :subtitle="__('logbook::logbook.days.fields.status').' : '.__($day->status->label())" flush>
                     <x-ui.table>
                         <x-slot:head>
@@ -79,6 +103,12 @@
                     </x-ui.table>
                 </x-ui.card>
 
+                @if ($day->closing)
+                    <x-ui.card :title="__('logbook::logbook.days.closing_block')">
+                        @include('logbook::partials.closing', ['counters' => $day->closing->counters, 'instructions' => $day->closing->instructions, 'closer' => $day->closing->closer, 'closedAt' => $day->closing->closed_at])
+                    </x-ui.card>
+                @endif
+
                 @include('logbook::partials.timeline', ['entries' => $day->entries->sortBy('occurred_at')->values()])
             </div>
 
@@ -111,10 +141,16 @@
 
                     @can(App\Support\Authorization\Permission::LogbookClose->value)
                         <x-ui.card data-guide="close_day" :title="__('logbook::logbook.days.close_title')" :subtitle="__('logbook::logbook.days.close_hint')">
-                            <form data-confirm="{{ __('logbook::confirm.close_day') }}" data-confirm-label="{{ __('logbook::confirm.close_day_yes') }}" method="POST" action="{{ route('logbook.days.close', $day) }}">
-                                @csrf
-                                <button type="submit" class="btn btn-success"><i class="feather icon-lock"></i> {{ __('logbook::logbook.days.close') }}</button>
-                            </form>
+                            @if ($day->hasEnded())
+                                <form data-confirm="{{ __('logbook::confirm.close_day') }}" data-confirm-label="{{ __('logbook::confirm.close_day_yes') }}" method="POST" action="{{ route('logbook.days.close', $day) }}">
+                                    @csrf
+                                    <x-ui.form.textarea name="instructions" :label="__('logbook::logbook.handovers.fields.instructions')" rows="4" />
+                                    <p class="text-muted f-12">{{ __('logbook::logbook.days.closing_instructions_hint') }}</p>
+                                    <button type="submit" class="btn btn-success"><i class="feather icon-lock"></i> {{ __('logbook::logbook.days.close') }}</button>
+                                </form>
+                            @else
+                                <p class="text-muted mb-0">{{ __('logbook::logbook.days.close_not_yet', ['time' => $day->shift_end_at->format('d/m/Y H:i')]) }}</p>
+                            @endif
                         </x-ui.card>
                     @endcan
                 @else

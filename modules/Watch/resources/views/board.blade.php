@@ -1,5 +1,14 @@
 <x-layouts.app :title="__('watch::watch.board.title')">
-    <x-ui.page-header :title="__('watch::watch.board.title')" :subtitle="__('watch::watch.board.subtitle')" />
+    <x-ui.page-header :title="__('watch::watch.board.title')" :subtitle="__('watch::watch.board.subtitle')">
+        <x-slot:actions>
+            @can(App\Support\Authorization\Permission::LogbookHandover->value)
+                <a href="{{ route('logbook.handovers.create') }}" class="btn btn-sm btn-primary"><i class="feather icon-repeat"></i> {{ __('logbook::logbook.handovers.new') }}</a>
+            @endcan
+            @can(App\Support\Authorization\Permission::LogbookView->value)
+                <a href="{{ route('logbook.days.today') }}" class="btn btn-sm btn-outline-primary"><i class="feather icon-book"></i> {{ __('logbook::logbook.days.open_today') }}</a>
+            @endcan
+        </x-slot:actions>
+    </x-ui.page-header>
 
     <div class="page-body">
         <div class="row">

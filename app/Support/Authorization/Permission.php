@@ -92,4 +92,5 @@ enum Permission: string
     case WitnessesView = 'witnesses.view';
     case WitnessesCreate = 'witnesses.create';
     case WitnessesManage = 'witnesses.manage';
+    case LogbookHandover = 'logbook.handover';
 }
