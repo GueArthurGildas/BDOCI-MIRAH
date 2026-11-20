@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['operation_id', 'first_event', 'temperature', 'pressure', 'visibility', 'cloud_cover', 'wind_beaufort', 'sea_state'])]
+#[Fillable(['operation_id', 'first_event', 'temperature', 'pressure', 'visibility', 'cloud_cover', 'wind_beaufort', 'sea_state', 'weather_notes', 'vessel_position', 'vessel_activity', 'comments'])]
 class OperationContext extends Model
 {
     use HasFactory;

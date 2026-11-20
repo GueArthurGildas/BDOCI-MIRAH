@@ -3,6 +3,7 @@
 namespace Modules\Logbook\Http\Controllers;
 
 use App\Enums\LogbookDayStatus;
+use App\Enums\OperationStatus;
 use App\Http\Controllers\Controller;
 use App\Models\LogbookDay;
 use App\Models\Operation;
@@ -12,7 +13,9 @@ use App\Support\Documents\DocumentStore;
 use App\Support\Logbook\LogbookCalendar;
 use App\Support\Logbook\LogbookChannels;
 use App\Support\Logbook\LogbookCounters;
+use App\Support\Logbook\LogbookDayDocument;
 use App\Support\Logbook\LogbookDayWord;
+use App\Support\Printing\PdfRenderer;
 use App\Support\Tables\PerPage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
@@ -88,6 +91,16 @@ class LogbookDayController extends Controller
         ]);
     }
 
+    public function print(LogbookDay $day, LogbookDayDocument $document, PdfRenderer $pdf): Response
+    {
+        $printed = PdfRenderer::inPrintLocale(fn () => $document->build($day));
+
+        return response(PdfRenderer::inPrintLocale(fn () => $pdf->render($printed)), 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="'.$printed->filename('pdf').'"',
+        ]);
+    }
+
     public function today(LogbookCalendar $calendar): RedirectResponse
     {
         return to_route('logbook.days.show', $calendar->today());
@@ -96,6 +109,12 @@ class LogbookDayController extends Controller
     public function show(LogbookDay $day, LogbookChannels $channels, DocumentStore $documents): View
     {
         $day->load(['entries.channel', 'entries.vessels', 'entries.operation', 'entries.author', 'entries.corrects', 'entries.corrections', 'closing.closer', 'pdfDocument', 'handovers.outgoing', 'handovers.incoming', 'handovers.supervisor']);
+        $inProgress = Operation::query()
+            ->whereIn('status', [OperationStatus::Open, OperationStatus::InProgress])
+            ->with('category')
+            ->withMax('events', 'occurred_at')
+            ->orderBy('started_at')
+            ->get();
 
         return view('logbook::days.show', [
             'day' => $day,
@@ -107,7 +126,8 @@ class LogbookDayController extends Controller
                 ->get(),
             'channels' => $channels->options(),
             'vessels' => Vessel::orderBy('name')->get()->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => "{$vessel->name} ({$vessel->registration_number})"]),
-            'operations' => Operation::query()->latest('started_at')->limit(100)->pluck('code', 'id'),
+            'operations' => $inProgress->pluck('code', 'id'),
+            'inProgress' => $inProgress,
             'pdfIntact' => $day->pdfDocument ? $documents->isIntact($day->pdfDocument) : null,
         ]);
     }

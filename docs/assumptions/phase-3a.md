@@ -82,7 +82,7 @@ Aucune de ces hypothèses n'est une règle validée. Pour retrouver les tests qu
 |---|---|
 | Identifiant | `H-3a-7` |
 | Question | quand un navire cité en main courante sort-il de la veille ; qui peut faire quoi |
-| Option retenue | une ligne de veille `logbook` est ouverte par navire et par ligne citée, close quand la ligne passe à « clos » (rouverte si elle est remise en traitement) ou quand l'opération liée est clôturée ; l'Agent consulte, saisit lignes, observations et suivis renforcés, ouvre des opérations et, **depuis le 19/11/2026 (règle validée, PROCOP_CSP/01)**, fait la relève de quart (`logbook.handover`) et clôture la journée (`logbook.close`) ; le Chef d'équipe et le Directeur clôturent les opérations, gèrent la liste du Directeur, les rotations et les consignes permanentes |
+| Option retenue | une ligne de veille `logbook` est ouverte par navire et par ligne citée, close quand la ligne passe à « clos » (rouverte si elle est remise en traitement) ou quand l'opération liée est clôturée ; l'Agent consulte, saisit lignes, observations et suivis renforcés, ouvre des opérations et, **depuis le 19/11/2026 (règle validée, PROCOP_CSP/01)**, fait la relève de quart (`logbook.handover`) et clôture la journée (`logbook.close`), et **depuis le 20/11/2026 (règle validée par l'utilisateur)** clôture les opérations (`operations.close`) ; le Chef d'équipe et le Directeur suivent les opérations (statut, instructions : `operations.manage`), gèrent la liste du Directeur, les rotations et les consignes permanentes. **Règle validée (PROCOP_CSP/01)** : la ligne de main courante journalière qui inscrit l'ouverture d'une opération cite ses navires et les met en veille jusqu'à la clôture de l'opération |
 | Alternatives | veille fermée seulement par le Chef d'équipe ; Agent autorisé à clôturer une opération |
 | Où | `App\Support\Watch\WatchList`, `Role::permissions()` (Agent), `Permission` (cas ajoutés en fin) |
 | Pour changer | modifier `WatchList` ; les droits se changent dans la page Rôles et permissions |
@@ -99,3 +99,16 @@ Aucune de ces hypothèses n'est une règle validée. Pour retrouver les tests qu
 | Où | listes `logbook_channels`, `weather_visibility`, `weather_cloud_cover`, `weather_sea_state` ; `App\Support\Logbook\LogbookChannels`, `App\Support\Operations\WeatherScales` |
 | Pour changer | l'Admin modifie les valeurs des listes de référence sans code |
 | Tests | `OperationFlowTest::test_an_agent_opens_an_operation_with_its_context_vessels_and_journal` |
+
+## H-3a-9 : opérations, main courante journalière et documents imprimés
+
+| Champ | Contenu |
+|---|---|
+| Identifiant | `H-3a-9` |
+| Statut | **règles validées le 19/11/2026 et le 20/11/2026** (source : manuel de procédures opérationnelles du SCS-MIRAH, PROCOP_CSP/01, pages 41 à 52, logigramme figure 2, tableaux 2 à 11, et modèles `Main_courante_CSP_du_AAAA_MM_JJ.docx` et `Main_courante_OPS_Num_Cat_AAAA_Nom.docx` de `docs/UPDATED RULES/document metier`) ; les points marqués « provisoire » restent à confirmer |
+| Question | lien entre opérations et main courante, contenu des cartouches, documents imprimés |
+| Option retenue | **Validé** : l'ouverture d'une opération est inscrite dans la main courante journalière (en rouge, avec le canal par lequel l'information est arrivée et le résumé) et sa clôture aussi (en vert, avec le résultat) ; toute information liée à une opération en cours s'inscrit uniquement dans la main courante de l'opération (QUAND / COMMENT / QUOI, ordre ou décision) ; tout agent clôture une opération ; à la clôture, la main courante de l'opération est imprimée en PDF figé et rangée dans le dossier de l'opération avec ses pièces jointes ; les documents Word et PDF reprennent les modèles (en-tête « République de Côte d'Ivoire / Centre de Surveillance des Pêches », cartouches, couleurs, nommage `Main_courante_CSP_du_AAAA_MM_JJ` et `Main_courante_OPS_num_cat_AAAA_nom`). **Provisoire** : la ligne d'ouverture est « en cours » de traitement puis « clos » à la clôture de l'opération ; le canal de la ligne de clôture est « Interne » s'il n'est pas choisi ; la position et l'activité du navire s'impriment dans la rubrique « Commentaires / autres navires impliqués » ; le tirant d'eau, absent du référentiel, s'imprime vide ; dans la main courante imprimée, une ligne émise porte « (émis) » après le canal et les navires cités sont ajoutés sous le texte |
+| Alternatives | ligne d'ouverture « à traiter » ; colonne Sens séparée ; tirant d'eau saisi à l'ouverture |
+| Où | `Modules\Operations\Actions\OpenOperation`, `CloseOperation`, `AddOperationEvent`, `AttachOperationDocument` ; `Modules\Logbook\Actions\RecordOperationLogbookLine` et `App\Support\Operations\OperationLogbook` ; `App\Support\Logbook\LogbookDayDocument`, `Modules\Operations\Support\OperationDocument`, `App\Support\Printing\*` |
+| Pour changer | modifier ces classes ; la mise en page commune est dans `App\Support\Printing` (Word) et `resources/views/printing/document.blade.php` (PDF) |
+| Tests | `OperationLogbookTest`, `OperationPrintTest`, `LogbookPrintTest`, `LogbookFoldersTest::test_the_word_document_follows_the_daily_logbook_template` |

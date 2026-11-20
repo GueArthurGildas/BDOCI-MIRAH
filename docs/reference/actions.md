@@ -47,8 +47,9 @@
 | `movements.declare` | `movements` | `update` | Saisir et suivre les déclarations ZEE |
 | `movements.view` | `movements` | `view` | Consulter les mouvements |
 | `mrep.view` | `mrep` | `view` | Consulter les DPEP, décisions d'entrée et notifications |
+| `operations.close` | `operations` | `update` | Clôturer les opérations |
 | `operations.create` | `operations` | `create` | Ouvrir des opérations |
-| `operations.manage` | `operations` | `update` | Suivre et clôturer les opérations |
+| `operations.manage` | `operations` | `update` | Suivre les opérations (statut, instructions) |
 | `operations.view` | `operations` | `view` | Consulter les opérations |
 | `registry.manage` | `registry` | `update` | Gérer les référentiels |
 | `registry.view` | `registry` | `view` | Consulter les référentiels |
@@ -142,6 +143,7 @@ Actions exécutées par l'`ActionRunner` (transaction, droit, événement, état
 | `logbook.close_day` | `logbook.close` | `Modules\Logbook\Actions\CloseLogbookDay` |
 | `logbook.open` | `logbook.create` | `Modules\Logbook\Actions\OpenObservation` |
 | `logbook.record_handover` | `logbook.handover` | `Modules\Logbook\Actions\RecordShiftHandover` |
+| `logbook.record_operation_line` | `logbook.create` | `Modules\Logbook\Actions\RecordOperationLogbookLine` |
 | `logbook.rectify_entry` | `logbook.create` | `Modules\Logbook\Actions\RectifyLogbookEntry` |
 | `logbook.set_entry_handling` | `logbook.manage` | `Modules\Logbook\Actions\SetLogbookEntryHandling` |
 | `logbook.update` | `logbook.manage` | `Modules\Logbook\Actions\UpdateObservation` |
@@ -170,7 +172,8 @@ Actions exécutées par l'`ActionRunner` (transaction, droit, événement, état
 | `movements.record_eez_declaration` | `movements.declare` | `Modules\Movements\Actions\RecordEezDeclaration` |
 | `movements.remind_missed_declaration` | `movements.declare` | `Modules\Movements\Actions\RemindMissedDeclaration` |
 | `operations.add_event` | `operations.create` | `Modules\Operations\Actions\AddOperationEvent` |
-| `operations.close` | `operations.manage` | `Modules\Operations\Actions\CloseOperation` |
+| `operations.attach_document` | `operations.create` | `Modules\Operations\Actions\AttachOperationDocument` |
+| `operations.close` | `operations.close` | `Modules\Operations\Actions\CloseOperation` |
 | `operations.give_instruction` | `operations.manage` | `Modules\Operations\Actions\GiveOperationInstruction` |
 | `operations.open` | `operations.create` | `Modules\Operations\Actions\OpenOperation` |
 | `operations.update` | `operations.manage` | `Modules\Operations\Actions\UpdateOperation` |

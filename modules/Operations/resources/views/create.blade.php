@@ -24,16 +24,26 @@
                     </div>
                 </div>
                 <x-ui.form.textarea name="summary" :label="__('operations::operations.fields.summary')" rows="3" />
+                <x-ui.form.select name="supervised_by" :label="__('operations::operations.fields.supervised_by')" :options="$supervisors" />
             </x-ui.card>
 
-            <x-ui.card :title="__('operations::operations.context_title')">
+            <x-ui.card :title="__('operations::operations.opening_title')" :subtitle="__('operations::operations.opening_hint')">
+                <x-ui.form.select name="channel_id" :label="__('operations::operations.fields.channel')" :options="$channels" required />
+                <x-ui.form.select name="direction" :label="__('operations::operations.fields.direction')" :options="App\Enums\LogbookDirection::options()" value="received" required />
+            </x-ui.card>
+
+            <x-ui.card :title="__('operations::operations.context_title')" :subtitle="__('operations::operations.context_hint')">
                 <x-ui.form.textarea name="first_event" :label="__('operations::operations.fields.first_event')" rows="3" />
+                <x-ui.form.textarea name="vessel_position" :label="__('operations::operations.fields.vessel_position')" rows="2" />
+                <x-ui.form.textarea name="vessel_activity" :label="__('operations::operations.fields.vessel_activity')" rows="2" />
                 <x-ui.form.input name="temperature" type="number" step="0.1" :label="__('operations::operations.fields.temperature')" />
                 <x-ui.form.input name="pressure" type="number" step="0.1" :label="__('operations::operations.fields.pressure')" />
                 <x-ui.form.select name="visibility" :label="__('operations::operations.fields.visibility')" :options="$visibilities" />
                 <x-ui.form.select name="cloud_cover" :label="__('operations::operations.fields.cloud_cover')" :options="$cloudCovers" />
                 <x-ui.form.input name="wind_beaufort" type="number" min="0" max="12" :label="__('operations::operations.fields.wind_beaufort')" />
                 <x-ui.form.select name="sea_state" :label="__('operations::operations.fields.sea_state')" :options="$seaStates" />
+                <x-ui.form.textarea name="weather_notes" :label="__('operations::operations.fields.weather_notes')" rows="2" />
+                <x-ui.form.textarea name="comments" :label="__('operations::operations.fields.comments')" rows="2" />
                 <x-ui.form.actions :cancel="route('operations.index')" />
             </x-ui.card>
         </form>

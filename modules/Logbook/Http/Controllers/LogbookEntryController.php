@@ -12,12 +12,26 @@ use Modules\Logbook\Actions\RectifyLogbookEntry;
 use Modules\Logbook\Actions\SetLogbookEntryHandling;
 use Modules\Logbook\Http\Requests\RectifyLogbookEntryRequest;
 use Modules\Logbook\Http\Requests\SetLogbookEntryHandlingRequest;
+use Modules\Logbook\Actions\RecordOperationLogbookLine;
 use Modules\Logbook\Http\Requests\StoreLogbookEntryRequest;
 
 class LogbookEntryController extends Controller
 {
     public function store(StoreLogbookEntryRequest $request, ActionRunner $actions): RedirectResponse
     {
+        if ($request->filled('operation_id')) {
+            $event = $actions->run(RecordOperationLogbookLine::class, $request->user(), [
+                'operation_id' => $request->validated('operation_id'),
+                'occurred_at' => $request->validated('occurred_at'),
+                'channel_id' => $request->validated('channel_id'),
+                'direction' => $request->validated('direction'),
+                'body' => $request->validated('content'),
+                'is_order_or_decision' => $request->validated('is_order_or_decision'),
+            ]);
+
+            return to_route('operations.show', $event->operation_id)->with('status', __('logbook::logbook.entries.sent_to_operation'));
+        }
+
         $entry = $actions->run(AddLogbookEntry::class, $request->user(), $request->validated());
 
         return to_route('logbook.days.show', $entry->logbook_day_id)->with('status', __('logbook::logbook.entries.created'));

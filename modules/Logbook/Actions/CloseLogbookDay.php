@@ -4,22 +4,25 @@ namespace Modules\Logbook\Actions;
 
 use App\Enums\LogbookDayStatus;
 use App\Models\LogbookDay;
-use App\Models\Operation;
-use App\Models\User;
 use App\Support\Actions\Action;
 use App\Support\Actions\ActionContext;
 use App\Support\Authorization\Permission;
 use App\Support\Documents\DocumentStore;
 use App\Support\Logbook\LogbookCounters;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\App;
+use App\Support\Logbook\LogbookDayDocument;
+use App\Support\Printing\PdfRenderer;
 use Illuminate\Validation\ValidationException;
 
 class CloseLogbookDay extends Action
 {
-    public const PDF_LOCALE = 'fr';
+    public const PDF_LOCALE = PdfRenderer::LOCALE;
 
-    public function __construct(private readonly DocumentStore $documents, private readonly LogbookCounters $counters) {}
+    public function __construct(
+        private readonly DocumentStore $documents,
+        private readonly LogbookCounters $counters,
+        private readonly LogbookDayDocument $printed,
+        private readonly PdfRenderer $pdf,
+    ) {}
 
     public function code(): string
     {
@@ -45,40 +48,20 @@ class CloseLogbookDay extends Action
 
         $counters = $this->counters->for($day);
         $instructions = filled($input['instructions'] ?? null) ? $input['instructions'] : null;
-        $day->load(['entries.channel', 'entries.vessels', 'entries.operation', 'entries.author', 'handovers.outgoing', 'handovers.incoming', 'handovers.supervisor']);
+        $closedAt = now();
 
-        $document = $this->documents->storeContent(
-            $this->fileName($day),
-            $this->renderPdf($day, $counters, $instructions, $context->actor),
-            'application/pdf',
-            $context->actor,
-            freeze: true,
-        );
+        $content = PdfRenderer::inPrintLocale(fn () => $this->pdf->render($this->printed->build($day, $counters, $instructions, $context->actor, $closedAt)));
+        $document = $this->documents->storeContent($this->fileName($day), $content, 'application/pdf', $context->actor, freeze: true);
         $this->documents->attach($document, $day);
 
-        $day->closing()->create(['counters' => $counters, 'instructions' => $instructions, 'closed_by' => $context->actor->id, 'closed_at' => now()]);
-        $day->update(['status' => LogbookDayStatus::Locked, 'pdf_document_id' => $document->id, 'locked_at' => now()]);
+        $day->closing()->create(['counters' => $counters, 'instructions' => $instructions, 'closed_by' => $context->actor->id, 'closed_at' => $closedAt]);
+        $day->update(['status' => LogbookDayStatus::Locked, 'pdf_document_id' => $document->id, 'locked_at' => $closedAt]);
 
         return $day;
     }
 
     public function fileName(LogbookDay $day): string
     {
-        return 'Main_courante_CSP_du_'.$day->day->format('Y_m_d').'.pdf';
-    }
-
-    /** @param array<string, mixed> $counters */
-    private function renderPdf(LogbookDay $day, array $counters, ?string $instructions, User $closer): string
-    {
-        $previous = App::getLocale();
-        App::setLocale(self::PDF_LOCALE);
-
-        try {
-            return Pdf::loadView('logbook::pdf.day', ['day' => $day, 'counters' => $counters, 'closingInstructions' => $instructions, 'closer' => $closer, 'closedAt' => now(), 'operations' =>Operation::query()->whereIn('id', $day->entries->pluck('operation_id')->filter())->get()->keyBy('id')])
-                ->setPaper('a4', 'landscape')
-                ->output();
-        } finally {
-            App::setLocale($previous);
-        }
+        return LogbookDayDocument::basename($day).'.pdf';
     }
 }

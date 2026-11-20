@@ -176,7 +176,8 @@ return [
         'operations' => [
             'view' => 'Consulter les opérations',
             'create' => 'Ouvrir des opérations',
-            'manage' => 'Suivre et clôturer les opérations',
+            'manage' => 'Suivre les opérations (statut, instructions)',
+            'close' => 'Clôturer les opérations',
         ],
         'watch' => [
             'view' => 'Consulter le tableau du matin et la surveillance de quart',

@@ -11,6 +11,7 @@ use App\Models\Vessel;
 use App\Models\VesselEvent;
 use App\Models\WatchEntry;
 use App\Support\Authorization\Role;
+use App\Support\Logbook\LogbookChannels;
 use App\Support\Watch\WatchList;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Activitylog\Models\Activity;
@@ -48,6 +49,8 @@ class OperationFlowTest extends TestCase
             'temperature' => 29.5,
             'wind_beaufort' => 4,
             'visibility' => 'good',
+            'channel_id' => app(LogbookChannels::class)->idFor('themis'),
+            'direction' => 'received',
         ])->assertRedirect();
 
         $operation = Operation::sole();
@@ -82,7 +85,7 @@ class OperationFlowTest extends TestCase
         $vessel = Vessel::factory()->create();
         $operation->vessels()->attach($vessel);
 
-        $this->post(route('operations.events.store', $operation), ['body' => 'Armateur contacté.'])->assertRedirect();
+        $this->post(route('operations.events.store', $operation), ['body' => 'Armateur contacté.', 'channel_id' => app(LogbookChannels::class)->idFor('phone'), 'direction' => 'sent'])->assertRedirect();
         $this->assertSame(OperationStatus::InProgress, $operation->fresh()->status);
         $this->assertSame('Armateur contacté.', $operation->events()->sole()->body);
 
@@ -105,14 +108,16 @@ class OperationFlowTest extends TestCase
     }
 
     #[Covers('UC11', partial: true)]
-    public function test_agents_cannot_close_an_operation(): void
+    public function test_any_agent_can_close_an_operation_but_not_give_instructions(): void
     {
-        $this->signInAs(Role::Agent);
+        $agent = $this->signInAs(Role::Agent);
         $operation = Operation::factory()->create();
 
-        $this->post(route('operations.close', $operation), ['result' => 'Fini.'])->assertForbidden();
+        $this->post(route('operations.instructions.store', $operation), ['body' => 'Relancer'])->assertForbidden();
+        $this->post(route('operations.close', $operation), ['result' => 'Fini.'])->assertRedirect();
 
-        $this->assertSame(OperationStatus::Open, $operation->fresh()->status);
+        $this->assertSame(OperationStatus::Closed, $operation->fresh()->status);
+        $this->assertSame($agent->id, $operation->fresh()->closed_by);
     }
 
     #[Covers('UC11', partial: true)]
@@ -121,7 +126,7 @@ class OperationFlowTest extends TestCase
         $this->signInAs(Role::TeamLead);
         $operation = Operation::factory()->create(['status' => OperationStatus::Closed]);
 
-        $this->post(route('operations.events.store', $operation), ['body' => 'Trop tard'])->assertSessionHasErrors('body');
+        $this->post(route('operations.events.store', $operation), ['body' => 'Trop tard', 'channel_id' => app(LogbookChannels::class)->idFor('phone'), 'direction' => 'received'])->assertSessionHasErrors('body');
         $this->post(route('operations.instructions.store', $operation), ['body' => 'Trop tard'])->assertSessionHasErrors('body');
         $this->post(route('operations.close', $operation), ['result' => 'Encore'])->assertSessionHasErrors('result');
 

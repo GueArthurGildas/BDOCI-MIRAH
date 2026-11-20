@@ -155,6 +155,7 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `logbook.days.close` | POST | `/logbook/days/{day}/close` | `logbook.close` |
 | `logbook.days.index` | GET | `/logbook/days` | `logbook.view` |
 | `logbook.days.pdf` | GET | `/logbook/days/{day}/pdf` | `logbook.view` |
+| `logbook.days.print` | GET | `/logbook/days/{day}/print` | `logbook.view` |
 | `logbook.days.show` | GET | `/logbook/days/{day}` | `logbook.view` |
 | `logbook.days.today` | GET | `/logbook/days/today` | `logbook.view` |
 | `logbook.days.word` | GET | `/logbook/days/{day}/word` | `logbook.view` |
@@ -212,14 +213,18 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `notifications.index` | GET | `/notifications` | — |
 | `notifications.open` | GET | `/notifications/{notification}` | — |
 | `notifications.read-all` | POST | `/notifications/read-all` | — |
-| `operations.close` | POST | `/operations/{operation}/close` | `operations.manage` |
+| `operations.close` | POST | `/operations/{operation}/close` | `operations.close` |
 | `operations.create` | GET | `/operations/create` | `operations.create` |
+| `operations.documents.download` | GET | `/operations/{operation}/documents/{document}` | `operations.view` |
+| `operations.documents.store` | POST | `/operations/{operation}/documents` | `operations.create` |
 | `operations.events.store` | POST | `/operations/{operation}/events` | `operations.create` |
 | `operations.index` | GET | `/operations` | `operations.view` |
 | `operations.instructions.store` | POST | `/operations/{operation}/instructions` | `operations.manage` |
+| `operations.pdf` | GET | `/operations/{operation}/pdf` | `operations.view` |
 | `operations.show` | GET | `/operations/{operation}` | `operations.view` |
 | `operations.store` | POST | `/operations` | `operations.create` |
 | `operations.update` | PATCH | `/operations/{operation}` | `operations.manage` |
+| `operations.word` | GET | `/operations/{operation}/word` | `operations.view` |
 | `profile.avatar` | GET | `/profile/avatar/{user}` | — |
 | `profile.avatar.destroy` | DELETE | `/profile/avatar` | — |
 | `profile.avatar.update` | POST | `/profile/avatar` | — |

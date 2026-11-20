@@ -272,6 +272,11 @@ return [
         'locked' => 'Verrouillée',
     ],
 
+    'operation_milestone' => [
+        'opened' => 'Ouverture d\'opération',
+        'closed' => 'Clôture d\'opération',
+    ],
+
     'logbook_direction' => [
         'received' => 'Reçu',
         'sent' => 'Émis',

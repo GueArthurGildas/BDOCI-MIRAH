@@ -6,13 +6,14 @@ Main courante : journées QUAND / COMMENT / QUOI, clôture avec PDF figé et lig
 - Actions : `AddLogbookEntry`, `SetLogbookEntryHandling`, `RectifyLogbookEntry`, `RecordShiftHandover`, `CloseLogbookDay`, `OpenObservation`, `UpdateObservation` (ces deux dernières reflètent l'observation dans `surveillance_observations`).
 - Permissions : `logbook.view`, `logbook.create`, `logbook.manage`, `logbook.close` (clôturer la journée) et `logbook.handover` (relève de quart) : tout agent, Chef d'équipe, Directeur.
 - Le déclencheur `logbook_entries_locked` (migration `2026_11_03_100003`) interdit la modification d'une ligne d'une journée verrouillée.
-- Hypothèses : H-3a-1, H-3a-4, H-3a-6, H-3a-7 (`docs/assumptions/phase-3a.md`).
+- Hypothèses : H-3a-1, H-3a-4, H-3a-6, H-3a-7, H-3a-9 (`docs/assumptions/phase-3a.md`).
 
 ## Filtres, dossiers, document Word et chronologie
 
 - **Filtres** de la liste des journées : texte (contenu d'une ligne, navire cité ou auteur), statut, canal, période ; ils s'appliquent à la saisie.
 - **Vue en dossiers** (`?view=folders`) : arbre année, mois, jour ; le jour choisi se déplie en rubriques (entrées par canal, navires impliqués, acteurs impliqués, opérations liées, ordres et décisions) construites par `Support/LogbookDayFolders`. Le volet de droite montre la synthèse du jour (compteurs, navires, acteurs, opérations, chronologie) ou les entrées de la rubrique choisie.
-- **Document Word** : `logbook.days.word` génère un `.docx` (PhpWord) avec le même contenu que le PDF de clôture, plus les navires et acteurs impliqués (`Support/LogbookDayWord`). Il est disponible pour une journée ouverte comme pour une journée close ; seul le PDF de clôture est non modifiable.
+- **Documents imprimés** : `App\Support\Logbook\LogbookDayDocument` construit la main courante selon le modèle `Main_courante_CSP_du_AAAA_MM_JJ` du manuel (en-tête officiel, pour chaque relève son cartouche puis les lignes QUAND / COMMENT / QUOI qui la suivent, ouvertures d'opérations en rouge et clôtures en vert, cartouche de clôture orange). Le même document est rendu en Word (`logbook.days.word`), en PDF à la demande pour une journée ouverte (`logbook.days.print`) et en PDF figé à la clôture ; seul ce dernier est non modifiable.
+- **Opérations** : une information saisie pour une opération en cours est inscrite dans la seule main courante de l'opération (action `RecordOperationLogbookLine`, qui partage `App\Support\Operations\OperationLogbook` avec `AddOperationEvent` du module Operations) ; la page d'une journée liste les opérations en cours avec leur statut.
 - **Chronologie** : sur la page d'une journée et dans la vue en dossiers, avec une légende (reçu, émis, ordre ou décision, ligne rectificative).
 
 ## Journée, relève et clôture (manuel PROCOP_CSP/01, règles validées le 19/11/2026)

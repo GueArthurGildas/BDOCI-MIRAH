@@ -86,6 +86,7 @@ return [
             'steps' => [
                 'entries' => ['title' => 'Les lignes du quart', 'text' => 'Chaque fait reçu est une ligne : quand, comment, quoi. Après la clôture, les lignes sont verrouillées.'],
                 'new_entry' => ['title' => 'Ajouter une ligne', 'text' => 'Saisissez le moment, le moyen, ce qui s\'est passé, et rattachez les navires concernés.'],
+                'operations' => ['title' => 'Opérations en cours', 'text' => 'Les opérations ouvertes et leur statut ; une information qui les concerne s\'inscrit dans leur propre main courante. Ouverture en rouge, clôture en vert dans la journée.'],
                 'handovers' => ['title' => 'Relèves de quart', 'text' => 'À 08 h et 18 h, l\'opérateur quittant fait la relève : opérateur prenant, responsable du CSP, consignes ; les compteurs et les opérations ouvertes sont relevés automatiquement.'],
                 'close_day' => ['title' => 'Clôturer la journée', 'text' => 'À la relève du matin, après les 24 heures de la journée, l\'opérateur quittant la clôture : PDF non modifiable et lignes verrouillées (confirmation demandée).'],
                 'pdf' => ['title' => 'Copie PDF', 'text' => 'Le PDF figé de la journée, dont l\'intégrité se contrôle.'],
@@ -120,11 +121,13 @@ return [
         'operations_show' => [
             'intro' => 'Le dossier d\'une opération, du premier constat à la clôture.',
             'steps' => [
-                'details' => ['title' => 'Détails', 'text' => 'Catégorie, navires concernés, équipe et état de l\'opération.'],
-                'events' => ['title' => 'Chronologie', 'text' => 'Tous les événements de l\'opération.'],
-                'add_event' => ['title' => 'Ajouter un événement', 'text' => 'Consignez chaque développement au fur et à mesure.'],
+                'details' => ['title' => 'Information de contexte', 'text' => 'Type et numéro d\'opération, premier événement, météo, navire impliqué (repris du référentiel), personnel du CSP.'],
+                'events' => ['title' => 'Main courante de l\'opération', 'text' => 'Toutes les informations liées à l\'opération, en QUAND / COMMENT / QUOI ; elles ne sont pas recopiées dans la main courante journalière.'],
+                'add_event' => ['title' => 'Nouvelle ligne', 'text' => 'Heure de réception au CSP, moyen (téléphone, e-mail…), texte synthétique, ordre ou décision.'],
+                'documents' => ['title' => 'Pièces jointes', 'text' => 'Fiches navires, DPEP, licences, copies d\'écran : tout le dossier de l\'opération.'],
                 'instructions' => ['title' => 'Instructions', 'text' => 'Les consignes données aux équipes pour cette opération.'],
-                'close' => ['title' => 'Clôturer l\'opération', 'text' => 'Réservé au Chef d\'équipe : renseignez le résultat puis clôturez ; les lignes de veille de l\'opération se ferment.'],
+                'close' => ['title' => 'Clôturer l\'opération', 'text' => 'Tout agent : vérifiez le dossier, renseignez le résultat et les infractions éventuelles ; la clôture s\'inscrit en vert dans la main courante journalière et le PDF de la main courante de l\'opération est rangé dans le dossier.'],
+                'closing' => ['title' => 'Clôture de l\'opération', 'text' => 'Dates, durée totale, rappel, résultat et infractions relevées.'],
             ],
         ],
         'licenses_index' => [

@@ -176,7 +176,8 @@ return [
         'operations' => [
             'view' => 'View operations',
             'create' => 'Open operations',
-            'manage' => 'Follow and close operations',
+            'manage' => 'Follow operations (status, instructions)',
+            'close' => 'Close operations',
         ],
         'watch' => [
             'view' => 'View the morning board and watch duty',

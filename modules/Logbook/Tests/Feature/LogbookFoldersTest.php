@@ -129,31 +129,36 @@ class LogbookFoldersTest extends TestCase
             ->assertViewHas('content', fn (array $content) => $content['filtered']->count() === 1);
     }
 
-    public function test_the_word_document_contains_the_day_its_entries_and_who_was_involved(): void
+    public function test_the_word_document_follows_the_daily_logbook_template(): void
     {
         $this->signInAs(Role::Agent);
         $day = $this->day('2026-03-10');
         $vessel = Vessel::factory()->create(['name' => 'NAVIRE WORD']);
-        $author = User::factory()->create(['name' => 'Kouamé', 'first_name' => 'Ange']);
-        $this->entry($day, ['content' => 'Contrôle radio du chalutier & équipage', 'entered_by' => $author->id, 'is_order_or_decision' => true, 'direction' => LogbookDirection::Sent], [$vessel]);
+        $this->entry($day, ['content' => 'Contrôle radio du chalutier & équipage', 'is_order_or_decision' => true, 'direction' => LogbookDirection::Sent], [$vessel]);
 
         $response = $this->get(route('logbook.days.word', $day))->assertOk()->assertHeader('Content-Type', LogbookDayWord::MIME_TYPE);
 
-        $this->assertStringContainsString('Main_courante_2026-03-10.docx', $response->headers->get('Content-Disposition'));
+        $this->assertStringContainsString('Main_courante_CSP_du_2026_03_10.docx', $response->headers->get('Content-Disposition'));
 
         $path = tempnam(sys_get_temp_dir(), 'docx');
         file_put_contents($path, $response->getContent());
         $zip = new ZipArchive;
         $this->assertTrue($zip->open($path));
         $xml = html_entity_decode($zip->getFromName('word/document.xml'), ENT_QUOTES | ENT_XML1);
+        $headers = collect(range(0, $zip->numFiles - 1))->map(fn (int $index) => $zip->getNameIndex($index))->filter(fn (string $name) => str_starts_with($name, 'word/header'))->map(fn (string $name) => html_entity_decode($zip->getFromName($name), ENT_QUOTES | ENT_XML1))->join(' ');
         $zip->close();
         unlink($path);
 
-        $this->assertStringContainsString('10/03/2026', $xml);
+        $this->assertStringContainsString('Centre de Surveillance des Pêches', $headers);
+        $this->assertStringContainsString('Main_courante_CSP_du_2026_03_10.docx', $headers);
+        $this->assertStringContainsString('Relève de Quart du CSP', $xml);
+        $this->assertStringContainsString('QUOI ?', $xml);
+        $this->assertStringContainsString('Clôture de la main courante', $xml);
+        $this->assertStringContainsString('4472C4', $xml);
+        $this->assertStringContainsString('FFC000', $xml);
         $this->assertStringContainsString('Contrôle radio du chalutier & équipage', $xml);
         $this->assertStringContainsString('NAVIRE WORD', $xml);
-        $this->assertStringContainsString('Ange Kouamé', $xml);
-        $this->assertStringContainsString(__('logbook::logbook.entries.order_or_decision'), $xml);
+        $this->assertStringContainsString('Ordre ou décision', $xml);
     }
 
     public function test_the_word_document_needs_the_logbook_permission(): void

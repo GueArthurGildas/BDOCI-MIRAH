@@ -34,7 +34,8 @@ final class LogbookWriter
             'direction' => $input['direction'] ?? LogbookDirection::Received,
             'is_order_or_decision' => $input['is_order_or_decision'] ?? false,
             'operation_id' => $input['operation_id'] ?? null,
-            'handling_status' => LogbookHandlingStatus::ToHandle,
+            'operation_milestone' => $input['operation_milestone'] ?? null,
+            'handling_status' => $input['handling_status'] ?? LogbookHandlingStatus::ToHandle,
             'corrects_entry_id' => $input['corrects_entry_id'] ?? null,
             'entered_by' => $context->actor->id,
         ]);
@@ -42,8 +43,12 @@ final class LogbookWriter
         $entry->vessels()->sync($input['vessel_ids'] ?? []);
 
         foreach ($entry->vessels as $vessel) {
-            if ($entry->corrects_entry_id === null) {
+            if ($entry->corrects_entry_id === null && ($input['opens_watch'] ?? true)) {
                 $this->watchList->open($vessel, WatchOrigin::Logbook, $context->actor, $entry);
+            }
+
+            if ($entry->operation_milestone !== null) {
+                continue;
             }
 
             $context->publish(

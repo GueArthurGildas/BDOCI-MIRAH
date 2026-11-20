@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-#[Fillable(['code', 'category_id', 'number', 'year', 'name', 'status', 'started_at', 'ended_at', 'origin', 'summary', 'result', 'created_by', 'closed_by'])]
+#[Fillable(['code', 'category_id', 'number', 'year', 'name', 'status', 'started_at', 'ended_at', 'origin', 'summary', 'result', 'infractions_noted', 'created_by', 'closed_by'])]
 class Operation extends Model
 {
     use Audited, HasFactory;
@@ -69,5 +69,10 @@ class Operation extends Model
     public function personnel(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'operation_user')->withPivot('role');
+    }
+
+    public function isFinished(): bool
+    {
+        return in_array($this->status, [OperationStatus::Closed, OperationStatus::Archived], true);
     }
 }

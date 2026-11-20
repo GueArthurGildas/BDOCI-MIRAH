@@ -47,6 +47,7 @@ Permissions accordées par défaut à chaque rôle système (l'héritage `Direct
 | `movements.declare` | — | oui | oui | oui |
 | `movements.view` | — | oui | oui | oui |
 | `mrep.view` | — | oui | oui | oui |
+| `operations.close` | — | oui | oui | oui |
 | `operations.create` | — | oui | oui | oui |
 | `operations.manage` | — | oui | oui | — |
 | `operations.view` | — | oui | oui | oui |

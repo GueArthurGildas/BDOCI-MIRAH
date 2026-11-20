@@ -805,6 +805,7 @@ erDiagram
         int8 entered_by FK
         timestamp created_at
         timestamp updated_at
+        varchar operation_milestone
     }
     logbook_entry_vessel {
         int8 logbook_entry_id FK
@@ -1118,6 +1119,10 @@ erDiagram
         varchar cloud_cover
         int2 wind_beaufort
         varchar sea_state
+        text weather_notes
+        text vessel_position
+        text vessel_activity
+        text comments
     }
     operation_counters {
         int8 category_id FK
@@ -1131,6 +1136,10 @@ erDiagram
         text body
         timestamp created_at
         timestamp updated_at
+        int8 channel_id FK
+        varchar direction
+        bool is_order_or_decision
+        int8 entered_by FK
     }
     operation_instructions {
         int8 id PK
@@ -1166,6 +1175,7 @@ erDiagram
         int8 closed_by FK
         timestamp created_at
         timestamp updated_at
+        text infractions_noted
     }
     patrol_tracks {
         int8 id PK
@@ -2267,6 +2277,7 @@ erDiagram
     presentations ||--o{ ers_catch_lines : "presentation_id"
     reference_list_values ||--o{ eez_declarations : "reception_channel_id"
     reference_list_values ||--o{ logbook_entries : "channel_id"
+    reference_list_values ||--o{ operation_events : "channel_id"
     reference_list_values ||--o{ slot_positions : "locality_id"
     reference_lists ||--o{ reference_list_values : "reference_list_id"
     roles ||--o{ permission_grants : "role_id"
@@ -2334,6 +2345,7 @@ erDiagram
     users ||--o{ missions : "created_by"
     users ||--o{ movements : "recorded_by"
     users ||--o{ observations : "author_id"
+    users ||--o{ operation_events : "entered_by"
     users ||--o{ operation_instructions : "given_by"
     users ||--o{ operation_user : "user_id"
     users ||--o{ operations : "closed_by"

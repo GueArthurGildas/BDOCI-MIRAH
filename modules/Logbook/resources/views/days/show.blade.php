@@ -10,6 +10,9 @@
                 @endcan
             @endif
             <a href="{{ route('logbook.days.word', $day) }}" class="btn btn-sm btn-outline-primary"><i class="feather icon-file-text"></i> {{ __('logbook::logbook.days.word') }}</a>
+            @if ($isOpen)
+                <a href="{{ route('logbook.days.print', $day) }}" target="_blank" class="btn btn-sm btn-outline-primary"><i class="feather icon-printer"></i> {{ __('logbook::logbook.print.pdf') }}</a>
+            @endif
         </x-slot:actions>
     </x-ui.page-header>
 
@@ -53,7 +56,10 @@
                                     <div class="text-muted f-12">{{ __($entry->direction->label()) }}</div>
                                 </td>
                                 <td class="text-wrap">
-                                    <span class="text-pre-line">{{ $entry->content }}</span>
+                                    @if ($entry->operation_milestone)
+                                        <x-ui.status-badge :status="$entry->operation_milestone" />
+                                    @endif
+                                    <span @class(['text-pre-line', 'text-danger' => $entry->operation_milestone === App\Enums\OperationMilestone::Opened, 'text-success' => $entry->operation_milestone === App\Enums\OperationMilestone::Closed])>{{ $entry->content }}</span>
                                     @if ($entry->is_order_or_decision)
                                         <span class="label label-danger">{{ __('logbook::logbook.entries.order_or_decision') }}</span>
                                     @endif
@@ -67,7 +73,12 @@
                                         <div><x-ui.vessel-link :vessel="$vessel" /></div>
                                     @endforeach
                                     @if ($entry->operation)
-                                        <div><a href="{{ route('operations.show', $entry->operation) }}">{{ $entry->operation->code }}</a></div>
+                                        <div>
+                                            <a href="{{ route('operations.show', $entry->operation) }}" @class(['text-danger' => $entry->operation_milestone === App\Enums\OperationMilestone::Opened, 'text-success' => $entry->operation_milestone === App\Enums\OperationMilestone::Closed])>
+                                                {{ __('logbook::logbook.entries.operation_'.($entry->operation_milestone?->value ?? 'linked'), ['code' => $entry->operation->code]) }}
+                                            </a>
+                                            <x-ui.status-badge :status="$entry->operation->status" />
+                                        </div>
                                     @endif
                                 </td>
                                 <td class="text-nowrap">
@@ -113,6 +124,27 @@
             </div>
 
             <div class="col-xl-4">
+                @can(App\Support\Authorization\Permission::OperationsView->value)
+                    <x-ui.card data-guide="operations" :title="__('operations::operations.in_progress_list')" :subtitle="__('operations::operations.in_progress_hint')" flush>
+                        <x-ui.table>
+                            <x-slot:head>
+                                <th>{{ __('operations::operations.fields.code') }}</th>
+                                <th>{{ __('operations::operations.fields.status') }}</th>
+                                <th>{{ __('operations::operations.last_event') }}</th>
+                            </x-slot:head>
+                            @forelse ($inProgress as $operation)
+                                <tr>
+                                    <td class="text-wrap"><a href="{{ route('operations.show', $operation) }}">{{ $operation->code }}</a></td>
+                                    <td><x-ui.status-badge :status="$operation->status" /></td>
+                                    <td class="text-nowrap">{{ $operation->events_max_occurred_at ? \Illuminate\Support\Carbon::parse($operation->events_max_occurred_at)->format('d/m H:i') : '—' }}</td>
+                                </tr>
+                            @empty
+                                <x-ui.empty-row colspan="3">{{ __('operations::operations.none_in_progress') }}</x-ui.empty-row>
+                            @endforelse
+                        </x-ui.table>
+                    </x-ui.card>
+                @endcan
+
                 @if ($isOpen)
                     @can(App\Support\Authorization\Permission::LogbookCreate->value)
                         <x-ui.card data-guide="new_entry" :title="__('logbook::logbook.entries.new')">
@@ -123,6 +155,7 @@
                                 <x-ui.form.select name="direction" :label="__('logbook::logbook.entries.fields.direction')" :options="App\Enums\LogbookDirection::options()" value="received" required />
                                 <x-ui.form.textarea name="content" :label="__('logbook::logbook.entries.fields.content')" rows="3" required />
                                 <x-ui.form.select name="operation_id" :label="__('logbook::logbook.entries.fields.operation')" :options="$operations" />
+                                <p class="text-muted f-12">{{ __('logbook::logbook.entries.operation_hint') }}</p>
                                 <div class="mb-3 row">
                                     <label for="vessel_ids" class="form-label col-sm-3 col-form-label">{{ __('logbook::logbook.entries.fields.vessels') }}</label>
                                     <div class="col-sm-9">

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\LogbookDirection;
 use App\Enums\LogbookHandlingStatus;
+use App\Enums\OperationMilestone;
 use App\Models\Concerns\Audited;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['logbook_day_id', 'occurred_at', 'channel_id', 'content', 'direction', 'is_order_or_decision', 'operation_id', 'handling_status', 'corrects_entry_id', 'entered_by'])]
+#[Fillable(['logbook_day_id', 'occurred_at', 'channel_id', 'content', 'direction', 'is_order_or_decision', 'operation_id', 'operation_milestone', 'handling_status', 'corrects_entry_id', 'entered_by'])]
 class LogbookEntry extends Model
 {
     use Audited, HasFactory;
@@ -23,6 +24,7 @@ class LogbookEntry extends Model
             'occurred_at' => 'datetime',
             'direction' => LogbookDirection::class,
             'handling_status' => LogbookHandlingStatus::class,
+            'operation_milestone' => OperationMilestone::class,
             'is_order_or_decision' => 'boolean',
         ];
     }

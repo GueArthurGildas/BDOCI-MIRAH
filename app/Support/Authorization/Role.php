@@ -112,6 +112,7 @@ enum Role: string
                 Permission::RegistryView,
                 Permission::OperationsView,
                 Permission::OperationsCreate,
+                Permission::OperationsClose,
                 Permission::WatchView,
                 Permission::WatchCreate,
                 Permission::MrepView,

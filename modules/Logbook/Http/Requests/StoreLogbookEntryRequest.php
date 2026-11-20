@@ -3,6 +3,7 @@
 namespace Modules\Logbook\Http\Requests;
 
 use App\Enums\LogbookDirection;
+use App\Enums\OperationStatus;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -16,7 +17,7 @@ class StoreLogbookEntryRequest extends FormRequest
             'direction' => ['required', Rule::enum(LogbookDirection::class)],
             'content' => ['required', 'string', 'max:5000'],
             'is_order_or_decision' => ['nullable', 'boolean'],
-            'operation_id' => ['nullable', 'exists:operations,id'],
+            'operation_id' => ['nullable', Rule::exists('operations', 'id')->whereIn('status', [OperationStatus::Open->value, OperationStatus::InProgress->value])],
             'vessel_ids' => ['nullable', 'array'],
             'vessel_ids.*' => ['exists:vessels,id'],
         ];

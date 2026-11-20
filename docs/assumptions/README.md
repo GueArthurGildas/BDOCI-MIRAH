@@ -35,7 +35,7 @@ Format d'une entrée :
 
 ## Index
 
-74 hypothèses provisoires, une par ligne ; le détail de chacune est dans `docs/assumptions/phase-<x>.md`.
+75 hypothèses provisoires, une par ligne ; le détail de chacune est dans `docs/assumptions/phase-<x>.md`.
 
 | Identifiant | Phase | Sujet | Option retenue (extrait) |
 |---|---|---|---|
@@ -55,6 +55,7 @@ Format d'une entrée :
 | `H-3a-6` | 3a | : reprise des observations existantes | les pages actuelles (`/logbook`) restent et écrivent dans `observations` ; chaque observation liée à un navire est reflétée dans `surveillan |
 | `H-3a-7` | 3a | : navires en veille et droits par défaut | une ligne de veille `logbook` est ouverte par navire et par ligne citée, close quand la ligne passe à « clos » (rouverte si elle est remise  |
 | `H-3a-8` | 3a | : nomenclatures des canaux et de la météo | listes de référence amorcées avec : canaux téléphone, e-mail, THEMIS, radio, courrier, en personne, interne ; visibilité bonne/moyenne/mauva |
+| `H-3a-9` | 3a | : opérations, main courante journalière et documents imprimés | validé (PROCOP_CSP/01) : ouverture en rouge et clôture en vert dans la main courante journalière, information d'une opération en cours dans sa seule main courante, tout agent clôture, PDF figé rangé dans le dossier, documents conformes aux modèles |
 | `H-3b-1` | 3b | : V18 : positions par API pour la photo d'un créneau ; V17 : URL directe par navire dans THEMIS | Les positions de la photo viennent de notre propre table `positions` par une interface `PositionFeed` dont le seul pilote est `LocalPosition |
 | `H-3b-2` | 3b | : V20 : localités à compter hors Abidjan, San Pedro et Sassandra | Liste de référence `counting_localities` (modifiable par l'Admin dans les listes de référence), alimentée avec Abidjan, San Pedro et Sassand |
 | `H-3b-3` | 3b | : RG04 : période d'émission requise et taux d'émission | Navire ivoirien : toute la période. Navire étranger : de la première à la dernière heure où une position est dans la ZEE sur la période. On  |

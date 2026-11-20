@@ -86,6 +86,7 @@ return [
             'steps' => [
                 'entries' => ['title' => 'The shift lines', 'text' => 'Each fact received is a line: when, how, what. After closing, the lines are locked.'],
                 'new_entry' => ['title' => 'Add a line', 'text' => 'Enter the time, the means, what happened, and attach the vessels concerned.'],
+                'operations' => ['title' => 'Operations in progress', 'text' => 'Open operations and their status; information about them goes into their own logbook. Opening in red, closing in green in the day.'],
                 'handovers' => ['title' => 'Shift handovers', 'text' => 'At 08:00 and 18:00 the outgoing operator records the handover: incoming operator, CSP manager, instructions; counters and open operations are captured automatically.'],
                 'close_day' => ['title' => 'Close the day', 'text' => 'At the morning handover, once the day\'s 24 hours are over, the outgoing operator closes it: unalterable PDF and locked lines (confirmation asked).'],
                 'pdf' => ['title' => 'PDF copy', 'text' => 'The day\'s frozen PDF, whose integrity can be checked.'],
@@ -120,11 +121,13 @@ return [
         'operations_show' => [
             'intro' => 'An operation\'s file, from the first finding to closing.',
             'steps' => [
-                'details' => ['title' => 'Details', 'text' => 'Category, vessels concerned, team and state of the operation.'],
-                'events' => ['title' => 'Timeline', 'text' => 'All the operation\'s events.'],
-                'add_event' => ['title' => 'Add an event', 'text' => 'Record each development as it happens.'],
+                'details' => ['title' => 'Context information', 'text' => 'Operation type and number, first event, weather, vessel involved (from the registry), CSP staff.'],
+                'events' => ['title' => 'Operation logbook', 'text' => 'All information about the operation, as WHEN / HOW / WHAT; it is not copied into the daily logbook.'],
+                'add_event' => ['title' => 'New line', 'text' => 'Time received at the CSP, means (phone, e-mail…), short text, order or decision.'],
+                'documents' => ['title' => 'Attachments', 'text' => 'Vessel sheets, prior port entry requests, licences, screenshots: the whole operation file.'],
                 'instructions' => ['title' => 'Instructions', 'text' => 'The instructions given to the teams for this operation.'],
-                'close' => ['title' => 'Close the operation', 'text' => 'Reserved for the Team lead: fill in the outcome then close; the operation\'s watch lines close.'],
+                'close' => ['title' => 'Close the operation', 'text' => 'Any agent: check the file, fill in the result and any infractions; the closing is written in green in the daily logbook and the operation logbook PDF is filed.'],
+                'closing' => ['title' => 'Operation closing', 'text' => 'Dates, total duration, reminder, result and infractions noted.'],
             ],
         ],
         'licenses_index' => [

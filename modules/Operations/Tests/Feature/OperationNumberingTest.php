@@ -6,6 +6,7 @@ use App\Enums\OperationCategoryCode;
 use App\Models\Operation;
 use App\Models\OperationCategory;
 use App\Support\Authorization\Role;
+use App\Support\Logbook\LogbookChannels;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\Attributes\Assumes;
 use Tests\Attributes\Covers;
@@ -17,7 +18,7 @@ class OperationNumberingTest extends TestCase
 
     private function open(OperationCategory $category, string $name, array $extra = [])
     {
-        return $this->post(route('operations.store'), ['category_id' => $category->id, 'name' => $name, ...$extra]);
+        return $this->post(route('operations.store'), ['category_id' => $category->id, 'name' => $name, 'channel_id' => app(LogbookChannels::class)->idFor('themis'), 'direction' => 'received', ...$extra]);
     }
 
     #[Covers('UC11', partial: true)]

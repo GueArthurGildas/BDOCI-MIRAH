@@ -2,6 +2,8 @@
 
 namespace Modules\Operations\Http\Requests;
 
+use App\Enums\LogbookDirection;
+use App\Support\Logbook\LogbookChannels;
 use App\Support\Operations\WeatherScales;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -27,6 +29,13 @@ class StoreOperationRequest extends FormRequest
             'cloud_cover' => ['nullable', Rule::in(array_keys($scales->options(WeatherScales::CLOUD_COVER)))],
             'wind_beaufort' => ['nullable', 'integer', 'between:0,12'],
             'sea_state' => ['nullable', Rule::in(array_keys($scales->options(WeatherScales::SEA_STATE)))],
+            'weather_notes' => ['nullable', 'string', 'max:5000'],
+            'vessel_position' => ['nullable', 'string', 'max:2000'],
+            'vessel_activity' => ['nullable', 'string', 'max:2000'],
+            'comments' => ['nullable', 'string', 'max:5000'],
+            'channel_id' => ['required', Rule::exists('reference_list_values', 'id')->where('reference_list_id', app(LogbookChannels::class)->ensure()->id)],
+            'direction' => ['required', Rule::enum(LogbookDirection::class)],
+            'supervised_by' => ['nullable', 'integer', Rule::exists('users', 'id')->where('is_active', true)],
         ];
     }
 

@@ -1138,6 +1138,7 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 | `origine` | `origin` | varchar(60) |
 | `resume` | `summary` | text |
 | `resultat` | `result` | text |
+| — (infractions éventuellement relevées) | `infractions_noted` | text |
 | `cree_par` | `created_by` | bigint |
 | `cloture_par` | `closed_by` | bigint |
 
@@ -1153,6 +1154,10 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 | `nebulosite` | `cloud_cover` | varchar(40) |
 | `vent_beaufort` | `wind_beaufort` | smallint |
 | `etat_mer` | `sea_state` | varchar(40) |
+| — (observations météo) | `weather_notes` | text |
+| — (position du navire) | `vessel_position` | text |
+| — (activité en cours) | `vessel_activity` | text |
+| — (commentaires / autres navires impliqués) | `comments` | text |
 
 ### `operation_vessel` (spécification : `operation_navire`)
 
@@ -1176,7 +1181,11 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 | `id` | `id` | bigint |
 | `operation_id` | `operation_id` | bigint |
 | `date_evt` | `occurred_at` | timestamp(0) |
+| — (COMMENT) | `channel_id` | bigint |
+| — (sens) | `direction` | varchar(40) |
 | `texte` | `body` | text |
+| — (ordre ou décision) | `is_order_or_decision` | boolean |
+| — (saisi par) | `entered_by` | bigint |
 
 ### `operation_instructions` (spécification : `operation_instruction`)
 
@@ -1221,6 +1230,7 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 | `sens` | `direction` | varchar(40) |
 | `est_ordre_ou_decision` | `is_order_or_decision` | boolean |
 | `operation_id` | `operation_id` | bigint |
+| — (ouverture ou clôture d'opération) | `operation_milestone` | varchar(40) |
 | `statut_traitement` | `handling_status` | varchar(40) |
 | `rectifie_evenement_id` | `corrects_entry_id` | bigint |
 | `saisi_par` | `entered_by` | bigint |

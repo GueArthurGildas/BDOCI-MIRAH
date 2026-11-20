@@ -2,21 +2,33 @@
 
 namespace Modules\Operations\Actions;
 
+use App\Enums\LogbookHandlingStatus;
+use App\Enums\OperationMilestone;
 use App\Enums\OperationStatus;
 use App\Models\Operation;
 use App\Models\OperationCategory;
 use App\Support\Actions\Action;
 use App\Support\Actions\ActionContext;
 use App\Support\Authorization\Permission;
+use App\Support\Logbook\LogbookChannels;
+use App\Support\Logbook\LogbookWriter;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Modules\Operations\Support\OperationNumbering;
 
 class OpenOperation extends Action
 {
-    private const CONTEXT_FIELDS = ['first_event', 'temperature', 'pressure', 'visibility', 'cloud_cover', 'wind_beaufort', 'sea_state'];
+    public const LEAD_ROLE = 'lead';
 
-    public function __construct(private readonly OperationNumbering $numbering) {}
+    public const MANAGER_ROLE = 'manager';
+
+    private const CONTEXT_FIELDS = ['first_event', 'temperature', 'pressure', 'visibility', 'cloud_cover', 'wind_beaufort', 'sea_state', 'weather_notes', 'vessel_position', 'vessel_activity', 'comments'];
+
+    public function __construct(
+        private readonly OperationNumbering $numbering,
+        private readonly LogbookWriter $logbook,
+        private readonly LogbookChannels $channels,
+    ) {}
 
     public function code(): string
     {
@@ -52,8 +64,24 @@ class OpenOperation extends Action
             $operation->context()->create($contextFields);
         }
 
-        $operation->personnel()->attach($context->actor->id, ['role' => 'lead']);
+        $operation->personnel()->attach($context->actor->id, ['role' => self::LEAD_ROLE]);
+
+        if (! empty($input['supervised_by']) && (int) $input['supervised_by'] !== $context->actor->id) {
+            $operation->personnel()->attach($input['supervised_by'], ['role' => self::MANAGER_ROLE]);
+        }
+
         $operation->vessels()->sync($input['vessel_ids'] ?? []);
+
+        $this->logbook->write($context, [
+            'occurred_at' => $startedAt,
+            'channel_id' => $input['channel_id'] ?? $this->channels->idFor(LogbookChannels::INTERNAL),
+            'direction' => $input['direction'] ?? null,
+            'content' => filled($input['summary'] ?? null) ? $input['summary'] : $operation->name,
+            'operation_id' => $operation->id,
+            'operation_milestone' => OperationMilestone::Opened,
+            'handling_status' => LogbookHandlingStatus::InProgress,
+            'vessel_ids' => $operation->vessels->pluck('id')->all(),
+        ]);
 
         foreach ($operation->vessels as $vessel) {
             $context->publish(
