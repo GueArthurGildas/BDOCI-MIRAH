@@ -235,7 +235,12 @@
 @media (max-width: 991.98px) {
     .gs-shell {
         flex-direction: column;
+        align-items: stretch;
         padding: 12px;
+    }
+
+    .gs-content {
+        width: 100%;
     }
 
     .gs-sidebar {

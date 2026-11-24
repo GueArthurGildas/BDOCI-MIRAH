@@ -111,6 +111,25 @@
         font-size: 1.05rem;
     }
 
+    &.has-actions {
+        flex-wrap: wrap;
+    }
+
+    .gs-stat-text {
+        flex: 1 1 0;
+        min-width: 0;
+    }
+
+    .gs-stat-actions {
+        flex: 1 0 100%;
+        padding-top: 10px;
+        border-top: 1px solid var(--gs-line);
+
+        .btn {
+            width: 100%;
+        }
+    }
+
     .gs-stat-icon {
         display: flex;
         flex: 0 0 52px;
@@ -136,5 +155,34 @@
         font: 600 .72rem var(--gs-font-title);
         letter-spacing: .05em;
         text-transform: uppercase;
+    }
+}
+
+.gs-recent-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gs-line);
+
+    &:last-child {
+        border-bottom: 0;
+    }
+
+    .gs-recent-text {
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .gs-recent-item {
+        flex-wrap: wrap;
+
+        .gs-recent-text {
+            flex-basis: 100%;
+            order: 3;
+        }
     }
 }

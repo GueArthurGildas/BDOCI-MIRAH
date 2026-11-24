@@ -128,4 +128,25 @@ class ProfileTest extends TestCase
 
         $this->get(route('profile.show'))->assertDontSee('enums.alert_rule_type');
     }
+
+    public function test_each_kpi_card_opens_its_five_latest_items_and_links_to_its_table(): void
+    {
+        $user = $this->signInAs(Role::Agent);
+
+        foreach (range(1, 7) as $index) {
+            InternalNote::factory()->create(['recipient_user_id' => $user->id, 'recipient_team_id' => null, 'free_text' => 'Message numéro '.$index, 'is_read' => false, 'created_at' => now()->subHours(10 - $index)]);
+        }
+
+        $response = $this->get(route('profile.show'))->assertOk();
+
+        foreach (['messages', 'urgencies', 'alerts', 'pending'] as $key) {
+            $response->assertSee('data-bs-target="#kpi-'.$key.'"', false)->assertSee('id="kpi-'.$key.'"', false);
+        }
+
+        $modal = str($response->getContent())->after('id="kpi-messages"')->before('id="kpi-urgencies"');
+        $this->assertSame(5, substr_count($modal, 'gs-recent-item'));
+        $this->assertStringContainsString('Message numéro 7', $modal);
+        $this->assertStringNotContainsString('Message numéro 2', $modal);
+        $this->assertStringContainsString(route('communications.notes.index'), $modal);
+    }
 }

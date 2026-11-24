@@ -26,6 +26,10 @@ return [
     'view' => 'View',
     'back' => 'Back',
     'close' => 'Close',
+    'required_fields' => 'Required fields',
+    'open_full_page' => 'Open as full page',
+    'form_error' => 'The form contains errors.',
+    'form_failed' => 'Saving failed. Try again or open the form as a full page.',
     'back_home' => 'Back to home',
     'actions' => 'Actions',
     'all' => 'All',
@@ -35,6 +39,22 @@ return [
     'saved' => 'Changes saved.',
     'updated_at' => 'Updated at :time',
 
+    'morning_menu' => [
+        'title' => 'Morning board',
+        'hint' => 'The screens of a CSP watch day, in working order',
+        'sections' => [
+            'shift' => 'Taking the watch',
+            'watch' => 'Monitoring and alerts',
+            'record' => 'Recording information',
+            'operations' => 'Operations and exchanges',
+            'follow_up' => 'Follow-up and decisions',
+        ],
+        'links' => [
+            'handover' => 'Shift handover',
+            'today' => 'Today\'s logbook',
+            'new_operation' => 'Open an operation',
+        ],
+    ],
     'navigation_folders' => [
         'e_inspection' => 'e-inspection',
         'morning_board' => 'Morning board',

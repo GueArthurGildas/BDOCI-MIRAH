@@ -1,11 +1,15 @@
-@props(['title', 'subtitle' => null, 'breadcrumbs' => [], 'icon' => null, 'actions' => null])
+@props(['title', 'subtitle' => null, 'breadcrumbs' => [], 'icon' => null, 'actions' => null, 'back' => null])
 @inject('navigation', App\Support\Navigation\Navigation::class)
 @php($icon ??= $navigation->activeItemFor(auth()->user())?->icon ?? 'icon-file-text')
+@php($back ??= collect($breadcrumbs)->last())
 
 <div class="page-header">
     <div class="row align-items-center">
         <div class="col-lg-8">
             <div class="page-header-title">
+                @if ($back)
+                    <a href="{{ $back }}" class="btn btn-default btn-sm gs-back" data-gs-back data-bs-toggle="tooltip" data-bs-title="{{ __('ui.back') }}" aria-label="{{ __('ui.back') }}"><i class="feather icon-arrow-left"></i></a>
+                @endif
                 <span class="gs-page-icon"><i class="feather {{ $icon }}"></i></span>
                 <div>
                     <h4>{{ $title }}</h4>

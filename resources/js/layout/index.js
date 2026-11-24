@@ -1,4 +1,5 @@
 import { initAutoSubmit } from './auto-submit';
+import { initBackButtons } from './back';
 import { initCardActions } from './card-actions';
 import { initCheckAll } from './check-all';
 import { initConfirmations } from './confirm';
@@ -9,6 +10,7 @@ import { initGuide } from './guide';
 import { initHoverPreview } from './hover-preview';
 import { initLiveLists } from './live-list';
 import { initMenuFolders } from './menu';
+import { initModalForms } from './modal-forms';
 import { initNotifications } from './notifications';
 import { initSelects } from './selects';
 import { initTablePagination } from './table-pagination';
@@ -27,6 +29,8 @@ export function initLayout() {
     initHoverPreview();
     initConfirmations();
     initRemoteModals();
+    initModalForms();
+    initBackButtons();
     initPopup();
     initGuide();
     initFullScreenToggle();

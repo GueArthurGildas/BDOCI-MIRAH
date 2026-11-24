@@ -22,6 +22,20 @@ return [
         'updated' => 'Votre photo a été mise à jour.',
         'removed' => 'Votre photo a été retirée.',
     ],
+    'recent' => [
+        'open' => 'Voir les :count derniers',
+        'hint' => 'Les :count éléments les plus récents.',
+        'all_messages' => 'Voir tous les messages',
+        'all_alerts' => 'Voir toutes les alertes',
+        'all_observations' => 'Voir les observations en suspens',
+        'all_operations' => 'Voir les opérations',
+        'kinds' => [
+            'message' => 'Message',
+            'alert' => 'Alerte',
+            'observation' => 'Observation',
+            'operation' => 'Opération',
+        ],
+    ],
     'cards' => [
         'messages' => 'Messages non lus',
         'urgencies' => 'Urgences',

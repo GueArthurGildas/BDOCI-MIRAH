@@ -5,6 +5,6 @@
         <button type="submit" class="btn btn-primary">
             <i class="feather icon-save"></i> {{ __('ui.save') }}
         </button>
-        <a href="{{ $cancel }}" class="btn btn-default m-l-10">{{ __('ui.cancel') }}</a>
+        <a href="{{ $cancel }}" class="btn btn-default m-l-10" data-gs-dismiss>{{ __('ui.cancel') }}</a>
     </div>
 </div>

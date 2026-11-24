@@ -39,12 +39,30 @@
             </div>
 
             <div class="col-xl-8">
+                @php
+                    $kpis = [
+                        'messages' => [$space['unreadMessages'], 'icon-mail', $space['unreadMessages'] > 0 ? 'warning' : 'success'],
+                        'urgencies' => [$space['urgentAlerts']->count() + $space['urgentNotes']->count(), 'icon-alert-octagon', ($space['urgentAlerts']->count() + $space['urgentNotes']->count()) > 0 ? 'danger' : 'success'],
+                        'alerts' => [array_sum($space['alertCounts']), 'icon-bell', 'info'],
+                        'pending' => [$space['observations']->count() + $space['dueNotes']->count() + $space['operations']->count(), 'icon-clock', 'primary'],
+                    ];
+                @endphp
                 <div class="row">
-                    <div class="col-md-3 col-6"><x-ui.stat-card :label="__('profile::profile.cards.messages')" :value="Number::format($space['unreadMessages'])" icon="icon-mail" :color="$space['unreadMessages'] > 0 ? 'warning' : 'success'" compact /></div>
-                    <div class="col-md-3 col-6"><x-ui.stat-card :label="__('profile::profile.cards.urgencies')" :value="Number::format($space['urgentAlerts']->count() + $space['urgentNotes']->count())" icon="icon-alert-octagon" :color="($space['urgentAlerts']->count() + $space['urgentNotes']->count()) > 0 ? 'danger' : 'success'" compact /></div>
-                    <div class="col-md-3 col-6"><x-ui.stat-card :label="__('profile::profile.cards.alerts')" :value="Number::format(array_sum($space['alertCounts']))" icon="icon-bell" color="info" compact /></div>
-                    <div class="col-md-3 col-6"><x-ui.stat-card :label="__('profile::profile.cards.pending')" :value="Number::format($space['observations']->count() + $space['dueNotes']->count() + $space['operations']->count())" icon="icon-clock" color="primary" compact /></div>
+                    @foreach ($kpis as $key => [$count, $icon, $color])
+                        <div class="col-xxl-3 col-md-6">
+                            <x-ui.stat-card :label="__('profile::profile.cards.'.$key)" :value="Number::format($count)" :icon="$icon" :color="$color" compact>
+                                <x-slot:actions>
+                                    <button type="button" class="btn btn-default btn-sm" data-bs-toggle="modal" data-bs-target="#kpi-{{ $key }}">
+                                        <i class="feather icon-list"></i> {{ __('profile::profile.recent.open', ['count' => Modules\Profile\Support\KpiRecent::LIMIT]) }}
+                                    </button>
+                                </x-slot:actions>
+                            </x-ui.stat-card>
+                        </div>
+                    @endforeach
                 </div>
+                @foreach ($recent as $key => $items)
+                    @include('profile::partials.kpi-modal', ['key' => $key, 'recent' => $items])
+                @endforeach
 
                 @include('profile::partials.messages', ['title' => __('profile::profile.messages.title'), 'notes' => $space['messages'], 'unread' => $space['unreadMessages']])
                 @include('profile::partials.urgencies')

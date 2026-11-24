@@ -1,4 +1,5 @@
 <header class="gs-topbar">
+    @include('layouts.partials.morning-menu')
     <ul class="gs-tabs">
         @foreach ($tree as $groupLabel => $nodes)
             @php($firstNode = $nodes->first())

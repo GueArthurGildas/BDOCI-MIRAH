@@ -16,6 +16,25 @@
         align-items: center;
         gap: 16px;
 
+        .gs-back {
+            display: inline-flex;
+            flex: none;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            padding: 0;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, .35);
+            color: #fff;
+
+            &:hover,
+            &:focus-visible {
+                background: var(--gs-orange);
+                border-color: var(--gs-orange);
+            }
+        }
+
         h4 {
             margin: 0;
             color: #fff;

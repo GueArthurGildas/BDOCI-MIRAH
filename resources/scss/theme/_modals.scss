@@ -543,3 +543,61 @@ tr:target {
     object-fit: contain;
     cursor: default;
 }
+
+.gs-form-modal {
+    &.fade .modal-dialog {
+        opacity: 0;
+        transform: translateY(18px) scale(.98);
+        transition: transform .28s cubic-bezier(.2, .8, .3, 1), opacity .22s ease-out;
+    }
+
+    &.show .modal-dialog {
+        opacity: 1;
+        transform: none;
+    }
+
+    .modal-header {
+        padding: 16px 24px;
+        border-bottom: 1px solid var(--gs-line);
+    }
+
+    .modal-title {
+        margin: 0;
+    }
+
+    .modal-body {
+        padding: 20px 24px;
+        background: var(--gs-surface-alt);
+        text-align: left;
+
+        > .row:last-child,
+        > .card:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    .modal-footer {
+        padding: 10px 24px;
+        border-top: 1px solid var(--gs-line);
+    }
+
+    p {
+        margin: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        &.fade .modal-dialog {
+            transition: none;
+        }
+    }
+}
+
+.gs-required::after,
+.gs-required-mark {
+    color: var(--gs-red);
+    font-weight: 700;
+}
+
+.gs-required::after {
+    content: " *";
+}

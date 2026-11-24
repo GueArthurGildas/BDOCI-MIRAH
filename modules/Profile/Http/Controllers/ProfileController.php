@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Modules\Profile\Http\Requests\AvatarRequest;
+use Modules\Profile\Support\KpiRecent;
 use Modules\Profile\Support\PersonalSpace;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -20,11 +21,13 @@ class ProfileController extends Controller
     public function show(Request $request): View
     {
         $user = $request->user()->load(['team', 'roles']);
+        $space = PersonalSpace::for($user);
 
         return view('profile::show', [
             'user' => $user,
             'roles' => $user->roles->map(fn ($role) => Role::labelFor($role->name))->all(),
-            'space' => PersonalSpace::for($user),
+            'space' => $space,
+            'recent' => KpiRecent::for($user, $space),
         ]);
     }
 

@@ -28,6 +28,7 @@
 
     @include('layouts.partials.confirm-modal')
     @include('layouts.partials.remote-modal')
+    @include('layouts.partials.form-modal')
     @include('layouts.partials.popup')
     @include('layouts.partials.guide')
 </body>

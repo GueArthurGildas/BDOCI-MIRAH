@@ -26,6 +26,10 @@ return [
     'view' => 'Voir',
     'back' => 'Retour',
     'close' => 'Fermer',
+    'required_fields' => 'Champs obligatoires',
+    'open_full_page' => 'Ouvrir en pleine page',
+    'form_error' => 'Le formulaire contient des erreurs.',
+    'form_failed' => 'L\'enregistrement a échoué. Réessayez ou ouvrez le formulaire en pleine page.',
     'back_home' => 'Retour à l\'accueil',
     'actions' => 'Actions',
     'all' => 'Tous',
@@ -35,6 +39,22 @@ return [
     'saved' => 'Modifications enregistrées.',
     'updated_at' => 'Mis à jour à :time',
 
+    'morning_menu' => [
+        'title' => 'Tableau du matin',
+        'hint' => 'Les écrans d\'une journée de quart au CSP, dans l\'ordre du travail',
+        'sections' => [
+            'shift' => 'Prise de quart',
+            'watch' => 'Veille et alertes',
+            'record' => 'Enregistrer l\'information',
+            'operations' => 'Opérations et échanges',
+            'follow_up' => 'Suivi et décisions',
+        ],
+        'links' => [
+            'handover' => 'Relève de quart',
+            'today' => 'Main courante du jour',
+            'new_operation' => 'Ouvrir une opération',
+        ],
+    ],
     'navigation_folders' => [
         'e_inspection' => 'e-inspection',
         'morning_board' => 'Tableau du matin',

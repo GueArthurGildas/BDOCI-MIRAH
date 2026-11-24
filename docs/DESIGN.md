@@ -38,6 +38,10 @@ Toutes les surcharges vivent dans `resources/scss/theme/`, importé en dernier d
 
 Ajouter une entrée de menu se fait dans la classe `Navigation` (via le fournisseur du module), jamais dans les vues. Les textes passent par `lang/{en,fr}/ui.php` ou `modules/*/lang`.
 
+**Menu « Tableau du matin »** : bouton noir à gauche de la barre orange, qui ouvre un grand panneau des écrans d'une journée de quart, rangés dans l'ordre du travail de l'agent et du Chef d'équipe (prise de quart, veille et alertes, enregistrer l'information, opérations et échanges, suivi et décisions). La liste est dans `App\Support\Navigation\MorningMenu` (route, libellé, icône, droit) ; un lien n'apparaît que si la route existe et que l'utilisateur a le droit ; sans aucun lien (Admin), le bouton disparaît.
+
+**Bouton retour** : `<x-ui.page-header>` affiche une flèche à gauche du titre dès qu'il a un fil d'Ariane ; elle revient à la page précédente de l'application (historique) ou, à défaut, au dernier lien du fil d'Ariane. `:back="url"` impose la cible, `:back="false"` la retire.
+
 ## Écrire une page
 
 ```blade
@@ -85,6 +89,9 @@ Trois fenêtres Bootstrap sont montées une fois dans le layout (`layouts/partia
 - **Confirmation** : tout `<form>` (ou bouton d'envoi) portant `data-confirm` ouvre une fenêtre avec le message, un lien « Annuler » et un bouton orange (`data-confirm-label`). `data-confirm-title` change le titre ; `data-confirm-details` (JSON `[{label, value}]`) ajoute des tuiles de récapitulatif. Les textes d'un module sont dans `modules/<Module>/lang/{en,fr}/confirm.php`.
 - **Réussite** : une redirection avec `->with('status', …)->with('popup', true)` affiche le message dans une fenêtre à coche verte au lieu du bandeau ; `->with('popup', [['label' => …, 'value' => …]])` ajoute des tuiles.
 - **Aperçu** : un lien `data-gs-modal` charge son URL en AJAX dans la fenêtre ; la route renvoie un fragment HTML sans layout (exemple : l'œil à côté d'un navire, `vessels.quick`).
+- **Formulaires** (`layouts/partials/form-modal`, `resources/js/layout/modal-forms.js`) : tout lien vers une page qui se termine par `/create`, `/edit` ou `/rectify` (ou portant `data-gs-modal-form`) ouvre le `.page-body` de cette page dans une grande fenêtre animée, avec son titre et un lien « Ouvrir en pleine page ». Les liens de la barre, de la sidebar ou portant `data-gs-no-modal` gardent la navigation normale. Un formulaire POST de la fenêtre est envoyé en AJAX avec l'en-tête `X-Gs-Modal` : le middleware `ModalFormRedirects` change la redirection en JSON `{redirect}` (le message flash est conservé pour la page suivante) et les erreurs de validation reviennent en 422, affichées sous chaque champ sans fermer la fenêtre. Le bouton « Annuler » de `<x-ui.form.actions>` (`data-gs-dismiss`) ferme la fenêtre.
+- **Champs obligatoires** : le libellé d'un champ `required` porte une étoile rouge (classe `gs-required`, posée par les composants `x-ui.form.*` et, pour les formulaires écrits à la main, par le script au chargement) ; la fenêtre de formulaire rappelle « * Champs obligatoires ».
+- **Cartes indicateurs** : `<x-ui.stat-card>` accepte un emplacement `actions` affiché en bas de la carte ; sur le profil, chaque carte ouvre une fenêtre avec ses 5 éléments les plus récents (`Modules\Profile\Support\KpiRecent`) et un bouton « Voir … » vers le tableau du module.
 
 
 ## Listes, filtres et pagination
@@ -95,3 +102,7 @@ Trois fenêtres Bootstrap sont montées une fois dans le layout (`layouts/partia
 - **Contenu chargé après coup** : un script qui doit agir sur du contenu remplacé (modal, liste filtrée) s'enregistre avec `onContent` (`resources/js/layout/content.js`) ; l'événement `gs:content` est émis après chaque remplacement.
 - **Libellés du navigateur** : les textes utilisés par ces scripts viennent des attributs `data-gs-*` de la balise `<html>` (jamais de texte en dur dans le JavaScript).
 - **Notions voisines** : alerte, communication et notification sont expliquées par l'encart `x-ui.notion-hint` des trois pages concernées.
+
+## Petits écrans
+
+Sous 992 px, `.gs-shell` passe en colonne avec `align-items: stretch` et `.gs-content` prend toute la largeur : sans cela le contenu prenait la largeur de son élément le plus large et la page défilait horizontalement. Vérification : aucune page testée (profil, journée, navire, opération, liste et création d'opération, tableau du matin, observations) ne déborde à 500, 800 et 1280 px (sonde `scrollWidth` du skill `ui-verify`).
