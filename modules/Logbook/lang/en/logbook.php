@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'title' => 'Logbook',
-    'subtitle' => 'Shared operational log of observations and follow-ups between teams',
+    'title' => 'Observations',
+    'subtitle' => 'Agents\' observations; each one is written in the daily logbook',
     'list_title' => 'Observations',
     'create_title' => 'New observation',
     'new' => 'New observation',
@@ -13,6 +13,7 @@ return [
     'search_placeholder' => 'Vessel name or registration…',
     'no_vessel' => 'No vessel',
     'fields' => [
+        'logbook_entry' => 'Daily logbook',
         'observed_at' => 'Observed at',
         'vessel' => 'Vessel',
         'zone' => 'Zone',
@@ -105,6 +106,10 @@ return [
         'operation_opened' => 'Operation :code opened',
         'operation_closed' => 'Operation :code closed',
         'operation_linked' => 'Operation :code',
+        'observation' => 'Observation no. :id',
+        'surveillance_observation' => 'Surveillance observation no. :id',
+        'witness_report' => 'Visual sighting report no. :id',
+        'logbook_line' => 'Line of :day at :time UTC',
         'rectify_title' => 'Rectifying line',
         'rectify_hint' => 'The original line stays unchanged; the rectification is recorded in the current day.',
         'original' => 'Original line',

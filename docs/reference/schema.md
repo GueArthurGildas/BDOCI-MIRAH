@@ -1066,6 +1066,7 @@ erDiagram
         timestamp closed_at
         timestamp created_at
         timestamp updated_at
+        int8 logbook_entry_id FK
     }
     observed_units {
         int8 id PK
@@ -2081,6 +2082,7 @@ erDiagram
         varchar status
         timestamp created_at
         timestamp updated_at
+        int8 logbook_entry_id FK
     }
     witnesses {
         int8 id PK
@@ -2220,9 +2222,11 @@ erDiagram
     logbook_entries ||--o{ internal_notes : "logbook_entry_id"
     logbook_entries ||--o{ logbook_entries : "corrects_entry_id"
     logbook_entries ||--o{ logbook_entry_vessel : "logbook_entry_id"
+    logbook_entries ||--o{ observations : "logbook_entry_id"
     logbook_entries ||--o{ sent_messages : "logbook_entry_id"
     logbook_entries ||--o{ surveillance_observations : "logbook_entry_id"
     logbook_entries ||--o{ watch_entries : "logbook_entry_id"
+    logbook_entries ||--o{ witness_reports : "logbook_entry_id"
     message_templates ||--o{ dispatch_rules : "message_template_id"
     message_templates ||--o{ sent_messages : "message_template_id"
     missions ||--o{ infraction_cases : "mission_id"

@@ -20,6 +20,7 @@ final class ObservationMirror
             [
                 'vessel_id' => $observation->vessel_id,
                 'body' => $observation->description,
+                'logbook_entry_id' => $observation->logbook_entry_id,
                 'status' => $observation->status === ObservationStatus::Closed ? SurveillanceObservationStatus::Closed : SurveillanceObservationStatus::Monitoring,
                 'created_by' => $observation->author_id,
                 'created_at' => $observation->observed_at,

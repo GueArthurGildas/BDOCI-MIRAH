@@ -39,6 +39,8 @@ class VesselController extends Controller
 
     private const TRACK_LENGTH = 12;
 
+    private const LOGBOOK_LIMIT = 50;
+
     public function index(Request $request): View
     {
         $filters = $request->validate([
@@ -105,6 +107,14 @@ class VesselController extends Controller
             'externalLists.institution',
         ]);
 
+        $vessel->setRelation('logbookEntries', $vessel->logbookEntries()
+            ->with(['channel', 'operation', 'observation', 'surveillanceObservation', 'witnessReport'])
+            ->latest('occurred_at')
+            ->limit(self::LOGBOOK_LIMIT)
+            ->get());
+        $vessel->setRelation('operations', $vessel->operations()->with('category')->latest('started_at')->get());
+        $vessel->setRelation('witnessReports', $vessel->witnessReports()->with('logbookEntry')->latest('received_at')->get());
+        $vessel->load('observations.logbookEntry');
         $vessel->setRelation('infractions', OpenInfractionCases::forVessel($vessel->id));
         $vessel->setRelation('missions', VesselMissions::forVessel($vessel->id));
 
@@ -195,13 +205,14 @@ class VesselController extends Controller
             'alerts' => Permission::TrackingView,
             'eez' => Permission::MovementsView,
             'watch' => Permission::WatchView,
+            'logbook' => Permission::LogbookView,
             'inspections' => Permission::InspectionsView,
             'infractions' => Permission::InfractionsView,
             'communications' => Permission::CommunicationsView,
             'documents' => Permission::LicensesView,
         ];
 
-        return collect(['indicators', 'identity', 'identifiers', 'actors', 'sources', 'licenses', 'devices', 'alerts', 'movements', 'eez', 'watch', 'observations', 'inspections', 'infractions', 'catches', 'missions', 'communications', 'documents', 'comments', 'timeline'])
+        return collect(['indicators', 'identity', 'logbook', 'identifiers', 'actors', 'sources', 'licenses', 'devices', 'alerts', 'movements', 'eez', 'watch', 'observations', 'inspections', 'infractions', 'catches', 'missions', 'communications', 'documents', 'comments', 'timeline'])
             ->filter(fn (string $tab) => ! isset($gated[$tab]) || auth()->user()->can($gated[$tab]->value))
             ->values()
             ->all();

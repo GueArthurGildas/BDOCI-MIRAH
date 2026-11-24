@@ -10,8 +10,11 @@ use App\Models\OperationCategory;
 use App\Support\Actions\Action;
 use App\Support\Actions\ActionContext;
 use App\Support\Authorization\Permission;
+use App\Support\Documents\DocumentStore;
 use App\Support\Logbook\LogbookChannels;
 use App\Support\Logbook\LogbookWriter;
+use App\Support\Printing\PdfRenderer;
+use App\Support\Vessels\VesselSheet;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Modules\Operations\Support\OperationNumbering;
@@ -28,6 +31,8 @@ class OpenOperation extends Action
         private readonly OperationNumbering $numbering,
         private readonly LogbookWriter $logbook,
         private readonly LogbookChannels $channels,
+        private readonly VesselSheet $sheets,
+        private readonly DocumentStore $documents,
     ) {}
 
     public function code(): string
@@ -84,6 +89,11 @@ class OpenOperation extends Action
         ]);
 
         foreach ($operation->vessels as $vessel) {
+            $this->documents->attach(
+                $this->documents->storeContent($this->sheets->filename($vessel), PdfRenderer::inPrintLocale(fn () => $this->sheets->render($vessel, $context->actor)), 'application/pdf', $context->actor, freeze: true),
+                $operation,
+            );
+
             $context->publish(
                 vessel: $vessel,
                 module: 'operations',

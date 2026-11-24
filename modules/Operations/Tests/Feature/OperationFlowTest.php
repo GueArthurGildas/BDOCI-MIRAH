@@ -11,9 +11,11 @@ use App\Models\Vessel;
 use App\Models\VesselEvent;
 use App\Models\WatchEntry;
 use App\Support\Authorization\Role;
+use App\Support\Documents\DocumentStore;
 use App\Support\Logbook\LogbookChannels;
 use App\Support\Watch\WatchList;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Activitylog\Models\Activity;
 use Tests\Attributes\Assumes;
 use Tests\Attributes\Covers;
@@ -22,6 +24,13 @@ use Tests\TestCase;
 class OperationFlowTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Storage::fake(DocumentStore::DISK);
+    }
 
     public function test_guests_are_redirected_and_administrators_are_forbidden(): void
     {

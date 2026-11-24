@@ -69,7 +69,7 @@ class WitnessReportController extends Controller
 
     public function show(WitnessReport $report): View
     {
-        $report->load(['witness', 'enteredBy', 'operation', 'reportedVessels.vessel', 'usability', 'investigation', 'decisions.decider', 'infractionCases', 'activitiesAsSubject.causer']);
+        $report->load(['witness', 'enteredBy', 'operation', 'logbookEntry.day', 'reportedVessels.vessel', 'usability', 'investigation', 'decisions.decider', 'infractionCases', 'activitiesAsSubject.causer']);
 
         return view('witnesses::show', [
             'report' => $report,

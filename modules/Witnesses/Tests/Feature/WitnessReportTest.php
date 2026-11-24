@@ -2,17 +2,22 @@
 
 namespace Modules\Witnesses\Tests\Feature;
 
+use App\Enums\LogbookDayStatus;
 use App\Enums\OperationCategoryCode;
 use App\Enums\WitnessReportStatus;
 use App\Models\AuthorizedListPublication;
+use App\Models\LogbookEntry;
 use App\Models\Operation;
 use App\Models\OperationCategory;
 use App\Models\User;
 use App\Models\Vessel;
 use App\Models\VesselEvent;
+use App\Models\WatchEntry;
 use App\Models\Witness;
 use App\Models\WitnessReport;
 use App\Support\Authorization\Role;
+use App\Support\Logbook\LogbookCalendar;
+use App\Support\Logbook\LogbookChannels;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Activitylog\Models\Activity;
 use Tests\Attributes\Assumes;
@@ -157,5 +162,45 @@ class WitnessReportTest extends TestCase
 
         $this->signInAs(Role::Agent);
         $this->get(route('witnesses.distributions.index'))->assertForbidden();
+    }
+
+    #[Covers('UC15', partial: true)]
+    #[Assumes('H-3a-10')]
+    public function test_a_received_report_is_written_in_the_daily_logbook_at_its_reception_time(): void
+    {
+        $this->travelTo(now()->setTime(10, 0));
+        $this->signInAs(Role::Agent);
+        $vessel = Vessel::factory()->create(['registration_number' => 'AN-5151']);
+
+        $this->record([
+            'received_at' => now()->subMinutes(30)->format('Y-m-d H:i'),
+            'channel' => 'email',
+            'vessels' => [['name' => 'CALIPSO', 'registration' => 'AN-5151', 'description' => 'Palangres à l\'eau']],
+        ])->assertSessionHasNoErrors();
+
+        $report = WitnessReport::sole();
+        $entry = LogbookEntry::sole();
+        $this->assertSame($entry->id, $report->logbook_entry_id);
+        $this->assertSame(now()->subMinutes(30)->format('Y-m-d H:i'), $entry->occurred_at->format('Y-m-d H:i'));
+        $this->assertSame(app(LogbookChannels::class)->idFor('email'), $entry->channel_id);
+        $this->assertSame("CALIPSO / AN-5151 : Palangres à l'eau", $entry->content);
+        $this->assertSame([$vessel->id], $entry->vessels()->pluck('vessels.id')->all());
+        $this->assertSame(0, WatchEntry::count());
+
+        $this->get(route('witnesses.show', $report))->assertOk()->assertSee(route('logbook.days.show', $entry->logbook_day_id).'#entry-'.$entry->id, false);
+        $this->get(route('logbook.days.show', $entry->logbook_day_id))->assertOk()->assertSee(route('witnesses.show', $report));
+    }
+
+    #[Covers('UC15', partial: true)]
+    public function test_a_report_received_on_a_closed_logbook_day_is_refused(): void
+    {
+        $this->travelTo(now()->setTime(10, 0));
+        $this->signInAs(Role::Agent);
+        $day = app(LogbookCalendar::class)->dayFor(now()->subDays(3));
+        $day->update(['status' => LogbookDayStatus::Closed]);
+
+        $this->record(['received_at' => now()->subDays(3)->format('Y-m-d H:i')])->assertSessionHasErrors('received_at');
+
+        $this->assertSame(0, WitnessReport::count());
     }
 }

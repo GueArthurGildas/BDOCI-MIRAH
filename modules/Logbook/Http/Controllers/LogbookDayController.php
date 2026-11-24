@@ -108,7 +108,7 @@ class LogbookDayController extends Controller
 
     public function show(LogbookDay $day, LogbookChannels $channels, DocumentStore $documents): View
     {
-        $day->load(['entries.channel', 'entries.vessels', 'entries.operation', 'entries.author', 'entries.corrects', 'entries.corrections', 'closing.closer', 'pdfDocument', 'handovers.outgoing', 'handovers.incoming', 'handovers.supervisor']);
+        $day->load(['entries.channel', 'entries.vessels', 'entries.operation', 'entries.author', 'entries.corrects', 'entries.corrections', 'entries.observation', 'entries.surveillanceObservation', 'entries.witnessReport', 'closing.closer', 'pdfDocument', 'handovers.outgoing', 'handovers.incoming', 'handovers.supervisor']);
         $inProgress = Operation::query()
             ->whereIn('status', [OperationStatus::Open, OperationStatus::InProgress])
             ->with('category')

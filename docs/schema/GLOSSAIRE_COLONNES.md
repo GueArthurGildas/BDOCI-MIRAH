@@ -1533,6 +1533,7 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 | `operation_id` | `operation_id` | bigint |
 | `saisi_par` | `entered_by` | bigint |
 | `statut` | `status` | varchar(40) |
+| — | `logbook_entry_id` | bigint |
 
 ### `reported_vessels` (spécification : `signalement_navire`)
 

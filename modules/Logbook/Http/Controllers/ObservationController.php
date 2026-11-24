@@ -69,7 +69,7 @@ class ObservationController extends Controller
 
     public function show(Observation $observation): View
     {
-        $observation->load(['vessel', 'zone', 'author', 'team', 'activitiesAsSubject.causer']);
+        $observation->load(['vessel', 'zone', 'author', 'team', 'logbookEntry.day', 'activitiesAsSubject.causer']);
 
         return view('logbook::show', compact('observation'));
     }

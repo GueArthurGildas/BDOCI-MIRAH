@@ -20,6 +20,11 @@
                         <x-ui.detail :label="__('logbook::logbook.fields.longitude')">{{ $observation->longitude ? Number::format($observation->longitude, 4) : '' }}</x-ui.detail>
                         <x-ui.detail :label="__('logbook::logbook.fields.author')">{{ $observation->author->name }}</x-ui.detail>
                         <x-ui.detail :label="__('logbook::logbook.fields.team')">{{ $observation->team?->name }}</x-ui.detail>
+                        <x-ui.detail :label="__('logbook::logbook.fields.logbook_entry')">
+                            @if ($observation->logbookEntry)
+                                <a href="{{ route('logbook.days.show', $observation->logbookEntry->logbook_day_id) }}#entry-{{ $observation->logbookEntry->id }}">{{ __('logbook::logbook.entries.logbook_line', ['day' => $observation->logbookEntry->day->day->isoFormat('L'), 'time' => $observation->logbookEntry->occurred_at->format('H:i')]) }}</a>
+                            @endif
+                        </x-ui.detail>
                         <x-ui.detail :label="__('logbook::logbook.fields.closed_at')">{{ $observation->closed_at?->isoFormat('L LT') }}</x-ui.detail>
                     </x-ui.detail-list>
                 </x-ui.card>

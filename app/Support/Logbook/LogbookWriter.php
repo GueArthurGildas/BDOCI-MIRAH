@@ -47,7 +47,7 @@ final class LogbookWriter
                 $this->watchList->open($vessel, WatchOrigin::Logbook, $context->actor, $entry);
             }
 
-            if ($entry->operation_milestone !== null) {
+            if ($entry->operation_milestone !== null || ! ($input['publishes_vessel_event'] ?? true)) {
                 continue;
             }
 

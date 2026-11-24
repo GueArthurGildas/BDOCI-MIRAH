@@ -27,12 +27,15 @@ return [
         'operation' => 'Opération liée au signalement.',
         'decided' => 'Décision enregistrée.',
     ],
+    'logbook_line' => 'Ligne du :day à :time UTC',
     'errors' => [
         'operation_not_inn' => 'L\'opération liée doit être une opération INN.',
         'already_decided' => 'Ce signalement a déjà été classé ou transmis.',
+        'logbook_day_closed' => 'La main courante de cette date est clôturée : saisissez une ligne rectificative dans la main courante.',
     ],
     'fields' => [
         'received_at' => 'Reçu le (UTC)',
+        'logbook' => 'Main courante journalière',
         'channel' => 'Canal',
         'latitude' => 'Latitude',
         'longitude' => 'Longitude',

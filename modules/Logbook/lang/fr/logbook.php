@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'title' => 'Main courante',
-    'subtitle' => 'Journal opérationnel partagé des observations et des relais entre équipes',
+    'title' => 'Observations',
+    'subtitle' => 'Observations des agents ; chacune est inscrite dans la main courante journalière',
     'list_title' => 'Observations',
     'create_title' => 'Nouvelle observation',
     'new' => 'Nouvelle observation',
@@ -13,6 +13,7 @@ return [
     'search_placeholder' => 'Nom ou immatriculation du navire…',
     'no_vessel' => 'Aucun navire',
     'fields' => [
+        'logbook_entry' => 'Main courante journalière',
         'observed_at' => 'Date et heure',
         'vessel' => 'Navire',
         'zone' => 'Zone',
@@ -105,6 +106,10 @@ return [
         'operation_opened' => 'Opération :code ouverte',
         'operation_closed' => 'Opération :code close',
         'operation_linked' => 'Opération :code',
+        'observation' => 'Observation n° :id',
+        'surveillance_observation' => 'Observation de surveillance n° :id',
+        'witness_report' => 'Rapport d\'observation visuelle n° :id',
+        'logbook_line' => 'Ligne du :day à :time UTC',
         'rectify_title' => 'Ligne rectificative',
         'rectify_hint' => 'La ligne d\'origine reste inchangée ; la rectification est inscrite dans la journée en cours.',
         'original' => 'Ligne d\'origine',

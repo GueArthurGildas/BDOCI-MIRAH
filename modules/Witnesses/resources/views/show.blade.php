@@ -19,6 +19,15 @@
                         <x-ui.detail :label="__('witnesses::witnesses.fields.channel')">{{ __($report->channel->label()) }}</x-ui.detail>
                         <x-ui.detail :label="__('witnesses::witnesses.fields.position')">@if ($report->latitude !== null) {{ $report->latitude }}, {{ $report->longitude }} @endif</x-ui.detail>
                         <x-ui.detail :label="__('witnesses::witnesses.fields.entered_by')">{{ $report->enteredBy?->name }}</x-ui.detail>
+                        <x-ui.detail :label="__('witnesses::witnesses.fields.logbook')">
+                            @if ($report->logbookEntry)
+                                @can(App\Support\Authorization\Permission::LogbookView->value)
+                                    <a href="{{ route('logbook.days.show', $report->logbookEntry->logbook_day_id) }}#entry-{{ $report->logbookEntry->id }}">{{ __('witnesses::witnesses.logbook_line', ['day' => $report->logbookEntry->day->day->isoFormat('L'), 'time' => $report->logbookEntry->occurred_at->format('H:i')]) }}</a>
+                                @else
+                                    {{ __('witnesses::witnesses.logbook_line', ['day' => $report->logbookEntry->day->day->isoFormat('L'), 'time' => $report->logbookEntry->occurred_at->format('H:i')]) }}
+                                @endcan
+                            @endif
+                        </x-ui.detail>
                         <x-ui.detail :label="__('witnesses::witnesses.fields.witness')">
                             @if ($report->witness)
                                 {{ $report->witness->name }} — {{ __($report->witness->category->label()) }}

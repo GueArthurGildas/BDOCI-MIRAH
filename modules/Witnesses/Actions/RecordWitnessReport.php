@@ -2,6 +2,8 @@
 
 namespace Modules\Witnesses\Actions;
 
+use App\Enums\LogbookDayStatus;
+use App\Enums\ReportChannel;
 use App\Enums\WitnessCategory;
 use App\Enums\WitnessReportStatus;
 use App\Models\Vessel;
@@ -10,14 +12,31 @@ use App\Models\WitnessReport;
 use App\Support\Actions\Action;
 use App\Support\Actions\ActionContext;
 use App\Support\Authorization\Permission;
+use App\Support\Logbook\LogbookCalendar;
+use App\Support\Logbook\LogbookChannels;
+use App\Support\Logbook\LogbookWriter;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
+use Illuminate\Validation\ValidationException;
 
 class RecordWitnessReport extends Action
 {
     private const MAX_VESSELS = 2;
 
+    private const LOGBOOK_CHANNELS = [
+        'email' => 'email',
+        'phone' => 'phone',
+        'mail' => 'mail',
+        'form' => 'mail',
+    ];
+
     private const VESSEL_FIELDS = ['latitude', 'longitude', 'name', 'flag', 'registration_port', 'type', 'ircs', 'registration', 'other_marks', 'gear', 'is_fishing', 'route', 'is_drifting', 'is_resupplying', 'is_transshipping', 'description'];
+
+    public function __construct(
+        private readonly LogbookWriter $logbook,
+        private readonly LogbookChannels $channels,
+        private readonly LogbookCalendar $calendar,
+    ) {}
 
     public function code(): string
     {
@@ -31,9 +50,15 @@ class RecordWitnessReport extends Action
 
     public function handle(ActionContext $context, array $input): WitnessReport
     {
+        $receivedAt = filled($input['received_at'] ?? null) ? Carbon::parse($input['received_at']) : now();
+
+        if ($this->calendar->dayFor($receivedAt)->status !== LogbookDayStatus::Open) {
+            throw ValidationException::withMessages(['received_at' => __('witnesses::witnesses.errors.logbook_day_closed')]);
+        }
+
         $report = WitnessReport::create([
             ...Arr::only($input, ['latitude', 'longitude', 'channel']),
-            'received_at' => filled($input['received_at'] ?? null) ? Carbon::parse($input['received_at']) : now(),
+            'received_at' => $receivedAt,
             'witness_id' => $this->witness($input)?->id,
             'entered_by' => $context->actor->id,
             'status' => WitnessReportStatus::Received,
@@ -65,7 +90,40 @@ class RecordWitnessReport extends Action
             }
         }
 
+        $report->load('reportedVessels');
+
+        $entry = $this->logbook->write($context, [
+            'occurred_at' => $report->received_at,
+            'channel_id' => $this->channel($report->channel),
+            'content' => $this->summary($report),
+            'vessel_ids' => $report->reportedVessels->pluck('vessel_id')->filter()->unique()->values()->all(),
+            'opens_watch' => false,
+            'publishes_vessel_event' => false,
+        ]);
+
+        $report->update(['logbook_entry_id' => $entry->id]);
+
         return $report;
+    }
+
+    private function channel(ReportChannel $channel): int
+    {
+        $code = self::LOGBOOK_CHANNELS[$channel->value] ?? LogbookChannels::INTERNAL;
+        $list = $this->channels->ensure();
+
+        return $list->values()->where('code', $code)->value('id') ?? $this->channels->idFor(LogbookChannels::INTERNAL);
+    }
+
+    private function summary(WitnessReport $report): string
+    {
+        $lines = $report->reportedVessels
+            ->map(fn ($vessel) => collect([
+                collect([$vessel->name, $vessel->ircs, $vessel->registration])->filter()->implode(' / '),
+                $vessel->description,
+            ])->filter()->implode(' : '))
+            ->filter();
+
+        return $lines->isEmpty() ? '—' : $lines->implode(PHP_EOL);
     }
 
     /** @param array<string, mixed> $input */

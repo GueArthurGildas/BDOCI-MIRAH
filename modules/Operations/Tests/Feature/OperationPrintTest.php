@@ -115,8 +115,11 @@ class OperationPrintTest extends TestCase
         $this->travelTo(now()->addDays(2)->setTime(10, 21));
         $this->post(route('operations.close', $operation), ['result' => 'VMS réparé.', 'channel_id' => $this->channel('email'), 'direction' => 'received'])->assertSessionHasNoErrors();
 
-        $pdf = app(DocumentStore::class)->for($operation->fresh())->sole();
-        $this->assertSame(OperationDocument::basename($operation).'.pdf', $pdf->name);
+        $documents = app(DocumentStore::class)->for($operation->fresh());
+        $pdf = $documents->firstWhere('name', OperationDocument::basename($operation).'.pdf');
+        $this->assertNotNull($pdf);
+        $this->assertCount(2, $documents);
+        $this->assertTrue($documents->contains(fn ($document) => str_starts_with($document->name, 'fiche-')));
         $this->assertTrue($pdf->is_frozen);
         $this->assertStringStartsWith('%PDF', Storage::disk(DocumentStore::DISK)->get($pdf->path));
 

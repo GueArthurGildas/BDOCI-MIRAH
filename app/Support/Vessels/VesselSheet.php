@@ -13,6 +13,8 @@ use Illuminate\Support\Str;
 
 final class VesselSheet
 {
+    private const LOGBOOK_LINES = 10;
+
     public function filename(Vessel $vessel): string
     {
         return 'fiche-'.Str::slug($vessel->registration_number ?: $vessel->name).'.pdf';
@@ -21,6 +23,8 @@ final class VesselSheet
     public function render(Vessel $vessel, ?User $generatedBy = null): string
     {
         $vessel->load(['currentLicense', 'latestPosition.zone', 'flagCountry', 'homePort', 'identifiers', 'actors.legalEntity', 'actors.person', 'trackingDevices', 'currentState']);
+        $vessel->setRelation('operations', $vessel->operations()->with('category')->latest('started_at')->get());
+        $vessel->setRelation('logbookEntries', $vessel->logbookEntries()->with(['channel', 'operation'])->latest('occurred_at')->limit(self::LOGBOOK_LINES)->get());
         $indicators = VesselIndicators::for($vessel);
 
         return Pdf::loadView('vessels::sheet', [
@@ -29,7 +33,7 @@ final class VesselSheet
             'photo' => $this->photo($vessel),
             'generatedAt' => now(),
             'generatedBy' => $generatedBy ?? auth()->user(),
-        ])->output();
+        ])->setOption('isFontSubsettingEnabled', true)->output();
     }
 
     public function document(Vessel $vessel, ?User $generatedBy = null): GeneratedDocument

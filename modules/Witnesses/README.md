@@ -9,3 +9,4 @@ Signalements de témoins (navire de l'État, pêcheur, caboteur, autorité portu
 - Diffusion de la liste des navires autorisés : destinataire et date par version publiée.
 - Permissions : `witnesses.view`, `witnesses.create` (Agent compris), `witnesses.manage` (exploitabilité, enquête, décision, diffusion : Chef d'équipe, Directeur).
 - Hypothèses : H-6-8 (`docs/assumptions/phase-6.md`).
+- Main courante (H-3a-10) : un rapport reçu écrit une ligne dans la main courante journalière à son heure de réception, avec le canal du rapport et les navires signalés ; la page du rapport renvoie à cette ligne. Un rapport reçu à une date dont la main courante est clôturée est refusé.

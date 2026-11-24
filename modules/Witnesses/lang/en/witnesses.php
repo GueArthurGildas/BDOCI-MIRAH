@@ -27,12 +27,15 @@ return [
         'operation' => 'Operation linked to the report.',
         'decided' => 'Decision recorded.',
     ],
+    'logbook_line' => 'Line of :day at :time UTC',
     'errors' => [
         'operation_not_inn' => 'The linked operation must be an IUU operation.',
         'already_decided' => 'This report has already been dismissed or forwarded.',
+        'logbook_day_closed' => 'The logbook of this date is closed: add a rectifying line to the logbook.',
     ],
     'fields' => [
         'received_at' => 'Received on (UTC)',
+        'logbook' => 'Daily logbook',
         'channel' => 'Channel',
         'latitude' => 'Latitude',
         'longitude' => 'Longitude',

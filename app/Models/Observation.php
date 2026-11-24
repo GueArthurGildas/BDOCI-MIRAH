@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 #[Fillable([
     'vessel_id', 'team_id', 'author_id', 'zone_id', 'observed_at', 'latitude',
-    'longitude', 'description', 'level', 'status', 'follow_up', 'closed_at',
+    'longitude', 'description', 'level', 'status', 'follow_up', 'closed_at', 'logbook_entry_id',
 ])]
 class Observation extends Model
 {
@@ -49,6 +49,11 @@ class Observation extends Model
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id');
+    }
+
+    public function logbookEntry(): BelongsTo
+    {
+        return $this->belongsTo(LogbookEntry::class, 'logbook_entry_id');
     }
 
     public function zone(): BelongsTo

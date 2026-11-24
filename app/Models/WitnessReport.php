@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-#[Fillable(['received_at', 'witness_id', 'latitude', 'longitude', 'channel', 'operation_id', 'entered_by', 'status'])]
+#[Fillable(['received_at', 'witness_id', 'latitude', 'longitude', 'channel', 'operation_id', 'entered_by', 'status', 'logbook_entry_id'])]
 class WitnessReport extends Model
 {
     use Audited, HasFactory;
@@ -36,6 +36,11 @@ class WitnessReport extends Model
     public function operation(): BelongsTo
     {
         return $this->belongsTo(Operation::class);
+    }
+
+    public function logbookEntry(): BelongsTo
+    {
+        return $this->belongsTo(LogbookEntry::class, 'logbook_entry_id');
     }
 
     public function enteredBy(): BelongsTo

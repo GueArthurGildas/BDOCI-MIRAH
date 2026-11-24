@@ -1487,6 +1487,7 @@ CREATE TABLE witness_reports (
     operation_id bigint,
     entered_by bigint,
     status varchar(40) NOT NULL DEFAULT 'received' CHECK (status IN ('received', 'verified', 'closed', 'forwarded')),
+    logbook_entry_id bigint,
     created_at timestamp(0) NULL,
     updated_at timestamp(0) NULL
 );
@@ -2189,6 +2190,7 @@ ALTER TABLE transshipments ADD CONSTRAINT transshipments_partner_vessel_id_forei
 ALTER TABLE witness_reports ADD CONSTRAINT witness_reports_witness_id_foreign FOREIGN KEY (witness_id) REFERENCES witnesses (id);
 ALTER TABLE witness_reports ADD CONSTRAINT witness_reports_operation_id_foreign FOREIGN KEY (operation_id) REFERENCES operations (id);
 ALTER TABLE witness_reports ADD CONSTRAINT witness_reports_entered_by_foreign FOREIGN KEY (entered_by) REFERENCES users (id);
+ALTER TABLE witness_reports ADD CONSTRAINT witness_reports_logbook_entry_id_foreign FOREIGN KEY (logbook_entry_id) REFERENCES logbook_entries (id);
 ALTER TABLE reported_vessels ADD CONSTRAINT reported_vessels_witness_report_id_foreign FOREIGN KEY (witness_report_id) REFERENCES witness_reports (id);
 ALTER TABLE reported_vessels ADD CONSTRAINT reported_vessels_vessel_id_foreign FOREIGN KEY (vessel_id) REFERENCES vessels (id);
 ALTER TABLE report_usabilities ADD CONSTRAINT report_usabilities_witness_report_id_foreign FOREIGN KEY (witness_report_id) REFERENCES witness_reports (id);

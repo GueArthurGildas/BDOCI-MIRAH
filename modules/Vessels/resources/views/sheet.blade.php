@@ -14,6 +14,9 @@
         table.data { width: 100%; border-collapse: collapse; }
         table.data th, table.data td { padding: 4px 6px; border-bottom: 1px solid #e3e6ee; text-align: left; }
         table.data th { width: 32%; font-weight: normal; color: #6b7280; }
+        table.list { width: 100%; border-collapse: collapse; }
+        table.list th, table.list td { padding: 3px 5px; border: 1px solid #e3e6ee; text-align: left; vertical-align: top; }
+        table.list th { background: #f3f4f6; font-weight: bold; }
         .tag { display: inline-block; padding: 1px 6px; border: 1px solid #f58f35; border-radius: 3px; font-weight: bold; }
         .footer { margin-top: 24px; font-size: 8px; color: #6b7280; }
     </style>
@@ -88,6 +91,29 @@
                 @endif
             </td>
         </tr>
+    </table>
+
+    <h2>{{ __('vessels::vessels.logbook.sheet') }}</h2>
+    <table class="list">
+        <tr><th>{{ __('vessels::vessels.columns.reference') }}</th><th>{{ __('vessels::vessels.logbook.opened_at') }}</th><th>{{ __('vessels::vessels.columns.closed_at') }}</th><th>{{ __('vessels::vessels.columns.status') }}</th></tr>
+        @forelse ($vessel->operations as $operation)
+            <tr><td>{{ $operation->code }}</td><td>{{ $operation->started_at?->isoFormat('L LT') }}</td><td>{{ $operation->ended_at?->isoFormat('L LT') ?? '—' }}</td><td>{{ __($operation->status->label()) }}</td></tr>
+        @empty
+            <tr><td colspan="4" class="muted">{{ __('vessels::vessels.logbook.no_operation') }}</td></tr>
+        @endforelse
+    </table>
+    <p class="muted" style="margin: 8px 0 4px;">{{ __('vessels::vessels.logbook.sheet_entries') }}</p>
+    <table class="list">
+        <tr><th>{{ __('vessels::vessels.logbook.when') }}</th><th>{{ __('vessels::vessels.logbook.how') }}</th><th>{{ __('vessels::vessels.logbook.what') }}</th></tr>
+        @forelse ($vessel->logbookEntries as $entry)
+            <tr>
+                <td style="white-space: nowrap;">{{ $entry->occurred_at->format('d/m/Y H:i') }}</td>
+                <td>{{ $entry->channel?->label }}</td>
+                <td>{{ $entry->content }}@if ($entry->operation) ({{ $entry->operation->code }})@endif</td>
+            </tr>
+        @empty
+            <tr><td colspan="3" class="muted">{{ __('vessels::vessels.logbook.none') }}</td></tr>
+        @endforelse
     </table>
 
     <p class="footer">{{ __('vessels::vessels.sheet.generated', ['date' => $generatedAt->isoFormat('L LT'), 'user' => $generatedBy->name]) }}</p>

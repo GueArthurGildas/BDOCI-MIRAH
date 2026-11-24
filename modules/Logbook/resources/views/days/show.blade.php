@@ -49,7 +49,7 @@
                         </x-slot:head>
 
                         @forelse ($day->entries as $entry)
-                            <tr>
+                            <tr id="entry-{{ $entry->id }}">
                                 <td class="text-nowrap">{{ $entry->occurred_at->format('H:i') }}</td>
                                 <td>
                                     {{ $entry->channel->label }}
@@ -72,6 +72,7 @@
                                     @foreach ($entry->vessels as $vessel)
                                         <div><x-ui.vessel-link :vessel="$vessel" /></div>
                                     @endforeach
+                                    @include('logbook::partials.entry-sources')
                                     @if ($entry->operation)
                                         <div>
                                             <a href="{{ route('operations.show', $entry->operation) }}" @class(['text-danger' => $entry->operation_milestone === App\Enums\OperationMilestone::Opened, 'text-success' => $entry->operation_milestone === App\Enums\OperationMilestone::Closed])>

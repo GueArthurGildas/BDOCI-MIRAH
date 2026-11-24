@@ -12,10 +12,11 @@ final class VesselFolderTree
     private const ITEMS_LIMIT = 10;
 
     private const FOLDERS = [
+        'logbook' => ['icon' => 'icon-book', 'leaves' => ['logbook', 'observations', 'watch']],
         'identification' => ['icon' => 'icon-user', 'leaves' => ['identity', 'photos', 'identifiers', 'actors', 'sources']],
         'licensing' => ['icon' => 'icon-file-text', 'leaves' => ['licenses', 'documents']],
-        'tracking' => ['icon' => 'icon-radio', 'leaves' => ['position', 'devices', 'alerts', 'movements', 'eez', 'watch']],
-        'controls' => ['icon' => 'icon-clipboard', 'leaves' => ['inspections', 'infractions', 'observations']],
+        'tracking' => ['icon' => 'icon-radio', 'leaves' => ['position', 'devices', 'alerts', 'movements', 'eez']],
+        'controls' => ['icon' => 'icon-clipboard', 'leaves' => ['inspections', 'infractions']],
         'activity' => ['icon' => 'icon-anchor', 'leaves' => ['catches', 'missions']],
         'follow_up' => ['icon' => 'icon-activity', 'leaves' => ['indicators', 'communications', 'comments', 'timeline']],
     ];
@@ -72,7 +73,8 @@ final class VesselFolderTree
             'watch' => [$vessel->watchEntries, null],
             'inspections' => [$vessel->externalInspections, fn ($inspection) => trim($inspection->started_at?->isoFormat('L').' '.($inspection->port?->name ?? ''))],
             'infractions' => [$vessel->infractionCases, fn ($case) => $case->reference],
-            'observations' => [$vessel->observations, null],
+            'observations' => [$vessel->observations->concat($vessel->witnessReports), null],
+            'logbook' => [$vessel->logbookEntries, null],
             'catches' => [$vessel->catchDeclarations, null],
             'missions' => [$vessel->missions, fn ($mission) => $mission->code],
             'communications' => [$vessel->sentMessages->concat($vessel->internalNotes), null],

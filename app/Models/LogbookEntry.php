@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 #[Fillable(['logbook_day_id', 'occurred_at', 'channel_id', 'content', 'direction', 'is_order_or_decision', 'operation_id', 'operation_milestone', 'handling_status', 'corrects_entry_id', 'entered_by'])]
 class LogbookEntry extends Model
@@ -57,6 +58,21 @@ class LogbookEntry extends Model
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'entered_by');
+    }
+
+    public function observation(): HasOne
+    {
+        return $this->hasOne(Observation::class, 'logbook_entry_id');
+    }
+
+    public function surveillanceObservation(): HasOne
+    {
+        return $this->hasOne(SurveillanceObservation::class, 'logbook_entry_id');
+    }
+
+    public function witnessReport(): HasOne
+    {
+        return $this->hasOne(WitnessReport::class, 'logbook_entry_id');
     }
 
     public function vessels(): BelongsToMany

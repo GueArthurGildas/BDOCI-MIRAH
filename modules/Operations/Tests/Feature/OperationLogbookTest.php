@@ -213,4 +213,19 @@ class OperationLogbookTest extends TestCase
 
         $this->assertCount(0, app(DocumentStore::class)->for($operation));
     }
+
+    #[Covers('UC11', partial: true)]
+    public function test_opening_an_operation_files_the_sheet_of_each_vessel_in_the_operation_file(): void
+    {
+        $this->signInAs(Role::Agent);
+        $vessel = Vessel::factory()->create(['name' => 'CALIPSO', 'registration_number' => 'AN-1234']);
+
+        $operation = $this->open(['vessel_ids' => [$vessel->id]]);
+
+        $sheet = app(DocumentStore::class)->for($operation)->sole();
+        $this->assertSame('fiche-an-1234.pdf', $sheet->name);
+        $this->assertSame('application/pdf', $sheet->mime_type);
+        $this->assertTrue(app(DocumentStore::class)->isIntact($sheet));
+        $this->get(route('operations.show', $operation))->assertOk()->assertSee('fiche-an-1234.pdf');
+    }
 }

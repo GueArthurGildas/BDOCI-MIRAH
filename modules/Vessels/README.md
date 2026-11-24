@@ -23,3 +23,9 @@ Fiche navire, identifiants multiples, historique des noms et pavillons, acteurs 
 - **Vue en dossiers** : `?view=folders&pane=<volet>`, arbre à gauche construit par `Support/VesselFolderTree` (dossiers, sous-dossiers, éléments), volet à droite réutilisant les partiels des onglets ; les volets suivent les mêmes permissions que les onglets.
 - **Fiche technique** : `vessels.sheet` génère un PDF (identification, caractéristiques, licence, balise et dernière émission, photo principale).
 - **Statuts** : au survol, chaque badge explique sa signification (`enums.descriptions.*`).
+
+## Main courante sur la fiche navire (H-3a-10)
+
+- Onglet et dossier « Main courante » (droit `logbook.view`) : opérations du navire avec leur statut (droit `operations.view`) et 50 dernières lignes de main courante journalière qui le citent, chacune reliée à sa journée.
+- L'onglet Observations ajoute les rapports d'observation visuelle où le navire est reconnu (droit `witnesses.view`) et la ligne de main courante de chaque observation.
+- La fiche technique PDF ajoute les opérations du navire et ses 10 dernières lignes de main courante ; elle est rangée, figée, dans le dossier de chaque opération ouverte pour le navire.

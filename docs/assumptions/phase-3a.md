@@ -112,3 +112,16 @@ Aucune de ces hypothèses n'est une règle validée. Pour retrouver les tests qu
 | Où | `Modules\Operations\Actions\OpenOperation`, `CloseOperation`, `AddOperationEvent`, `AttachOperationDocument` ; `Modules\Logbook\Actions\RecordOperationLogbookLine` et `App\Support\Operations\OperationLogbook` ; `App\Support\Logbook\LogbookDayDocument`, `Modules\Operations\Support\OperationDocument`, `App\Support\Printing\*` |
 | Pour changer | modifier ces classes ; la mise en page commune est dans `App\Support\Printing` (Word) et `resources/views/printing/document.blade.php` (PDF) |
 | Tests | `OperationLogbookTest`, `OperationPrintTest`, `LogbookPrintTest`, `LogbookFoldersTest::test_the_word_document_follows_the_daily_logbook_template` |
+
+## H-3a-10 : observations, rapports d'observation visuelle et main courante journalière
+
+| Champ | Contenu |
+|---|---|
+| Identifiant | `H-3a-10` |
+| Statut | **règle validée** pour le principe (manuel PROCOP_CSP/01, logigramme figure 2 : toute information reçue au CSP qui ne concerne pas une opération existante est inscrite dans la main courante journalière ; PROCOP_CSP/02 « Enregistrer l'information » ; PROCOP_CSP/06 réception d'un signalement) ; les points marqués « provisoire » restent à confirmer |
+| Question | où apparaissent les observations des agents et les rapports d'observation visuelle des témoins dans la main courante, et sur la fiche navire |
+| Option retenue | **Validé** : une observation enregistrée et un rapport d'observation visuelle reçu écrivent chacun une ligne dans la main courante journalière ; la ligne et l'observation (ou le rapport) se renvoient l'une à l'autre ; à l'ouverture d'une opération, la fiche de chaque navire impliqué est rangée dans le dossier de l'opération (logigramme figure 2 « Insertion de la fiche du navire dans le dossier opération ») ; la fiche navire montre les opérations du navire et les lignes de main courante qui le citent. **Provisoire** : la ligne d'une observation est datée de son enregistrement (heure de réception au CSP), canal « Interne » ; la ligne d'un rapport est datée de sa réception, avec le canal du rapport (e-mail, téléphone, courrier ; fiche papier = courrier ; télécopie = « Interne » faute de canal) et pour texte les navires signalés et leur description ; un rapport reçu à une date dont la main courante est clôturée est refusé ; la ligne d'un rapport ne met pas le navire en veille (l'opération INN s'en charge) ; la fiche navire jointe à l'opération est figée |
+| Alternatives | inscrire l'observation à l'heure observée ; ajouter un canal « Télécopie » ; ne joindre la fiche navire qu'à la demande |
+| Où | `Modules\Logbook\Actions\OpenObservation`, `Modules\Witnesses\Actions\RecordWitnessReport`, `Modules\Operations\Actions\OpenOperation`, `App\Support\Logbook\LogbookWriter`, `App\Support\Vessels\VesselSheet`, onglet `logbook` de la fiche navire |
+| Pour changer | modifier ces actions ; les canaux se règlent dans la liste de référence `logbook_channels` |
+| Tests | `ObservationLogbookTest`, `WitnessReportTest::test_a_received_report_is_written_in_the_daily_logbook_at_its_reception_time`, `VesselLogbookTest`, `OperationLogbookTest::test_opening_an_operation_files_the_sheet_of_each_vessel_in_the_operation_file` |

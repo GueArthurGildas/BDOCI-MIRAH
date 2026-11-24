@@ -30,7 +30,7 @@ final class LogbookDayDocument
     /** @param array<string, mixed>|null $counters */
     public function build(LogbookDay $day, ?array $counters = null, ?string $closingInstructions = null, ?User $closer = null, ?Carbon $closedAt = null): PrintedDocument
     {
-        $day->loadMissing(['entries.channel', 'entries.vessels', 'entries.operation', 'entries.corrects', 'handovers.outgoing', 'handovers.incoming', 'handovers.supervisor', 'closing.closer']);
+        $day->loadMissing(['entries.channel', 'entries.vessels', 'entries.operation', 'entries.corrects', 'entries.observation', 'entries.surveillanceObservation', 'entries.witnessReport', 'handovers.outgoing', 'handovers.incoming', 'handovers.supervisor', 'closing.closer']);
 
         if ($counters === null && $day->closing) {
             $counters = $day->closing->counters;
@@ -130,6 +130,16 @@ final class LogbookDayDocument
 
         if ($entry->vessels->isNotEmpty() && $entry->operation_milestone === null) {
             $lines[] = ['text' => $entry->vessels->pluck('name')->join(', ')];
+        }
+
+        if ($entry->observation) {
+            $lines[] = ['text' => __('logbook::logbook.entries.observation', ['id' => $entry->observation->id]), 'italic' => true];
+        } elseif ($entry->surveillanceObservation) {
+            $lines[] = ['text' => __('logbook::logbook.entries.surveillance_observation', ['id' => $entry->surveillanceObservation->id]), 'italic' => true];
+        }
+
+        if ($entry->witnessReport) {
+            $lines[] = ['text' => __('logbook::logbook.entries.witness_report', ['id' => $entry->witnessReport->id]), 'italic' => true];
         }
 
         if ($entry->operation) {

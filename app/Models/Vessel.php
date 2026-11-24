@@ -278,6 +278,21 @@ class Vessel extends Model
         return $this->belongsToMany(Mission::class, 'observed_units')->distinct()->latest('missions.planned_start_at');
     }
 
+    public function logbookEntries(): BelongsToMany
+    {
+        return $this->belongsToMany(LogbookEntry::class, 'logbook_entry_vessel');
+    }
+
+    public function witnessReports(): BelongsToMany
+    {
+        return $this->belongsToMany(WitnessReport::class, 'reported_vessels')->distinct();
+    }
+
+    public function operations(): BelongsToMany
+    {
+        return $this->belongsToMany(Operation::class, 'operation_vessel');
+    }
+
     public function watchEntries(): HasMany
     {
         return $this->hasMany(WatchEntry::class)->latest('started_at');
