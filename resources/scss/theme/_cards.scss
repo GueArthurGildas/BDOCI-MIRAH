@@ -186,3 +186,31 @@
         }
     }
 }
+
+.gs-map-title {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.gs-map-action {
+    display: block;
+    margin-top: 4px;
+    padding: 4px 8px;
+    border-radius: var(--gs-radius-sm);
+    background: var(--gs-orange-tint);
+    color: var(--gs-orange-darker);
+    font-weight: 600;
+
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.gs-map-square span {
+    display: block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--gs-surface);
+    border-radius: var(--gs-radius-sm);
+}

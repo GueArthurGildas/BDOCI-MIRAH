@@ -47,6 +47,7 @@ class SettingsTest extends TestCase
             'missions_team_lead_authorizes_port' => 0,
             'missions_team_lead_authorizes_aerial_drone' => 0,
             'communications_default_daily_cap' => 3,
+            'watch_csp_manager' => '',
             'alerts_prepared_messages_enabled' => 1,
             'alerts_prepared_messages_cooldown_hours' => 4,
         ], $overrides);
@@ -73,6 +74,18 @@ class SettingsTest extends TestCase
         $this->assertSame(90, config('surveillance.notification_poll_seconds'));
         $this->assertFalse(config('surveillance.alerts.beacons_silent.enabled'));
         $this->assertSame(['notifications.poll_seconds', 'alerts.beacons_silent.enabled'], Setting::orderBy('id')->pluck('key')->all());
+    }
+
+    public function test_the_csp_manager_name_is_a_text_setting(): void
+    {
+        $this->signInAs(Role::Admin);
+
+        $this->get(route('administration.settings'))->assertOk()->assertSee('name="watch_csp_manager"', false);
+
+        $this->put(route('administration.settings.update'), $this->validPayload(['watch_csp_manager' => '  Maxime DIOMANDE ']))->assertSessionHasNoErrors();
+
+        $this->assertSame('Maxime DIOMANDE', config('surveillance.watch.csp_manager'));
+        $this->assertSame('Maxime DIOMANDE', Setting::where('key', 'watch.csp_manager')->value('value'));
     }
 
     public function test_values_equal_to_the_default_are_not_stored(): void

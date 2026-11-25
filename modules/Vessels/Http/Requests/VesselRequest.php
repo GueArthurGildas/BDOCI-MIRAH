@@ -8,6 +8,7 @@ use App\Enums\LegalStatus;
 use App\Enums\VesselCategory;
 use App\Enums\VesselStatus;
 use App\Enums\VesselType;
+use App\Models\Vessel;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -17,7 +18,7 @@ class VesselRequest extends FormRequest
     {
         $vessel = $this->route('vessel');
 
-        return [
+        $rules = [
             'name' => ['required', 'string', 'max:255'],
             'registration_number' => ['required', 'string', 'max:50', Rule::unique('vessels')->ignore($vessel)],
             'imo_number' => ['nullable', 'string', 'max:20', Rule::unique('vessels')->ignore($vessel)],
@@ -40,11 +41,13 @@ class VesselRequest extends FormRequest
             'net_tonnage' => ['nullable', 'numeric', 'min:0'],
             'propulsion' => ['nullable', 'string', 'max:120'],
         ];
+
+        return $vessel === null ? $rules : array_diff_key($rules, array_flip(Vessel::FIXED_AT_REGISTRATION));
     }
 
     public function attributes(): array
     {
-        return collect(array_keys($this->rules()))
+        return collect([...array_keys($this->rules()), ...Vessel::FIXED_AT_REGISTRATION])
             ->mapWithKeys(fn (string $field) => [$field => __("vessels::vessels.fields.{$field}")])
             ->all();
     }

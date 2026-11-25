@@ -109,7 +109,7 @@ class LicenseController extends Controller
     private function vesselOptions(): array
     {
         return Vessel::orderBy('name')->get(['id', 'name', 'registration_number'])
-            ->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => "{$vessel->name} ({$vessel->registration_number})"])
+            ->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => $vessel->optionLabel()])
             ->all();
     }
 }

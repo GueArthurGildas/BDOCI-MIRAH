@@ -47,6 +47,11 @@
 
             <div class="col-xl-9">
                 <x-ui.card :title="__('tracking::tracking.slots.photo')" :subtitle="__('tracking::tracking.slots.photo_hint')" flush>
+                    @can(App\Support\Authorization\Permission::TrackingCreate->value)
+                        <x-slot:actions>
+                            <a href="{{ route('tracking.positions.create', ['control_slot_id' => $slot->id]) }}" class="btn btn-sm btn-primary" data-gs-modal-form><i class="feather icon-plus"></i> {{ __('tracking::tracking.manual.add_to_slot') }}</a>
+                        </x-slot:actions>
+                    @endcan
                     <x-ui.table>
                         <x-slot:head>
                             <th>{{ __('tracking::tracking.alerts.vessel') }}</th>

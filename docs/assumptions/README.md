@@ -115,4 +115,7 @@ Format d'une entrée :
 | `H-9-2` | 9 | / Champ / Contenu / | catalogue de deux rapports (activité des opérations, activité de la main courante) sur la dernière période civile terminée ; « Excel » est u |
 | `H-9-3` | 9 | / Champ / Contenu / | affiché aux détenteurs de `reports.view_health` seulement quand un connecteur n'est pas opérationnel ou a des erreurs ouvertes ou des enregi |
 | `H-9-4` | 9 | / Champ / Contenu / | trois exports (opérations, navires, main courante) en CSV ou PDF, chacun sous sa permission, accordée par défaut au Directeur et au Chef d'é |
+| `H-10-1` | 10 | : saisie manuelle des positions (créneaux, situation par zone) | position constatée rangée dans `positions` avec `system = manual` ; compte dans la situation par zone, la carte et les créneaux ; ne vaut jamais émission de balise |
+| `H-10-2` | 10 | : suppression par le Chef d'équipe et le Directeur | suppression tracée (motif obligatoire), ligne de main courante barrée, impossible dans une journée clôturée |
+| `H-10-3` | 10 | : relève unique et responsable du CSP | une relève par créneau (08 h, 18 h) ; responsable du CSP repris du réglage, sinon premier Directeur actif |
 

@@ -52,7 +52,7 @@ class MovementController extends Controller
     public function create(): View
     {
         return view('movements::create', [
-            'vessels' => Vessel::orderBy('name')->get()->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => "{$vessel->name} ({$vessel->registration_number})"]),
+            'vessels' => Vessel::orderBy('name')->get()->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => $vessel->optionLabel()]),
             'ports' => Port::orderBy('name')->pluck('name', 'id'),
         ]);
     }

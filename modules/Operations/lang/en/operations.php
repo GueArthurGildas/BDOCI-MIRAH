@@ -117,6 +117,8 @@ return [
     ],
     'print' => [
         'file_title' => 'Operation file',
+        'status_open' => 'OPERATION NOT CLOSED: provisional document printed on :date',
+        'status_closed' => 'OPERATION CLOSED on :date',
         'type_crossed' => 'OP type (cross out the boxes)',
         'first_event' => 'First event',
         'time_utc' => 'Time (UTC)',

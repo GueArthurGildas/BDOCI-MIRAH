@@ -11,6 +11,7 @@ return [
     'search' => 'Search',
     'notifications' => 'Notifications',
     'fullscreen' => 'Full screen',
+    'refresh' => 'Refresh the page',
     'guide_hint' => 'A quick tour of this page',
     'user_guide' => 'User guide',
     'results_count' => '{0} No results|{1} :count result|[2,*] :count results',
@@ -52,7 +53,7 @@ return [
         'links' => [
             'handover' => 'Shift handover',
             'today' => 'Today\'s logbook',
-            'new_operation' => 'Open an operation',
+            'new_operation' => '+ New operation',
         ],
     ],
     'navigation_folders' => [
@@ -128,6 +129,9 @@ return [
         'proceed' => 'Yes, continue',
         'delete' => 'Yes, delete',
         'remove' => 'Yes, remove',
+        'record_title' => 'Confirm the record',
+        'record' => 'Check the information entered before saving it.',
+        'record_label' => 'Yes, save',
     ],
 
     'health' => [
@@ -169,5 +173,17 @@ return [
             'name' => 'Notification',
             'text' => 'a reminder shown in the application (the bell) to tell you that an event concerns you. It is read then goes away; it replaces neither the alert nor the message.',
         ],
+    ],
+    'deletion' => [
+        'title' => 'Delete this record',
+        'button' => 'Delete',
+        'reason' => 'Reason for deletion',
+        'reason_placeholder' => 'Why delete? (required)',
+        'hint' => 'The record leaves the lists; its logbook line stays visible, struck through, with your name and the reason.',
+        'confirm' => 'Delete this record? It will leave the lists and its logbook line will be struck through.',
+        'done' => 'The record has been deleted.',
+        'day_closed' => 'The daily logbook of that day is closed: deletion is no longer possible, use a rectifying line.',
+        'linked_entry' => 'This line comes from another record (observation, check, witness report or operation): delete the original record.',
+        'cancelled' => 'Deleted by :name on :date: :reason',
     ],
 ];

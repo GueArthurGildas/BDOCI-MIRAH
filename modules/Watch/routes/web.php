@@ -20,10 +20,10 @@ Route::middleware('auth')
         Route::get('observations/create', [ObservationController::class, 'create'])->can(Permission::WatchCreate->value)->name('observations.create');
         Route::post('observations', [ObservationController::class, 'store'])->can(Permission::WatchCreate->value)->name('observations.store');
         Route::patch('observations/{observation}', [ObservationController::class, 'updateStatus'])->can(Permission::WatchCreate->value)->name('observations.update');
+        Route::delete('observations/{observation}', [ObservationController::class, 'destroy'])->can(Permission::WatchDelete->value)->name('observations.destroy');
 
         Route::get('rotations', [ShiftController::class, 'index'])->can(Permission::WatchView->value)->name('rotations.index');
         Route::post('rotations', [ShiftController::class, 'plan'])->can(Permission::WatchManage->value)->name('rotations.plan');
-        Route::post('rotations/{rotation}/handover', [ShiftController::class, 'startHandover'])->can(Permission::WatchCreate->value)->name('rotations.handover');
         Route::post('relays/{relay}/acknowledge', [ShiftController::class, 'acknowledge'])->can(Permission::WatchCreate->value)->name('relays.acknowledge');
 
         Route::get('instructions', [InstructionController::class, 'index'])->can(Permission::WatchView->value)->name('instructions.index');

@@ -9,7 +9,7 @@ return [
     'beacon_installed' => 'Balise installée.',
     'failure_declared' => 'Avarie VMS déclarée (délai de réparation :days jours).',
     'manual_report_recorded' => 'Rapport de position manuel enregistré.',
-    'failure_repaired' => 'Avarie VMS close après attestation.',
+    'failure_repaired' => 'Avarie VMS terminée après attestation.',
     'cessation_ordered' => 'Ordre de cessation donné après avarie VMS.',
     'cutoff_authorized' => 'Arrêt technique autorisé.',
     'ers_recorded' => 'Déclaration ERS enregistrée (:lines lignes).',

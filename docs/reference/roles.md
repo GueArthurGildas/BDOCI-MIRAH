@@ -35,6 +35,7 @@ Permissions accordées par défaut à chaque rôle système (l'héritage `Direct
 | `licenses.view` | — | oui | oui | oui |
 | `logbook.close` | — | oui | oui | oui |
 | `logbook.create` | — | oui | oui | oui |
+| `logbook.delete` | — | oui | oui | — |
 | `logbook.handover` | — | oui | oui | oui |
 | `logbook.manage` | — | oui | oui | oui |
 | `logbook.view` | — | oui | oui | oui |
@@ -75,8 +76,10 @@ Permissions accordées par défaut à chaque rôle système (l'héritage `Direct
 | `vms.manage` | — | oui | oui | — |
 | `vms.view` | — | oui | oui | oui |
 | `watch.create` | — | oui | oui | oui |
+| `watch.delete` | — | oui | oui | — |
 | `watch.manage` | — | oui | oui | — |
 | `watch.view` | — | oui | oui | oui |
 | `witnesses.create` | — | oui | oui | oui |
+| `witnesses.delete` | — | oui | oui | — |
 | `witnesses.manage` | — | oui | oui | — |
 | `witnesses.view` | — | oui | oui | oui |

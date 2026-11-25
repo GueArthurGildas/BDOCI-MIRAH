@@ -25,7 +25,7 @@ final class LogbookDayFolders
     public static function for(LogbookDay $day, string $folder = 'summary', ?int $item = null): array
     {
         $day->loadMissing(['entries.channel', 'entries.vessels', 'entries.operation', 'entries.author']);
-        $entries = $day->entries->sortBy('occurred_at')->values();
+        $entries = $day->entries->sortBy([['occurred_at', 'desc'], ['id', 'desc']])->values();
 
         return [
             'entries' => $entries,

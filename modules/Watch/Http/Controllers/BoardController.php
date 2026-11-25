@@ -25,7 +25,7 @@ class BoardController extends Controller
             'observations' => MorningBoard::openObservations(),
             'relays' => MorningBoard::pendingRelaysFor($request->user()),
             'checkAlerts' => MorningBoard::checkAlerts(),
-            'vessels' => Vessel::orderBy('name')->get()->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => "{$vessel->name} ({$vessel->registration_number})"]),
+            'vessels' => Vessel::orderBy('name')->get()->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => $vessel->optionLabel()]),
         ]);
     }
 

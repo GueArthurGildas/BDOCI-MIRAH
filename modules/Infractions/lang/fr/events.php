@@ -42,5 +42,5 @@ return [
     'payment_recorded' => 'Paiement de :amount :currency enregistré (dossier :reference).',
     'appeal_filed' => 'Recours déposé (dossier :reference).',
     'appeal_decided' => 'Issue du recours enregistrée (dossier :reference).',
-    'closed' => 'Dossier d\'infraction :reference clos.',
+    'closed' => 'Dossier d\'infraction :reference clôturé.',
 ];

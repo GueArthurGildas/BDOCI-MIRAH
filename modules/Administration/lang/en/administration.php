@@ -117,6 +117,7 @@ return [
             'manage' => 'Follow up observations',
             'close' => 'Close the daily logbook',
             'handover' => 'Record the shift handover',
+            'delete' => 'Delete observations and lines of the current daily logbook',
         ],
         'movements' => [
             'view' => 'View movements',
@@ -183,6 +184,7 @@ return [
             'view' => 'View the morning board and watch duty',
             'create' => 'Record observations, handovers and enhanced monitoring',
             'manage' => 'Plan rotations, standing instructions and watch lists',
+            'delete' => 'Delete vessel checks',
         ],
         'reports' => [
             'view' => 'View reports, exports and archives',
@@ -211,6 +213,7 @@ return [
             'view' => 'View witness reports',
             'create' => 'Record witness reports',
             'manage' => 'Investigate, dismiss or forward reports and distribute the authorized list',
+            'delete' => 'Delete witness reports',
         ],
     ],
 

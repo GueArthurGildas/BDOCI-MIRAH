@@ -3,8 +3,9 @@
 Main courante : journées QUAND / COMMENT / QUOI, clôture avec PDF figé et lignes rectificatives, plus les pages historiques d'observations (`/logbook`).
 
 - Tables : `logbook_days`, `logbook_closings`, `logbook_entries`, `logbook_entry_vessel`, `shift_handovers` (cartouche de relève) (modèles dans `app/Models`) et l'ancienne `observations`.
-- Actions : `AddLogbookEntry`, `SetLogbookEntryHandling`, `RectifyLogbookEntry`, `RecordShiftHandover`, `CloseLogbookDay`, `OpenObservation`, `UpdateObservation` (ces deux dernières reflètent l'observation dans `surveillance_observations`).
-- Permissions : `logbook.view`, `logbook.create`, `logbook.manage`, `logbook.close` (clôturer la journée) et `logbook.handover` (relève de quart) : tout agent, Chef d'équipe, Directeur.
+- Actions : `AddLogbookEntry`, `SetLogbookEntryHandling`, `RectifyLogbookEntry`, `RecordShiftHandover`, `CloseLogbookDay`, `OpenObservation`, `UpdateObservation`, `DeleteObservation`, `DeleteLogbookEntry` (suppression tracée, H-10-2) ; `OpenObservation` et `UpdateObservation` reflètent l'observation dans `surveillance_observations`.
+- Permissions : `logbook.view`, `logbook.create`, `logbook.manage`, `logbook.close` (clôturer la journée) et `logbook.handover` (relève de quart) : tout agent, Chef d'équipe, Directeur ; `logbook.delete` (supprimer une observation ou une ligne libre de la journée ouverte) : Chef d'équipe et Directeur.
+- Relève : une seule par créneau (08 h, 18 h) ; le responsable du CSP vient du réglage `watch.csp_manager` (H-10-3).
 - Le déclencheur `logbook_entries_locked` (migration `2026_11_03_100003`) interdit la modification d'une ligne d'une journée verrouillée.
 - Hypothèses : H-3a-1, H-3a-4, H-3a-6, H-3a-7, H-3a-9, H-3a-10 (`docs/assumptions/phase-3a.md`).
 

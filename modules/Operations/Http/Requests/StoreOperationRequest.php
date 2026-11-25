@@ -35,7 +35,6 @@ class StoreOperationRequest extends FormRequest
             'comments' => ['nullable', 'string', 'max:5000'],
             'channel_id' => ['required', Rule::exists('reference_list_values', 'id')->where('reference_list_id', app(LogbookChannels::class)->ensure()->id)],
             'direction' => ['required', Rule::enum(LogbookDirection::class)],
-            'supervised_by' => ['nullable', 'integer', Rule::exists('users', 'id')->where('is_active', true)],
         ];
     }
 

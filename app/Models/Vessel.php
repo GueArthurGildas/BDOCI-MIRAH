@@ -10,6 +10,7 @@ use App\Enums\IdentifierType;
 use App\Enums\LegalStatus;
 use App\Enums\RecordStatus;
 use App\Enums\SourceSystem;
+use App\Enums\TrackingSystem;
 use App\Enums\VesselCategory;
 use App\Enums\VesselStatus;
 use App\Enums\VesselType;
@@ -29,6 +30,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
 
 #[Fillable([
@@ -42,6 +44,8 @@ use Illuminate\Support\Facades\Route;
 class Vessel extends Model
 {
     use Audited, HasFactory, SoftDeletes;
+
+    public const FIXED_AT_REGISTRATION = ['category', 'type', 'vessel_type_id'];
 
     public ?string $pendingOwner = null;
 
@@ -112,7 +116,10 @@ class Vessel extends Model
 
     public function beaconStatus(): BeaconStatus
     {
-        $lastEmission = $this->latestPosition?->recorded_at;
+        $lastEmission = $this->latestPosition?->system === TrackingSystem::Manual
+            ? $this->positions()->where('system', '!=', TrackingSystem::Manual->value)->max('recorded_at')
+            : $this->latestPosition?->recorded_at;
+        $lastEmission = is_string($lastEmission) ? Carbon::parse($lastEmission) : $lastEmission;
 
         return match (true) {
             $lastEmission === null => BeaconStatus::NoData,
@@ -139,6 +146,13 @@ class Vessel extends Model
     public function homePort(): BelongsTo
     {
         return $this->belongsTo(Port::class, 'home_port_id');
+    }
+
+    public function optionLabel(): string
+    {
+        $reference = $this->registration_number ?: $this->imo_number ?: $this->call_sign;
+
+        return filled($reference) ? "{$this->name} ({$reference})" : (string) $this->name;
     }
 
     public function vesselType(): BelongsTo

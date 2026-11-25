@@ -117,6 +117,7 @@ return [
             'manage' => 'Suivre les observations',
             'close' => 'Clôturer la main courante du jour',
             'handover' => 'Faire la relève de quart',
+            'delete' => 'Supprimer des observations et des lignes de la main courante du jour',
         ],
         'movements' => [
             'view' => 'Consulter les mouvements',
@@ -182,7 +183,8 @@ return [
         'watch' => [
             'view' => 'Consulter le tableau du matin et la surveillance de quart',
             'create' => 'Saisir des observations, relais et suivis renforcés',
-            'manage' => 'Planifier les rotations, consignes permanentes et listes de veille',
+            'manage' => 'Planifier les équipes, consignes permanentes et listes de veille',
+            'delete' => 'Supprimer des vérifications de navires',
         ],
         'reports' => [
             'view' => 'Consulter les rapports, exports et archives',
@@ -211,6 +213,7 @@ return [
             'view' => 'Consulter les signalements de témoins',
             'create' => 'Enregistrer des signalements de témoins',
             'manage' => 'Instruire, classer ou transmettre les signalements et diffuser la liste des navires autorisés',
+            'delete' => 'Supprimer des signalements',
         ],
     ],
 

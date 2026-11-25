@@ -4,10 +4,10 @@ namespace Modules\Logbook\Http\Controllers;
 
 use App\Enums\UserType;
 use App\Http\Controllers\Controller;
-use App\Models\ShiftHandover;
 use App\Models\StandingInstruction;
 use App\Models\User;
 use App\Support\Actions\ActionRunner;
+use App\Support\Logbook\CspManager;
 use App\Support\Logbook\LogbookCalendar;
 use App\Support\Logbook\OperationSnapshot;
 use Illuminate\Http\RedirectResponse;
@@ -17,7 +17,7 @@ use Modules\Logbook\Http\Requests\StoreShiftHandoverRequest;
 
 class ShiftHandoverController extends Controller
 {
-    public function create(LogbookCalendar $calendar, OperationSnapshot $operations): View
+    public function create(LogbookCalendar $calendar, OperationSnapshot $operations, CspManager $manager): View
     {
         $day = $calendar->today();
 
@@ -30,13 +30,7 @@ class ShiftHandoverController extends Controller
                 ->orderBy('name')
                 ->get()
                 ->mapWithKeys(fn (User $user) => [$user->id => $user->fullName()]),
-            'supervisors' => User::query()
-                ->where('is_active', true)
-                ->where('type', UserType::Human)
-                ->orderBy('name')
-                ->get()
-                ->mapWithKeys(fn (User $user) => [$user->id => $user->fullName()]),
-            'previousSupervisor' => ShiftHandover::query()->whereNotNull('supervised_by')->latest('handed_over_at')->value('supervised_by'),
+            'manager' => $manager->name(),
             'operationCounters' => $operations->lastNumbers(now()->year),
             'openOperations' => $operations->openOperations(),
             'standingInstructions' => StandingInstruction::query()

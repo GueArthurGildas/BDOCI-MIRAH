@@ -10,7 +10,7 @@ use App\Models\User;
 use App\Models\Vessel;
 use App\Support\Authorization\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Spatie\Activitylog\Models\Activity;
+use Illuminate\Support\Facades\Route;
 use Tests\Attributes\Assumes;
 use Tests\Attributes\Covers;
 use Tests\TestCase;
@@ -63,24 +63,21 @@ class RotationAndInstructionTest extends TestCase
         $this->assertSame(0, Rotation::count());
     }
 
-    #[Covers('UC05', 'RG10', partial: true)]
-    public function test_the_team_on_duty_starts_its_handover_and_others_cannot(): void
+    #[Covers('UC05', partial: true)]
+    public function test_the_team_schedule_only_plans_teams_and_leaves_the_handover_to_the_logbook(): void
     {
         $team = Team::factory()->create();
-        $rotation = Rotation::factory()->create(['team_id' => $team->id, 'day' => today()]);
+        Rotation::factory()->create(['team_id' => $team->id, 'day' => today()]);
+        $this->signInAs(Role::Agent, ['team_id' => $team->id]);
 
-        $this->signInAs(Role::Agent, ['team_id' => Team::factory()->create()->id]);
-        $this->post(route('watch.rotations.handover', $rotation))->assertForbidden();
+        $this->get(route('watch.rotations.index'))
+            ->assertOk()
+            ->assertSee($team->name)
+            ->assertSee(__('watch::watch.rotations.title'))
+            ->assertDontSee('/handover"', false);
+
+        $this->assertFalse(Route::has('watch.rotations.handover'));
         $this->assertSame(0, ShiftHandover::count());
-
-        $agent = $this->signInAs(Role::Agent, ['team_id' => $team->id]);
-        $this->post(route('watch.rotations.handover', $rotation))->assertRedirect(route('watch.board.index'));
-        $this->post(route('watch.rotations.handover', $rotation));
-
-        $this->assertSame(1, ShiftHandover::count());
-        $this->assertNotNull(ShiftHandover::sole()->started_at);
-        $this->assertSame($agent->id, Activity::where('event', 'watch.start_handover')->first()->causer_id);
-        $this->get(route('watch.rotations.index'))->assertOk()->assertSee($team->name);
     }
 
     #[Covers('RG10', 'UC12', partial: true)]

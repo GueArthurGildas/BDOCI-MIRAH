@@ -106,3 +106,13 @@ Trois fenêtres Bootstrap sont montées une fois dans le layout (`layouts/partia
 ## Petits écrans
 
 Sous 992 px, `.gs-shell` passe en colonne avec `align-items: stretch` et `.gs-content` prend toute la largeur : sans cela le contenu prenait la largeur de son élément le plus large et la page défilait horizontalement. Vérification : aucune page testée (profil, journée, navire, opération, liste et création d'opération, tableau du matin, observations) ne déborde à 500, 800 et 1280 px (sonde `scrollWidth` du skill `ui-verify`).
+
+## Retours du 25/11/2026
+
+- **Listes à recherche dans une fenêtre** : la liste des résultats de Tom Select est attachée à la fenêtre (`.modal`) et placée en position fixe sous le champ (`selects.js`, `pin`) ; la fenêtre du gabarit a un `z-index` maximal, une liste attachée au `body` restait dessous. L'option vide sert de texte d'attente (« Aucun navire ») au lieu d'apparaître comme une valeur choisie ; un champ facultatif a une croix pour vider.
+- **Confirmation avant chaque enregistrement** : le bouton de `<x-ui.form.actions>` porte `data-gs-record` ; un formulaire POST sans `_method` qui le contient demande une confirmation avec le résumé des champs remplis (`confirm.js`, écoute en phase de capture, avant l'envoi en AJAX de la fenêtre). `data-no-confirm` sur le formulaire l'en dispense. Un double clic n'envoie le formulaire qu'une fois.
+- **Bouton Rafraîchir** dans la barre du haut (`data-gs-refresh`).
+- **Carte de situation** : un clic sur un navire propose « Nouvelle observation » (navire, position et zone pré-remplis) et « Nouvelle vérification » ; un clic ailleurs propose « Nouvelle observation à cet endroit ». Les observations des dernières 24 h sont des carrés orange.
+- **Suppression** : `<x-ui.delete-form :action="..." />` (motif obligatoire, confirmation) ; `compact` l'ouvre depuis une icône dans une ligne de tableau. Une ligne de main courante supprimée est barrée (`.gs-cancelled`) avec l'auteur et le motif.
+- **Documents imprimés** : bandeau rouge « NON CLÔTURÉE : document provisoire » ou vert « CLÔTURÉE le … par … » en tête de la main courante et du dossier d'opération.
+- **Vocabulaire** : pas de « conforme » (en règle, sans infraction, vérifié, écart constaté), pas de « clos » ni « clore » (terminé, traité, clôturé, terminer).

@@ -1114,6 +1114,7 @@ CREATE TABLE operations (
     closed_by bigint,
     created_at timestamp(0) NULL,
     updated_at timestamp(0) NULL,
+    csp_manager_name varchar(120),
     UNIQUE (category_id, year, number)
 );
 
@@ -1201,7 +1202,10 @@ CREATE TABLE logbook_entries (
     corrects_entry_id bigint,
     entered_by bigint,
     created_at timestamp(0) NULL,
-    updated_at timestamp(0) NULL
+    updated_at timestamp(0) NULL,
+    cancelled_at timestamp(0) NULL,
+    cancelled_by bigint,
+    cancellation_reason varchar(500)
 );
 
 CREATE TABLE logbook_entry_vessel (
@@ -1229,6 +1233,7 @@ CREATE TABLE shift_handovers (
     handed_over_by bigint,
     taken_over_by bigint,
     supervised_by bigint,
+    supervisor_name varchar(120),
     operation_counters jsonb,
     open_operations jsonb,
     instructions text,
@@ -1245,7 +1250,10 @@ CREATE TABLE surveillance_observations (
     status varchar(40) NOT NULL DEFAULT 'monitoring' CHECK (status IN ('monitoring', 'closed', 'operation')),
     created_by bigint,
     created_at timestamp(0) NOT NULL,
-    legacy_observation_id bigint UNIQUE
+    legacy_observation_id bigint UNIQUE,
+    deleted_at timestamp(0) NULL,
+    deleted_by bigint,
+    deletion_reason varchar(500)
 );
 
 CREATE TABLE relays (
@@ -1489,7 +1497,10 @@ CREATE TABLE witness_reports (
     status varchar(40) NOT NULL DEFAULT 'received' CHECK (status IN ('received', 'verified', 'closed', 'forwarded')),
     logbook_entry_id bigint,
     created_at timestamp(0) NULL,
-    updated_at timestamp(0) NULL
+    updated_at timestamp(0) NULL,
+    deleted_at timestamp(0) NULL,
+    deleted_by bigint,
+    deletion_reason varchar(500)
 );
 
 CREATE TABLE reported_vessels (

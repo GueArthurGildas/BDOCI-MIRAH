@@ -61,14 +61,14 @@ class EezDeclarationController extends Controller
         return view('movements::eez.index', [
             'declarations' => $declarations,
             'filters' => $filters,
-            'vessels' => Vessel::orderBy('name')->get(['id', 'name', 'registration_number'])->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => "{$vessel->name} ({$vessel->registration_number})"])->all(),
+            'vessels' => Vessel::orderBy('name')->get(['id', 'name', 'registration_number'])->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => $vessel->optionLabel()])->all(),
         ]);
     }
 
     public function create(): View
     {
         return view('movements::eez.create', [
-            'vessels' => Vessel::orderBy('name')->get()->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => "{$vessel->name} ({$vessel->registration_number})"]),
+            'vessels' => Vessel::orderBy('name')->get()->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => $vessel->optionLabel()]),
             'channels' => $this->receptionChannels(),
             'species' => Species::orderBy('name')->get()->mapWithKeys(fn (Species $species) => [$species->id => "{$species->fao_code} - {$species->name}"]),
             'reasons' => EezReason::options(),

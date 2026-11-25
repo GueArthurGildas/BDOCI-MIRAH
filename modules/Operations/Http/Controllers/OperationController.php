@@ -3,15 +3,14 @@
 namespace Modules\Operations\Http\Controllers;
 
 use App\Enums\OperationStatus;
-use App\Enums\UserType;
 use App\Http\Controllers\Controller;
 use App\Models\Document;
 use App\Models\Operation;
 use App\Models\OperationCategory;
-use App\Models\User;
 use App\Models\Vessel;
 use App\Support\Actions\ActionRunner;
 use App\Support\Documents\DocumentStore;
+use App\Support\Logbook\CspManager;
 use App\Support\Logbook\LogbookChannels;
 use App\Support\Operations\WeatherScales;
 use App\Support\Printing\PdfRenderer;
@@ -75,12 +74,12 @@ class OperationController extends Controller
     {
         return view('operations::create', [
             'categories' => OperationCategory::orderBy('code')->get()->mapWithKeys(fn (OperationCategory $category) => [$category->id => strtoupper($category->code->value).' - '.$category->label]),
-            'vessels' => Vessel::orderBy('name')->get()->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => "{$vessel->name} ({$vessel->registration_number})"]),
+            'vessels' => Vessel::orderBy('name')->get()->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => $vessel->optionLabel()]),
             'visibilities' => $scales->options(WeatherScales::VISIBILITY),
             'cloudCovers' => $scales->options(WeatherScales::CLOUD_COVER),
             'seaStates' => $scales->options(WeatherScales::SEA_STATE),
             'channels' => $channels->options(),
-            'supervisors' => User::query()->where('is_active', true)->where('type', UserType::Human)->orderBy('name')->get()->mapWithKeys(fn (User $user) => [$user->id => $user->fullName()]),
+            'manager' => app(CspManager::class)->name(),
         ]);
     }
 

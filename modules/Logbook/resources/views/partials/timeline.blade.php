@@ -35,7 +35,8 @@
                         <div class="cd-timeline-content card_main">
                             <div class="p-20">
                                 <h6>{{ $entry->occurred_at->format('H:i') }} UTC · {{ $entry->channel->label }}</h6>
-                                <p class="text-pre-line m-b-5">{{ Str::limit($entry->content, 220) }}</p>
+                                <p @class(['text-pre-line m-b-5', 'gs-cancelled' => $entry->isCancelled()])>{{ Str::limit($entry->content, 220) }}</p>
+                                @include('logbook::partials.cancelled', ['entry' => $entry])
                                 <div class="timeline-details">
                                     <span class="label label-{{ $kinds[$kind]['color'] }}">{{ __('logbook::logbook.timeline.legend.'.$kind) }}</span>
                                     <x-ui.status-badge :status="$entry->handling_status" />

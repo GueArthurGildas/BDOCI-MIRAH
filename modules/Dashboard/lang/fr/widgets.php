@@ -10,7 +10,7 @@ return [
     ],
     'pending_observations' => [
         'title' => 'Observations en suspens',
-        'explanation' => 'Observations de la main courante qui ne sont pas encore closes et attendent une suite.',
+        'explanation' => 'Observations de la main courante qui ne sont pas encore traitées et attendent une suite.',
     ],
     'zones' => [
         'title' => 'Situation par zone',
@@ -26,7 +26,7 @@ return [
     ],
     'fleet_status_lights' => [
         'title' => 'Statut à feux de la flotte',
-        'explanation' => 'Répartition des navires entre conformes, à surveiller, suspects et en infraction.',
+        'explanation' => 'Répartition des navires entre en règle, à surveiller, suspects et en infraction.',
     ],
     'vessels_by_segment' => [
         'title' => 'Navires par segment de flotte',
@@ -46,11 +46,11 @@ return [
     ],
     'alerts_by_status' => [
         'title' => 'Alertes par statut',
-        'explanation' => 'Alertes de suivi des navires selon leur traitement : ouvertes, prises en compte ou closes.',
+        'explanation' => 'Alertes de suivi des navires selon leur traitement : ouvertes, prises en compte ou traitées.',
     ],
     'observations_by_level' => [
         'title' => 'Observations en suspens par niveau',
-        'explanation' => 'Répartition des observations non closes selon leur niveau de gravité.',
+        'explanation' => 'Répartition des observations non traitées selon leur niveau de gravité.',
     ],
     'operations_by_status' => [
         'title' => 'Opérations par statut',
@@ -66,6 +66,6 @@ return [
     ],
     'pending_observation_list' => [
         'title' => 'Dernières observations en suspens',
-        'explanation' => 'Les cinq observations non closes les plus récentes de la main courante.',
+        'explanation' => 'Les cinq observations non traitées les plus récentes de la main courante.',
     ],
 ];

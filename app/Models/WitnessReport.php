@@ -11,11 +11,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[Fillable(['received_at', 'witness_id', 'latitude', 'longitude', 'channel', 'operation_id', 'entered_by', 'status', 'logbook_entry_id'])]
+#[Fillable(['received_at', 'witness_id', 'latitude', 'longitude', 'channel', 'operation_id', 'entered_by', 'status', 'logbook_entry_id', 'deleted_by', 'deletion_reason'])]
 class WitnessReport extends Model
 {
-    use Audited, HasFactory;
+    use Audited, HasFactory, SoftDeletes;
 
     protected function casts(): array
     {
@@ -71,5 +72,10 @@ class WitnessReport extends Model
     public function infractionCases(): HasMany
     {
         return $this->hasMany(InfractionCase::class);
+    }
+
+    public function deleter(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'deleted_by');
     }
 }

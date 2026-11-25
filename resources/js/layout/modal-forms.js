@@ -1,11 +1,13 @@
 import { Modal } from 'bootstrap';
 import { announceContent, onContent } from './content';
+import { releaseSelects } from './selects';
 
 const FORM_PATH = /\/(create|edit|rectify)\/?$/;
 const FIELD_SELECTOR = 'input, select, textarea';
 
 export function initModalForms() {
     onContent(markRequired);
+    preventDoubleSubmit();
 
     const element = document.getElementById('gs-form-modal');
 
@@ -46,12 +48,23 @@ export function initModalForms() {
         }
 
         event.preventDefault();
-        submit(form, event.submitter);
+
+        if (form.dataset.gsBusy) {
+            return;
+        }
+
+        form.dataset.gsBusy = '1';
+        form.dataset.gsSent = '1';
+        submit(form, event.submitter).finally(() => {
+            delete form.dataset.gsBusy;
+            delete form.dataset.gsSent;
+        });
     });
 
     async function open(url, fallbackTitle) {
         title.textContent = fallbackTitle;
         pageLink.href = url;
+        releaseSelects(body);
         body.innerHTML = '<div class="gs-modal-loading"><span class="spinner-border"></span></div>';
         modal.show();
 
@@ -163,6 +176,25 @@ export function initModalForms() {
         alert.textContent = message;
         form.prepend(alert);
     }
+}
+
+function preventDoubleSubmit() {
+    document.addEventListener('submit', (event) => {
+        const form = event.target;
+
+        if (event.defaultPrevented || !(form instanceof HTMLFormElement) || (form.getAttribute('method') ?? 'get').toLowerCase() !== 'post') {
+            return;
+        }
+
+        if (form.dataset.gsSent) {
+            event.preventDefault();
+
+            return;
+        }
+
+        form.dataset.gsSent = '1';
+        setTimeout(() => delete form.dataset.gsSent, 4000);
+    });
 }
 
 function opensInModal(link) {

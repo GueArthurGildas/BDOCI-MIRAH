@@ -37,6 +37,9 @@
             <a href="#!" data-gs-guide title="{{ __('ui.user_guide') }}"><i class="feather icon-help-circle"></i></a>
         </li>
         <li>
+            <a href="#!" data-gs-refresh title="{{ __('ui.refresh') }}" aria-label="{{ __('ui.refresh') }}"><i class="feather icon-refresh-cw"></i></a>
+        </li>
+        <li>
             <a href="#!" data-toggle-fullscreen title="{{ __('ui.fullscreen') }}"><i class="full-screen feather icon-maximize"></i></a>
         </li>
         @include('layouts.partials.locale-menu')

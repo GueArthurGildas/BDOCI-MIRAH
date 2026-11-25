@@ -7,10 +7,16 @@ return [
         'category' => 'Vessel category',
         'subtitle' => 'Last known position of each vessel and surveillance zones',
         'positions_count' => '{0} No vessel positioned|{1} :count vessel positioned|[2,*] :count vessels positioned',
+        'new_observation' => 'New observation',
+        'new_check' => 'New check',
+        'observation_here' => 'New observation here',
+        'observation_marker' => 'Observation of :time — :vessel',
+        'create_hint' => 'Click a vessel to create an observation or a check, or elsewhere on the map to create an observation at that spot. Observations of the last 24 hours are marked in orange.',
         'legend' => [
             'emitting' => 'Beacon emitting',
             'silent' => 'Signal lost',
             'patrol' => 'Patrol boat',
+            'observation' => 'Observation of the last 24 h',
         ],
     ],
     'zones' => [
@@ -133,6 +139,31 @@ return [
         'open_themis' => 'Open THEMIS',
         'copy_identifier' => 'Copy identifier',
         'create_observation' => 'Create an observation',
+    ],
+    'manual' => [
+        'title' => 'Enter a position',
+        'new' => 'Enter a position',
+        'add_to_slot' => 'Add a manual position',
+        'subtitle' => 'Position of a vessel observed by other means (radio, patrol, observer, THEMIS read on screen)',
+        'hint' => 'Use it until automatic loading is connected. Without coordinates, the vessel is placed at the centre of the chosen zone. The position counts in the zone situation, the map and the slot; it does not make the beacon look as emitting.',
+        'recorded' => 'Position recorded.',
+        'fields' => [
+            'vessel_id' => 'Vessel',
+            'recorded_at' => 'Date and time observed',
+            'zone_id' => 'Zone',
+            'latitude' => 'Latitude',
+            'longitude' => 'Longitude',
+            'speed_knots' => 'Speed (knots)',
+            'activity' => 'Activity',
+        ],
+        'activities' => [
+            'moored' => 'At quay or at anchor',
+            'fishing' => 'Fishing',
+            'transit' => 'Under way',
+        ],
+        'errors' => [
+            'no_location' => 'Enter the coordinates, or a zone drawn on the map.',
+        ],
     ],
     'rules' => [
         'codes' => [

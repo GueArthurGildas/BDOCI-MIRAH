@@ -16,6 +16,7 @@ return [
     'new' => 'New vessel',
     'created' => 'The vessel has been created.',
     'updated' => 'The vessel has been updated.',
+    'fixed_at_registration' => 'Set when the vessel was registered: it can no longer be changed.',
     'search_placeholder' => 'Name, registration, IMO, call sign…',
     'fields' => [
         'last_emission' => 'Last emission',

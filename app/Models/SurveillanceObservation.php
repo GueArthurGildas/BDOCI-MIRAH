@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[Fillable(['vessel_id', 'slot_position_id', 'logbook_entry_id', 'body', 'status', 'created_by', 'created_at', 'legacy_observation_id'])]
+#[Fillable(['vessel_id', 'slot_position_id', 'logbook_entry_id', 'body', 'status', 'created_by', 'created_at', 'legacy_observation_id', 'deleted_by', 'deletion_reason'])]
 class SurveillanceObservation extends Model
 {
-    use Audited, HasFactory;
+    use Audited, HasFactory, SoftDeletes;
 
     public const UPDATED_AT = null;
 
@@ -37,5 +38,10 @@ class SurveillanceObservation extends Model
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function deleter(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'deleted_by');
     }
 }

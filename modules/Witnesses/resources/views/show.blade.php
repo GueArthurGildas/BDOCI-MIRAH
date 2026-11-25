@@ -35,6 +35,9 @@
                             @endif
                         </x-ui.detail>
                     </x-ui.detail-list>
+                    @can(App\Support\Authorization\Permission::WitnessesDelete->value)
+                        <x-ui.delete-form :action="route('witnesses.destroy', $report)" class="m-t-15" />
+                    @endcan
                 </x-ui.card>
 
                 @foreach ($report->reportedVessels as $reported)

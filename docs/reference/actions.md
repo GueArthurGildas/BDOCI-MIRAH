@@ -35,6 +35,7 @@
 | `licenses.view` | `licenses` | `view` | Consulter les licences |
 | `logbook.close` | `logbook` | `update` | Clôturer la main courante du jour |
 | `logbook.create` | `logbook` | `create` | Saisir des observations |
+| `logbook.delete` | `logbook` | `update` | Supprimer des observations et des lignes de la main courante du jour |
 | `logbook.handover` | `logbook` | `update` | Faire la relève de quart |
 | `logbook.manage` | `logbook` | `update` | Suivre les observations |
 | `logbook.view` | `logbook` | `view` | Consulter la main courante |
@@ -75,9 +76,11 @@
 | `vms.manage` | `vms` | `update` | Gérer balises, installateurs, obligations, arrêts techniques et ordres de cessation |
 | `vms.view` | `vms` | `view` | Voir les balises, avaries et déclarations ERS |
 | `watch.create` | `watch` | `create` | Saisir des observations, relais et suivis renforcés |
-| `watch.manage` | `watch` | `update` | Planifier les rotations, consignes permanentes et listes de veille |
+| `watch.delete` | `watch` | `update` | Supprimer des vérifications de navires |
+| `watch.manage` | `watch` | `update` | Planifier les équipes, consignes permanentes et listes de veille |
 | `watch.view` | `watch` | `view` | Consulter le tableau du matin et la surveillance de quart |
 | `witnesses.create` | `witnesses` | `create` | Enregistrer des signalements de témoins |
+| `witnesses.delete` | `witnesses` | `update` | Supprimer des signalements |
 | `witnesses.manage` | `witnesses` | `update` | Instruire, classer ou transmettre les signalements et diffuser la liste des navires autorisés |
 | `witnesses.view` | `witnesses` | `view` | Consulter les signalements de témoins |
 
@@ -141,6 +144,8 @@ Actions exécutées par l'`ActionRunner` (transaction, droit, événement, état
 | `licenses.validate_import_line` | `licenses.validate` | `Modules\Licenses\Actions\ValidateLicenseImportLine` |
 | `logbook.add_entry` | `logbook.create` | `Modules\Logbook\Actions\AddLogbookEntry` |
 | `logbook.close_day` | `logbook.close` | `Modules\Logbook\Actions\CloseLogbookDay` |
+| `logbook.delete_entry` | `logbook.delete` | `Modules\Logbook\Actions\DeleteLogbookEntry` |
+| `logbook.delete_observation` | `logbook.delete` | `Modules\Logbook\Actions\DeleteObservation` |
 | `logbook.open` | `logbook.create` | `Modules\Logbook\Actions\OpenObservation` |
 | `logbook.record_handover` | `logbook.handover` | `Modules\Logbook\Actions\RecordShiftHandover` |
 | `logbook.record_operation_line` | `logbook.create` | `Modules\Logbook\Actions\RecordOperationLogbookLine` |
@@ -192,6 +197,7 @@ Actions exécutées par l'`ActionRunner` (transaction, droit, événement, état
 | `tracking.confirm_slot_position` | `tracking.create` | `Modules\Tracking\Actions\ConfirmSlotPosition` |
 | `tracking.handle_alert` | `tracking.create` | `Modules\Tracking\Actions\HandleAlert` |
 | `tracking.open_slot` | `tracking.create` | `Modules\Tracking\Actions\OpenControlSlot` |
+| `tracking.record_manual_position` | `tracking.create` | `Modules\Tracking\Actions\RecordManualPosition` |
 | `tracking.run_sweep` | `tracking.create` | `Modules\Tracking\Actions\RunSweep` |
 | `tracking.save_alert_rule` | `settings.manage` | `Modules\Tracking\Actions\SaveAlertRule` |
 | `vessels.add_actor` | `vessels.manage` | `Modules\Vessels\Actions\AddVesselActor` |
@@ -221,13 +227,14 @@ Actions exécutées par l'`ActionRunner` (transaction, droit, événement, état
 | `watch.add_to_director_list` | `watch.manage` | `Modules\Watch\Actions\AddVesselToDirectorList` |
 | `watch.close_entry` | `watch.manage` | `Modules\Watch\Actions\CloseWatchEntry` |
 | `watch.create_standing_instruction` | `watch.manage` | `Modules\Watch\Actions\CreateStandingInstruction` |
+| `watch.delete_observation` | `watch.delete` | `Modules\Watch\Actions\DeleteSurveillanceObservation` |
 | `watch.end_standing_instruction` | `watch.manage` | `Modules\Watch\Actions\EndStandingInstruction` |
 | `watch.place_under_enhanced_monitoring` | `watch.create` | `Modules\Watch\Actions\PlaceVesselUnderEnhancedMonitoring` |
 | `watch.plan_rotations` | `watch.manage` | `Modules\Watch\Actions\PlanRotations` |
 | `watch.record_observation` | `watch.create` | `Modules\Watch\Actions\RecordSurveillanceObservation` |
 | `watch.set_observation_status` | `watch.create` | `Modules\Watch\Actions\SetSurveillanceObservationStatus` |
-| `watch.start_handover` | `watch.create` | `Modules\Watch\Actions\StartShiftHandover` |
 | `witnesses.decide` | `witnesses.manage` | `Modules\Witnesses\Actions\DecideWitnessReport` |
+| `witnesses.delete_report` | `witnesses.delete` | `Modules\Witnesses\Actions\DeleteWitnessReport` |
 | `witnesses.link_operation` | `witnesses.create` | `Modules\Witnesses\Actions\LinkReportOperation` |
 | `witnesses.record` | `witnesses.create` | `Modules\Witnesses\Actions\RecordWitnessReport` |
 | `witnesses.record_distribution` | `witnesses.manage` | `Modules\Witnesses\Actions\RecordAuthorizedListDistribution` |

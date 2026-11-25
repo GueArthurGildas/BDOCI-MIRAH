@@ -20,6 +20,8 @@ Route::middleware('auth')->prefix('witnesses')->name('witnesses.')->group(functi
         Route::put('{report}/operation', [WitnessReportController::class, 'operation'])->whereNumber('report')->name('operation.save');
     });
 
+    Route::delete('{report}', [WitnessReportController::class, 'destroy'])->middleware('can:'.Permission::WitnessesDelete->value)->whereNumber('report')->name('destroy');
+
     Route::middleware('can:'.Permission::WitnessesView->value)->group(function () {
         Route::get('/', [WitnessReportController::class, 'index'])->name('index');
         Route::get('{report}', [WitnessReportController::class, 'show'])->whereNumber('report')->name('show');

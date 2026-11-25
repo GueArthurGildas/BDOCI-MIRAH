@@ -30,7 +30,7 @@ final class LogbookDayDocument
     /** @param array<string, mixed>|null $counters */
     public function build(LogbookDay $day, ?array $counters = null, ?string $closingInstructions = null, ?User $closer = null, ?Carbon $closedAt = null): PrintedDocument
     {
-        $day->loadMissing(['entries.channel', 'entries.vessels', 'entries.operation', 'entries.corrects', 'entries.observation', 'entries.surveillanceObservation', 'entries.witnessReport', 'handovers.outgoing', 'handovers.incoming', 'handovers.supervisor', 'closing.closer']);
+        $day->loadMissing(['entries.channel', 'entries.vessels', 'entries.operation', 'entries.corrects', 'entries.observation', 'entries.surveillanceObservation', 'entries.witnessReport', 'entries.canceller', 'handovers.outgoing', 'handovers.incoming', 'handovers.supervisor', 'closing.closer']);
 
         if ($counters === null && $day->closing) {
             $counters = $day->closing->counters;
@@ -44,6 +44,10 @@ final class LogbookDayDocument
             ['République de Côte d\'Ivoire', 'Centre de Surveillance des Pêches', __('logbook::logbook.print.daily_title')],
             __('logbook::logbook.print.daily_title'),
         );
+
+        $document->table([100], [[$closedAt === null
+            ? PrintedDocument::banner(__('logbook::logbook.print.status_open', ['date' => now()->format('d/m/Y H:i')]), Palette::OPENED_RED, 1)
+            : PrintedDocument::banner(__('logbook::logbook.print.status_closed', ['date' => $closedAt->format('d/m/Y H:i'), 'name' => $closer?->fullName() ?? '—']), Palette::CLOSED_GREEN, 1)]]);
 
         $entries = $day->entries->sortBy([['occurred_at', 'asc'], ['id', 'asc']])->values();
         $handovers = $day->handovers->sortBy([['handed_over_at', 'asc'], ['id', 'asc']])->values();
@@ -80,7 +84,7 @@ final class LogbookDayDocument
         $rows = [
             [PrintedDocument::banner(__('logbook::logbook.handovers.title'), Palette::TITLE_BLUE, 4)],
             [$label(__('logbook::logbook.handovers.fields.date')), $value($handover?->handed_over_at->format('d/m/Y')), $label(__('logbook::logbook.handovers.fields.time')), $value($handover?->handed_over_at->format('H:i'))],
-            [$label(__('logbook::logbook.handovers.fields.supervisor')), $value($handover?->supervisor?->fullName(), 3)],
+            [$label(__('logbook::logbook.handovers.fields.supervisor')), $value($handover?->supervisor_name ?? $handover?->supervisor?->fullName(), 3)],
             [$label(__('logbook::logbook.handovers.fields.outgoing')), $value($handover?->outgoing?->fullName()), $label(__('logbook::logbook.handovers.fields.incoming')), $value($handover?->incoming?->fullName())],
             ...$this->counterRows($counters, Palette::LABEL_BLUE, Palette::LABEL_BLUE_ALT, $handover !== null),
             ...$this->openOperationRows($open, null, $handover !== null),
@@ -126,7 +130,11 @@ final class LogbookDayDocument
             $lines[] = ['text' => __('logbook::logbook.print.rectifies', ['time' => $entry->corrects->occurred_at->format('d/m/Y H:i')]), 'italic' => true];
         }
 
-        $lines[] = ['text' => $entry->content, 'color' => $color];
+        $lines[] = ['text' => $entry->content, 'color' => $color, 'strike' => $entry->isCancelled()];
+
+        if ($entry->isCancelled()) {
+            $lines[] = ['text' => __('ui.deletion.cancelled', ['name' => $entry->canceller?->fullName() ?? '-', 'date' => $entry->cancelled_at->format('d/m/Y H:i'), 'reason' => $entry->cancellation_reason]), 'italic' => true, 'color' => Palette::OPENED_RED];
+        }
 
         if ($entry->vessels->isNotEmpty() && $entry->operation_milestone === null) {
             $lines[] = ['text' => $entry->vessels->pluck('name')->join(', ')];

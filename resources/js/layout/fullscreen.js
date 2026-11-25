@@ -1,4 +1,12 @@
 export function initFullScreenToggle() {
+    document.querySelectorAll('[data-gs-refresh]').forEach((trigger) => {
+        trigger.addEventListener('click', (event) => {
+            event.preventDefault();
+            trigger.querySelector('.feather')?.classList.add('gs-spin');
+            window.location.reload();
+        });
+    });
+
     document.querySelectorAll('[data-toggle-fullscreen]').forEach((trigger) => {
         trigger.addEventListener('click', (event) => {
             event.preventDefault();

@@ -93,7 +93,7 @@ class CatchDeclarationController extends Controller
             'bySpecies' => $bySpecies,
             'byVessel' => $byVessel->map(fn ($row) => ['vessel' => $vesselModels->get($row->vessel_id), 'total_kg' => (float) $row->total_kg, 'species_count' => (int) $row->species_count])->filter(fn (array $row) => $row['vessel'])->values(),
             'selectedVessel' => isset($filters['vessel']) ? Vessel::find($filters['vessel']) : null,
-            'vessels' => Vessel::query()->whereHas('catchDeclarations')->orderBy('name')->get()->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => "{$vessel->name} ({$vessel->registration_number})"]),
+            'vessels' => Vessel::query()->whereHas('catchDeclarations')->orderBy('name')->get()->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => $vessel->optionLabel()]),
             'periods' => collect(self::PERIODS)->mapWithKeys(fn (int $days, string $key) => [$key => __('catches::catches.periods.'.$key)])->all(),
             'sources' => CatchDeclaration::query()->selectRaw('source, count(*) as total, max(updated_at) as last_update')->groupBy('source')->get(),
             'periodChart' => [

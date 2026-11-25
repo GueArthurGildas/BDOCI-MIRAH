@@ -23,6 +23,11 @@
             </div>
             <div class="col-xl-6">
                 <x-ui.card :title="__('tracking::tracking.zones.table_title')" :subtitle="$from && $to ? __('tracking::tracking.zones.period_hint') : __('tracking::tracking.zones.freshness_hint', ['hours' => $freshnessHours])" flush>
+                    @can(App\Support\Authorization\Permission::TrackingCreate->value)
+                        <x-slot:actions>
+                            <a href="{{ route('tracking.positions.create') }}" class="btn btn-sm btn-primary"><i class="feather icon-plus"></i> {{ __('tracking::tracking.manual.new') }}</a>
+                        </x-slot:actions>
+                    @endcan
                     <x-ui.table>
                         <x-slot:head>
                             <th>{{ __('tracking::tracking.zones.zone') }}</th>

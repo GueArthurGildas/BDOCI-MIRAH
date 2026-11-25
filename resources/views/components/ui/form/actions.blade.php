@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-sm-9 offset-sm-3">
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn-primary" data-gs-record>
             <i class="feather icon-save"></i> {{ __('ui.save') }}
         </button>
         <a href="{{ $cancel }}" class="btn btn-default m-l-10" data-gs-dismiss>{{ __('ui.cancel') }}</a>

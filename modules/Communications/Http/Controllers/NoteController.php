@@ -55,7 +55,7 @@ class NoteController extends Controller
     {
         return view('communications::notes.create', [
             'vessels' => Vessel::orderBy('name')->get(['id', 'name', 'registration_number'])
-                ->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => "{$vessel->name} ({$vessel->registration_number})"])
+                ->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => $vessel->optionLabel()])
                 ->all(),
             'recipients' => [
                 __('communications::notes.recipient_users') => User::where('is_active', true)->whereKeyNot($request->user()->id)->where('type', 'human')->orderBy('name')->get()

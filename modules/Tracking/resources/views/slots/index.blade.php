@@ -7,7 +7,7 @@
                 @can(App\Support\Authorization\Permission::TrackingCreate->value)
                     <form method="POST" action="{{ route('tracking.slots.store') }}">
                         @csrf
-                        <button type="submit" class="btn btn-primary btn-mini"><i class="feather icon-camera"></i> {{ __('tracking::tracking.slots.open') }}</button>
+                        <button type="submit" class="btn btn-primary btn-mini" data-gs-record><i class="feather icon-camera"></i> {{ __('tracking::tracking.slots.open') }}</button>
                     </form>
                 @endcan
             </x-slot:actions>

@@ -38,7 +38,7 @@ return [
     'errors' => [
         'empty_file' => 'Le fichier ne contient aucune ligne de données.',
         'line_closed' => 'Cette ligne ne peut plus être modifiée.',
-        'import_closed' => 'Cet import est clos.',
+        'import_closed' => 'Cet import est terminé.',
     ],
     'rejections' => [
         'unknown_vessel' => 'Navire inconnu',

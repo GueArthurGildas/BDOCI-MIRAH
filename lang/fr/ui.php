@@ -11,6 +11,7 @@ return [
     'search' => 'Rechercher',
     'notifications' => 'Notifications',
     'fullscreen' => 'Plein écran',
+    'refresh' => 'Rafraîchir la page',
     'guide_hint' => 'Une visite rapide de cette page',
     'user_guide' => 'Guide utilisateur',
     'results_count' => '{0} Aucun résultat|{1} :count résultat|[2,*] :count résultats',
@@ -52,7 +53,7 @@ return [
         'links' => [
             'handover' => 'Relève de quart',
             'today' => 'Main courante du jour',
-            'new_operation' => 'Ouvrir une opération',
+            'new_operation' => '+ Nouvelle opération',
         ],
     ],
     'navigation_folders' => [
@@ -128,6 +129,9 @@ return [
         'proceed' => 'Oui, continuer',
         'delete' => 'Oui, supprimer',
         'remove' => 'Oui, retirer',
+        'record_title' => 'Confirmer l\'enregistrement',
+        'record' => 'Vérifiez les informations saisies avant de les enregistrer.',
+        'record_label' => 'Oui, enregistrer',
     ],
 
     'health' => [
@@ -169,5 +173,17 @@ return [
             'name' => 'Notification',
             'text' => 'un rappel affiché dans l\'application (la cloche) pour vous prévenir qu\'un événement vous concerne. Elle se lit puis disparaît ; elle ne remplace ni l\'alerte ni le message.',
         ],
+    ],
+    'deletion' => [
+        'title' => 'Supprimer cet enregistrement',
+        'button' => 'Supprimer',
+        'reason' => 'Motif de la suppression',
+        'reason_placeholder' => 'Pourquoi supprimer ? (obligatoire)',
+        'hint' => 'L\'enregistrement disparaît des listes ; sa ligne de main courante reste visible, barrée, avec votre nom et le motif.',
+        'confirm' => 'Supprimer cet enregistrement ? Il disparaîtra des listes et sa ligne de main courante sera barrée.',
+        'done' => 'L\'enregistrement a été supprimé.',
+        'day_closed' => 'La main courante de ce jour est clôturée : la suppression n\'est plus possible, passez par une ligne rectificative.',
+        'linked_entry' => 'Cette ligne vient d\'un autre enregistrement (observation, vérification, signalement ou opération) : supprimez l\'enregistrement d\'origine.',
+        'cancelled' => 'Supprimée par :name le :date : :reason',
     ],
 ];

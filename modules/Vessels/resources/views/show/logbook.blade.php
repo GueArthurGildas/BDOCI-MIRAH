@@ -45,7 +45,10 @@
                     @if ($entry->operation_milestone)
                         <x-ui.status-badge :status="$entry->operation_milestone" />
                     @endif
-                    <span @class(['text-pre-line', 'text-danger' => $entry->operation_milestone === App\Enums\OperationMilestone::Opened, 'text-success' => $entry->operation_milestone === App\Enums\OperationMilestone::Closed])>{{ $entry->content }}</span>
+                    <span @class(['text-pre-line', 'gs-cancelled' => $entry->isCancelled(), 'text-danger' => $entry->operation_milestone === App\Enums\OperationMilestone::Opened, 'text-success' => $entry->operation_milestone === App\Enums\OperationMilestone::Closed])>{{ $entry->content }}</span>
+                    @if ($entry->isCancelled())
+                        <div class="text-danger f-12">{{ __('ui.deletion.cancelled', ['name' => $entry->canceller?->fullName() ?? '—', 'date' => $entry->cancelled_at->isoFormat('L LT'), 'reason' => $entry->cancellation_reason]) }}</div>
+                    @endif
                     @if ($entry->operation)
                         <div><a href="{{ route('operations.show', $entry->operation) }}">{{ $entry->operation->code }}</a> <x-ui.status-badge :status="$entry->operation->status" /></div>
                     @endif

@@ -13,7 +13,7 @@ final class Settings
 {
     private const CACHE_KEY = 'settings.overrides';
 
-    /** @var array<string, int|bool> */
+    /** @var array<string, int|bool|string> */
     private array $baselines = [];
 
     /** @return Collection<string, SettingDefinition> */
@@ -36,6 +36,7 @@ final class Settings
             new SettingDefinition('watch.shift_end_hour', 'surveillance.watch.shift_end_hour', SettingType::Integer, 'watch', 1, 23),
             new SettingDefinition('watch.teams_count', 'surveillance.watch.teams_count', SettingType::Integer, 'watch', 1, 10),
             new SettingDefinition('watch.check_threshold', 'surveillance.watch.check_threshold', SettingType::Integer, 'watch', 1, 20),
+            new SettingDefinition('watch.csp_manager', 'surveillance.watch.csp_manager', SettingType::Text, 'watch', 0, 120),
             new SettingDefinition('alerts.scheduled_reports.enabled', 'surveillance.alerts.scheduled_reports.enabled', SettingType::Boolean, 'reports'),
             new SettingDefinition('archive.after_years', 'surveillance.archive_after_years', SettingType::Integer, 'reports', 1, 50),
             new SettingDefinition('connectors.stale_after_hours', 'surveillance.connectors.stale_after_hours', SettingType::Integer, 'connectors', 1, 720),
@@ -67,12 +68,12 @@ final class Settings
         }
     }
 
-    public function value(SettingDefinition $definition): int|bool
+    public function value(SettingDefinition $definition): int|bool|string
     {
         return config($definition->configKey);
     }
 
-    public function baseline(SettingDefinition $definition): int|bool
+    public function baseline(SettingDefinition $definition): int|bool|string
     {
         return $this->baselines[$definition->key];
     }
@@ -92,7 +93,7 @@ final class Settings
     public function save(array $values, User $user): void
     {
         foreach ($this->definitions() as $field => $definition) {
-            $value = $definition->cast($values[$field]);
+            $value = $definition->cast($values[$field] ?? null);
 
             if ($value === $this->baselines[$definition->key]) {
                 Setting::where('key', $definition->key)->first()?->delete();
@@ -101,7 +102,7 @@ final class Settings
             }
 
             $setting = Setting::firstOrNew(['key' => $definition->key]);
-            $setting->fill(['value' => (string) (int) $value, 'updated_by' => $user->id])->save();
+            $setting->fill(['value' => is_string($value) ? $value : (string) (int) $value, 'updated_by' => $user->id])->save();
         }
 
         $this->refresh();

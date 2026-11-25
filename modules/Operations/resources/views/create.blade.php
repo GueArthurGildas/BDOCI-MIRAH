@@ -24,7 +24,10 @@
                     </div>
                 </div>
                 <x-ui.form.textarea name="summary" :label="__('operations::operations.fields.summary')" rows="3" />
-                <x-ui.form.select name="supervised_by" :label="__('operations::operations.fields.supervised_by')" :options="$supervisors" />
+                <div class="mb-3 row">
+                    <label class="form-label col-sm-3 col-form-label">{{ __('operations::operations.fields.supervised_by') }}</label>
+                    <div class="col-sm-9"><p class="form-control-plaintext">{{ $manager ?? '—' }}</p></div>
+                </div>
             </x-ui.card>
 
             <x-ui.card :title="__('operations::operations.opening_title')" :subtitle="__('operations::operations.opening_hint')">

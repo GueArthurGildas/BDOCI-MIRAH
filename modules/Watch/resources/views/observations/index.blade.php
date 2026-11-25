@@ -18,6 +18,9 @@
                     <th>{{ __('watch::watch.fields.body') }}</th>
                     <th>{{ __('watch::watch.fields.author') }}</th>
                     <th>{{ __('watch::watch.fields.status') }}</th>
+                    @can(App\Support\Authorization\Permission::WatchDelete->value)
+                        <th></th>
+                    @endcan
                 </x-slot:head>
                 @forelse ($observations as $observation)
                     <tr>
@@ -40,9 +43,12 @@
                                 <x-ui.status-badge :status="$observation->status" />
                             @endcan
                         </td>
+                        @can(App\Support\Authorization\Permission::WatchDelete->value)
+                            <td class="text-end"><x-ui.delete-form :action="route('watch.observations.destroy', $observation)" compact /></td>
+                        @endcan
                     </tr>
                 @empty
-                    <x-ui.empty-row colspan="5" />
+                    <x-ui.empty-row colspan="6" />
                 @endforelse
             </x-ui.table>
         </x-ui.card>

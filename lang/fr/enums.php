@@ -74,9 +74,9 @@ return [
     ],
 
     'inspection_result' => [
-        'compliant' => 'Conforme',
+        'compliant' => 'Sans infraction',
         'minor_issues' => 'Écarts mineurs',
-        'non_compliant' => 'Non conforme',
+        'non_compliant' => 'Infraction constatée',
     ],
 
     'catch_source' => [
@@ -268,7 +268,7 @@ return [
 
     'logbook_day_status' => [
         'open' => 'Ouverte',
-        'closed' => 'Close',
+        'closed' => 'Clôturée',
         'locked' => 'Verrouillée',
     ],
 
@@ -285,7 +285,7 @@ return [
     'logbook_handling_status' => [
         'to_handle' => 'À traiter',
         'in_progress' => 'En cours',
-        'closed' => 'Clos',
+        'closed' => 'Traité',
     ],
 
     'surveillance_observation_status' => [
@@ -306,7 +306,7 @@ return [
 
     'watch_status' => [
         'open' => 'Ouvert',
-        'closed' => 'Clos',
+        'closed' => 'Terminé',
     ],
 
     'report_frequency' => [
@@ -455,6 +455,7 @@ return [
         'api' => 'API',
         'import' => 'Import',
         'scraping' => 'Scraping',
+        'manual' => 'Saisie manuelle',
     ],
 
     'alert_rule_type' => [
@@ -468,7 +469,7 @@ return [
     'alert_status' => [
         'open' => 'Ouverte',
         'acknowledged' => 'Acquittée',
-        'closed' => 'Close',
+        'closed' => 'Traitée',
     ],
 
     'vms_failure_category' => [
@@ -493,13 +494,13 @@ return [
     'vms_request_status' => [
         'requested' => 'Demandée',
         'assessed' => 'Évaluée',
-        'closed' => 'Close',
+        'closed' => 'Traitée',
     ],
 
     'beacon_request_status' => [
         'requested' => 'Demandée',
         'installed' => 'Installée',
-        'closed' => 'Close',
+        'closed' => 'Traitée',
     ],
 
     'assessment_result' => [
@@ -508,7 +509,7 @@ return [
         'to_complete' => 'À compléter',
     ],
     'vessel_status_light' => [
-        'compliant' => 'Conforme',
+        'compliant' => 'En règle',
         'to_watch' => 'À surveiller',
         'suspect' => 'Suspect',
         'in_violation' => 'En infraction',
@@ -551,7 +552,7 @@ return [
         'open' => 'Ouvert',
         'instruction' => 'En instruction',
         'decision' => 'En décision',
-        'closed' => 'Clos',
+        'closed' => 'Clôturé',
     ],
 
     'precautionary_measure_type' => [
@@ -688,7 +689,7 @@ return [
             'open' => 'Le dossier vient d\'être ouvert.',
             'instruction' => 'Le dossier est en cours d\'instruction : preuves et auditions.',
             'decision' => 'Le dossier attend ou fait l\'objet d\'une décision.',
-            'closed' => 'Le dossier est clos.',
+            'closed' => 'Le dossier est clôturé.',
         ],
         'observation_level' => [
             'info' => 'Information à titre de renseignement.',
@@ -698,7 +699,7 @@ return [
         'observation_status' => [
             'open' => 'L\'observation est ouverte et n\'a pas encore de suite.',
             'in_progress' => 'L\'observation est en cours de traitement.',
-            'closed' => 'L\'observation est close.',
+            'closed' => 'L\'observation est traitée.',
         ],
         'operation_status' => [
             'open' => 'L\'opération est ouverte.',
@@ -711,7 +712,7 @@ return [
             'authorized' => 'La mission est autorisée et peut démarrer.',
             'in_progress' => 'La mission est en cours.',
             'completed' => 'La mission est terminée, le compte rendu reste à faire.',
-            'closed' => 'La mission est close.',
+            'closed' => 'La mission est clôturée.',
         ],
         'movement_direction' => [
             'entry' => 'Le navire est entré dans le port.',
@@ -719,8 +720,8 @@ return [
         ],
     ],
     'eez_check_result' => [
-        'ok' => 'Conforme',
-        'ko' => 'Non conforme',
+        'ok' => 'Vérifié',
+        'ko' => 'Écart constaté',
         'na' => 'Sans objet',
     ],
     'eez_check_type' => [
@@ -738,7 +739,7 @@ return [
         'verified' => 'Vérifiée',
         'acknowledged' => 'Accusée de réception',
         'variance' => 'Écart constaté',
-        'closed' => 'Close',
+        'closed' => 'Traitée',
     ],
     'eez_declaration_type' => [
         'entry' => 'Entrée en ZEE',
@@ -757,7 +758,7 @@ return [
     ],
     'entry_exit_alert_status' => [
         'open' => 'Ouverte',
-        'closed' => 'Close',
+        'closed' => 'Traitée',
     ],
     'entry_exit_explanation' => [
         'catch_document' => 'Document de capture',

@@ -124,7 +124,7 @@ class OperationPrintTest extends TestCase
         $this->assertStringStartsWith('%PDF', Storage::disk(DocumentStore::DISK)->get($pdf->path));
 
         $xml = $this->wordXml($this->get(route('operations.word', $operation))->assertOk()->getContent());
-        $this->assertStringContainsString('Opération '.$operation->code.' close', $xml);
+        $this->assertStringContainsString('Opération '.$operation->code.' clôturée', $xml);
         $this->assertStringContainsString('VMS réparé.', $xml);
         $this->assertStringContainsString('2 j 3 h 19 min', $xml);
         $this->assertStringNotContainsString(OperationDocument::basename($operation).'.pdf', $xml);

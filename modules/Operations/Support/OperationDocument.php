@@ -50,6 +50,10 @@ final class OperationDocument
             __('logbook::logbook.print.daily_title'),
         );
 
+        $document->table([100], [[$operation->isFinished()
+            ? PrintedDocument::banner(__('operations::operations.print.status_closed', ['date' => $operation->ended_at?->format('d/m/Y H:i') ?? '—']), Palette::CLOSED_GREEN, 1)
+            : PrintedDocument::banner(__('operations::operations.print.status_open', ['date' => now()->format('d/m/Y H:i')]), Palette::OPENED_RED, 1)]]);
+
         $this->addContext($document, $operation);
         $this->addLogbook($document, $operation);
         $this->addClosing($document, $operation);
@@ -113,7 +117,7 @@ final class OperationDocument
             [PrintedDocument::cell($field('comments'), ['span' => 6, 'fill' => Palette::VESSEL_SECTION])],
             [$value($comments, 6)],
             [PrintedDocument::banner(__('operations::operations.personnel_title'), Palette::TITLE_BLUE, 6)],
-            [$label($field('supervised_by'), 2, ''), $value($manager?->fullName(), 4)],
+            [$label($field('supervised_by'), 2, ''), $value($operation->csp_manager_name ?? $manager?->fullName(), 4)],
             [$label($field('operator'), 2, ''), $value($operator?->fullName(), 4)],
         ];
 

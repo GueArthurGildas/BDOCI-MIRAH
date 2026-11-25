@@ -13,4 +13,5 @@ return [
     'closed' => 'Vessel removed from the watch list.',
     'standing_instruction_created' => 'Standing instruction recorded.',
     'standing_instruction_ended' => 'Standing instruction lifted.',
+    'observation_deleted' => 'Check #:id deleted.',
 ];

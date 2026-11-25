@@ -52,6 +52,8 @@ Classées par ordre de besoin. Chaque phase est livrée avec l'hypothèse de la 
 | C10 | V17 | URL directe par navire dans THEMIS | 7 | Hypothèse H-7-7 (modèle d'adresse par source) | |
 | C11 | — | La DPEP expose-t-elle tous les champs par API ? Sinon import contrôlé (F-018) | 7 | Hypothèse H-7-1 (charges utiles enregistrées) | |
 | C12 | E3 | Liste complète des besoins fonctionnels (dont BF06) | périmètre | Aucune hypothèse : question de périmètre | |
+| C13 | — | Saisie manuelle des positions en attendant les flux externes : la position constatée d'un navire suffit-elle, ou faut-il aussi saisir un comptage par zone sans navire ? | retours 25/11 | Hypothèse H-10-1 (position manuelle, jamais une émission de balise) | |
+| C14 | — | Suppression par le Chef d'équipe et le Responsable du CSP : suppression tracée (ligne barrée, motif) compatible avec PROCOP_CSP/01 ? Faut-il l'autoriser après clôture ? | retours 25/11 | Hypothèse H-10-2 (jamais après clôture) | |
 
 ## C2. Retours de recette du 31/10 au 01/11/2026 : réponses techniques
 
@@ -92,3 +94,4 @@ Pour livrer une application complète, 74 hypothèses provisoires ont été rete
 | E5 | H-7-1 | accès aux sources externes : seul le jeu de données enregistré est branché |
 | E6 | H-5-1, H-5-2 | fournisseur d'e-mail et consentement WhatsApp (V10, V11) |
 | E7 | H-3b-1, H-3b-2 | positions pour la « photo » et localités à compter (V18, V20) |
+| E8 | H-10-1, H-10-2, H-10-3 | saisie manuelle des positions, suppression tracée, relève unique et responsable du CSP (retours du 25/11/2026) |

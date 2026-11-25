@@ -26,6 +26,7 @@ return [
         'shift_end_hour' => (int) env('SURVEILLANCE_WATCH_SHIFT_END_HOUR', 18),
         'teams_count' => (int) env('SURVEILLANCE_WATCH_TEAMS_COUNT', 3),
         'check_threshold' => (int) env('SURVEILLANCE_WATCH_CHECK_THRESHOLD', 3),
+        'csp_manager' => (string) env('SURVEILLANCE_CSP_MANAGER', ''),
         'working_days' => array_map('intval', explode(',', env('SURVEILLANCE_WATCH_WORKING_DAYS', '1,2,3,4,5,6,7'))),
     ],
 

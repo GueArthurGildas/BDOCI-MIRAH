@@ -14,7 +14,6 @@ use App\Models\LogbookEntry;
 use App\Models\Operation;
 use App\Models\OperationCategory;
 use App\Models\OperationEvent;
-use App\Models\User;
 use App\Models\Vessel;
 use App\Models\VesselActor;
 use App\Models\WatchEntry;
@@ -64,10 +63,10 @@ class OperationLogbookTest extends TestCase
     public function test_opening_an_operation_writes_a_red_line_in_the_daily_logbook(): void
     {
         $agent = $this->signInAs(Role::Agent);
-        $manager = User::factory()->create(['first_name' => 'Maxime', 'name' => 'DIOMANDE']);
+        config(['surveillance.watch.csp_manager' => 'Maxime DIOMANDE']);
         $vessel = Vessel::factory()->create(['name' => 'CALIPSO']);
 
-        $operation = $this->open(['vessel_ids' => [$vessel->id], 'supervised_by' => $manager->id, 'vessel_position' => '02°16\'30"N / 006°48\'59"W', 'comments' => 'Aucun autre navire.']);
+        $operation = $this->open(['vessel_ids' => [$vessel->id], 'vessel_position' => '02°16\'30"N / 006°48\'59"W', 'comments' => 'Aucun autre navire.']);
 
         $line = LogbookEntry::sole();
         $this->assertSame($operation->id, $line->operation_id);
@@ -78,7 +77,8 @@ class OperationLogbookTest extends TestCase
         $this->assertTrue($line->occurred_at->equalTo($operation->started_at));
         $this->assertSame([$vessel->id], $line->vessels->pluck('id')->all());
         $this->assertSame(1, WatchEntry::open()->where('vessel_id', $vessel->id)->where('operation_id', $operation->id)->count());
-        $this->assertSame(['lead' => $agent->id, 'manager' => $manager->id], $operation->personnel->mapWithKeys(fn ($user) => [$user->pivot->role => $user->id])->sortKeys()->all());
+        $this->assertSame(['lead' => $agent->id], $operation->personnel->mapWithKeys(fn ($user) => [$user->pivot->role => $user->id])->sortKeys()->all());
+        $this->assertSame('Maxime DIOMANDE', $operation->csp_manager_name);
         $this->assertSame('02°16\'30"N / 006°48\'59"W', $operation->context->vessel_position);
 
         $this->get(route('logbook.days.show', $line->day))->assertOk()

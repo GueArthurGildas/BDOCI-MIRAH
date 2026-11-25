@@ -56,19 +56,17 @@ class MenuStructureTest extends TestCase
     {
         $morning = $this->tree('surveillance')[1]['morning_board'];
 
-        $this->assertSame(['watch.board.index', 'tracking.beacons', 'watch.instructions.index', 'logbook.index'], array_slice($morning, 0, 4));
+        $this->assertSame(['watch.board.index', 'tracking.beacons', 'watch.instructions.index'], array_slice($morning, 0, 3));
         $this->assertSame([
             'watch.observations.index',
             'watch.rotations.index',
-            'watch.instructions.index',
-            'tracking.alerts.index',
             'tracking.slots.index',
             'logbook.days.index',
             'vms.beacons.index',
             'logbook.index',
             'vms.failures.index',
             'vms.ers.index',
-        ], $morning[4]['logbook']);
+        ], $morning[3]['logbook']);
     }
 
     public function test_vessels_and_licenses_no_longer_sit_in_the_registry_group(): void

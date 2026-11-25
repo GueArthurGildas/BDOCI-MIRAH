@@ -6,4 +6,5 @@ enum SettingType: string
 {
     case Integer = 'integer';
     case Boolean = 'boolean';
+    case Text = 'text';
 }

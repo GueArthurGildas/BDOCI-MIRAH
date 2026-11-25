@@ -68,6 +68,8 @@ return [
         'watch_shift_end_hour' => 'Heure de clôture de la main courante (1 à 23)',
         'watch_teams_count' => 'Nombre d\'équipes en rotation',
         'watch_check_threshold' => 'Une alerte est levée au-delà de (vérifications d\'un même navire)',
+        'watch_csp_manager' => 'Responsable du CSP',
+        'watch_csp_manager_hint' => 'Nom inscrit sur les relèves de quart et les mains courantes. Vide : le premier Directeur actif.',
         'alerts_scheduled_reports_enabled' => 'Prévenir le destinataire lorsqu\'un rapport programmé est prêt',
         'archive_after_years' => 'Les opérations clôturées sont archivées après (années)',
         'connectors_stale_after_hours' => 'Une source est périmée après (heures sans synchronisation)',

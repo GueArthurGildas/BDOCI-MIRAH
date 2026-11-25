@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Modules\Watch\Actions\AcknowledgeRelay;
 use Modules\Watch\Actions\PlanRotations;
-use Modules\Watch\Actions\StartShiftHandover;
 use Modules\Watch\Http\Requests\PlanRotationsRequest;
 
 class ShiftController extends Controller
@@ -20,7 +19,7 @@ class ShiftController extends Controller
     {
         return view('watch::rotations.index', [
             'rotations' => Rotation::query()
-                ->with(['team.lead', 'handovers'])
+                ->with(['team.lead'])
                 ->whereDate('day', '>=', today()->subDays(7))
                 ->orderBy('day')
                 ->get(),
@@ -32,13 +31,6 @@ class ShiftController extends Controller
         $created = $actions->run(PlanRotations::class, $request->user(), $request->validated());
 
         return to_route('watch.rotations.index')->with('status', trans_choice('watch::watch.rotations.planned', $created->count()));
-    }
-
-    public function startHandover(Rotation $rotation, Request $request, ActionRunner $actions): RedirectResponse
-    {
-        $actions->run(StartShiftHandover::class, $request->user(), ['rotation_id' => $rotation->id]);
-
-        return to_route('watch.board.index')->with('status', __('watch::watch.rotations.handover_started'));
     }
 
     public function acknowledge(Relay $relay, Request $request, ActionRunner $actions): RedirectResponse

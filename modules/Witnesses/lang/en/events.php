@@ -6,4 +6,5 @@ return [
         'dismissal' => 'Report #:id dismissed.',
         'forward_to_instruction' => 'Report #:id forwarded to instruction.',
     ],
+    'report_deleted' => 'Witness report #:id deleted.',
 ];

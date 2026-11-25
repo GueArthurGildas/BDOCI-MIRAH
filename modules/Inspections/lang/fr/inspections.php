@@ -31,7 +31,7 @@ return [
         'infractions' => 'Infractions',
         'exceeding_catches' => 'Captures au-delà du seuil',
         'type' => 'Type',
-        'compliant' => 'Conforme',
+        'compliant' => 'Réglementaire',
         'gear' => 'Engin',
         'mesh_mm' => 'Maillage (mm)',
         'marking' => 'Marquage',

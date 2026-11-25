@@ -455,6 +455,7 @@ return [
         'api' => 'API',
         'import' => 'Import',
         'scraping' => 'Scraping',
+        'manual' => 'Manual entry',
     ],
 
     'alert_rule_type' => [

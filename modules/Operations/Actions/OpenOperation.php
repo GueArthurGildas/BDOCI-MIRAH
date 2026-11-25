@@ -11,6 +11,7 @@ use App\Support\Actions\Action;
 use App\Support\Actions\ActionContext;
 use App\Support\Authorization\Permission;
 use App\Support\Documents\DocumentStore;
+use App\Support\Logbook\CspManager;
 use App\Support\Logbook\LogbookChannels;
 use App\Support\Logbook\LogbookWriter;
 use App\Support\Printing\PdfRenderer;
@@ -33,6 +34,7 @@ class OpenOperation extends Action
         private readonly LogbookChannels $channels,
         private readonly VesselSheet $sheets,
         private readonly DocumentStore $documents,
+        private readonly CspManager $manager,
     ) {}
 
     public function code(): string
@@ -61,6 +63,7 @@ class OpenOperation extends Action
             'status' => OperationStatus::Open,
             'started_at' => $startedAt,
             'created_by' => $context->actor->id,
+            'csp_manager_name' => $this->manager->name(),
         ]);
 
         $contextFields = array_filter(Arr::only($input, self::CONTEXT_FIELDS), fn (mixed $value) => $value !== null && $value !== '');
@@ -70,10 +73,6 @@ class OpenOperation extends Action
         }
 
         $operation->personnel()->attach($context->actor->id, ['role' => self::LEAD_ROLE]);
-
-        if (! empty($input['supervised_by']) && (int) $input['supervised_by'] !== $context->actor->id) {
-            $operation->personnel()->attach($input['supervised_by'], ['role' => self::MANAGER_ROLE]);
-        }
 
         $operation->vessels()->sync($input['vessel_ids'] ?? []);
 

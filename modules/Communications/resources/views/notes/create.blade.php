@@ -37,7 +37,7 @@
 
                 <div class="row">
                     <div class="col-sm-9 offset-sm-3">
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary" data-gs-record>
                             <i class="feather icon-save"></i> {{ __('communications::notes.leave') }}
                         </button>
                         @can(App\Support\Authorization\Permission::CommunicationsTriggerAiAgent->value)

@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\LogbookEntry;
 use App\Support\Actions\ActionRunner;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Modules\Logbook\Actions\AddLogbookEntry;
+use Modules\Logbook\Actions\DeleteLogbookEntry;
 use Modules\Logbook\Actions\RectifyLogbookEntry;
 use Modules\Logbook\Actions\SetLogbookEntryHandling;
 use Modules\Logbook\Http\Requests\RectifyLogbookEntryRequest;
@@ -56,5 +58,12 @@ class LogbookEntryController extends Controller
         $actions->run(SetLogbookEntryHandling::class, $request->user(), [...$request->validated(), 'entry_id' => $entry->id]);
 
         return to_route('logbook.days.show', $entry->logbook_day_id)->with('status', __('logbook::logbook.entries.handled'));
+    }
+
+    public function destroy(Request $request, LogbookEntry $entry, ActionRunner $actions): RedirectResponse
+    {
+        $actions->run(DeleteLogbookEntry::class, $request->user(), ['entry_id' => $entry->id, 'reason' => $request->validate(['reason' => ['required', 'string', 'max:500']], [], ['reason' => __('ui.deletion.reason')])['reason']]);
+
+        return to_route('logbook.days.show', $entry->logbook_day_id)->with('status', __('ui.deletion.done'));
     }
 }

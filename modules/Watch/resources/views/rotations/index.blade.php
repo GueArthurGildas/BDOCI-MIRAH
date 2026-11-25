@@ -11,7 +11,6 @@
                             <th>{{ __('watch::watch.fields.team') }}</th>
                             <th>{{ __('watch::watch.fields.lead') }}</th>
                             <th>{{ __('watch::watch.fields.hours') }}</th>
-                            <th>{{ __('watch::watch.fields.handover') }}</th>
                         </x-slot:head>
                         @forelse ($rotations as $rotation)
                             <tr>
@@ -19,21 +18,9 @@
                                 <td>{{ $rotation->team->name }}</td>
                                 <td>{{ $rotation->team->lead?->name }}</td>
                                 <td class="text-nowrap">{{ substr($rotation->start_time, 0, 5) }} - {{ substr($rotation->end_time, 0, 5) }}</td>
-                                <td>
-                                    @if ($rotation->handovers->isNotEmpty())
-                                        <span class="label label-success">{{ __('watch::watch.rotations.handover_done') }}</span>
-                                    @else
-                                        @can(App\Support\Authorization\Permission::WatchCreate->value)
-                                            <form data-confirm="{{ __('watch::confirm.handover') }}" data-confirm-label="{{ __('watch::confirm.handover_yes') }}" method="POST" action="{{ route('watch.rotations.handover', $rotation) }}">
-                                                @csrf
-                                                <button type="submit" class="btn btn-outline-primary btn-mini">{{ __('watch::watch.rotations.start_handover') }}</button>
-                                            </form>
-                                        @endcan
-                                    @endif
-                                </td>
                             </tr>
                         @empty
-                            <x-ui.empty-row colspan="5" />
+                            <x-ui.empty-row colspan="4" />
                         @endforelse
                     </x-ui.table>
                 </x-ui.card>

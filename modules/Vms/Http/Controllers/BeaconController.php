@@ -64,6 +64,6 @@ class BeaconController extends Controller
 
     private function vesselOptions()
     {
-        return Vessel::orderBy('name')->get()->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => "{$vessel->name} ({$vessel->registration_number})"]);
+        return Vessel::orderBy('name')->get()->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => $vessel->optionLabel()]);
     }
 }

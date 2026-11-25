@@ -3,11 +3,17 @@
 namespace Tests\Feature;
 
 use App\Http\Middleware\ModalFormRedirects;
+use App\Models\LogbookDay;
+use App\Models\Observation;
 use App\Models\Operation;
 use App\Models\OperationCategory;
+use App\Models\Position;
 use App\Support\Authorization\Permission;
 use App\Support\Authorization\Role;
 use App\Support\Logbook\LogbookChannels;
+use App\Support\Logbook\LogbookDayDocument;
+use App\Support\Navigation\Navigation;
+use App\Support\Navigation\NavigationItem;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -84,6 +90,53 @@ class InterfaceTest extends TestCase
         $this->signInAs(Role::Admin);
 
         $this->get(route('profile.show'))->assertOk()->assertDontSee(__('ui.morning_menu.hint'));
+    }
+
+    public function test_every_page_has_a_refresh_button_and_asks_to_confirm_each_record(): void
+    {
+        $this->signInAs(Role::Agent);
+
+        $this->get(route('logbook.create'))
+            ->assertOk()
+            ->assertSee('data-gs-refresh', false)
+            ->assertSee('data-gs-confirm-record="'.e(__('ui.confirm.record')).'"', false)
+            ->assertSee('data-gs-record', false);
+    }
+
+    public function test_the_sidebar_lists_each_screen_once(): void
+    {
+        $user = $this->signInAs(Role::Director);
+
+        $routes = app(Navigation::class)->groupsFor($user)->flatten(1)->map(fn (NavigationItem $item) => $item->route);
+
+        $this->assertSame($routes->count(), $routes->unique()->count(), 'Duplicated: '.$routes->duplicates()->join(', '));
+    }
+
+    public function test_the_situation_map_offers_to_record_from_a_vessel_or_a_spot(): void
+    {
+        $this->signInAs(Role::Agent);
+        $position = Position::factory()->create(['recorded_at' => now()->subMinutes(5)]);
+        Observation::factory()->create(['latitude' => 5.1, 'longitude' => -4.2, 'observed_at' => now()->subHour()]);
+
+        $this->get(route('tracking.map'))
+            ->assertOk()
+            ->assertViewHas('markers', fn (array $markers) => collect($markers)->contains(fn (array $marker) => collect($marker['actions'] ?? [])->contains(fn (array $action) => str_contains($action['url'], 'vessel_id='.$position->vessel_id)))
+                && collect($markers)->contains(fn (array $marker) => ($marker['square'] ?? false) === true))
+            ->assertViewHas('create', fn (?array $create) => $create !== null && $create['url'] === route('logbook.create'));
+
+        $this->get(route('logbook.create', ['vessel_id' => $position->vessel_id, 'latitude' => 5.25, 'longitude' => -4.5]))
+            ->assertOk()
+            ->assertSee('value="5.25"', false);
+    }
+
+    public function test_printed_logbooks_say_whether_they_are_closed(): void
+    {
+        $this->freezeTime();
+        $day = LogbookDay::factory()->create();
+
+        $texts = collect(app(LogbookDayDocument::class)->build($day)->blocks())->flatMap(fn (array $block) => $block['rows'] ?? [])->flatten(1)->flatMap(fn ($cell) => $cell['lines'] ?? [])->pluck('text');
+
+        $this->assertTrue($texts->contains(fn (string $text) => $text === __('logbook::logbook.print.status_open', ['date' => now()->format('d/m/Y H:i')])));
     }
 
     public function test_a_detail_page_offers_a_back_button_to_its_parent_page(): void

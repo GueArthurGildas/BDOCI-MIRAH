@@ -15,7 +15,6 @@ class StoreShiftHandoverRequest extends FormRequest
         return [
             'handed_over_at' => ['nullable', 'date', 'before_or_equal:now'],
             'taken_over_by' => ['required', 'integer', $activeHuman],
-            'supervised_by' => ['nullable', 'integer', $activeHuman],
             'instructions' => ['nullable', 'string', 'max:5000'],
         ];
     }
@@ -25,7 +24,6 @@ class StoreShiftHandoverRequest extends FormRequest
         return [
             'handed_over_at' => __('logbook::logbook.handovers.fields.handed_over_at'),
             'taken_over_by' => __('logbook::logbook.handovers.fields.incoming'),
-            'supervised_by' => __('logbook::logbook.handovers.fields.supervisor'),
             'instructions' => __('logbook::logbook.handovers.fields.instructions'),
         ];
     }

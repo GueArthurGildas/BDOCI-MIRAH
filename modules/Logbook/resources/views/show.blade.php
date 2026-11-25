@@ -45,6 +45,12 @@
                     @endcan
                 </x-ui.card>
 
+                @can(App\Support\Authorization\Permission::LogbookDelete->value)
+                    <x-ui.card :title="__('ui.deletion.title')">
+                        <x-ui.delete-form :action="route('logbook.destroy', $observation)" />
+                    </x-ui.card>
+                @endcan
+
                 <x-ui.audit-history :subject="$observation" />
             </div>
         </div>

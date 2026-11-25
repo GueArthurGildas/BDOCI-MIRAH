@@ -11,6 +11,7 @@ use App\Support\Actions\ActionRunner;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Modules\Watch\Actions\DeleteSurveillanceObservation;
 use Modules\Watch\Actions\RecordSurveillanceObservation;
 use Modules\Watch\Actions\SetSurveillanceObservationStatus;
 use Modules\Watch\Http\Requests\SetObservationStatusRequest;
@@ -32,7 +33,7 @@ class ObservationController extends Controller
         return view('watch::observations.create', [
             'slotPositionId' => $request->integer('slot_position_id') ?: null,
             'selectedVesselId' => $request->integer('vessel_id') ?: null,
-            'vessels' => Vessel::orderBy('name')->get()->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => "{$vessel->name} ({$vessel->registration_number})"]),
+            'vessels' => Vessel::orderBy('name')->get()->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => $vessel->optionLabel()]),
             'teams' => Team::whereKeyNot($request->user()->team_id)->orderBy('name')->pluck('name', 'id'),
         ]);
     }
@@ -54,5 +55,12 @@ class ObservationController extends Controller
         $actions->run(SetSurveillanceObservationStatus::class, $request->user(), [...$request->validated(), 'observation_id' => $observation->id]);
 
         return back()->with('status', __('watch::watch.observations.updated'));
+    }
+
+    public function destroy(Request $request, SurveillanceObservation $observation, ActionRunner $actions): RedirectResponse
+    {
+        $actions->run(DeleteSurveillanceObservation::class, $request->user(), ['observation_id' => $observation->id, 'reason' => $request->validate(['reason' => ['required', 'string', 'max:500']], [], ['reason' => __('ui.deletion.reason')])['reason']]);
+
+        return to_route('watch.observations.index')->with('status', __('ui.deletion.done'));
     }
 }

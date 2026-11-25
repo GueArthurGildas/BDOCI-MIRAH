@@ -28,7 +28,7 @@ class RequestController extends Controller
             'assessmentRequests' => VmsAssessmentRequest::with(['vessel', 'assessments'])->latest('requested_on')->latest('id')->get(),
             'newBeaconRequests' => NewBeaconRequest::with(['vessel', 'installations.installer.legalEntity'])->latest('requested_on')->latest('id')->get(),
             'installers' => ApprovedInstaller::with('legalEntity')->get(),
-            'vessels' => Vessel::orderBy('name')->get()->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => "{$vessel->name} ({$vessel->registration_number})"]),
+            'vessels' => Vessel::orderBy('name')->get()->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => $vessel->optionLabel()]),
             'results' => AssessmentResult::options(),
             'beaconOptions' => Beacon::orderBy('serial_number')->pluck('serial_number', 'id'),
             'installerOptions' => ApprovedInstaller::with('legalEntity')->get()->mapWithKeys(fn (ApprovedInstaller $installer) => [$installer->id => $installer->legalEntity->name]),

@@ -11,4 +11,5 @@ enum PositionLoadingSource: string
     case Api = 'api';
     case Import = 'import';
     case Scraping = 'scraping';
+    case Manual = 'manual';
 }

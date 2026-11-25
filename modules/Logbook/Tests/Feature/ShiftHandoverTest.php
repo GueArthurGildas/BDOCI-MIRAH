@@ -31,17 +31,16 @@ class ShiftHandoverTest extends TestCase
     {
         $outgoing = $this->signInAs(Role::Agent);
         $incoming = User::factory()->create(['first_name' => 'Mariam', 'name' => 'CONDE']);
-        $manager = User::factory()->create(['first_name' => 'Maxime', 'name' => 'DIOMANDE']);
+        config(['surveillance.watch.csp_manager' => 'Maxime DIOMANDE']);
         $mep = OperationCategory::factory()->create(['code' => OperationCategoryCode::Mep]);
         Operation::factory()->for($mep, 'category')->create(['code' => 'OPS-326-MEP-2026-PACIFIC_PRIDE', 'number' => 326]);
         Operation::factory()->for($mep, 'category')->create(['code' => 'OPS-320-MEP-2026-OLD', 'number' => 320, 'status' => 'closed', 'ended_at' => now()->subDay()]);
         DB::table('operation_counters')->insert(['category_id' => $mep->id, 'year' => now()->year, 'last_number' => 328]);
 
-        $this->get(route('logbook.handovers.create'))->assertOk()->assertSee('328')->assertSee('OPS-326-MEP-2026-PACIFIC_PRIDE', false);
+        $this->get(route('logbook.handovers.create'))->assertOk()->assertSee('328')->assertSee('OPS-326-MEP-2026-PACIFIC_PRIDE', false)->assertSee('Maxime DIOMANDE')->assertDontSee('name="supervised_by"', false);
 
         $this->post(route('logbook.handovers.store'), [
             'taken_over_by' => $incoming->id,
-            'supervised_by' => $manager->id,
             'instructions' => "L'étude de la DPEP pour l'OPS 326/MEP est à faire en priorité.",
         ])->assertRedirect(route('logbook.days.show', LogbookDay::sole()));
 
@@ -50,7 +49,7 @@ class ShiftHandoverTest extends TestCase
         $this->assertSame(now()->toDateString(), $handover->day->day->toDateString());
         $this->assertSame($outgoing->id, $handover->handed_over_by);
         $this->assertSame($incoming->id, $handover->taken_over_by);
-        $this->assertSame($manager->id, $handover->supervised_by);
+        $this->assertSame('Maxime DIOMANDE', $handover->supervisor_name);
         $this->assertSame(328, $handover->operation_counters['mep']);
         $this->assertSame(0, $handover->operation_counters['vms']);
         $this->assertSame(['OPS-326-MEP-2026-PACIFIC_PRIDE'], $handover->open_operations['mep']);
@@ -79,6 +78,20 @@ class ShiftHandoverTest extends TestCase
 
         $this->assertSame(1, LogbookDay::count());
         $this->assertSame(2, LogbookDay::sole()->handovers()->count());
+    }
+
+    #[Covers('UC12', partial: true)]
+    public function test_each_handover_is_recorded_only_once_and_names_the_csp_manager_from_the_settings(): void
+    {
+        $director = $this->signInAs(Role::Director, ['first_name' => 'Awa', 'name' => 'KOUAME']);
+        $this->signInAs(Role::Agent);
+        $incoming = User::factory()->create();
+
+        $this->post(route('logbook.handovers.store'), ['taken_over_by' => $incoming->id])->assertSessionHasNoErrors();
+        $this->post(route('logbook.handovers.store'), ['taken_over_by' => $incoming->id])->assertSessionHasErrors('handed_over_at');
+
+        $this->assertSame(1, ShiftHandover::count());
+        $this->assertSame($director->fullName(), ShiftHandover::sole()->supervisor_name);
     }
 
     public function test_the_handover_is_given_to_someone_else_and_validates_its_input(): void

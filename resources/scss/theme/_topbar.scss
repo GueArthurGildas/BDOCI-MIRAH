@@ -258,3 +258,13 @@
         width: calc(100vw - 16px);
     }
 }
+
+.gs-spin {
+    animation: gs-spin .8s linear infinite;
+}
+
+@keyframes gs-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

@@ -4,6 +4,7 @@ use App\Support\Authorization\Permission;
 use Illuminate\Support\Facades\Route;
 use Modules\Tracking\Http\Controllers\AlertController;
 use Modules\Tracking\Http\Controllers\AlertRuleController;
+use Modules\Tracking\Http\Controllers\ManualPositionController;
 use Modules\Tracking\Http\Controllers\SlotController;
 use Modules\Tracking\Http\Controllers\ThermisController;
 use Modules\Tracking\Http\Controllers\TrackingController;
@@ -29,6 +30,9 @@ Route::middleware(['auth', 'can:'.Permission::TrackingView->value])
         Route::get('slots/{slot}', [SlotController::class, 'show'])->name('slots.show');
         Route::post('slots/{slot}/positions/{position}/confirm', [SlotController::class, 'confirm'])->can(Permission::TrackingCreate->value)->name('slots.confirm');
         Route::post('slots/{slot}/sweep', [SlotController::class, 'sweep'])->can(Permission::TrackingCreate->value)->name('slots.sweep');
+
+        Route::get('positions/create', [ManualPositionController::class, 'create'])->can(Permission::TrackingCreate->value)->name('positions.create');
+        Route::post('positions', [ManualPositionController::class, 'store'])->can(Permission::TrackingCreate->value)->name('positions.store');
     });
 
 Route::middleware(['auth', 'can:'.Permission::SettingsManage->value])

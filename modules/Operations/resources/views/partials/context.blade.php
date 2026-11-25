@@ -122,7 +122,7 @@
             <tr><th colspan="4">{{ __('operations::operations.personnel_title') }}</th></tr>
             <tr>
                 <th scope="row">{{ __('operations::operations.fields.supervised_by') }}</th>
-                <td colspan="3">{{ $manager?->fullName() }}</td>
+                <td colspan="3">{{ $operation->csp_manager_name ?? $manager?->fullName() }}</td>
             </tr>
             <tr>
                 <th scope="row">{{ __('operations::operations.fields.operator') }}</th>

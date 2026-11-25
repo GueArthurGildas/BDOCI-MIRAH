@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-#[Fillable(['logbook_day_id', 'occurred_at', 'channel_id', 'content', 'direction', 'is_order_or_decision', 'operation_id', 'operation_milestone', 'handling_status', 'corrects_entry_id', 'entered_by'])]
+#[Fillable(['logbook_day_id', 'occurred_at', 'channel_id', 'content', 'direction', 'is_order_or_decision', 'operation_id', 'operation_milestone', 'handling_status', 'corrects_entry_id', 'entered_by', 'cancelled_at', 'cancelled_by', 'cancellation_reason'])]
 class LogbookEntry extends Model
 {
     use Audited, HasFactory;
@@ -26,6 +26,7 @@ class LogbookEntry extends Model
             'direction' => LogbookDirection::class,
             'handling_status' => LogbookHandlingStatus::class,
             'operation_milestone' => OperationMilestone::class,
+            'cancelled_at' => 'datetime',
             'is_order_or_decision' => 'boolean',
         ];
     }
@@ -78,5 +79,15 @@ class LogbookEntry extends Model
     public function vessels(): BelongsToMany
     {
         return $this->belongsToMany(Vessel::class, 'logbook_entry_vessel');
+    }
+
+    public function canceller(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'cancelled_by');
+    }
+
+    public function isCancelled(): bool
+    {
+        return $this->cancelled_at !== null;
     }
 }

@@ -1,9 +1,10 @@
 <?php
 
 return [
+    'manual_position_recorded' => 'Position saisie à la main (:latitude, :longitude).',
     'slot_position_confirmed' => 'Position de créneau confirmée (:result).',
     'sweep_anomaly' => 'Anomalie de balayage enregistrée (:type).',
     'alert_acknowledged' => 'Alerte acquittée (:type).',
     'alert_handled' => 'Alerte traitée (:type).',
-    'alert_closed' => 'Alerte close (:type).',
+    'alert_closed' => 'Alerte traitée (:type).',
 ];

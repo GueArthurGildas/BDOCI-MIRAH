@@ -30,7 +30,7 @@ class ExportController extends Controller
             'formats' => ExportFormat::options(),
             'operationStatuses' => OperationStatus::options(),
             'recordStatuses' => RecordStatus::options(),
-            'vessels' => Vessel::orderBy('name')->get()->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => "{$vessel->name} ({$vessel->registration_number})"])->all(),
+            'vessels' => Vessel::orderBy('name')->get()->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => $vessel->optionLabel()])->all(),
             'log' => ExportLog::with('user')->latest('exported_at')->latest('id')->paginate(self::PER_PAGE),
         ]);
     }

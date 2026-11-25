@@ -35,6 +35,14 @@ final class LogbookCalendar
         return [(int) config('surveillance.watch.shift_start_hour'), (int) config('surveillance.watch.shift_end_hour')];
     }
 
+    public function handoverSlot(Carbon $at): Carbon
+    {
+        return collect([-1, 0, 1])
+            ->flatMap(fn (int $offset) => collect($this->handoverHours())->map(fn (int $hour) => $at->copy()->addDays($offset)->setTime($hour, 0)))
+            ->sortBy(fn (Carbon $slot) => abs($slot->diffInSeconds($at, false)))
+            ->first();
+    }
+
     public function isWorkingDay(Carbon $date): bool
     {
         return in_array($date->isoWeekday(), config('surveillance.watch.working_days'), true);

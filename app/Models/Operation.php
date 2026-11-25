@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-#[Fillable(['code', 'category_id', 'number', 'year', 'name', 'status', 'started_at', 'ended_at', 'origin', 'summary', 'result', 'infractions_noted', 'created_by', 'closed_by'])]
+#[Fillable(['code', 'category_id', 'number', 'year', 'name', 'status', 'started_at', 'ended_at', 'origin', 'summary', 'result', 'infractions_noted', 'created_by', 'closed_by', 'csp_manager_name'])]
 class Operation extends Model
 {
     use Audited, HasFactory;

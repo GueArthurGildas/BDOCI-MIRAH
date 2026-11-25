@@ -15,6 +15,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
+use Modules\Logbook\Actions\DeleteObservation;
 use Modules\Logbook\Actions\OpenObservation;
 use Modules\Logbook\Actions\UpdateObservation;
 use Modules\Logbook\Http\Requests\StoreObservationRequest;
@@ -52,10 +53,18 @@ class ObservationController extends Controller
         ]);
     }
 
-    public function create(): View
+    public function create(Request $request): View
     {
+        $prefill = $request->validate([
+            'vessel_id' => ['nullable', 'integer'],
+            'zone_id' => ['nullable', 'integer'],
+            'latitude' => ['nullable', 'numeric', 'between:-90,90'],
+            'longitude' => ['nullable', 'numeric', 'between:-180,180'],
+        ]);
+
         return view('logbook::create', [
-            'vessels' => Vessel::orderBy('name')->get()->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => "{$vessel->name} ({$vessel->registration_number})"]),
+            'prefill' => $prefill,
+            'vessels' => Vessel::orderBy('name')->get()->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => $vessel->optionLabel()]),
             'zones' => Zone::orderBy('name')->pluck('name', 'id'),
         ]);
     }
@@ -79,5 +88,12 @@ class ObservationController extends Controller
         $actions->run(UpdateObservation::class, $request->user(), [...$request->validated(), 'observation_id' => $observation->id]);
 
         return to_route('logbook.show', $observation)->with('status', __('logbook::logbook.updated'));
+    }
+
+    public function destroy(Request $request, Observation $observation, ActionRunner $actions): RedirectResponse
+    {
+        $actions->run(DeleteObservation::class, $request->user(), ['observation_id' => $observation->id, 'reason' => $request->validate(['reason' => ['required', 'string', 'max:500']], [], ['reason' => __('ui.deletion.reason')])['reason']]);
+
+        return to_route('logbook.index')->with('status', __('ui.deletion.done'));
     }
 }

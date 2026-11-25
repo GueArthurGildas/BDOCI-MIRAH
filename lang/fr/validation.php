@@ -38,7 +38,7 @@ return [
     'different'              => 'Les champs :attribute et :other doivent être différents.',
     'digits'                 => 'Le champ :attribute doit contenir :digits chiffres.',
     'digits_between'         => 'Le champ :attribute doit contenir entre :min et :max chiffres.',
-    'dimensions'             => 'La taille de l\'image :attribute n\'est pas conforme.',
+    'dimensions'             => 'La taille de l\'image :attribute n\'est pas acceptée.',
     'distinct'               => 'Le champ :attribute a une valeur en double.',
     'doesnt_contain'         => 'Le champ :attribute ne doit contenir aucun des éléments suivants : :values.',
     'doesnt_end_with'        => 'Le champ :attribute ne doit pas finir avec une des valeurs suivantes : :values.',

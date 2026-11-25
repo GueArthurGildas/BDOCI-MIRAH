@@ -21,7 +21,10 @@
                         </form>
                     </x-slot:actions>
 
-                    <x-ui.map :markers="$markers" :zones="$zones" height="620px" />
+                    <x-ui.map :markers="$markers" :zones="$zones" :create="$create" height="620px" />
+                    @if ($create)
+                        <p class="text-muted f-12 m-t-10 mb-0">{{ __('tracking::tracking.map.create_hint') }}</p>
+                    @endif
 
                     <div class="d-flex flex-wrap gap-4 m-t-15 f-13">
                         @foreach (Modules\Tracking\Http\Controllers\TrackingController::MARKER_COLORS as $kind => $color)

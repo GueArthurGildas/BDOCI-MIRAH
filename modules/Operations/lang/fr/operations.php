@@ -117,6 +117,8 @@ return [
     ],
     'print' => [
         'file_title' => 'Dossier Opération',
+        'status_open' => 'OPÉRATION NON CLÔTURÉE : document provisoire édité le :date',
+        'status_closed' => 'OPÉRATION CLÔTURÉE le :date',
         'type_crossed' => 'Type d\'OP (barrer les cases)',
         'first_event' => 'Premier événement',
         'time_utc' => 'Heure (UTC)',

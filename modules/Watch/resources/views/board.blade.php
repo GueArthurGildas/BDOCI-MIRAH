@@ -165,10 +165,10 @@
                     <div class="row">
                         <div class="col-sm-9 offset-sm-3">
                             @can(App\Support\Authorization\Permission::WatchManage->value)
-                                <button type="submit" class="btn btn-primary">{{ __('watch::watch.board.add_director_list') }}</button>
+                                <button type="submit" class="btn btn-primary" data-gs-record>{{ __('watch::watch.board.add_director_list') }}</button>
                             @endcan
                             @can(App\Support\Authorization\Permission::WatchCreate->value)
-                                <button type="submit" formaction="{{ route('watch.board.enhanced-monitoring') }}" class="btn btn-warning m-l-10">{{ __('watch::watch.board.add_enhanced_monitoring') }}</button>
+                                <button type="submit" formaction="{{ route('watch.board.enhanced-monitoring') }}" class="btn btn-warning m-l-10" data-gs-record>{{ __('watch::watch.board.add_enhanced_monitoring') }}</button>
                             @endcan
                         </div>
                     </div>

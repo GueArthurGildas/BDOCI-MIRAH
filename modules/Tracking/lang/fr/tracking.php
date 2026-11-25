@@ -7,10 +7,16 @@ return [
         'category' => 'Catégorie de navire',
         'subtitle' => 'Dernière position connue de chaque navire et zones de surveillance',
         'positions_count' => '{0} Aucun navire positionné|{1} :count navire positionné|[2,*] :count navires positionnés',
+        'new_observation' => 'Nouvelle observation',
+        'new_check' => 'Nouvelle vérification',
+        'observation_here' => 'Nouvelle observation à cet endroit',
+        'observation_marker' => 'Observation du :time — :vessel',
+        'create_hint' => 'Cliquez sur un navire pour créer une observation ou une vérification, ou ailleurs sur la carte pour créer une observation à cet endroit. Les observations des dernières 24 heures sont marquées en orange.',
         'legend' => [
             'emitting' => 'Balise émettrice',
             'silent' => 'Rupture d\'émission',
             'patrol' => 'Vedette',
+            'observation' => 'Observation des dernières 24 h',
         ],
     ],
     'zones' => [
@@ -90,9 +96,9 @@ return [
         'handled_by' => 'Traité par',
         'measures' => 'Mesures prises',
         'handle_title' => 'Traiter l\'alerte',
-        'handle_hint' => 'Vérifier le navire, consigner les mesures et clore l\'alerte au retour du signal.',
+        'handle_hint' => 'Vérifier le navire, consigner les mesures et terminer l\'alerte au retour du signal.',
         'vessel_contacted' => 'Le navire a été contacté',
-        'close_after' => 'Clore l\'alerte',
+        'close_after' => 'Terminer l\'alerte',
         'handled' => 'Traitement enregistré.',
         'open_operation' => 'Ouvrir une opération',
         'questions' => [
@@ -133,6 +139,31 @@ return [
         'open_themis' => 'Ouvrir THEMIS',
         'copy_identifier' => 'Copier l\'identifiant',
         'create_observation' => 'Créer une observation',
+    ],
+    'manual' => [
+        'title' => 'Saisir une position',
+        'new' => 'Saisir une position',
+        'add_to_slot' => 'Ajouter une position manuelle',
+        'subtitle' => 'Position d\'un navire constatée par un autre moyen (radio, patrouille, observateur, THEMIS consulté à l\'écran)',
+        'hint' => 'À utiliser tant que le chargement automatique n\'est pas branché. Sans coordonnées, le navire est placé au centre de la zone choisie. La position compte dans la situation par zone, la carte et le créneau ; elle ne fait pas passer la balise pour émettrice.',
+        'recorded' => 'Position enregistrée.',
+        'fields' => [
+            'vessel_id' => 'Navire',
+            'recorded_at' => 'Date et heure constatées',
+            'zone_id' => 'Zone',
+            'latitude' => 'Latitude',
+            'longitude' => 'Longitude',
+            'speed_knots' => 'Vitesse (nœuds)',
+            'activity' => 'Activité',
+        ],
+        'activities' => [
+            'moored' => 'À quai ou au mouillage',
+            'fishing' => 'En pêche',
+            'transit' => 'En route',
+        ],
+        'errors' => [
+            'no_location' => 'Indiquez les coordonnées, ou une zone dessinée sur la carte.',
+        ],
     ],
     'rules' => [
         'codes' => [

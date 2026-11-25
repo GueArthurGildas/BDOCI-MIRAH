@@ -27,7 +27,7 @@ return [
                 'stats' => ['title' => 'Les indicateurs clés', 'text' => 'Navires actifs, licences qui expirent, observations en suspens et balises en rupture. Les chiffres sont recalculés à chaque ouverture de la page.'],
                 'messages' => ['title' => 'Mes messages', 'text' => 'Les messages qui vous sont adressés, à vous ou à votre équipe, et qui n\'ont pas encore été lus.'],
                 'zones' => ['title' => 'Situation par zone', 'text' => 'Le nombre de navires présents dans chaque zone portuaire à cet instant.'],
-                'infractions' => ['title' => 'Infractions par statut', 'text' => 'La répartition des dossiers d\'infraction : ouverts, en instruction, en décision, clos.'],
+                'infractions' => ['title' => 'Infractions par statut', 'text' => 'La répartition des dossiers d\'infraction : ouverts, en instruction, en décision, clôturés.'],
                 'sources' => ['title' => 'Fraîcheur des données', 'text' => 'Pour chaque source externe : dernière synchronisation, erreurs et rejets. Un statut dégradé demande l\'attention de l\'Administrateur.'],
                 'observations' => ['title' => 'Dernières observations en suspens', 'text' => 'Les observations ouvertes ou en cours, à suivre ou à transmettre à l\'équipe suivante.'],
             ],
@@ -37,7 +37,7 @@ return [
             'steps' => [
                 'stats' => ['title' => 'Les indicateurs cliquables', 'text' => 'Cliquez un indicateur pour afficher la liste des navires qui le composent.'],
                 'filter_card' => ['title' => 'Période et filtres', 'text' => 'Restreignez la vue par période, zone ou segment.'],
-                'distribution' => ['title' => 'Statut à feux de la flotte', 'text' => 'Combien de navires sont conformes, à surveiller, suspects ou en infraction.'],
+                'distribution' => ['title' => 'Statut à feux de la flotte', 'text' => 'Combien de navires sont en règle, à surveiller, suspects ou en infraction.'],
                 'ranking' => ['title' => 'Navires à plus forte vigilance', 'text' => 'Les navires classés par score de vigilance (0 à 100) ; cliquez-en un pour ouvrir sa fiche.'],
             ],
         ],
@@ -51,7 +51,7 @@ return [
         'vessels_show' => [
             'intro' => 'La fiche complète d\'un navire : tout ce que l\'application sait de lui, au même endroit.',
             'steps' => [
-                'header' => ['title' => 'Situation du navire', 'text' => 'Le statut à feux (conforme, à surveiller, suspect, en infraction) avec ses raisons, puis les identifiants, l\'armateur, l\'agent et le capitaine.'],
+                'header' => ['title' => 'Situation du navire', 'text' => 'Le statut à feux (en règle, à surveiller, suspect, en infraction) avec ses raisons, puis les identifiants, l\'armateur, l\'agent et le capitaine.'],
                 'summary' => ['title' => 'Résumé', 'text' => 'Catégorie, statut, licence et état de la balise. Le bouton Modifier, s\'il apparaît, ouvre le formulaire d\'édition.'],
                 'position' => ['title' => 'Dernière position connue', 'text' => 'La position et la trace récente du navire sur la carte.'],
                 'tabs' => ['title' => 'Les onglets', 'text' => 'Licences, balises, alertes, inspections, infractions, missions, messages, chronologie… Les onglets affichés dépendent de vos droits.'],
@@ -87,7 +87,7 @@ return [
                 'entries' => ['title' => 'Les lignes du quart', 'text' => 'Chaque fait reçu est une ligne : quand, comment, quoi. Après la clôture, les lignes sont verrouillées.'],
                 'new_entry' => ['title' => 'Ajouter une ligne', 'text' => 'Saisissez le moment, le moyen, ce qui s\'est passé, et rattachez les navires concernés.'],
                 'operations' => ['title' => 'Opérations en cours', 'text' => 'Les opérations ouvertes et leur statut ; une information qui les concerne s\'inscrit dans leur propre main courante. Ouverture en rouge, clôture en vert dans la journée.'],
-                'handovers' => ['title' => 'Relèves de quart', 'text' => 'À 08 h et 18 h, l\'opérateur quittant fait la relève : opérateur prenant, responsable du CSP, consignes ; les compteurs et les opérations ouvertes sont relevés automatiquement.'],
+                'handovers' => ['title' => 'Relèves de quart', 'text' => 'À 08 h et 18 h, l\'opérateur quittant fait la relève : opérateur prenant et consignes (le responsable du CSP est repris des réglages) ; les compteurs et les opérations ouvertes sont relevés automatiquement.'],
                 'close_day' => ['title' => 'Clôturer la journée', 'text' => 'À la relève du matin, après les 24 heures de la journée, l\'opérateur quittant la clôture : PDF non modifiable et lignes verrouillées (confirmation demandée).'],
                 'pdf' => ['title' => 'Copie PDF', 'text' => 'Le PDF figé de la journée, dont l\'intégrité se contrôle.'],
             ],
@@ -162,7 +162,7 @@ return [
                 'measures' => ['title' => 'Mesures conservatoires', 'text' => 'Le Chef d\'équipe les propose ; seul le Directeur les décide.'],
                 'violation_report' => ['title' => 'Procès-verbal', 'text' => 'Établi une seule fois, il est figé en PDF.'],
                 'follow_ups' => ['title' => 'Suites, décisions, paiements et recours', 'text' => 'La suite donnée au dossier, la décision, les paiements et les recours éventuels. Ces décisions restent humaines.'],
-                'status' => ['title' => 'Clôture du dossier', 'text' => 'Quand tout est soldé, « Clore le dossier » (avec confirmation) termine l\'instruction.'],
+                'status' => ['title' => 'Clôture du dossier', 'text' => 'Quand tout est soldé, « Terminer le dossier » (avec confirmation) termine l\'instruction.'],
             ],
         ],
         'missions_index' => [

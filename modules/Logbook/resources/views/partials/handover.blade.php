@@ -15,7 +15,7 @@
             </tr>
             <tr>
                 <th scope="row">{{ __('logbook::logbook.handovers.fields.supervisor') }}</th>
-                <td colspan="3">{{ $handover->supervisor?->fullName() }}</td>
+                <td colspan="3">{{ $handover->supervisor_name ?? $handover->supervisor?->fullName() }}</td>
             </tr>
             <tr>
                 <th scope="row">{{ __('logbook::logbook.handovers.fields.outgoing') }}</th>

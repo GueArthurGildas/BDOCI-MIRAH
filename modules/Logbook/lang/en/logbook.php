@@ -132,6 +132,7 @@ return [
         'already_a_correction' => 'A rectifying line cannot be rectified.',
         'day_not_ended' => 'The day is not over: it is closed at the morning handover, from :time.',
         'handover_to_self' => 'The incoming operator must be someone other than the outgoing operator.',
+        'handover_already_done' => 'The :hour handover has already been recorded for this day: it is done only once.',
     ],
     'print' => [
         'daily_title' => 'Electronic logbook',
@@ -140,6 +141,8 @@ return [
         'what' => 'WHAT?',
         'rectifies' => 'Rectifying line for the line of :time',
         'pdf' => 'PDF',
+        'status_open' => 'NOT CLOSED: provisional document printed on :date',
+        'status_closed' => 'CLOSED on :date by :name',
     ],
     'pdf' => [
         'title' => 'CSP logbook of :day',

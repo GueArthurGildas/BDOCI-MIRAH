@@ -159,6 +159,8 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `logbook.days.show` | GET | `/logbook/days/{day}` | `logbook.view` |
 | `logbook.days.today` | GET | `/logbook/days/today` | `logbook.view` |
 | `logbook.days.word` | GET | `/logbook/days/{day}/word` | `logbook.view` |
+| `logbook.destroy` | DELETE | `/logbook/{observation}` | `logbook.delete` |
+| `logbook.entries.destroy` | DELETE | `/logbook/entries/{entry}` | `logbook.delete` |
 | `logbook.entries.rectify` | GET | `/logbook/entries/{entry}/rectify` | `logbook.create` |
 | `logbook.entries.rectify.store` | POST | `/logbook/entries/{entry}/rectify` | `logbook.create` |
 | `logbook.entries.store` | POST | `/logbook/entries` | `logbook.create` |
@@ -256,6 +258,8 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `tracking.alerts.show` | GET | `/tracking/alerts/{alert}` | `tracking.view` |
 | `tracking.beacons` | GET | `/tracking/beacons` | `tracking.view` |
 | `tracking.map` | GET | `/tracking/map` | `tracking.view` |
+| `tracking.positions.create` | GET | `/tracking/positions/create` | `tracking.view`, `tracking.create` |
+| `tracking.positions.store` | POST | `/tracking/positions` | `tracking.view`, `tracking.create` |
 | `tracking.rules.index` | GET | `/tracking/rules` | `settings.manage` |
 | `tracking.rules.store` | POST | `/tracking/rules` | `settings.manage` |
 | `tracking.rules.update` | PUT | `/tracking/rules/{rule}` | `settings.manage` |
@@ -312,15 +316,16 @@ Routes nommées de l'application et du socle, avec la permission exigée.
 | `watch.instructions.index` | GET | `/watch/instructions` | `watch.view` |
 | `watch.instructions.store` | POST | `/watch/instructions` | `watch.manage` |
 | `watch.observations.create` | GET | `/watch/observations/create` | `watch.create` |
+| `watch.observations.destroy` | DELETE | `/watch/observations/{observation}` | `watch.delete` |
 | `watch.observations.index` | GET | `/watch/observations` | `watch.view` |
 | `watch.observations.store` | POST | `/watch/observations` | `watch.create` |
 | `watch.observations.update` | PATCH | `/watch/observations/{observation}` | `watch.create` |
 | `watch.relays.acknowledge` | POST | `/watch/relays/{relay}/acknowledge` | `watch.create` |
-| `watch.rotations.handover` | POST | `/watch/rotations/{rotation}/handover` | `watch.create` |
 | `watch.rotations.index` | GET | `/watch/rotations` | `watch.view` |
 | `watch.rotations.plan` | POST | `/watch/rotations` | `watch.manage` |
 | `witnesses.create` | GET | `/witnesses/create` | `witnesses.create` |
 | `witnesses.decision.store` | POST | `/witnesses/{report}/decision` | `witnesses.manage` |
+| `witnesses.destroy` | DELETE | `/witnesses/{report}` | `witnesses.delete` |
 | `witnesses.distributions.index` | GET | `/witnesses/distributions` | `witnesses.manage` |
 | `witnesses.distributions.store` | POST | `/witnesses/distributions` | `witnesses.manage` |
 | `witnesses.index` | GET | `/witnesses` | `witnesses.view` |

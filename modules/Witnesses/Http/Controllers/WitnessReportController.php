@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Modules\Witnesses\Actions\DecideWitnessReport;
+use Modules\Witnesses\Actions\DeleteWitnessReport;
 use Modules\Witnesses\Actions\LinkReportOperation;
 use Modules\Witnesses\Actions\RecordWitnessReport;
 use Modules\Witnesses\Actions\SaveReportInvestigation;
@@ -110,5 +111,12 @@ class WitnessReportController extends Controller
     private function back(WitnessReport $report, string $key): RedirectResponse
     {
         return to_route('witnesses.show', $report)->with('status', __("witnesses::witnesses.messages.{$key}"));
+    }
+
+    public function destroy(Request $request, WitnessReport $report, ActionRunner $actions): RedirectResponse
+    {
+        $actions->run(DeleteWitnessReport::class, $request->user(), ['report_id' => $report->id, 'reason' => $request->validate(['reason' => ['required', 'string', 'max:500']], [], ['reason' => __('ui.deletion.reason')])['reason']]);
+
+        return to_route('witnesses.index')->with('status', __('ui.deletion.done'));
     }
 }

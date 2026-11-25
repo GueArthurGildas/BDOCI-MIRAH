@@ -20,7 +20,7 @@ return [
     'expiring_within' => 'Échéance sous :days jours',
     'identity' => 'Identité',
     'scope' => 'Zones, engins et espèces autorisés',
-    'compliance_link' => 'Conformité du navire (FNP, certificat VMS, autorisations externes)',
+    'compliance_link' => 'Situation administrative du navire (FNP, certificat VMS, autorisations externes)',
     'fields' => [
         'number' => 'Numéro',
         'vessel' => 'Navire',

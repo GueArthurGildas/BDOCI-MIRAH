@@ -26,7 +26,7 @@ class UpdateVessel extends Action
     public function handle(ActionContext $context, array $input): Vessel
     {
         $vessel = Vessel::findOrFail($input['vessel_id']);
-        $vessel->update($input['attributes']);
+        $vessel->update(array_diff_key($input['attributes'], array_flip(Vessel::FIXED_AT_REGISTRATION)));
 
         foreach (array_keys($vessel->getChanges()) as $field) {
             if (in_array($field, config('registry.tracked_vessel_fields'), true)) {

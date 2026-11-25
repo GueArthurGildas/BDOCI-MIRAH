@@ -59,7 +59,8 @@
                                     @if ($entry->operation_milestone)
                                         <x-ui.status-badge :status="$entry->operation_milestone" />
                                     @endif
-                                    <span @class(['text-pre-line', 'text-danger' => $entry->operation_milestone === App\Enums\OperationMilestone::Opened, 'text-success' => $entry->operation_milestone === App\Enums\OperationMilestone::Closed])>{{ $entry->content }}</span>
+                                    <span @class(['text-pre-line', 'gs-cancelled' => $entry->isCancelled(), 'text-danger' => $entry->operation_milestone === App\Enums\OperationMilestone::Opened, 'text-success' => $entry->operation_milestone === App\Enums\OperationMilestone::Closed])>{{ $entry->content }}</span>
+                                    @include('logbook::partials.cancelled', ['entry' => $entry])
                                     @if ($entry->is_order_or_decision)
                                         <span class="label label-danger">{{ __('logbook::logbook.entries.order_or_decision') }}</span>
                                     @endif
@@ -103,9 +104,14 @@
                                 </td>
                                 <td class="text-end">
                                     @can(App\Support\Authorization\Permission::LogbookCreate->value)
-                                        @unless ($entry->corrects_entry_id)
+                                        @unless ($entry->corrects_entry_id || $entry->isCancelled())
                                             <a href="{{ route('logbook.entries.rectify', $entry) }}" class="btn btn-outline-primary btn-mini">{{ __('logbook::logbook.entries.rectify') }}</a>
                                         @endunless
+                                    @endcan
+                                    @can(App\Support\Authorization\Permission::LogbookDelete->value)
+                                        @if ($day->status === App\Enums\LogbookDayStatus::Open && ! $entry->isCancelled() && ! $entry->operation_milestone && ! $entry->observation && ! $entry->surveillanceObservation && ! $entry->witnessReport)
+                                            <x-ui.delete-form :action="route('logbook.entries.destroy', $entry)" compact class="d-inline-block m-l-5" />
+                                        @endif
                                     @endcan
                                 </td>
                             </tr>
@@ -121,7 +127,7 @@
                     </x-ui.card>
                 @endif
 
-                @include('logbook::partials.timeline', ['entries' => $day->entries->sortBy('occurred_at')->values()])
+                @include('logbook::partials.timeline', ['entries' => $day->entries->sortBy([['occurred_at', 'desc'], ['id', 'desc']])->values()])
             </div>
 
             <div class="col-xl-4">

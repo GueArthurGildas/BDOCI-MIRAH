@@ -18,11 +18,12 @@ final readonly class SettingDefinition
         return str_replace('.', '_', $this->key);
     }
 
-    public function cast(mixed $raw): int|bool
+    public function cast(mixed $raw): int|bool|string
     {
         return match ($this->type) {
             SettingType::Integer => (int) $raw,
             SettingType::Boolean => filter_var($raw, FILTER_VALIDATE_BOOLEAN),
+            SettingType::Text => trim((string) $raw),
         };
     }
 
@@ -32,6 +33,7 @@ final readonly class SettingDefinition
         return match ($this->type) {
             SettingType::Integer => ['required', 'integer', "min:{$this->min}", "max:{$this->max}"],
             SettingType::Boolean => ['required', 'boolean'],
+            SettingType::Text => ['nullable', 'string', "max:{$this->max}"],
         };
     }
 }

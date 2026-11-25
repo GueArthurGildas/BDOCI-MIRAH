@@ -12,7 +12,10 @@
                     <form method="POST" action="{{ route('logbook.handovers.store') }}">
                         @csrf
                         <x-ui.form.input name="handed_over_at" type="datetime-local" :label="__('logbook::logbook.handovers.fields.handed_over_at')" :value="now()->format('Y-m-d\TH:i')" required />
-                        <x-ui.form.select name="supervised_by" :label="__('logbook::logbook.handovers.fields.supervisor')" :options="$supervisors" :value="$previousSupervisor" />
+                        <div class="mb-3 row">
+                            <label class="form-label col-sm-3 col-form-label">{{ __('logbook::logbook.handovers.fields.supervisor') }}</label>
+                            <div class="col-sm-9"><p class="form-control-plaintext">{{ $manager ?? '—' }}</p></div>
+                        </div>
                         <div class="mb-3 row">
                             <label class="form-label col-sm-3 col-form-label">{{ __('logbook::logbook.handovers.fields.outgoing') }}</label>
                             <div class="col-sm-9"><p class="form-control-plaintext">{{ request()->user()->fullName() }}</p></div>

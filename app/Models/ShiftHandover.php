@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['rotation_id', 'logbook_day_id', 'started_at', 'handed_over_at', 'handed_over_by', 'taken_over_by', 'supervised_by', 'operation_counters', 'open_operations', 'instructions'])]
+#[Fillable(['rotation_id', 'logbook_day_id', 'started_at', 'handed_over_at', 'handed_over_by', 'taken_over_by', 'supervised_by', 'supervisor_name', 'operation_counters', 'open_operations', 'instructions'])]
 class ShiftHandover extends Model
 {
     use Audited, HasFactory;

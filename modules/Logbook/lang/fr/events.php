@@ -7,6 +7,8 @@ return [
     'handled' => [
         'to_handle' => 'Ligne #:id de la main courante : à traiter.',
         'in_progress' => 'Ligne #:id de la main courante : traitement en cours.',
-        'closed' => 'Ligne #:id de la main courante : traitement clos.',
+        'closed' => 'Ligne #:id de la main courante : traitement terminé.',
     ],
+    'deleted' => 'Observation #:id supprimée.',
+    'entry_cancelled' => 'Ligne #:id de la main courante supprimée.',
 ];

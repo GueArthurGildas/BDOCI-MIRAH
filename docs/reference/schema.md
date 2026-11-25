@@ -806,6 +806,9 @@ erDiagram
         timestamp created_at
         timestamp updated_at
         varchar operation_milestone
+        timestamp cancelled_at
+        int8 cancelled_by FK
+        varchar cancellation_reason
     }
     logbook_entry_vessel {
         int8 logbook_entry_id FK
@@ -1067,6 +1070,9 @@ erDiagram
         timestamp created_at
         timestamp updated_at
         int8 logbook_entry_id FK
+        timestamp deleted_at
+        int8 deleted_by FK
+        varchar deletion_reason
     }
     observed_units {
         int8 id PK
@@ -1177,6 +1183,7 @@ erDiagram
         timestamp created_at
         timestamp updated_at
         text infractions_noted
+        varchar csp_manager_name
     }
     patrol_tracks {
         int8 id PK
@@ -1743,6 +1750,7 @@ erDiagram
         jsonb operation_counters
         jsonb open_operations
         text instructions
+        varchar supervisor_name
     }
     slot_positions {
         int8 id PK
@@ -1795,6 +1803,9 @@ erDiagram
         int8 created_by FK
         timestamp created_at
         int8 legacy_observation_id FK
+        timestamp deleted_at
+        int8 deleted_by FK
+        varchar deletion_reason
     }
     sweep_anomalies {
         int8 id PK
@@ -2083,6 +2094,9 @@ erDiagram
         timestamp created_at
         timestamp updated_at
         int8 logbook_entry_id FK
+        timestamp deleted_at
+        int8 deleted_by FK
+        varchar deletion_reason
     }
     witnesses {
         int8 id PK
@@ -2343,12 +2357,14 @@ erDiagram
     users ||--o{ license_suspensions : "proposed_by"
     users ||--o{ licenses : "entered_by"
     users ||--o{ logbook_closings : "closed_by"
+    users ||--o{ logbook_entries : "cancelled_by"
     users ||--o{ logbook_entries : "entered_by"
     users ||--o{ manual_position_reports : "entered_by"
     users ||--o{ mission_authorizations : "authorized_by"
     users ||--o{ missions : "created_by"
     users ||--o{ movements : "recorded_by"
     users ||--o{ observations : "author_id"
+    users ||--o{ observations : "deleted_by"
     users ||--o{ operation_events : "entered_by"
     users ||--o{ operation_instructions : "given_by"
     users ||--o{ operation_user : "user_id"
@@ -2368,11 +2384,13 @@ erDiagram
     users ||--o{ shift_handovers : "taken_over_by"
     users ||--o{ slot_positions : "confirmed_by"
     users ||--o{ surveillance_observations : "created_by"
+    users ||--o{ surveillance_observations : "deleted_by"
     users ||--o{ sweeps : "operator_user_id"
     users ||--o{ teams : "lead_user_id"
     users ||--o{ vessel_events : "user_id"
     users ||--o{ vessel_sources : "settled_by"
     users ||--o{ watch_entries : "decided_by"
+    users ||--o{ witness_reports : "deleted_by"
     users ||--o{ witness_reports : "entered_by"
     vessel_types ||--o{ vessels : "vessel_type_id"
     vessels ||--o{ alerts : "vessel_id"

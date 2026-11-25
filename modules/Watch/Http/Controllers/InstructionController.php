@@ -19,7 +19,7 @@ class InstructionController extends Controller
     {
         return view('watch::instructions.index', [
             'instructions' => StandingInstruction::query()->with('vessel')->latest('started_on')->latest('id')->get(),
-            'vessels' => Vessel::orderBy('name')->get()->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => "{$vessel->name} ({$vessel->registration_number})"]),
+            'vessels' => Vessel::orderBy('name')->get()->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => $vessel->optionLabel()]),
         ]);
     }
 

@@ -6,10 +6,12 @@ use App\Enums\BeaconStatus;
 use App\Enums\VesselCategory;
 use App\Enums\ZoneType;
 use App\Http\Controllers\Controller;
+use App\Models\Observation;
 use App\Models\Position;
 use App\Models\Zone;
 use App\Queries\BeaconStates;
 use App\Queries\ZoneSituation;
+use App\Support\Authorization\Permission;
 use App\Support\Presentation\VesselLink;
 use App\Support\Tables\PerPage;
 use App\Support\Vms\SilencePresets;
@@ -17,6 +19,7 @@ use App\Support\Vms\SilenceThreshold;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Modules\Tracking\Support\ThermisPanel;
@@ -27,6 +30,7 @@ class TrackingController extends Controller
         'emitting' => '#0ac282',
         'silent' => '#fe5d70',
         'patrol' => '#4099ff',
+        'observation' => '#f58f35',
     ];
 
     private const ZONE_COLORS = [
@@ -54,6 +58,17 @@ class TrackingController extends Controller
             ))
             ->get();
 
+        $user = $request->user();
+        $canObserve = Route::has('logbook.create') && $user->can(Permission::LogbookCreate->value);
+        $canCheck = Route::has('watch.observations.create') && $user->can(Permission::WatchCreate->value);
+        $observations = Observation::query()
+            ->with('vessel')
+            ->whereNotNull('latitude')
+            ->whereNotNull('longitude')
+            ->where('observed_at', '>=', now()->subDay())
+            ->latest('observed_at')
+            ->get();
+
         return view('tracking::map', [
             'filters' => $filters,
             'positionsCount' => $positions->count(),
@@ -63,7 +78,19 @@ class TrackingController extends Controller
                 'label' => $position->vessel->name.' — '.$position->recorded_at->isoFormat('L LT'),
                 'url' => VesselLink::url($position->vessel),
                 'color' => self::MARKER_COLORS[$this->markerKind($position)],
-            ])->all(),
+                'actions' => array_values(array_filter([
+                    $canObserve ? ['label' => __('tracking::tracking.map.new_observation'), 'url' => route('logbook.create', ['vessel_id' => $position->vessel_id, 'latitude' => round($position->latitude, 6), 'longitude' => round($position->longitude, 6), 'zone_id' => $position->zone_id])] : null,
+                    $canCheck ? ['label' => __('tracking::tracking.map.new_check'), 'url' => route('watch.observations.create', ['vessel_id' => $position->vessel_id])] : null,
+                ])),
+            ])->concat($observations->map(fn (Observation $observation) => [
+                'latitude' => (float) $observation->latitude,
+                'longitude' => (float) $observation->longitude,
+                'label' => __('tracking::tracking.map.observation_marker', ['time' => $observation->observed_at->isoFormat('L LT'), 'vessel' => $observation->vessel?->name ?? '—']),
+                'url' => Route::has('logbook.show') ? route('logbook.show', $observation) : null,
+                'color' => self::MARKER_COLORS['observation'],
+                'square' => true,
+            ]))->values()->all(),
+            'create' => $canObserve ? ['label' => __('tracking::tracking.map.observation_here'), 'url' => route('logbook.create')] : null,
             'zones' => $this->zonesForMap(),
             'panel' => ThermisPanel::for($request),
             'thermisTabActive' => $request->query('tab') === 'thermis' || $request->has('vessels'),

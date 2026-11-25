@@ -98,6 +98,27 @@ class VesselPagesTest extends TestCase
         $this->assertSame('Armement Ivoirien', $vessel->fresh()->owner);
     }
 
+    #[Covers('UC01', partial: true)]
+    public function test_the_vessel_type_is_fixed_at_registration(): void
+    {
+        $this->signInAs(Role::TeamLead);
+        $vessel = Vessel::factory()->create(['category' => 'fishing', 'type' => 'seiner', 'flag' => 'CI', 'status' => 'active']);
+
+        $this->get(route('vessels.edit', $vessel))->assertOk()->assertDontSee('name="category"', false)->assertDontSee('name="type"', false)->assertSee(__('vessels::vessels.fixed_at_registration'));
+
+        $this->put(route('vessels.update', $vessel), [
+            'name' => $vessel->name,
+            'registration_number' => $vessel->registration_number,
+            'flag' => 'CI',
+            'status' => 'active',
+            'category' => 'patrol',
+            'type' => 'trawler',
+        ])->assertRedirect(route('vessels.show', $vessel));
+
+        $this->assertSame('fishing', $vessel->fresh()->category->value);
+        $this->assertSame('seiner', $vessel->fresh()->type->value);
+    }
+
     #[Covers('RG02', 'UC01', partial: true)]
     public function test_registration_number_must_be_unique(): void
     {

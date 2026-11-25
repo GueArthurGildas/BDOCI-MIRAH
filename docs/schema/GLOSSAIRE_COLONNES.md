@@ -1141,6 +1141,7 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 | — (infractions éventuellement relevées) | `infractions_noted` | text |
 | `cree_par` | `created_by` | bigint |
 | `cloture_par` | `closed_by` | bigint |
+| — (nom du responsable du CSP, repris du réglage) | `csp_manager_name` | varchar(120) |
 
 ### `operation_contexts` (spécification : `operation_contexte`)
 
@@ -1234,6 +1235,10 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 | `statut_traitement` | `handling_status` | varchar(40) |
 | `rectifie_evenement_id` | `corrects_entry_id` | bigint |
 | `saisi_par` | `entered_by` | bigint |
+| — (ligne supprimée, barrée) | `cancelled_at` | timestamp(0) |
+| — (auteur de la suppression) | `cancelled_by` | bigint |
+| — (motif de la suppression) | `cancellation_reason` | varchar(500) |
+
 
 ### `logbook_entry_vessel` (spécification : `mc_evenement_navire`)
 
@@ -1264,6 +1269,7 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 | — (opérateur quittant) | `handed_over_by` | bigint |
 | — (opérateur prenant) | `taken_over_by` | bigint |
 | — (responsable du CSP) | `supervised_by` | bigint |
+| — (nom du responsable du CSP, repris du réglage) | `supervisor_name` | varchar(120) |
 | — (compteurs d'opération) | `operation_counters` | jsonb |
 | — (opérations ouvertes) | `open_operations` | jsonb |
 | — (informations complémentaires et consignes) | `instructions` | text |
@@ -1281,6 +1287,10 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 | `cree_par` | `created_by` | bigint |
 | `cree_le` | `created_at` | timestamp(0) |
 | (absente) | `legacy_observation_id` | bigint, unique, ajout de l'implémentation |
+| — (suppression tracée) | `deleted_at` | timestamp(0) |
+| — (auteur de la suppression) | `deleted_by` | bigint |
+| — (motif de la suppression) | `deletion_reason` | varchar(500) |
+
 
 ### `relays` (spécification : `relais`)
 
@@ -1534,6 +1544,10 @@ Ne pas éditer à la main : en cas de changement de nom, corriger ensemble le sc
 | `saisi_par` | `entered_by` | bigint |
 | `statut` | `status` | varchar(40) |
 | — | `logbook_entry_id` | bigint |
+| — (suppression tracée) | `deleted_at` | timestamp(0) |
+| — (auteur de la suppression) | `deleted_by` | bigint |
+| — (motif de la suppression) | `deletion_reason` | varchar(500) |
+
 
 ### `reported_vessels` (spécification : `signalement_navire`)
 

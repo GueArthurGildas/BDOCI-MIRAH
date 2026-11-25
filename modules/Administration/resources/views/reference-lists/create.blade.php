@@ -10,7 +10,7 @@
                 <p class="text-muted f-12">{{ __('administration::reference_lists.code_hint') }}</p>
 
                 <div class="mt-4">
-                    <button type="submit" class="btn btn-primary"><i class="feather icon-save"></i> {{ __('ui.save') }}</button>
+                    <button type="submit" class="btn btn-primary" data-gs-record><i class="feather icon-save"></i> {{ __('ui.save') }}</button>
                     <a href="{{ route('administration.reference-lists.index') }}" class="btn btn-default m-l-10">{{ __('ui.cancel') }}</a>
                 </div>
             </form>

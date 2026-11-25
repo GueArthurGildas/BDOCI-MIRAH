@@ -30,7 +30,7 @@ class ErsController extends Controller
 
         return view('vms::ers.index', [
             'filters' => $filters,
-            'vessels' => Vessel::orderBy('name')->get(['id', 'name', 'registration_number'])->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => "{$vessel->name} ({$vessel->registration_number})"])->all(),
+            'vessels' => Vessel::orderBy('name')->get(['id', 'name', 'registration_number'])->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => $vessel->optionLabel()])->all(),
             'declarations' => ErsDeclaration::with('vessel')->withCount('lines')->withSum('lines', 'live_weight_kg')
                 ->when($filters['vessel'] ?? null, fn (Builder $query, string $vessel) => $query->where('vessel_id', $vessel))
                 ->when($filters['from'] ?? null, fn (Builder $query, string $from) => $query->whereDate('declared_at', '>=', $from))
@@ -44,7 +44,7 @@ class ErsController extends Controller
     public function create(): View
     {
         return view('vms::ers.create', [
-            'vessels' => Vessel::orderBy('name')->get()->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => "{$vessel->name} ({$vessel->registration_number})"]),
+            'vessels' => Vessel::orderBy('name')->get()->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => $vessel->optionLabel()]),
             'species' => Species::orderBy('name')->pluck('name', 'id'),
             'presentations' => Presentation::orderBy('label')->pluck('label', 'id'),
             'gears' => Gear::orderBy('label')->pluck('label', 'id'),

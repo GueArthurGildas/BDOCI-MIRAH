@@ -24,6 +24,7 @@ Route::middleware('auth')
         Route::get('entries/{entry}/rectify', [LogbookEntryController::class, 'rectifyForm'])->can(Permission::LogbookCreate->value)->name('entries.rectify');
         Route::post('entries/{entry}/rectify', [LogbookEntryController::class, 'rectify'])->can(Permission::LogbookCreate->value)->name('entries.rectify.store');
         Route::patch('entries/{entry}', [LogbookEntryController::class, 'updateHandling'])->can(Permission::LogbookManage->value)->name('entries.update');
+        Route::delete('entries/{entry}', [LogbookEntryController::class, 'destroy'])->can(Permission::LogbookDelete->value)->name('entries.destroy');
     });
 
 Route::middleware('auth')
@@ -36,4 +37,5 @@ Route::middleware('auth')
         Route::post('/', 'store')->can(Permission::LogbookCreate->value)->name('store');
         Route::get('{observation}', 'show')->can(Permission::LogbookView->value)->name('show');
         Route::patch('{observation}', 'update')->can(Permission::LogbookManage->value)->name('update');
+        Route::delete('{observation}', 'destroy')->can(Permission::LogbookDelete->value)->name('destroy');
     });

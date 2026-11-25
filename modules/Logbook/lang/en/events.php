@@ -9,4 +9,6 @@ return [
         'in_progress' => 'Logbook line #:id: handling in progress.',
         'closed' => 'Logbook line #:id: handling closed.',
     ],
+    'deleted' => 'Observation #:id deleted.',
+    'entry_cancelled' => 'Logbook line #:id deleted.',
 ];

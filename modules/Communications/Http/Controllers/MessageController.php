@@ -60,7 +60,7 @@ class MessageController extends Controller
     {
         return view('communications::messages.create', [
             'vessels' => Vessel::orderBy('name')->get(['id', 'name', 'registration_number'])
-                ->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => "{$vessel->name} ({$vessel->registration_number})"])
+                ->mapWithKeys(fn (Vessel $vessel) => [$vessel->id => $vessel->optionLabel()])
                 ->all(),
             'templates' => MessageTemplate::where('is_active', true)->orderBy('code')->get()
                 ->mapWithKeys(fn (MessageTemplate $template) => [$template->id => "{$template->code} ({$template->channel->value})"])

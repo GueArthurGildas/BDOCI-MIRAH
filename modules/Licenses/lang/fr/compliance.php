@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'title' => 'Conformité de :vessel',
+    'title' => 'Situation administrative de :vessel',
     'licenses' => 'Licences',
     'expired' => 'Échu',
     'fnp' => [
